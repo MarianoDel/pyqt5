@@ -1,0 +1,4 @@
+#ignore the bkp files
+*.*~
+*.pdf
+.tags

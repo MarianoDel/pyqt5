@@ -1,0 +1,129 @@
+##### PROGRAMACION GUI CON QT5 y Python (PyQt5) #####
+#links:
+http://pyqt.sourceforge.net/Docs/PyQt5/designer.html
+
+http://pythonthusiast.pythonblogs.com/230_pythonthusiast/archive/1348_developing_cross_platform_application_using_qt_pyqt_and_pyside__introduction-part_1_of_5.html
+
+https://www.python-course.eu/python3_course.php
+
+http://zetcode.com/gui/pyqt5/eventssignals/
+
+http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4/
+
+#Manual original y eventos de riverbank
+http://pyqt.sourceforge.net/Docs/PyQt5/index.html
+http://pyqt.sourceforge.net/Docs/PyQt4/qevent.html
+
+
+#con el archivo del Qt Designer archivo.ui lo paso a python
+pyuic5 archivo.ui > archivo.py
+
+#ahora tengo que armar el main.py y vincularlo a la parte grafica
+#Qt5 utiliza 3 clases bases de toda la interface GUI
+QWidgets
+QDialog
+QMainWindow
+
+#segun el tipo de interface GUI que haya creado tengo una de esas tres clases bases
+
+#puedo enganchar la GUI de tres formas
+direct approach
+single inheritance
+multiple inheritance
+
+### DIRECT APPROACH ###
+si el dialogo que arme se llama ImageDialog y la clase es QDialog
+   puedo hacer cat o head image.ui...
+   <class>ImageDialog</class>
+   <widget class="QDialog" name="ImageDialog">
+pyuic5 image.ui > ui_imagedialog.py
+
+import sys
+from PyQt5.QtWidgets import QApplication, QDialog
+from ui_imagedialog import Ui_ImageDialog
+
+app = QApplication(sys.argv)
+window = QDialog()
+ui = Ui_ImageDialog()
+ui.setupUi(window)
+
+window.show()
+sys.exit(app.exec_())
+
+#si no responde la interface por ahi pifie el nombre de las clases o la funcion de inicializacion
+puedo revisarla con cat ui_imagedialog.py
+   class Ui_ImageDialog(object):
+      def setupUi(self, ImageDialog):
+
+### SINGLE INHERITANCE ### Este es el que usan casi todos
+#con este metodo puedo tomar control de los widgets
+import sys
+from PyQt5.QtWidgets import QApplication, QDialog
+from ui_imagedialog import Ui_ImageDialog
+
+class ImageDialog(QDialog):
+    def __init__(self):
+        super(ImageDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_ImageDialog()
+        self.ui.setupUi(self)
+
+        # # Make some local modifications.
+        # self.ui.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
+        #
+        # # Connect up the buttons.
+        # self.ui.okButton.clicked.connect(self.accept)
+        # self.ui.cancelButton.clicked.connect(self.reject)
+
+app = QApplication(sys.argv)
+w = ImageDialog()
+w.show()
+sys.exit(app.exec_())
+
+### MULTIPLE INHERITANCE ###
+from PyQt5.QtGui import QDialog
+from ui_imagedialog import Ui_ImageDialog
+
+class ImageDialog(QDialog, Ui_ImageDialog):
+    def __init__(self):
+        super(ImageDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.setupUi(self)
+
+        # Make some local modifications.
+        self.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
+
+        # Connect up the buttons.
+        self.okButton.clicked.connect(self.accept)
+        self.cancelButton.clicked.connect(self.reject)
+
+### OTRO METODO ES UTILIZAR UIC DENTRO DEL CODIGO PYTHON ###
+#https://www.youtube.com/watch?v=OpUeZzKcA7Q
+
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import uic
+
+#nueva clase que contiene la interface
+class Ventana (QMainWindow):
+      #metodo constructor
+      def __init__(self):
+      	  #inicio un objeto QMainWindow
+	  QMainWindow.__init__(self)
+	  #cargo el archivo de interface *.ui
+	  uic.loadUi("MainWindow.ui",self)
+	  self.setWindowTitle("Nuevo Nombre")
+
+#instanciar aplicacion
+app = QApplication(sys.argv)
+#creo el objeto de la clase ventana
+vent = Ventana()
+#mostrar ventana
+vent.show()
+#ejecutar aplicacion
+app.exec_()
+
+#### A FUTURO, VER pyqtdeploy #####
+http://pyqt.sourceforge.net/Docs/pyqtdeploy/
