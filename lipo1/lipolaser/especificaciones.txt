@@ -1,0 +1,33 @@
+#LIPOLASER ESPECIFICACIONES
+
+#PADS O APLICADORES
+conjunto entre laser 5mW y leds 1W
+circuitos distintos
+
+//la potencia debiera poder manejar todos los mismos, ej 12 leds o 12 lasers
+//esto permitiria poner pads solo de leds o solo de lasers
+
+#FUNCIONES
+CW  (onda continua)   //segun potencia elegida (ver laser > 60%)
+PULSE (onda pulsada)  //de 0 a 100% de la potencia elegida
+MOD (onda modulada)   //de 25 a 75% de la potencia elegida
+
+Con onda o pulsada de 1 a 10Hz
+
+#SELECTOR DE POTENCIA
+
+#SELECTOR DE TIEMPO DE TRATAMIENTO
+
+#BIPPER
+multiple de arranque y parada
+
+#HABLITAR / DESHABILITAR CANALES
+potencia controlada por cada canal??
+
+#RELOJ CON BIP (avisos intermedios)
+tiempo para re-ubicar pads
+
+#INICIO PAUSA STOP
+
+#HARDWARE
+#COMUNICACION CON PLACA POTENCIA (Protocolo de 1 a 4 placas)

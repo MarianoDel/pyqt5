@@ -1,0 +1,32 @@
+https://physics.stackexchange.com/questions/337320/can-a-808nm-laser-diode-with-power-400mw-burn-skin
+
+
+
+http://www.learnabout-electronics.org/Semiconductors/diodes_26.php
+
+Laser Classifications
+
+Lasers are classified into four broad areas (plus sub areas) depending on the potential for causing biological damage. When you see a laser, it should be labelled with appropriate class designation, briefly described below:
+Typical Laser warning stickers
+Fig. 2.6.9 Typical Laser
+Warning Stickers
+
+    • Class 1 − Safe under conditions of normal use. Output is restricted to less than 0.39mW at 600nm (less for shorter wavelengths).
+    • Class 1M − Lasers producing divergent beams, safe for all conditions of use, except when passed through magnifying optics such as microscopes and telescopes.
+    • Class 2 − Low power visible lasers that emit above Class 1 levels but at a radiant power not above 1mW. The concept is that the human aversion reaction to bright light (the blink reflex) will protect a person. This class is used for laser pointers.
+    • Class 2M − Similar to Class 2 but can allow more power as beams with this classification must produce
+                wide or diverging beams. Light passing through a viewer's pupil must not be greater than
+                that allowed in class 2.
+    • Class 3R − Moderate power lasers below 5mW, considered safe where viewing is restricted, giving low
+                risk of injury.
+    • Class 3B − High-power pulsed lasers up to 500mW: Hazardous to view (except as reflected light from a
+                matt surface) significant controls such as protective eyewear and safety interlocks are
+                required of Class 3B laser facilities.
+    • Class 4 − High power lasers greater than 500mW. They can burn the skin, and cause potentially
+                devastating and permanent eye damage as a result of direct or diffuse beam viewing.
+                They may also ignite combustible materials, and thus may represent a fire risk.
+                This classification includes many industrial, scientific, medical and military lasers.
+
+Equipment using lasers of any of the above classifications will be found to carry a warning label similar to those in Fig. 2.6.9 outlining the hazards and the classification of the laser used.
+
+The above list is an abridged version of the laser specifications contained in the IEC 60825-1 standard and should not be relied on as a comprehensive guide. The full standard, together with other relevant safety information can be purchased from the International Electrotechnical Commission Webstore
