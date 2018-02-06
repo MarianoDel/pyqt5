@@ -1,0 +1,28 @@
+https://www.youtube.com/watch?v=_sAGY_4Ptsw
+min 12.30 agrega qframe
+min 18.50 icons on buttons  (OJO QtoolButton y bo pushbutton)
+min 21 Qbutton text under icon
+min 22.25 qss para buttons (gradient background color)
+min 28 css direccionado al widget QFrame
+min 31 button checkeable
+min 32 auto exclusive property
+min 33 css para todos los botones
+min 34 css para button checked
+min 37 css para button pressed
+min 38 css para hover y border 1px
+
+
+
+
+https://stackoverflow.com/questions/38071131/how-to-adjust-a-qsliders-handle
+
+http://doc.qt.io/qt-5/stylesheet-examples.html
+
+
+https://stackoverflow.com/questions/20952226/customize-qdial-with-stylesheet
+
+
+
+https://stackoverflow.com/questions/35532459/smooth-drawing-with-qpainter
+
+https://stackoverflow.com/questions/9465047/make-an-animated-wave-with-drawpolyline-in-pyside-pyqt
