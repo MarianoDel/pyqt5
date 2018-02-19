@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>pulsada.ico</file>
+    <file>continua.ico</file>
+    <file>modulada.ico</file>
+  </qresource>
+  <qresource prefix="images">
+    <file>power_meter4.png</file>
+    <file>power_meter5.png</file>
+    <file>power_meter6.png</file>
+    <file>power_meter7.png</file>
+    <file>power_meter0.png</file>
+    <file>power_meter3.png</file>
+    <file>power_meter3b.png</file>
+  </qresource>
+</RCC>

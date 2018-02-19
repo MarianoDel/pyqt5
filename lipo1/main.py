@@ -12,11 +12,17 @@ class Dialog(QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
+
         # # Make some local modifications.
         # self.ui.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
         #
         # # Connect up the buttons.
         self.ui.closeButton.clicked.connect(self.close)
+
+        # # Connect the QSlider
+        self.ui.verticalSlider.valueChanged.connect(self.SetPowerLevel)
+
+
   #      self.ui.enviar2.clicked.connect(self.Envio2)
    #     self.ui.enviar3.clicked.connect(self.Envio3)
 
@@ -28,6 +34,11 @@ class Dialog(QDialog):
     #    else:
      #       self.ui.diag.setText("puerto serie abierto OK!")
 
+## Funciones del Modulo
+    def SetPowerLevel(self, event):
+        self.ui.Powerlabel.setText(str(event) + "%")
+        self.ui.Powerlabel.raise()
+        # print ("nuevo valor slider: " + str(event))
 
     def Envio1(self, event):
         self.ui.recibido.setText("env 1")
