@@ -14,13 +14,33 @@ class Dialog(QDialog):
 
 
         # # Make some local modifications.
+        self.ui.pLevel125.setDisabled(True)
+        self.ui.pLevel250.setDisabled(True)
+        self.ui.pLevel375.setDisabled(True)
+        self.ui.pLevel500.setDisabled(True)
+        self.ui.pLevel625.setDisabled(True)
+        self.ui.pLevel750.setDisabled(True)
+        self.ui.pLevel875.setDisabled(True)
+        self.ui.pLevel1000.setDisabled(True)
+
+        self.ui.m75.setDisabled(True)
+        self.ui.m150.setDisabled(True)
+        self.ui.m225.setDisabled(True)
+        self.ui.m300.setDisabled(True)
+        self.ui.m375.setDisabled(True)
+        self.ui.m450.setDisabled(True)
+        self.ui.m525.setDisabled(True)
+        self.ui.m600.setDisabled(True)
+
+
         # self.ui.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
         #
         # # Connect up the buttons.
         self.ui.closeButton.clicked.connect(self.close)
 
         # # Connect the QSlider
-        self.ui.verticalSlider.valueChanged.connect(self.SetPowerLevel)
+        self.ui.powerSlider.valueChanged.connect(self.SetPowerLevel)
+        self.ui.timerSlider.valueChanged.connect(self.SetTimerLevel)
 
 
   #      self.ui.enviar2.clicked.connect(self.Envio2)
@@ -37,8 +57,178 @@ class Dialog(QDialog):
 ## Funciones del Modulo
     def SetPowerLevel(self, event):
         self.ui.Powerlabel.setText(str(event) + "%")
+        if (event == 100):
+            self.ui.pLevel1000.setEnabled(True)
+            self.ui.pLevel875.setEnabled(True)
+            self.ui.pLevel750.setEnabled(True)
+            self.ui.pLevel625.setEnabled(True)
+            self.ui.pLevel500.setEnabled(True)
+            self.ui.pLevel375.setEnabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 87):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setEnabled(True)
+            self.ui.pLevel750.setEnabled(True)
+            self.ui.pLevel625.setEnabled(True)
+            self.ui.pLevel500.setEnabled(True)
+            self.ui.pLevel375.setEnabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 75):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setEnabled(True)
+            self.ui.pLevel625.setEnabled(True)
+            self.ui.pLevel500.setEnabled(True)
+            self.ui.pLevel375.setEnabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 62):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setDisabled(True)
+            self.ui.pLevel625.setEnabled(True)
+            self.ui.pLevel500.setEnabled(True)
+            self.ui.pLevel375.setEnabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 50):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setDisabled(True)
+            self.ui.pLevel625.setDisabled(True)
+            self.ui.pLevel500.setEnabled(True)
+            self.ui.pLevel375.setEnabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 37):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setDisabled(True)
+            self.ui.pLevel625.setDisabled(True)
+            self.ui.pLevel500.setDisabled(True)
+            self.ui.pLevel375.setEnabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 25):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setDisabled(True)
+            self.ui.pLevel625.setDisabled(True)
+            self.ui.pLevel500.setDisabled(True)
+            self.ui.pLevel375.setDisabled(True)
+            self.ui.pLevel250.setEnabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        elif(event > 12):
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setDisabled(True)
+            self.ui.pLevel625.setDisabled(True)
+            self.ui.pLevel500.setDisabled(True)
+            self.ui.pLevel375.setDisabled(True)
+            self.ui.pLevel250.setDisabled(True)
+            self.ui.pLevel125.setEnabled(True)
+        else:
+            self.ui.pLevel1000.setDisabled(True)
+            self.ui.pLevel875.setDisabled(True)
+            self.ui.pLevel750.setDisabled(True)
+            self.ui.pLevel625.setDisabled(True)
+            self.ui.pLevel500.setDisabled(True)
+            self.ui.pLevel375.setDisabled(True)
+            self.ui.pLevel250.setDisabled(True)
+            self.ui.pLevel125.setDisabled(True)
         self.ui.Powerlabel.raise_()
-        # print ("nuevo valor slider: " + str(event))
+
+    def SetTimerLevel(self, event):
+        self.ui.Timerlabel.setText(str(event))
+        if (event == 60):
+            self.ui.m600.setEnabled(True)
+            self.ui.m525.setEnabled(True)
+            self.ui.m450.setEnabled(True)
+            self.ui.m375.setEnabled(True)
+            self.ui.m300.setEnabled(True)
+            self.ui.m225.setEnabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 52):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setEnabled(True)
+            self.ui.m450.setEnabled(True)
+            self.ui.m375.setEnabled(True)
+            self.ui.m300.setEnabled(True)
+            self.ui.m225.setEnabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 45):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setEnabled(True)
+            self.ui.m375.setEnabled(True)
+            self.ui.m300.setEnabled(True)
+            self.ui.m225.setEnabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 37):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setDisabled(True)
+            self.ui.m375.setEnabled(True)
+            self.ui.m300.setEnabled(True)
+            self.ui.m225.setEnabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 30):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setDisabled(True)
+            self.ui.m375.setDisabled(True)
+            self.ui.m300.setEnabled(True)
+            self.ui.m225.setEnabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 22):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setDisabled(True)
+            self.ui.m375.setDisabled(True)
+            self.ui.m300.setDisabled(True)
+            self.ui.m225.setEnabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 15):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setDisabled(True)
+            self.ui.m375.setDisabled(True)
+            self.ui.m300.setDisabled(True)
+            self.ui.m225.setDisabled(True)
+            self.ui.m150.setEnabled(True)
+            self.ui.m75.setEnabled(True)
+        elif(event > 7):
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setDisabled(True)
+            self.ui.m375.setDisabled(True)
+            self.ui.m300.setDisabled(True)
+            self.ui.m225.setDisabled(True)
+            self.ui.m150.setDisabled(True)
+            self.ui.m75.setEnabled(True)
+        else:
+            self.ui.m600.setDisabled(True)
+            self.ui.m525.setDisabled(True)
+            self.ui.m450.setDisabled(True)
+            self.ui.m375.setDisabled(True)
+            self.ui.m300.setDisabled(True)
+            self.ui.m225.setDisabled(True)
+            self.ui.m150.setDisabled(True)
+            self.ui.m75.setDisabled(True)
+
+
+
+
+
+
 
     def Envio1(self, event):
         self.ui.recibido.setText("env 1")

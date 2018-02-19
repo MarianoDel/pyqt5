@@ -18,7 +18,7 @@
 
 </string>
   </property>
-  <widget class="QSlider" name="verticalSlider">
+  <widget class="QSlider" name="powerSlider">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -57,29 +57,6 @@ background: pink;
    </property>
    <property name="tickPosition">
     <enum>QSlider::NoTicks</enum>
-   </property>
-  </widget>
-  <widget class="QDial" name="dial_2">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>110</y>
-     <width>241</width>
-     <height>251</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>600</x>
-     <y>200</y>
-     <width>131</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
    </property>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -375,7 +352,7 @@ background-color: rgb(170, 170, 255);
   <widget class="QLabel" name="Powerlabel">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>160</x>
      <y>200</y>
      <width>141</width>
      <height>73</height>
@@ -431,7 +408,7 @@ background-color: rgb(170, 170, 255);
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="pLevel825">
+     <widget class="QLabel" name="pLevel875">
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
       </property>
@@ -486,7 +463,7 @@ background-color: rgb(170, 170, 255);
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="pLevel325">
+     <widget class="QLabel" name="pLevel375">
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
       </property>
@@ -537,6 +514,242 @@ background-color: rgb(170, 170, 255);
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="Timerlabel">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>200</y>
+     <width>71</width>
+     <height>73</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>40</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>591</x>
+     <y>131</y>
+     <width>101</width>
+     <height>204</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="m600">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter8.png</pixmap>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m525">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter7.png</pixmap>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m450">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter6.png</pixmap>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m375">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter5.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m300">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter4.png</pixmap>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m225">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter3.png</pixmap>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m150">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter1.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="m75">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="res_lipo2.qrc">:/images/time_meter1.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="Powerlabel_3">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>260</y>
+     <width>171</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>30</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>minutos</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QSlider" name="timerSlider">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>120</y>
+     <width>91</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSlider::groove:vertical {
+background: red;
+position: absolute; /* absolutely position 4px from the left and right of the widget. setting margins on the widget should work too... */
+left: 4px; right: 4px;
+border: 1px solid #bbb;
+border-radius: 4px;
+}
+QSlider::handle:vertical {
+height: 10px;
+background: green;
+margin: 0 -4px; /* expand outside the groove */
+border: 1px solid #777;
+border-radius: 4px;
+}
+QSlider::add-page:vertical {
+background: white;
+}
+QSlider::sub-page:vertical {
+background: pink;
+}</string>
+   </property>
+   <property name="maximum">
+    <number>60</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="tickPosition">
+    <enum>QSlider::NoTicks</enum>
+   </property>
   </widget>
  </widget>
  <resources>

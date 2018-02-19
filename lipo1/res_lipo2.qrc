@@ -5,6 +5,13 @@
     <file>modulada.ico</file>
   </qresource>
   <qresource prefix="images">
+    <file>time_meter1.png</file>
+    <file>time_meter3.png</file>
+    <file>time_meter4.png</file>
+    <file>time_meter5.png</file>
+    <file>time_meter6.png</file>
+    <file>time_meter7.png</file>
+    <file>time_meter8.png</file>
     <file>power_meter4.png</file>
     <file>power_meter5.png</file>
     <file>power_meter6.png</file>
