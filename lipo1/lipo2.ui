@@ -49,6 +49,9 @@ QSlider::sub-page:vertical {
 background: pink;
 }</string>
    </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
@@ -372,9 +375,9 @@ background-color: rgb(170, 170, 255);
   <widget class="QLabel" name="Powerlabel">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>170</x>
      <y>200</y>
-     <width>119</width>
+     <width>141</width>
      <height>73</height>
     </rect>
    </property>
@@ -394,8 +397,11 @@ background-color: rgb(170, 170, 255);
    <property name="text">
     <string>0%</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>271</x>

@@ -37,7 +37,7 @@ class Dialog(QDialog):
 ## Funciones del Modulo
     def SetPowerLevel(self, event):
         self.ui.Powerlabel.setText(str(event) + "%")
-        self.ui.Powerlabel.raise()
+        self.ui.Powerlabel.raise_()
         # print ("nuevo valor slider: " + str(event))
 
     def Envio1(self, event):
