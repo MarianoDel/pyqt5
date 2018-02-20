@@ -1,10 +1,15 @@
 <RCC>
   <qresource prefix="icons">
+    <file>pause.ico</file>
+    <file>stop.ico</file>
+    <file>play2.ico</file>
+    <file>play.ico</file>
     <file>pulsada.ico</file>
     <file>continua.ico</file>
     <file>modulada.ico</file>
   </qresource>
   <qresource prefix="images">
+    <file>kirno_negro_cursiva.png</file>
     <file>time_meter1.png</file>
     <file>time_meter3.png</file>
     <file>time_meter4.png</file>

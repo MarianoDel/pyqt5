@@ -21,7 +21,7 @@
   <widget class="QSlider" name="powerSlider">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>230</x>
      <y>120</y>
      <width>91</width>
      <height>251</height>
@@ -64,7 +64,7 @@ background: pink;
     <rect>
      <x>9</x>
      <y>400</y>
-     <width>811</width>
+     <width>1001</width>
      <height>181</height>
     </rect>
    </property>
@@ -74,42 +74,158 @@ background: pink;
     </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
       <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QToolButton" name="toolButton_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_6">
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>40</height>
+          <height>70</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Bookman</family>
+          <pointsize>30</pointsize>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>  PLAY</string>
+        </property>
+        <property name="icon">
+         <iconset resource="res_lipo2.qrc">
+          <normaloff>:/icons/play2.ico</normaloff>:/icons/play2.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QToolButton" name="toolButton_6">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>40</height>
+          <height>70</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Bookman</family>
+          <pointsize>30</pointsize>
+          <italic>true</italic>
+         </font>
+        </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>  STOP</string>
+        </property>
+        <property name="icon">
+         <iconset resource="res_lipo2.qrc">
+          <normaloff>:/icons/stop.ico</normaloff>:/icons/stop.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>300</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Bookman</family>
+          <pointsize>30</pointsize>
+          <weight>50</weight>
+          <italic>true</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>  PAUSE</string>
+        </property>
+        <property name="icon">
+         <iconset resource="res_lipo2.qrc">
+          <normaloff>:/icons/pause.ico</normaloff>:/icons/pause.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -143,6 +259,12 @@ background: pink;
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_11">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -198,13 +320,14 @@ background: pink;
     <rect>
      <x>9</x>
      <y>9</y>
-     <width>811</width>
+     <width>1001</width>
      <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame {
-background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.0539216 rgba(128, 128, 128, 255), stop:0.637255 rgba(255, 255, 255, 255));
+/*background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.0539216 rgba(128, 128, 128, 255), stop:0.637255 rgba(255, 255, 255, 255));*/
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0.0539216 rgba(51, 128, 128, 255), stop:0.637255 rgba(255, 255, 255, 255));
 }
 
 QPushButton {
@@ -225,7 +348,9 @@ QToolButton:checked, QPushButton:pressed {
 background-color: rgb(170, 170, 255);
 }
 
-</string>
+QLabel {
+background-color: none;
+}</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -236,10 +361,10 @@ background-color: rgb(170, 170, 255);
    <widget class="QPushButton" name="closeButton">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>20</y>
-      <width>411</width>
-      <height>34</height>
+      <x>970</x>
+      <y>10</y>
+      <width>21</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -348,12 +473,31 @@ background-color: rgb(170, 170, 255);
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>10</y>
+      <width>481</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="res_lipo2.qrc">:/images/kirno_negro_cursiva.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="Powerlabel">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>200</y>
+     <x>9</x>
+     <y>199</y>
      <width>141</width>
      <height>73</height>
     </rect>
@@ -381,8 +525,8 @@ background-color: rgb(170, 170, 255);
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>271</x>
-     <y>131</y>
+     <x>120</x>
+     <y>130</y>
      <width>101</width>
      <height>204</height>
     </rect>
@@ -518,7 +662,7 @@ background-color: rgb(170, 170, 255);
   <widget class="QLabel" name="Timerlabel">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>540</x>
      <y>200</y>
      <width>71</width>
      <height>73</height>
@@ -547,7 +691,7 @@ background-color: rgb(170, 170, 255);
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>591</x>
+     <x>621</x>
      <y>131</y>
      <width>101</width>
      <height>204</height>
@@ -684,7 +828,7 @@ background-color: rgb(170, 170, 255);
   <widget class="QLabel" name="Powerlabel_3">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>450</x>
      <y>260</y>
      <width>171</width>
      <height>61</height>
@@ -750,6 +894,104 @@ background: pink;
    <property name="tickPosition">
     <enum>QSlider::NoTicks</enum>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>120</y>
+     <width>171</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="title">
+    <string>Alarmas Intermedias</string>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>151</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <widget class="QRadioButton" name="radioButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Nin&amp;guna</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_3">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>&amp;Una</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_4">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>&amp;Dos</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_2">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Cua&amp;tro</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources>
