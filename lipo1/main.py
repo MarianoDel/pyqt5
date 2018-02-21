@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
+from PyQt5.QtWidgets import QApplication, QDialog, QGraphicsColorizeEffect
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QPropertyAnimation
+from PyQt5.QtGui import QColor
 from ui_lipo2 import Ui_Dialog
 #from serialcomm import SerialComm
 
@@ -38,6 +39,8 @@ class Dialog(QDialog):
         # # Connect up the buttons.
         self.ui.closeButton.clicked.connect(self.close)
         self.ui.ch1Button.clicked.connect(self.channel1Button)
+        # self.ui.ch2Button.pressed.connect(self.channel2Button)
+        self.ui.ch2Button.clicked.connect(self.channel2Button)
 
         # # Connect the QSlider
         self.ui.powerSlider.valueChanged.connect(self.SetPowerLevel)
@@ -230,8 +233,23 @@ class Dialog(QDialog):
     def channel1Button(self, event):
         self.ui.ch1Button.setStyleSheet("background-color: red")
 
+    def channel2Button(self, event=None):
+        # self.ui.ch2Button.setStyleSheet("background-color: red")
+        self.effect = QGraphicsColorizeEffect(self.ui.ch2Button)
+        self.ui.ch2Button.setGraphicsEffect(self.effect)
+        self.anim = QPropertyAnimation(self.effect, b"color")
+        self.anim.setStartValue(QColor(Qt.blue))
+        self.anim.setEndValue(QColor(Qt.red))
+        self.anim.setDuration(1000)
+        self.anim.start()
 
-
+# QGraphicsColorizeEffect *eEffect= new QGraphicsColorizeEffect(btn);
+# btn->setGraphicsEffect(eEffect);
+# QPropertyAnimation *paAnimation = new QPropertyAnimation(eEffect,"color");
+# paAnimation->setStartValue(QColor(Qt::blue));
+# paAnimation->setEndValue(QColor(Qt::red));
+# paAnimation->setDuration(1000);
+# paAnimation->start();
 
 
     def Envio1(self, event):
