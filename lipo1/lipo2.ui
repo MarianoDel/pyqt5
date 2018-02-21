@@ -237,7 +237,7 @@ background: pink;
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton_12">
+       <widget class="QPushButton" name="ch1Button">
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -993,6 +993,36 @@ background: pink;
     </layout>
    </widget>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>110</y>
+     <width>91</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="res_lipo2.qrc">:/images/woman1.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>powerSlider</zorder>
+  <zorder>verticalLayoutWidget</zorder>
+  <zorder>frame</zorder>
+  <zorder>Powerlabel</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>Timerlabel</zorder>
+  <zorder>layoutWidget_2</zorder>
+  <zorder>timerSlider</zorder>
+  <zorder>groupBox</zorder>
+  <zorder>label_2</zorder>
+  <zorder>Powerlabel_3</zorder>
  </widget>
  <resources>
   <include location="res_lipo2.qrc"/>

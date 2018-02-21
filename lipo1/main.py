@@ -37,6 +37,7 @@ class Dialog(QDialog):
         #
         # # Connect up the buttons.
         self.ui.closeButton.clicked.connect(self.close)
+        self.ui.ch1Button.clicked.connect(self.channel1Button)
 
         # # Connect the QSlider
         self.ui.powerSlider.valueChanged.connect(self.SetPowerLevel)
@@ -225,6 +226,9 @@ class Dialog(QDialog):
             self.ui.m75.setDisabled(True)
 
 
+    #Funcinalidad de Botones de Canales
+    def channel1Button(self, event):
+        self.ui.ch1Button.setStyleSheet("background-color: red")
 
 
 
@@ -252,6 +256,7 @@ class Dialog(QDialog):
  #       self.s.Close()
         event.accept()
 
+#### FIN CLASE DIALOG (ventana principal)
 
 
 

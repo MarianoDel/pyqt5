@@ -9,6 +9,7 @@
     <file>modulada.ico</file>
   </qresource>
   <qresource prefix="images">
+    <file>woman1.png</file>
     <file>kirno_negro_cursiva.png</file>
     <file>time_meter1.png</file>
     <file>time_meter3.png</file>
