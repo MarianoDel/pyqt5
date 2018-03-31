@@ -87,7 +87,7 @@ background: pink;
        <number>1</number>
       </property>
       <item>
-       <widget class="QToolButton" name="toolButton_4">
+       <widget class="QToolButton" name="playButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -135,7 +135,7 @@ background: pink;
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="toolButton_6">
+       <widget class="QToolButton" name="stopButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -180,7 +180,7 @@ background: pink;
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="toolButton_5">
+       <widget class="QToolButton" name="pauseButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -825,7 +825,7 @@ background-color: none;
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="Powerlabel_3">
+  <widget class="QLabel" name="unitlabel">
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -928,7 +928,7 @@ background: pink;
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="radioButton_none">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -955,7 +955,7 @@ background: pink;
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_3">
+      <widget class="QRadioButton" name="radioButton_one">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
@@ -967,7 +967,7 @@ background: pink;
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_4">
+      <widget class="QRadioButton" name="radioButton_two">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
@@ -979,7 +979,7 @@ background: pink;
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="radioButton_four">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
@@ -1022,7 +1022,7 @@ background: pink;
   <zorder>timerSlider</zorder>
   <zorder>groupBox</zorder>
   <zorder>label_2</zorder>
-  <zorder>Powerlabel_3</zorder>
+  <zorder>unitlabel</zorder>
  </widget>
  <resources>
   <include location="res_lipo2.qrc"/>
