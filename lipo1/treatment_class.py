@@ -25,6 +25,11 @@ class Treatment():
 
         self.treatment_state = 'STOPED'
 
+        #contadores internos
+        self.remaining_minutes = 0
+        self.treatment_seconds = 0
+        self.internal_seconds_counter = 0
+
     def SetLaserPower(self, channel, power):
         if (channel == 'ch1'):
             self.ch1_laser_power = power

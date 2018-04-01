@@ -5,7 +5,7 @@ from PyQt5.QtGui import QColor
 from ui_lipo2 import Ui_Dialog
 from serialcomm import SerialComm
 from treatment_class import Treatment
-from timers_module import TimeoutCB
+from timers_module import TimeoutCB, ContinuousCB
 
 class Dialog(QDialog):
     def __init__(self):
@@ -75,8 +75,10 @@ class Dialog(QDialog):
             print ("puerto serie abierto OK!")
             self.ui.ch1Button.setText("OK")
 
+        self.ui.pauseButton.setEnabled(False)
         self.t = Treatment()
         self.timeout_1sec = ContinuousCB(1,self.UpdateOneSec)
+        self.twosecs = 0
 
 ## Funciones del Modulo
     def SetPowerLevel(self, event):
@@ -270,12 +272,18 @@ class Dialog(QDialog):
         # self.ui.ch2Button.setStyleSheet("background-color: red")
         pass
         
-
+    #silent ending con el boton STOP
     def StopTreatment(self, event=None):
         self.s.Write("ch1 stop treatment\n")
+        self.t.treatment_state = 'ENDED'
 
     def PauseTreatment(self, event=None):
-        self.s.Write("ch1 stop treatment\n")
+        if self.t.treatment_state == 'PAUSED':
+            self.t.treatment_state = 'RUNNING'
+            self.s.Write("ch1 start treatment\n")
+        else:
+            self.s.Write("ch1 stop treatment\n")
+            self.t.treatment_state = 'PAUSED'
 
     def SetTimerandAlarms (self, new_timer, new_alarms):
         """ me llaman desde el slider del timer o el radiocheck de alarms """
@@ -300,79 +308,9 @@ class Dialog(QDialog):
 
         self.SetTimerandAlarms(0, dummy)
         
-    def StartTreatment(self, event=None):        
-        self.effect = QGraphicsColorizeEffect(self.ui.playButton)
-        self.ui.playButton.setGraphicsEffect(self.effect)
-        self.anim = QPropertyAnimation(self.effect, b"color")
-        self.anim.setStartValue(QColor(Qt.blue))
-        self.anim.setEndValue(QColor(Qt.darkBlue))
-        self.anim.setDuration(1000)
-        self.anim.start()
-
-        ch1_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
-        self.s.Write("ch1 power led " + str(ch1_new_power) + "\n")
-
-        # #activo el timer de tratamiento
-        # self.tratamiento = Timer(self, self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
-        # self.tratamiento.start()
-        self.timer1 = TimeoutCB(self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
-
-        #timers intermedios
-        dummy = self.t.GetTreatmentAlarms()
-
-        if (dummy != 0):
-            dummy_t_secs = self.t.GetTreatmentTimer() / (dummy + 1)
-            dummy_t_secs = dummy_t_secs * 60
-            
-            self.objs_timer = list()
-
-            for i in range (dummy):
-                 self.objs_timer.append(TimeoutCB(dummy_t_secs * i, self.AlarmaIntermedia))
-
-        self.t.treatment_state = 'RUNNING'
-        self.t.treatment_seconds = 0
-        self.t.remaining_minutes = self.t.GetTreatmentTimer()
-        self.twosecs = 0
-        self.s.Write("ch1 start treatment\n")
-        self.s.Write("ch1 buzzer short 2\n")
-
-
-    def FinTratamiento(self):
-        self.t.treatment_state = 'ENDED'
-        self.s.Write("ch1 buzzer long 3\n")
-        self.s.Write("ch1 stop treatment\n")
-
-    def AlarmaIntermedia(self):
-        self.s.Write("ch1 buzzer half 2\n")
-
-    def UpdateOneSec(self):
-        """ aca tengo que resolver todo lo que se mueve """
-        if self.twosecs < 2:
-            self.twosecs += 1
-        else:
-            self.twosecs = 0
-        
-        if self.t.treatment_state == 'RUNNING':
-            self.t.treatment_seconds += 1
-
-            if self.t.treatment_seconds >= 60:
-                self.t.treatment_seconds = 0
-
-                if self.t.remaining_minutes > 0:
-                    if self.t.treatment_seconds < 60:
-                        self.t.treatment_seconds += 1
-                    else:
-                        self.t.remaining_minutes -= 1
-                        self.t.treatment_seconds = 0
-                        
-                elif self.t.remaining_minutes == 1:
-                    self.ui.Timerlabel.setText("60")
-                    self.ui.unitlabel.setText("segs.")
-                else:
-                    self.ui.Timerlabel.setText(str(self.t.treatment_seconds))
-                    
-
-            and self.twosecs == 2:
+    def StartTreatment(self, event=None):
+        #solo ejecuto si no estaba corriendo
+        if self.t.treatment_state != 'RUNNING':
             self.effect = QGraphicsColorizeEffect(self.ui.playButton)
             self.ui.playButton.setGraphicsEffect(self.effect)
             self.anim = QPropertyAnimation(self.effect, b"color")
@@ -381,12 +319,103 @@ class Dialog(QDialog):
             self.anim.setDuration(1000)
             self.anim.start()
 
+            ch1_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
+            self.s.Write("ch1 power led " + str(ch1_new_power) + "\n")
+
+            # #activo el timer de tratamiento
+            # self.tratamiento = Timer(self, self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
+            # self.tratamiento.start()
+            self.timer1 = TimeoutCB(self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
+
+            #timers intermedios
+            dummy = self.t.GetTreatmentAlarms()
+
+            if (dummy != 0):
+                dummy_t_secs = self.t.GetTreatmentTimer() / (dummy + 1)
+                dummy_t_secs = dummy_t_secs * 60
+            
+                self.objs_timer = list()
+
+                for i in range (dummy):
+                    self.objs_timer.append(TimeoutCB(dummy_t_secs * i, self.AlarmaIntermedia))
+            #fin timers intermedios
+            
+            self.t.treatment_state = 'RUNNING'
+            self.t.internal_seconds_counter = 0
+            self.t.remaining_minutes = self.t.GetTreatmentTimer()
+            self.twosecs = 0
+            self.s.Write("ch1 start treatment\n")
+            self.s.Write("ch1 buzzer short 2\n")
+            self.ui.pauseButton.setEnabled(True)
+
+
+    def FinTratamiento(self):
+        self.t.treatment_state = 'ENDED'
+        self.s.Write("ch1 buzzer long 3\n")
+        self.s.Write("ch1 stop treatment\n")
+
+
+    def AlarmaIntermedia(self):
+        """ la hago sonar solamente si esta corriendo, sino no suena """
+        #puede trear problemas con el PAUSE
+        if self.t.treatment_state == 'RUNNING':
+            self.s.Write("ch1 buzzer half 2\n")
+
+    def UpdateOneSec(self):
+        """ 
+            aca tengo que resolver todo lo que se mueve 
+            lo hago tipo por estados del programa con treatmet_state
+        """
+        if self.t.treatment_state == 'RUNNING':
+
+            if self.t.remaining_minutes > 1:
+                #si quedan minutos todavia
+                if self.t.internal_seconds_counter < 60:
+                    self.t.internal_seconds_counter += 1
+                else:
+                    #debo descontar minutos y actualizar ui
+                    self.t.remaining_minutes -= 1
+                    self.t.internal_seconds_counter = 0
+
+                    if self.t.remaining_minutes == 1:
+                        self.ui.Timerlabel.setText("59")
+                        self.ui.unitlabel.setText("segundos")
+                        self.t.treatment_seconds = 59
+                    else:
+                        self.ui.Timerlabel.setText(str(self.t.remaining_minutes))
+
+            else:
+                #estoy en el ultimo minuto ya uso el contador treatment_seconds
+                if self.t.treatment_seconds > 0:
+                    self.t.treatment_seconds -= 1
+
+                self.ui.Timerlabel.setText(str(self.t.treatment_seconds))
+                #o me quedo esperando en cero el fin del tratamiento                
+                        
+
+            #final de update de tiempos                        
+
+            # if self.twosecs < 2:
+            #     self.twosecs += 1
+            # else:
+            #     self.twosecs = 0
+
+            #     #update de efectos
+            #     self.effect = QGraphicsColorizeEffect(self.ui.playButton)
+            #     self.ui.playButton.setGraphicsEffect(self.effect)
+            #     self.anim = QPropertyAnimation(self.effect, b"color")
+            #     self.anim.setStartValue(QColor(Qt.blue))
+            #     self.anim.setEndValue(QColor(Qt.darkBlue))
+            #     self.anim.setDuration(1000)
+            #     self.anim.start()
+
             
 
         if self.t.treatment_state == 'ENDED':
             self.ui.Timerlabel.setText(str(self.t.treatment_timer))
             self.ui.unitlabel.setText("minutos")
             self.t.treatment_state = 'ENDED_OK'
+            self.ui.pauseButton.setEnabled(False)
         
             
         
