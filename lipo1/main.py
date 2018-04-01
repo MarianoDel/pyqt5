@@ -1,11 +1,17 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QDialog, QGraphicsColorizeEffect
+from PyQt5.QtWidgets import QApplication, QDialog, QGraphicsColorizeEffect, QWidget
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QPropertyAnimation
 from PyQt5.QtGui import QColor
 from ui_lipo2 import Ui_Dialog
 from serialcomm import SerialComm
 from treatment_class import Treatment
-from timers_module import TimeoutCB, ContinuousCB
+from timers_module import TimeoutCB
+
+#para el timer de 1 segundo
+from threading import Timer
+from time import time
+from datetime import datetime
+
 
 class Dialog(QDialog):
     def __init__(self):
@@ -47,6 +53,8 @@ class Dialog(QDialog):
         # # Connect the QSlider
         self.ui.powerSlider.valueChanged.connect(self.SetPowerLevel)
         self.ui.timerSlider.valueChanged.connect(self.SetTimerLevel)
+        # self.ui.timerSlider.sliderMoved.connect(self.SetTimerLevel)
+        # self.ui.timerSlider.sliderPressed.connect(self.SetTimerLevel)
 
         # # Connect Button Treatments
         self.ui.playButton.clicked.connect(self.StartTreatment)
@@ -58,7 +66,11 @@ class Dialog(QDialog):
         self.ui.radioButton_one.clicked.connect(self.SetAlarms)
         self.ui.radioButton_two.clicked.connect(self.SetAlarms)
         self.ui.radioButton_four.clicked.connect(self.SetAlarms)
-        
+
+        # # Connect signals Buttons
+        self.ui.cwaveButton.clicked.connect(self.SetCWAVE)
+        self.ui.pulsedButton.clicked.connect(self.SetPULSED)
+        self.ui.modulatedButton.clicked.connect(self.SetMODULATED)
 
 
   #      self.ui.enviar2.clicked.connect(self.Envio2)
@@ -77,8 +89,16 @@ class Dialog(QDialog):
 
         self.ui.pauseButton.setEnabled(False)
         self.t = Treatment()
-        self.timeout_1sec = ContinuousCB(1,self.UpdateOneSec)
+
+        #activo el timer de 1 segundo
+        self.next_call = time()
+        self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()
+
+#        self.timeout_1sec = ContinuousCB(1,self.UpdateOneSec)
         self.twosecs = 0
+        self.ui.playButton.setStyleSheet("background-color: rgb(191, 64, 64)")
+        # self.st = QWidget.styleSheet(self.ui.playButton)
+        # print (self.st)
 
 ## Funciones del Modulo
     def SetPowerLevel(self, event):
@@ -177,7 +197,10 @@ class Dialog(QDialog):
         self.t.SetLedPower('ch4', event)        
         
     def SetTimerLevel(self, event):
-        self.ui.Timerlabel.setText(str(event))
+        if self.t.treatment_state != 'RUNNING':
+            self.ui.Timerlabel.setText(str(event))
+            self.SetTimerandAlarms(event, 0)
+            
         if (event == 60):
             self.ui.m600.setEnabled(True)
             self.ui.m525.setEnabled(True)
@@ -260,10 +283,20 @@ class Dialog(QDialog):
             self.ui.m150.setDisabled(True)
             self.ui.m75.setDisabled(True)
 
-        self.SetTimerandAlarms(event, 0)
+        self.ui.unitlabel.raise_()    #debiera subir el string para que no quede tapado
+
 
 
     #Funcinalidad de Botones de Canales
+    def SetCWAVE (self, event=None):
+        self.t.signal = 'cwave'
+
+    def SetPULSED (self, event=None):
+        self.t.signal = 'pulsed'
+
+    def SetMODULATED (self, event=None):
+        self.t.signal = 'modulated'
+        
     def channel1Button(self, event):
         self.ui.ch1Button.setStyleSheet("background-color: red")
         self.s.Write("ch1 buzzer short 3\n")
@@ -315,9 +348,12 @@ class Dialog(QDialog):
             self.ui.playButton.setGraphicsEffect(self.effect)
             self.anim = QPropertyAnimation(self.effect, b"color")
             self.anim.setStartValue(QColor(Qt.blue))
-            self.anim.setEndValue(QColor(Qt.darkBlue))
+            self.anim.setEndValue(QColor(191, 64, 64))
             self.anim.setDuration(1000)
             self.anim.start()
+
+            #mando tipo de senial
+            self.s.Write("ch1 signal " + self.t.signal + "\n")
 
             ch1_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
             self.s.Write("ch1 power led " + str(ch1_new_power) + "\n")
@@ -347,6 +383,9 @@ class Dialog(QDialog):
             self.s.Write("ch1 start treatment\n")
             self.s.Write("ch1 buzzer short 2\n")
             self.ui.pauseButton.setEnabled(True)
+            self.ui.cwaveButton.setEnabled(False)
+            self.ui.pulsedButton.setEnabled(False)
+            self.ui.modulatedButton.setEnabled(False)
 
 
     def FinTratamiento(self):
@@ -361,11 +400,12 @@ class Dialog(QDialog):
         if self.t.treatment_state == 'RUNNING':
             self.s.Write("ch1 buzzer half 2\n")
 
-    def UpdateOneSec(self):
+    def UpdateOneSec(self, lapse):
         """ 
             aca tengo que resolver todo lo que se mueve 
             lo hago tipo por estados del programa con treatmet_state
         """
+        self.next_call = self.next_call + 1
         if self.t.treatment_state == 'RUNNING':
 
             if self.t.remaining_minutes > 1:
@@ -378,11 +418,15 @@ class Dialog(QDialog):
                     self.t.internal_seconds_counter = 0
 
                     if self.t.remaining_minutes == 1:
+                        self.ui.timerSlider.setValue(0)
                         self.ui.Timerlabel.setText("59")
                         self.ui.unitlabel.setText("segundos")
                         self.t.treatment_seconds = 59
                     else:
                         self.ui.Timerlabel.setText(str(self.t.remaining_minutes))
+                        self.ui.timerSlider.setValue(self.t.remaining_minutes)
+                        #la llama sola de arriba
+                        # self.SetTimerLevel(self.t.remaining_minutes)
 
             else:
                 #estoy en el ultimo minuto ya uso el contador treatment_seconds
@@ -395,10 +439,18 @@ class Dialog(QDialog):
 
             #final de update de tiempos                        
 
-            # if self.twosecs < 2:
-            #     self.twosecs += 1
-            # else:
-            #     self.twosecs = 0
+            if self.twosecs < 2:
+                self.twosecs += 1
+            else:
+                self.twosecs = 0
+
+                # self.effect = QGraphicsColorizeEffect(self.ui.playButton)
+                # self.ui.playButton.setGraphicsEffect(self.effect)
+                # self.anim = QPropertyAnimation(self.effect, b"color")
+                # self.anim.setStartValue(QColor(Qt.blue))
+                # self.anim.setEndValue(QColor(191, 64, 64))
+                # self.anim.setDuration(1000)
+                # self.anim.start()
 
             #     #update de efectos
             #     self.effect = QGraphicsColorizeEffect(self.ui.playButton)
@@ -412,12 +464,19 @@ class Dialog(QDialog):
             
 
         if self.t.treatment_state == 'ENDED':
-            self.ui.Timerlabel.setText(str(self.t.treatment_timer))
+            # self.ui.Timerlabel.setText(str(self.t.treatment_timer))
+            self.ui.timerSlider.setValue(self.t.treatment_timer)
+            # self.SetTimerLevel(self.t.treatment_timer)
             self.ui.unitlabel.setText("minutos")
             self.t.treatment_state = 'ENDED_OK'
             self.ui.pauseButton.setEnabled(False)
+            self.ui.cwaveButton.setEnabled(True)
+            self.ui.pulsedButton.setEnabled(True)
+            self.ui.modulatedButton.setEnabled(True)
+
         
-            
+        #antes de volver hago la proxima llamada
+        self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
         
         
 # QGraphicsColorizeEffect *eEffect= new QGraphicsColorizeEffect(btn);

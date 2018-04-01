@@ -116,6 +116,9 @@ background: pink;
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(191, 64, 64);</string>
+        </property>
         <property name="text">
          <string>  PLAY</string>
         </property>
@@ -374,7 +377,7 @@ background-color: none;
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton">
+   <widget class="QToolButton" name="cwaveButton">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -409,7 +412,7 @@ background-color: none;
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_2">
+   <widget class="QToolButton" name="pulsedButton">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -441,7 +444,7 @@ background-color: none;
      <enum>Qt::ToolButtonTextUnderIcon</enum>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_3">
+   <widget class="QToolButton" name="modulatedButton">
     <property name="geometry">
      <rect>
       <x>220</x>

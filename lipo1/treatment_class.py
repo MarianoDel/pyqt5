@@ -18,7 +18,7 @@ class Treatment():
         self.ch4_led_power = 0
 
         self.alarms = 0
-        self.signal = 'CWAVE'
+        self.signal = 'cwave'
 
         self.treatment_timer = 0
         self.treatment_alarms = 0
