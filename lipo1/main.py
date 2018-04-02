@@ -45,7 +45,6 @@ class Dialog(QDialog):
         # self.ui.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
         #
         # # Connect up the buttons.
-        self.ui.closeButton.clicked.connect(self.close)
         self.ui.ch1Button.clicked.connect(self.channel1Button)
         # self.ui.ch2Button.pressed.connect(self.channel2Button)
         self.ui.ch2Button.clicked.connect(self.channel2Button)
@@ -96,6 +95,7 @@ class Dialog(QDialog):
 
 #        self.timeout_1sec = ContinuousCB(1,self.UpdateOneSec)
         self.twosecs = 0
+        self.closeui = 0
         self.ui.playButton.setStyleSheet("background-color: rgb(191, 64, 64)")
         # self.st = QWidget.styleSheet(self.ui.playButton)
         # print (self.st)
@@ -310,6 +310,17 @@ class Dialog(QDialog):
         self.s.Write("ch1 stop treatment\n")
         self.t.treatment_state = 'ENDED'
 
+        if self.t.treatment_state != 'RUNNING':
+            if self.closeui > 5:
+                self.close()
+            elif self.closeui > 4: 
+                self.closeui += 1
+                self.ui.stopButton.setText(" !! ?? !!")
+            else:
+                self.closeui += 1
+                
+                
+
     def PauseTreatment(self, event=None):
         if self.t.treatment_state == 'PAUSED':
             self.t.treatment_state = 'RUNNING'
@@ -375,10 +386,19 @@ class Dialog(QDialog):
                 for i in range (dummy):
                     self.objs_timer.append(TimeoutCB(dummy_t_secs * i, self.AlarmaIntermedia))
             #fin timers intermedios
-            
-            self.t.treatment_state = 'RUNNING'
-            self.t.internal_seconds_counter = 0
-            self.t.remaining_minutes = self.t.GetTreatmentTimer()
+
+            #arreglo para cuando seleccionan 1 minuto
+            if self.t.GetTreatmentTimer() == 1:
+                self.ui.timerSlider.setValue(0)    #esto me cambia el label
+                self.ui.Timerlabel.setText("59")
+                self.ui.unitlabel.setText("segundos")
+                self.t.treatment_seconds = 59
+                self.t.remaining_minutes = 0
+            else:
+                self.t.remaining_minutes = self.t.GetTreatmentTimer()
+                self.t.internal_seconds_counter = 0
+
+
             self.twosecs = 0
             self.s.Write("ch1 start treatment\n")
             self.s.Write("ch1 buzzer short 2\n")
@@ -386,7 +406,8 @@ class Dialog(QDialog):
             self.ui.cwaveButton.setEnabled(False)
             self.ui.pulsedButton.setEnabled(False)
             self.ui.modulatedButton.setEnabled(False)
-
+            self.TreatmentColors()
+            self.t.treatment_state = 'RUNNING'
 
     def FinTratamiento(self):
         self.t.treatment_state = 'ENDED'
@@ -473,11 +494,54 @@ class Dialog(QDialog):
             self.ui.cwaveButton.setEnabled(True)
             self.ui.pulsedButton.setEnabled(True)
             self.ui.modulatedButton.setEnabled(True)
+            self.DefaultColors()
 
         
         #antes de volver hago la proxima llamada
         self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
         
+
+    def TreatmentColors (self):
+        s_dummy = "QSlider::groove:vertical {\
+                    background: red;\
+                    position: absolute;\
+                    left: 4px; right: 4px;\
+                    border: 1px solid #bbb;\
+                    border-radius: 4px;}\
+                    QSlider::handle:vertical {\
+                    height: 10px;\
+                    background: green;\
+                    margin: 0 -4px;\
+                    border: 1px solid #777;\
+                    border-radius: 4px;}\
+                    QSlider::add-page:vertical {\
+                    background:rgb(233, 31, 153);}\
+                    QSlider::sub-page:vertical {\
+                    background: pink;}"
+
+        self.ui.timerSlider.setStyleSheet(s_dummy)
+        self.ui.powerSlider.setStyleSheet(s_dummy)
+
+    def DefaultColors (self):
+        s_dummy = "QSlider::groove:vertical {\
+                    background: red;\
+                    position: absolute;\
+                    left: 4px; right: 4px;\
+                    border: 1px solid #bbb;\
+                    border-radius: 4px;}\
+                    QSlider::handle:vertical {\
+                    height: 10px;\
+                    background: green;\
+                    margin: 0 -4px;\
+                    border: 1px solid #777;\
+                    border-radius: 4px;}\
+                    QSlider::add-page:vertical {\
+                    background:white;}\
+                    QSlider::sub-page:vertical {\
+                    background: pink;}"
+
+        self.ui.timerSlider.setStyleSheet(s_dummy)
+        self.ui.powerSlider.setStyleSheet(s_dummy)
         
 # QGraphicsColorizeEffect *eEffect= new QGraphicsColorizeEffect(btn);
 # btn->setGraphicsEffect(eEffect);

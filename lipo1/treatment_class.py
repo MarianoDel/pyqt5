@@ -97,4 +97,5 @@ class Treatment():
 
     def GetTreatmentAlarms (self):
         return self.treatment_alarms
-        
+
+    
