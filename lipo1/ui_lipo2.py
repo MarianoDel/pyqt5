@@ -26,16 +26,16 @@ class Ui_Dialog(object):
 "}\n"
 "QSlider::handle:vertical {\n"
 "height: 10px;\n"
-"background: green;\n"
+"background: rgb(13, 10, 61);\n"
 "margin: 0 -4px; /* expand outside the groove */\n"
 "border: 1px solid #777;\n"
 "border-radius: 4px;\n"
 "}\n"
 "QSlider::add-page:vertical {\n"
-"background:white;\n"
+"background: rgb(32, 74, 135);\n"
 "}\n"
 "QSlider::sub-page:vertical {\n"
-"background: pink;\n"
+"background: rgb(110, 202, 206);\n"
 "}")
         self.powerSlider.setMaximum(100)
         self.powerSlider.setOrientation(QtCore.Qt.Vertical)
@@ -64,7 +64,7 @@ class Ui_Dialog(object):
         font.setItalic(True)
         self.playButton.setFont(font)
         self.playButton.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.playButton.setStyleSheet("background-color: rgb(154, 110, 181);")
+        self.playButton.setStyleSheet("background-color: rgb(114, 159, 207);")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/play2.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.playButton.setIcon(icon)
@@ -441,16 +441,16 @@ class Ui_Dialog(object):
 "}\n"
 "QSlider::handle:vertical {\n"
 "height: 10px;\n"
-"background: green;\n"
+"background: rgb(13, 10, 61);\n"
 "margin: 0 -4px; /* expand outside the groove */\n"
 "border: 1px solid #777;\n"
 "border-radius: 4px;\n"
 "}\n"
 "QSlider::add-page:vertical {\n"
-"background: white;\n"
+"background: rgb(32, 74, 135);\n"
 "}\n"
 "QSlider::sub-page:vertical {\n"
-"background: pink;\n"
+"background: rgb(110, 202, 206);\n"
 "}")
         self.timerSlider.setMaximum(60)
         self.timerSlider.setOrientation(QtCore.Qt.Vertical)

@@ -94,9 +94,9 @@ class Dialog(QDialog):
         self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()
 
 #        self.timeout_1sec = ContinuousCB(1,self.UpdateOneSec)
-        self.twosecs = 0
-        self.closeui = 0
-        self.ui.playButton.setStyleSheet("background-color: rgb(191, 64, 64)")
+        self.stopb_closeui = 0
+        self.playcolors = 0
+
         # self.st = QWidget.styleSheet(self.ui.playButton)
         # print (self.st)
 
@@ -308,16 +308,18 @@ class Dialog(QDialog):
     #silent ending con el boton STOP
     def StopTreatment(self, event=None):
         self.s.Write("ch1 stop treatment\n")
-        self.t.treatment_state = 'ENDED'
+
+        if self.t.treatment_state == 'RUNNING':
+            self.t.treatment_state = 'ENDED'
 
         if self.t.treatment_state != 'RUNNING':
-            if self.closeui > 5:
+            if self.stopb_closeui > 5:
                 self.close()
-            elif self.closeui > 4: 
-                self.closeui += 1
+            elif self.stopb_closeui > 4: 
+                self.stopb_closeui += 1
                 self.ui.stopButton.setText(" !! ?? !!")
             else:
-                self.closeui += 1
+                self.stopb_closeui += 1
                 
                 
 
@@ -355,15 +357,7 @@ class Dialog(QDialog):
     def StartTreatment(self, event=None):
         #solo ejecuto si no estaba corriendo
         if self.t.treatment_state != 'RUNNING':
-            self.effect = QGraphicsColorizeEffect(self.ui.playButton)
-            self.ui.playButton.setGraphicsEffect(self.effect)
-            self.anim = QPropertyAnimation(self.effect, b"color")
-            self.anim.setStartValue(QColor(Qt.blue))
-            self.anim.setEndValue(QColor(191, 64, 64))
-            self.anim.setDuration(1000)
-            self.anim.start()
-
-            #mando tipo de senial
+            #mando signal type
             self.s.Write("ch1 signal " + self.t.signal + "\n")
 
             ch1_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
@@ -399,7 +393,6 @@ class Dialog(QDialog):
                 self.t.internal_seconds_counter = 0
 
 
-            self.twosecs = 0
             self.s.Write("ch1 start treatment\n")
             self.s.Write("ch1 buzzer short 2\n")
             self.ui.pauseButton.setEnabled(True)
@@ -458,32 +451,30 @@ class Dialog(QDialog):
                 #o me quedo esperando en cero el fin del tratamiento                
                         
 
-            #final de update de tiempos                        
+            #final de update de tiempos
 
-            if self.twosecs < 2:
-                self.twosecs += 1
+            #update de efetos
+            if self.playcolors > 4:
+                self.ui.playButton.setStyleSheet("background-color: rgb(114, 159, 207);")
+                self.playcolors = 0
+            elif self.playcolors > 3:
+                self.ui.playButton.setStyleSheet("background-color: rgb(52, 101, 164);")
+                self.playcolors += 1
+            elif self.playcolors > 2:
+                self.ui.playButton.setStyleSheet("background-color: rgb(32, 74, 135);")
+                self.playcolors += 1
+            elif self.playcolors > 1:
+                self.ui.playButton.setStyleSheet("background-color: rgb(92, 53, 102);")
+                self.playcolors += 1
+            elif self.playcolors > 0:
+                self.ui.playButton.setStyleSheet("background-color: rgb(117, 80, 123);")
+                self.playcolors += 1
             else:
-                self.twosecs = 0
-
-                # self.effect = QGraphicsColorizeEffect(self.ui.playButton)
-                # self.ui.playButton.setGraphicsEffect(self.effect)
-                # self.anim = QPropertyAnimation(self.effect, b"color")
-                # self.anim.setStartValue(QColor(Qt.blue))
-                # self.anim.setEndValue(QColor(191, 64, 64))
-                # self.anim.setDuration(1000)
-                # self.anim.start()
-
-            #     #update de efectos
-            #     self.effect = QGraphicsColorizeEffect(self.ui.playButton)
-            #     self.ui.playButton.setGraphicsEffect(self.effect)
-            #     self.anim = QPropertyAnimation(self.effect, b"color")
-            #     self.anim.setStartValue(QColor(Qt.blue))
-            #     self.anim.setEndValue(QColor(Qt.darkBlue))
-            #     self.anim.setDuration(1000)
-            #     self.anim.start()
-
-            
-
+                self.ui.playButton.setStyleSheet("background-color: rgb(173, 127, 168);")
+                self.playcolors += 1
+                
+                                
+        #fin del tratamiento por timer o confirmacion de stop
         if self.t.treatment_state == 'ENDED':
             # self.ui.Timerlabel.setText(str(self.t.treatment_timer))
             self.ui.timerSlider.setValue(self.t.treatment_timer)
@@ -510,7 +501,7 @@ class Dialog(QDialog):
                     border-radius: 4px;}\
                     QSlider::handle:vertical {\
                     height: 10px;\
-                    background: green;\
+                    background:rgb(84, 10, 82);\
                     margin: 0 -4px;\
                     border: 1px solid #777;\
                     border-radius: 4px;}\
@@ -522,7 +513,28 @@ class Dialog(QDialog):
         self.ui.timerSlider.setStyleSheet(s_dummy)
         self.ui.powerSlider.setStyleSheet(s_dummy)
 
+        #self.ui es un puntero a mi objeto dialog, pero el propio dialogo es self        
+        s_dummy = "background-color: rgb(173, 127, 168);"
+        self.setStyleSheet(s_dummy)
+
     def DefaultColors (self):
+        # s_dummy = "QSlider::groove:vertical {\
+        #             background: red;\
+        #             position: absolute;\
+        #             left: 4px; right: 4px;\
+        #             border: 1px solid #bbb;\
+        #             border-radius: 4px;}\
+        #             QSlider::handle:vertical {\
+        #             height: 10px;\
+        #             background: green;\
+        #             margin: 0 -4px;\
+        #             border: 1px solid #777;\
+        #             border-radius: 4px;}\
+        #             QSlider::add-page:vertical {\
+        #             background:white;}\
+        #             QSlider::sub-page:vertical {\
+        #             background: pink;}"
+
         s_dummy = "QSlider::groove:vertical {\
                     background: red;\
                     position: absolute;\
@@ -531,17 +543,23 @@ class Dialog(QDialog):
                     border-radius: 4px;}\
                     QSlider::handle:vertical {\
                     height: 10px;\
-                    background: green;\
+                    background: rgb(13, 10, 61);\
                     margin: 0 -4px;\
                     border: 1px solid #777;\
                     border-radius: 4px;}\
                     QSlider::add-page:vertical {\
-                    background:white;}\
+                    background: rgb(32, 74, 135);}\
                     QSlider::sub-page:vertical {\
-                    background: pink;}"
-
+                    background: rgb(110, 202, 206);}"
+                            
         self.ui.timerSlider.setStyleSheet(s_dummy)
         self.ui.powerSlider.setStyleSheet(s_dummy)
+
+        #self.ui es un puntero a mi objeto dialog, pero el propio dialogo es self
+        s_dummy = "background-color: rgb(85, 170, 127);"
+        self.setStyleSheet(s_dummy)
+
+
         
 # QGraphicsColorizeEffect *eEffect= new QGraphicsColorizeEffect(btn);
 # btn->setGraphicsEffect(eEffect);
