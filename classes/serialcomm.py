@@ -73,9 +73,9 @@ class SerialComm:
 
     def Close(self):
         if (self.port_open == True):
+            self.ser.cancel_read()
+            self.ser.close()
             print ("quito thread")
             self.port_open = False
             self.hilo1.do_run = False
-            self.ser.cancel_read()
-            self.ser.close()
             self.hilo1.join()
