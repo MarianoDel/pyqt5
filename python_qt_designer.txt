@@ -17,6 +17,7 @@ http://pyqt.sourceforge.net/Docs/PyQt4/qevent.html
 
 #con el archivo del Qt Designer archivo.ui lo paso a python
 pyuic5 archivo.ui > archivo.py
+pyrcc5 res_arch.qrc > res_arch_rc.py    #si tiene resources
 
 #ahora tengo que armar el main.py y vincularlo a la parte grafica
 #Qt5 utiliza 3 clases bases de toda la interface GUI

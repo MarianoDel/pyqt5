@@ -13,6 +13,7 @@ from threading import Timer
 from time import time
 from datetime import datetime
 
+#### CLASE PDIALOG (ventana secundaria de seteo potencia)
 class PDialog(QDialog):
     def __init__(self):
         super(PDialog, self).__init__()
@@ -80,8 +81,9 @@ class PDialog(QDialog):
             self.intled = 0
 
         self.changeLEDLabel(self.intled)
-            
+#### FIN CLASE PDIALOG (ventana secundaria de seteo potencia)            
 
+#### CLASE DIALOG (ventana principal)
 class Dialog(QDialog):
     def __init__(self):
         super(Dialog, self).__init__()
@@ -721,18 +723,6 @@ class Dialog(QDialog):
 # paAnimation->setDuration(1000);
 # paAnimation->start();
 
-
-    def Envio1(self, event):
-        self.ui.recibido.setText("env 1")
-        self.s.Write("boton 1\n")
-
-    def Envio2(self, event):
-        self.ui.recibido.setText("env 2")
-        self.s.Write("boton 2\n")
-
-    def Envio3(self, event):
-        self.ui.recibido.setText("env 3")
-        self.s.Write("boton 3\n")
 
     def MyObjCallBack (self, dataread):
         d = dataread[:-1]
