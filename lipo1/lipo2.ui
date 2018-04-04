@@ -36,7 +36,7 @@ border: 1px solid #bbb;
 border-radius: 4px;
 }
 QSlider::handle:vertical {
-height: 10px;
+height: 30px;
 background: rgb(13, 10, 61);
 margin: 0 -4px; /* expand outside the groove */
 border: 1px solid #777;
@@ -253,11 +253,19 @@ background: rgb(110, 202, 206);
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH1</string>
         </property>
        </widget>
       </item>
@@ -269,43 +277,67 @@ background: rgb(110, 202, 206);
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH2</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_13">
+       <widget class="QPushButton" name="ch3Button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH3</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_11">
+       <widget class="QPushButton" name="ch4Button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH4</string>
         </property>
        </widget>
       </item>
@@ -323,66 +355,98 @@ background: rgb(110, 202, 206);
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_10">
+       <widget class="QPushButton" name="ch5Button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH5</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_9">
+       <widget class="QPushButton" name="ch6Button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH6</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="ch7Button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH7</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_7">
+       <widget class="QPushButton" name="ch8Button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans Mono</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>CH8</string>
         </property>
        </widget>
       </item>
@@ -514,7 +578,7 @@ background-color: none;
     </property>
     <property name="icon">
      <iconset resource="res_lipo2.qrc">
-      <normaloff>:/icons/continua.ico</normaloff>:/icons/continua.ico</iconset>
+      <normaloff>:/newPrefix/modulada.ico</normaloff>:/newPrefix/modulada.ico</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -931,7 +995,7 @@ border: 1px solid #bbb;
 border-radius: 4px;
 }
 QSlider::handle:vertical {
-height: 10px;
+height: 30px;
 background: rgb(13, 10, 61);
 margin: 0 -4px; /* expand outside the groove */
 border: 1px solid #777;
@@ -980,72 +1044,172 @@ background: rgb(110, 202, 206);
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>30</y>
       <width>151</width>
-      <height>201</height>
+      <height>211</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item>
-      <widget class="QRadioButton" name="radioButton_none">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="QPushButton" name="alarmButton_none">
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>0</height>
+         <height>40</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <family>DejaVu Sans Mono</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
-       <property name="text">
-        <string>Nin&amp;guna</string>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: transparent;
+/*border: none;*/
+border: 1px solid #777;
+border-radius: 4px;
+}
+
+QPushButton:checked, QPushButton:pressed {
+background-color: rgb(170, 170, 255);
+}
+</string>
        </property>
-       <property name="checked">
+       <property name="text">
+        <string>NINGUNA</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_one">
+      <widget class="QPushButton" name="alarmButton_one">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <family>DejaVu Sans Mono</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: transparent;
+/*border: none;*/
+border: 1px solid #777;
+border-radius: 4px;
+}
+
+QPushButton:checked, QPushButton:pressed {
+background-color: rgb(170, 170, 255);
+}
+</string>
+       </property>
        <property name="text">
-        <string>&amp;Una</string>
+        <string>UNA</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_two">
+      <widget class="QPushButton" name="alarmButton_two">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <family>DejaVu Sans Mono</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: transparent;
+/*border: none;*/
+border: 1px solid #777;
+border-radius: 4px;
+}
+
+QPushButton:checked, QPushButton:pressed {
+background-color: rgb(170, 170, 255);
+}
+</string>
+       </property>
        <property name="text">
-        <string>&amp;Dos</string>
+        <string>DOS</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_four">
+      <widget class="QPushButton" name="alarmButton_four">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <family>DejaVu Sans Mono</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: transparent;
+/*border: none;*/
+border: 1px solid #777;
+border-radius: 4px;
+}
+
+QPushButton:checked, QPushButton:pressed {
+background-color: rgb(170, 170, 255);
+}
+</string>
+       </property>
        <property name="text">
-        <string>Cua&amp;tro</string>
+        <string>CUATRO</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

@@ -6,6 +6,8 @@
     <file>play.ico</file>
     <file>pulsada.ico</file>
     <file>continua.ico</file>
+  </qresource>
+  <qresource prefix="newPrefix">
     <file>modulada.ico</file>
   </qresource>
   <qresource prefix="images">

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QGraphicsColorizeEffect, QWid
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QPropertyAnimation
 from PyQt5.QtGui import QColor
 from ui_lipo2 import Ui_Dialog
+from ui_power import Ui_powerDialog
 from serialcomm import SerialComm
 from treatment_class import Treatment
 from timers_module import TimeoutCB
@@ -12,6 +13,74 @@ from threading import Timer
 from time import time
 from datetime import datetime
 
+class PDialog(QDialog):
+    def __init__(self):
+        super(PDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_powerDialog()
+        self.ui.setupUi(self)
+
+        self.intlaser = 0
+        self.intled = 0
+
+        # # # Connect up the buttons.
+        self.ui.pushButton1.clicked.connect(self.UPLaser)
+        self.ui.pushButton2.clicked.connect(self.DWNLaser)
+        self.ui.pushButton3.clicked.connect(self.UPLED)
+        self.ui.pushButton4.clicked.connect(self.DWNLED)
+        # self.ui.pushButton1.pressed.connect(self.UPLaser)
+        # self.ui.pushButton2.pressed.connect(self.DWNLaser)
+        # self.ui.pushButton3.pressed.connect(self.UPLED)
+        # self.ui.pushButton4.pressed.connect(self.DWNLED)        
+        
+        # # self.ui.cancelButton.clicked.connect(self.reject)
+        self.ui.endButton.clicked.connect(self.accept)
+
+
+    def changeChannelLabel(self, new_string):
+        self.ui.whatchLabel.setText(new_string)
+
+    def changeLaserLabel(self, new_p):
+        self.intlaser = new_p
+        self.ui.whatplaserLabel.setText(str(self.intlaser) + "%")
+
+    def changeLEDLabel(self, new_p):
+        self.intled = new_p
+        self.ui.whatpledLabel.setText(str(self.intled) + "%")
+
+    def UPLaser (self, event=None):
+        if (self.intlaser < (100 - 5)):
+            self.intlaser += 5
+        else:
+            self.intlaser = 100
+
+        self.changeLaserLabel(self.intlaser)
+
+    def DWNLaser (self, event=None):
+        if (self.intlaser > 5):
+            self.intlaser -= 5
+        else:
+            self.intlaser = 0
+
+        self.changeLaserLabel(self.intlaser)
+
+    def UPLED (self, event=None):
+        if (self.intled < (100 - 5)):
+            self.intled += 5
+        else:
+            self.intled = 100
+
+        self.changeLEDLabel(self.intled)
+
+    def DWNLED (self, event=None):
+        if (self.intled > 5):
+            self.intled -= 5
+        else:
+            self.intled = 0
+
+        self.changeLEDLabel(self.intled)
+            
 
 class Dialog(QDialog):
     def __init__(self):
@@ -46,9 +115,11 @@ class Dialog(QDialog):
         #
         # # Connect up the buttons.
         self.ui.ch1Button.clicked.connect(self.channel1Button)
-        # self.ui.ch2Button.pressed.connect(self.channel2Button)
         self.ui.ch2Button.clicked.connect(self.channel2Button)
-
+        self.ui.ch3Button.clicked.connect(self.channel3Button)
+        self.ui.ch4Button.clicked.connect(self.channel4Button)
+        
+        
         # # Connect the QSlider
         self.ui.powerSlider.valueChanged.connect(self.SetPowerLevel)
         self.ui.timerSlider.valueChanged.connect(self.SetTimerLevel)
@@ -60,11 +131,11 @@ class Dialog(QDialog):
         self.ui.stopButton.clicked.connect(self.StopTreatment)
         self.ui.pauseButton.clicked.connect(self.PauseTreatment)
 
-        # # Connect radioButtons
-        self.ui.radioButton_none.clicked.connect(self.SetAlarms)
-        self.ui.radioButton_one.clicked.connect(self.SetAlarms)
-        self.ui.radioButton_two.clicked.connect(self.SetAlarms)
-        self.ui.radioButton_four.clicked.connect(self.SetAlarms)
+        # # Connect alrms Buttons
+        self.ui.alarmButton_none.clicked.connect(self.SetAlarms)
+        self.ui.alarmButton_one.clicked.connect(self.SetAlarms)
+        self.ui.alarmButton_two.clicked.connect(self.SetAlarms)
+        self.ui.alarmButton_four.clicked.connect(self.SetAlarms)
 
         # # Connect signals Buttons
         self.ui.cwaveButton.clicked.connect(self.SetCWAVE)
@@ -76,17 +147,25 @@ class Dialog(QDialog):
    #     self.ui.enviar3.clicked.connect(self.Envio3)
 
 #    def __show__(self):
-        self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
+        #para slackware
+        # self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
+        #para raspberry
+        self.s = SerialComm(self.MyObjCallBack, '/dev/ttyAMA0')
         if self.s.port_open == False:
             print ("Sin puerto serie!!!")
-            self.ui.ch1Button.setText("NO!")
+            # self.ui.ch1Button.setText("NO!")
             self.ui.playButton.setEnabled(False)
             #sys.exit(-1)
         else:
             print ("puerto serie abierto OK!")
-            self.ui.ch1Button.setText("OK")
+            # self.ui.ch1Button.setText("OK")
 
         self.ui.pauseButton.setEnabled(False)
+        self.ui.ch5Button.setEnabled(False)
+        self.ui.ch6Button.setEnabled(False)
+        self.ui.ch7Button.setEnabled(False)
+        self.ui.ch8Button.setEnabled(False)
+        
         self.t = Treatment()
 
         #activo el timer de 1 segundo
@@ -297,13 +376,86 @@ class Dialog(QDialog):
     def SetMODULATED (self, event=None):
         self.t.signal = 'modulated'
         
-    def channel1Button(self, event):
-        self.ui.ch1Button.setStyleSheet("background-color: red")
-        self.s.Write("ch1 buzzer short 3\n")
+    def channel1Button(self, event=None):
+        a = PDialog()
+        a.setModal(True)
+        a.changeChannelLabel("CH1")
+        a.changeLaserLabel(self.t.GetLaserPower('ch1'))
+        a.changeLEDLabel(self.t.GetLedPower('ch1'))
+        # a.setWindowFlags(Qt.FramelessWindowHint)
+        a.setWindowTitle("Seteo de Potencias")
+        a.exec_()
+        new_power = a.ui.whatplaserLabel.text()
+        # print (new_power)
+        new_power = new_power[:-1]
+        self.t.SetLaserPower('ch1', int(new_power))
+
+        new_power = a.ui.whatpledLabel.text()
+        # print (new_power)        
+        new_power = new_power[:-1]
+        self.t.SetLedPower('ch1', int(new_power))
+
+
+
 
     def channel2Button(self, event=None):
-        # self.ui.ch2Button.setStyleSheet("background-color: red")
-        pass
+        a = PDialog()
+        a.setModal(True)
+        a.changeChannelLabel("CH2")
+        a.changeLaserLabel(self.t.GetLaserPower('ch2'))
+        a.changeLEDLabel(self.t.GetLedPower('ch2'))
+        # a.setWindowFlags(Qt.FramelessWindowHint)
+        a.setWindowTitle("Seteo de Potencias")        
+        a.exec_()
+        new_power = a.ui.whatplaserLabel.text()
+        # print (new_power)
+        new_power = new_power[:-1]
+        self.t.SetLaserPower('ch2', int(new_power))
+
+        new_power = a.ui.whatpledLabel.text()
+        # print (new_power)        
+        new_power = new_power[:-1]
+        self.t.SetLedPower('ch2', int(new_power))
+
+    def channel3Button(self, event=None):
+        a = PDialog()
+        a.setModal(True)
+        a.changeChannelLabel("CH3")
+        a.changeLaserLabel(self.t.GetLaserPower('ch3'))
+        a.changeLEDLabel(self.t.GetLedPower('ch3'))
+        # a.setWindowFlags(Qt.FramelessWindowHint)
+        a.setWindowTitle("Seteo de Potencias")        
+        a.exec_()
+        new_power = a.ui.whatplaserLabel.text()
+        # print (new_power)
+        new_power = new_power[:-1]
+        self.t.SetLaserPower('ch3', int(new_power))
+
+        new_power = a.ui.whatpledLabel.text()
+        # print (new_power)        
+        new_power = new_power[:-1]
+        self.t.SetLedPower('ch3', int(new_power))
+
+    def channel4Button(self, event=None):
+        a = PDialog()
+        a.setModal(True)
+        a.changeChannelLabel("CH4")
+        a.changeLaserLabel(self.t.GetLaserPower('ch4'))
+        a.changeLEDLabel(self.t.GetLedPower('ch4'))
+        # a.setWindowFlags(Qt.FramelessWindowHint)
+        a.setWindowTitle("Seteo de Potencias")        
+        a.exec_()
+        new_power = a.ui.whatplaserLabel.text()
+        # print (new_power)
+        new_power = new_power[:-1]
+        self.t.SetLaserPower('ch4', int(new_power))
+
+        new_power = a.ui.whatpledLabel.text()
+        # print (new_power)        
+        new_power = new_power[:-1]
+        self.t.SetLedPower('ch4', int(new_power))
+        
+        
         
     #silent ending con el boton STOP
     def StopTreatment(self, event=None):
@@ -332,24 +484,24 @@ class Dialog(QDialog):
             self.t.treatment_state = 'PAUSED'
 
     def SetTimerandAlarms (self, new_timer, new_alarms):
-        """ me llaman desde el slider del timer o el radiocheck de alarms """
+        """ me llaman desde el slider del timer o de los botones de las alarmas """
         if (new_timer != 0):
             #me llamaron desde el slider del timer
             self.t.SetTreatmentTimer(new_timer)
 
         if (new_timer == 0):
-            #me llamaron desde los radioButton de alarmas a tarves de SetAlarm
+            #me llamaron desde los Button de alarmas a traves de SetAlarm
             self.t.SetTreatmentAlarms(new_alarms)
 
     def SetAlarms(self, event=None):
         dummy = 0
-        if self.ui.radioButton_none.isChecked():
+        if self.ui.alarmButton_none.isChecked():
             dummy = 0
-        if self.ui.radioButton_one.isChecked():
+        if self.ui.alarmButton_one.isChecked():
             dummy = 1
-        if self.ui.radioButton_two.isChecked():
+        if self.ui.alarmButton_two.isChecked():
             dummy = 2
-        if self.ui.radioButton_four.isChecked():
+        if self.ui.alarmButton_four.isChecked():
             dummy = 4
 
         self.SetTimerandAlarms(0, dummy)
@@ -500,7 +652,7 @@ class Dialog(QDialog):
                     border: 1px solid #bbb;\
                     border-radius: 4px;}\
                     QSlider::handle:vertical {\
-                    height: 10px;\
+                    height: 30px;\
                     background:rgb(84, 10, 82);\
                     margin: 0 -4px;\
                     border: 1px solid #777;\
@@ -525,7 +677,7 @@ class Dialog(QDialog):
         #             border: 1px solid #bbb;\
         #             border-radius: 4px;}\
         #             QSlider::handle:vertical {\
-        #             height: 10px;\
+        #             height: 30px;\
         #             background: green;\
         #             margin: 0 -4px;\
         #             border: 1px solid #777;\
@@ -542,7 +694,7 @@ class Dialog(QDialog):
                     border: 1px solid #bbb;\
                     border-radius: 4px;}\
                     QSlider::handle:vertical {\
-                    height: 10px;\
+                    height:30px;\
                     background: rgb(13, 10, 61);\
                     margin: 0 -4px;\
                     border: 1px solid #777;\
