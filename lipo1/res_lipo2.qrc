@@ -1,31 +1,29 @@
 <RCC>
   <qresource prefix="icons">
-    <file>pause.ico</file>
-    <file>stop.ico</file>
-    <file>play2.ico</file>
-    <file>play.ico</file>
-    <file>pulsada.ico</file>
-    <file>continua.ico</file>
-  </qresource>
-  <qresource prefix="newPrefix">
-    <file>modulada.ico</file>
+    <file>resources/modulada.ico</file>
+    <file>resources/pause.ico</file>
+    <file>resources/stop.ico</file>
+    <file>resources/play2.ico</file>
+    <file>resources/play.ico</file>
+    <file>resources/pulsada.ico</file>
+    <file>resources/continua.ico</file>
   </qresource>
   <qresource prefix="images">
-    <file>woman1.png</file>
-    <file>kirno_negro_cursiva.png</file>
-    <file>time_meter1.png</file>
-    <file>time_meter3.png</file>
-    <file>time_meter4.png</file>
-    <file>time_meter5.png</file>
-    <file>time_meter6.png</file>
-    <file>time_meter7.png</file>
-    <file>time_meter8.png</file>
-    <file>power_meter4.png</file>
-    <file>power_meter5.png</file>
-    <file>power_meter6.png</file>
-    <file>power_meter7.png</file>
-    <file>power_meter0.png</file>
-    <file>power_meter3.png</file>
-    <file>power_meter3b.png</file>
+    <file>resources/woman1.png</file>
+    <file>resources/kirno_negro_cursiva.png</file>
+    <file>resources/power_meter0.png</file>
+    <file>resources/power_meter3.png</file>
+    <file>resources/time_meter1.png</file>
+    <file>resources/time_meter3.png</file>
+    <file>resources/time_meter4.png</file>
+    <file>resources/time_meter5.png</file>
+    <file>resources/time_meter6.png</file>
+    <file>resources/time_meter7.png</file>
+    <file>resources/time_meter8.png</file>
+    <file>resources/power_meter3b.png</file>
+    <file>resources/power_meter4.png</file>
+    <file>resources/power_meter5.png</file>
+    <file>resources/power_meter6.png</file>
+    <file>resources/power_meter7.png</file>
   </qresource>
 </RCC>

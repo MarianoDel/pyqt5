@@ -124,7 +124,7 @@ background: rgb(110, 202, 206);
         </property>
         <property name="icon">
          <iconset resource="res_lipo2.qrc">
-          <normaloff>:/icons/play2.ico</normaloff>:/icons/play2.ico</iconset>
+          <normaloff>:/icons/resources/play2.ico</normaloff>:/icons/resources/play2.ico</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -172,7 +172,7 @@ background: rgb(110, 202, 206);
         </property>
         <property name="icon">
          <iconset resource="res_lipo2.qrc">
-          <normaloff>:/icons/stop.ico</normaloff>:/icons/stop.ico</iconset>
+          <normaloff>:/icons/resources/stop.ico</normaloff>:/icons/resources/stop.ico</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -225,7 +225,7 @@ background: rgb(110, 202, 206);
         </property>
         <property name="icon">
          <iconset resource="res_lipo2.qrc">
-          <normaloff>:/icons/pause.ico</normaloff>:/icons/pause.ico</iconset>
+          <normaloff>:/icons/resources/pause.ico</normaloff>:/icons/resources/pause.ico</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -511,7 +511,7 @@ background-color: none;
     </property>
     <property name="icon">
      <iconset resource="res_lipo2.qrc">
-      <normaloff>:/icons/continua.ico</normaloff>:/icons/continua.ico</iconset>
+      <normaloff>:/icons/resources/continua.ico</normaloff>:/icons/resources/continua.ico</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -546,7 +546,7 @@ background-color: none;
     </property>
     <property name="icon">
      <iconset resource="res_lipo2.qrc">
-      <normaloff>:/icons/pulsada.ico</normaloff>:/icons/pulsada.ico</iconset>
+      <normaloff>:/icons/resources/pulsada.ico</normaloff>:/icons/resources/pulsada.ico</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -578,7 +578,7 @@ background-color: none;
     </property>
     <property name="icon">
      <iconset resource="res_lipo2.qrc">
-      <normaloff>:/newPrefix/modulada.ico</normaloff>:/newPrefix/modulada.ico</iconset>
+      <normaloff>:/icons/resources/modulada.ico</normaloff>:/icons/resources/modulada.ico</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -609,7 +609,7 @@ background-color: none;
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="res_lipo2.qrc">:/images/kirno_negro_cursiva.png</pixmap>
+     <pixmap resource="res_lipo2.qrc">:/images/resources/kirno_negro_cursiva.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -670,7 +670,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter7.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter7.png</pixmap>
       </property>
      </widget>
     </item>
@@ -683,7 +683,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter6.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter6.png</pixmap>
       </property>
      </widget>
     </item>
@@ -696,7 +696,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter5.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter5.png</pixmap>
       </property>
      </widget>
     </item>
@@ -709,7 +709,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter4.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter4.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -725,7 +725,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter3b.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter3b.png</pixmap>
       </property>
      </widget>
     </item>
@@ -738,7 +738,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter3.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter3.png</pixmap>
       </property>
      </widget>
     </item>
@@ -751,7 +751,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter0.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter0.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -773,7 +773,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/power_meter0.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/power_meter0.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -836,7 +836,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter8.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter8.png</pixmap>
       </property>
      </widget>
     </item>
@@ -849,7 +849,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter7.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter7.png</pixmap>
       </property>
      </widget>
     </item>
@@ -862,7 +862,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter6.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter6.png</pixmap>
       </property>
      </widget>
     </item>
@@ -875,7 +875,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter5.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter5.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -891,7 +891,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter4.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter4.png</pixmap>
       </property>
      </widget>
     </item>
@@ -904,7 +904,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter3.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter3.png</pixmap>
       </property>
      </widget>
     </item>
@@ -917,7 +917,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter1.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter1.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -939,7 +939,7 @@ background-color: none;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res_lipo2.qrc">:/images/time_meter1.png</pixmap>
+       <pixmap resource="res_lipo2.qrc">:/images/resources/time_meter1.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -1229,7 +1229,7 @@ background-color: rgb(170, 170, 255);
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="res_lipo2.qrc">:/images/woman1.png</pixmap>
+    <pixmap resource="res_lipo2.qrc">:/images/resources/woman1.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

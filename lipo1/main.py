@@ -152,7 +152,7 @@ class Dialog(QDialog):
         #para slackware
         # self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
         #para raspberry
-        self.s = SerialComm(self.MyObjCallBack, '/dev/ttyAMA0')
+        self.s = SerialComm(self.MyObjCallBack, '/dev/serial0')
         if self.s.port_open == False:
             print ("Sin puerto serie!!!")
             # self.ui.ch1Button.setText("NO!")
@@ -177,6 +177,7 @@ class Dialog(QDialog):
 #        self.timeout_1sec = ContinuousCB(1,self.UpdateOneSec)
         self.stopb_closeui = 0
         self.playcolors = 0
+        self.ui.alarmButton_none.toggle()
 
         # self.st = QWidget.styleSheet(self.ui.playButton)
         # print (self.st)
@@ -275,7 +276,30 @@ class Dialog(QDialog):
         self.t.SetLedPower('ch1', event)
         self.t.SetLedPower('ch2', event)
         self.t.SetLedPower('ch3', event)
-        self.t.SetLedPower('ch4', event)        
+        self.t.SetLedPower('ch4', event)
+
+        if self.t.treatment_state == 'RUNNING':
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
+            self.s.Write("ch1 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch1'))
+            self.s.Write("ch1 power laser " + str(ch_new_power) + "\n")
+
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch2'))
+            self.s.Write("ch2 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch2'))
+            self.s.Write("ch2 power laser " + str(ch_new_power) + "\n")
+
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch3'))
+            self.s.Write("ch3 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch3'))
+            self.s.Write("ch3 power laser " + str(ch_new_power) + "\n")
+
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch4'))
+            self.s.Write("ch4 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
+            self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
+
+            
         
     def SetTimerLevel(self, event):
         if self.t.treatment_state != 'RUNNING':
@@ -397,7 +421,11 @@ class Dialog(QDialog):
         new_power = new_power[:-1]
         self.t.SetLedPower('ch1', int(new_power))
 
-
+        if self.t.treatment_state == 'RUNNING':
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
+            self.s.Write("ch1 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch1'))
+            self.s.Write("ch1 power laser " + str(ch_new_power) + "\n")
 
 
     def channel2Button(self, event=None):
@@ -419,6 +447,13 @@ class Dialog(QDialog):
         new_power = new_power[:-1]
         self.t.SetLedPower('ch2', int(new_power))
 
+        if self.t.treatment_state == 'RUNNING':
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch2'))
+            self.s.Write("ch2 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch2'))
+            self.s.Write("ch2 power laser " + str(ch_new_power) + "\n")
+
+
     def channel3Button(self, event=None):
         a = PDialog()
         a.setModal(True)
@@ -438,6 +473,13 @@ class Dialog(QDialog):
         new_power = new_power[:-1]
         self.t.SetLedPower('ch3', int(new_power))
 
+        if self.t.treatment_state == 'RUNNING':
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch3'))
+            self.s.Write("ch3 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch3'))
+            self.s.Write("ch3 power laser " + str(ch_new_power) + "\n")
+
+
     def channel4Button(self, event=None):
         a = PDialog()
         a.setModal(True)
@@ -456,6 +498,13 @@ class Dialog(QDialog):
         # print (new_power)        
         new_power = new_power[:-1]
         self.t.SetLedPower('ch4', int(new_power))
+
+        if self.t.treatment_state == 'RUNNING':
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch4'))
+            self.s.Write("ch4 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
+            self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
+
         
         
         
@@ -509,14 +558,33 @@ class Dialog(QDialog):
         self.SetTimerandAlarms(0, dummy)
         
     def StartTreatment(self, event=None):
+        #limpio contador de STOP cuando se toca play
+        self.stopb_closeui = 0
         #solo ejecuto si no estaba corriendo
         if self.t.treatment_state != 'RUNNING':
             #mando signal type
             self.s.Write("ch1 signal " + self.t.signal + "\n")
 
-            ch1_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
-            self.s.Write("ch1 power led " + str(ch1_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
+            self.s.Write("ch1 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch1'))
+            self.s.Write("ch1 power laser " + str(ch_new_power) + "\n")
 
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch2'))
+            self.s.Write("ch2 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch2'))
+            self.s.Write("ch2 power laser " + str(ch_new_power) + "\n")
+
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch3'))
+            self.s.Write("ch3 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch3'))
+            self.s.Write("ch3 power laser " + str(ch_new_power) + "\n")
+
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch4'))
+            self.s.Write("ch4 power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
+            self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
+            
             # #activo el timer de tratamiento
             # self.tratamiento = Timer(self, self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
             # self.tratamiento.start()
