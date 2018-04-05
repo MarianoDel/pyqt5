@@ -2,11 +2,14 @@ import sys
 from PyQt5.QtWidgets import QApplication, QDialog, QGraphicsColorizeEffect, QWidget
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QPropertyAnimation
 from PyQt5.QtGui import QColor
-from ui_lipo2 import Ui_Dialog
-from ui_power import Ui_powerDialog
 from serialcomm import SerialComm
 from treatment_class import Treatment
 from timers_module import TimeoutCB
+
+#importo UIs
+from ui_lipo2 import Ui_Dialog
+from ui_power import Ui_powerDialog
+from ui_freq import Ui_freqDialog
 
 #para el timer de 1 segundo
 from threading import Timer
@@ -83,6 +86,43 @@ class PDialog(QDialog):
         self.changeLEDLabel(self.intled)
 #### FIN CLASE PDIALOG (ventana secundaria de seteo potencia)            
 
+#### CLASE FDIALOG (ventana secundaria de seteo de frecuencia)
+class FDialog(QDialog):
+    def __init__(self):
+        super(FDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_freqDialog()
+        self.ui.setupUi(self)
+
+        self.intfreq = 0
+
+        # # # Connect up the buttons.
+        self.ui.pushButton1.clicked.connect(self.UPFreq)
+        self.ui.pushButton2.clicked.connect(self.DWNFreq)
+        self.ui.endButton.clicked.connect(self.accept)
+
+
+    def UPFreq (self, event=None):
+        if (self.intfreq < 10):
+            self.intfreq += 1
+
+        self.changeFreqLabel(self.intfreq)
+
+    def DWNFreq (self, event=None):
+        if (self.intfreq > 1):
+            self.intfreq -= 1
+
+        self.changeFreqLabel(self.intfreq)
+
+    def changeFreqLabel(self, new_f):
+        self.intfreq = new_f
+        self.ui.whatfreqLabel.setText(str(self.intfreq))
+        
+
+#### FIN CLASE FDIALOG (ventana secundaria de seteo de frecuencia)            
+
+
 #### CLASE DIALOG (ventana principal)
 class Dialog(QDialog):
     def __init__(self):
@@ -133,7 +173,7 @@ class Dialog(QDialog):
         self.ui.stopButton.clicked.connect(self.StopTreatment)
         self.ui.pauseButton.clicked.connect(self.PauseTreatment)
 
-        # # Connect alrms Buttons
+        # # Connect alarms Buttons
         self.ui.alarmButton_none.clicked.connect(self.SetAlarms)
         self.ui.alarmButton_one.clicked.connect(self.SetAlarms)
         self.ui.alarmButton_two.clicked.connect(self.SetAlarms)
@@ -143,13 +183,14 @@ class Dialog(QDialog):
         self.ui.cwaveButton.clicked.connect(self.SetCWAVE)
         self.ui.pulsedButton.clicked.connect(self.SetPULSED)
         self.ui.modulatedButton.clicked.connect(self.SetMODULATED)
+        self.ui.freqButton.clicked.connect(self.SetFREQUENCY)
 
 
   #      self.ui.enviar2.clicked.connect(self.Envio2)
    #     self.ui.enviar3.clicked.connect(self.Envio3)
 
 #    def __show__(self):
-        #para slackware
+        # # para slackware
         # self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
         #para raspberry
         self.s = SerialComm(self.MyObjCallBack, '/dev/serial0')
@@ -167,6 +208,7 @@ class Dialog(QDialog):
         self.ui.ch6Button.setEnabled(False)
         self.ui.ch7Button.setEnabled(False)
         self.ui.ch8Button.setEnabled(False)
+        self.ui.freqButton.setEnabled(False)
         
         self.t = Treatment()
 
@@ -395,12 +437,35 @@ class Dialog(QDialog):
     #Funcinalidad de Botones de Canales
     def SetCWAVE (self, event=None):
         self.t.signal = 'cwave'
+        self.ui.freqButton.setEnabled(False)
 
     def SetPULSED (self, event=None):
         self.t.signal = 'pulsed'
+        self.ui.freqButton.setEnabled(True)        
 
     def SetMODULATED (self, event=None):
         self.t.signal = 'modulated'
+        self.ui.freqButton.setEnabled(True)
+
+    def SetFREQUENCY (self, event=None):
+        a = FDialog()
+        a.setModal(True)
+        if self.t.frequency == 0:
+            a.changeFreqLabel(10)
+        else:
+            a.changeFreqLabel(int(self.t.frequency))
+            
+        a.setWindowTitle("Seteo de F")
+        a.exec_()
+        new_f = a.intfreq
+        if new_f == 10:
+            self.t.frequency = 0
+        else:
+            self.t.frequency = new_f
+
+        if self.t.treatment_state == 'RUNNING':
+            self.s.Write("ch1 frequency " + str(self.t.frequency) + "\n")
+        
         
     def channel1Button(self, event=None):
         a = PDialog()
@@ -608,11 +673,11 @@ class Dialog(QDialog):
                 self.ui.timerSlider.setValue(0)    #esto me cambia el label
                 self.ui.Timerlabel.setText("59")
                 self.ui.unitlabel.setText("segundos")
-                self.t.treatment_seconds = 59
+                self.t.remaining_seconds = 59
                 self.t.remaining_minutes = 0
             else:
                 self.t.remaining_minutes = self.t.GetTreatmentTimer()
-                self.t.internal_seconds_counter = 0
+                self.t.remaining_seconds = 0
 
 
             self.s.Write("ch1 start treatment\n")
@@ -646,30 +711,28 @@ class Dialog(QDialog):
 
             if self.t.remaining_minutes > 1:
                 #si quedan minutos todavia
-                if self.t.internal_seconds_counter < 60:
-                    self.t.internal_seconds_counter += 1
+                if self.t.remaining_seconds > 0:
+                    self.t.remaining_seconds -= 1
                 else:
-                    #debo descontar minutos y actualizar ui
                     self.t.remaining_minutes -= 1
-                    self.t.internal_seconds_counter = 0
+                    self.t.remaining_seconds = 59
 
-                    if self.t.remaining_minutes == 1:
-                        self.ui.timerSlider.setValue(0)
-                        self.ui.Timerlabel.setText("59")
-                        self.ui.unitlabel.setText("segundos")
-                        self.t.treatment_seconds = 59
-                    else:
-                        self.ui.Timerlabel.setText(str(self.t.remaining_minutes))
-                        self.ui.timerSlider.setValue(self.t.remaining_minutes)
-                        #la llama sola de arriba
-                        # self.SetTimerLevel(self.t.remaining_minutes)
+                #todos los segundos actualizo ui
+                if self.t.remaining_minutes == 1:
+                    self.ui.timerSlider.setValue(0)
+                    self.ui.Timerlabel.setText("59")
+                    self.ui.unitlabel.setText("segundos")
+                else:
+                    # self.ui.Timerlabel.setText(str(self.t.remaining_minutes) + ":" + str(self.t.remaining_seconds))
+                    self.ui.Timerlabel.setText(str('{}:{:02d}'.format(self.t.remaining_minutes, self.t.remaining_seconds)))
+                    self.ui.timerSlider.setValue(self.t.remaining_minutes)
 
             else:
-                #estoy en el ultimo minuto ya uso el contador treatment_seconds
-                if self.t.treatment_seconds > 0:
-                    self.t.treatment_seconds -= 1
+                #estoy en el ultimo minuto ya uso el contador remaining_seconds
+                if self.t.remaining_seconds > 0:
+                    self.t.remaining_seconds -= 1
 
-                self.ui.Timerlabel.setText(str(self.t.treatment_seconds))
+                self.ui.Timerlabel.setText(str(self.t.remaining_seconds))
                 #o me quedo esperando en cero el fin del tratamiento                
                         
 

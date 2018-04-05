@@ -615,6 +615,42 @@ background-color: none;
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QToolButton" name="freqButton">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>10</y>
+      <width>91</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>DejaVu Serif</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Frecuencia</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="Powerlabel">
    <property name="geometry">
@@ -785,9 +821,9 @@ background-color: none;
   <widget class="QLabel" name="Timerlabel">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>450</x>
      <y>200</y>
-     <width>71</width>
+     <width>171</width>
      <height>73</height>
     </rect>
    </property>

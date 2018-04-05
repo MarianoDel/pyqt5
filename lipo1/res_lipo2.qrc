@@ -9,6 +9,8 @@
     <file>resources/continua.ico</file>
   </qresource>
   <qresource prefix="images">
+    <file>resources/arrow_down.png</file>
+    <file>resources/arrow_up.png</file>
     <file>resources/woman1.png</file>
     <file>resources/kirno_negro_cursiva.png</file>
     <file>resources/power_meter0.png</file>

@@ -19,6 +19,7 @@ class Treatment():
 
         self.alarms = 0
         self.signal = 'cwave'
+        self.frequency = 0
 
         self.treatment_timer = 0
         self.treatment_alarms = 0
@@ -27,8 +28,8 @@ class Treatment():
 
         #contadores internos
         self.remaining_minutes = 0
-        self.treatment_seconds = 0
-        self.internal_seconds_counter = 0
+        self.remaining_seconds = 0
+
 
     def SetLaserPower(self, channel, power):
         if (channel == 'ch1'):
