@@ -601,9 +601,11 @@ class Dialog(QDialog):
         if self.t.treatment_state == 'PAUSED':
             self.t.treatment_state = 'RUNNING'
             self.s.Write("ch1 start treatment\n")
+            self.ui.playButton.setEnabled(True)
         else:
             self.s.Write("ch1 stop treatment\n")
             self.t.treatment_state = 'PAUSED'
+            self.ui.playButton.setEnabled(False)
 
     def SetTimerandAlarms (self, new_timer, new_alarms):
         """ me llaman desde el slider del timer o de los botones de las alarmas """
