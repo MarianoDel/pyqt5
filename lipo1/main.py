@@ -223,6 +223,12 @@ class Dialog(QDialog):
 
         # self.st = QWidget.styleSheet(self.ui.playButton)
         # print (self.st)
+        # self.ui.Timerlabel.raise_()    #debiera subir el string para que no quede tapado
+        # self.ui.Powerlabel.raise_()    #debiera subir el string para que no quede tapado
+        # self.SetPowerLevel(100)
+        # self.SetTimerLevel(30)
+        self.ui.powerSlider.setValue(100)
+        self.ui.timerSlider.setValue(30)
 
 ## Funciones del Modulo
     def SetPowerLevel(self, event):
@@ -430,7 +436,7 @@ class Dialog(QDialog):
             self.ui.m150.setDisabled(True)
             self.ui.m75.setDisabled(True)
 
-        self.ui.unitlabel.raise_()    #debiera subir el string para que no quede tapado
+        self.ui.Timerlabel.raise_()    #debiera subir el string para que no quede tapado
 
 
 
@@ -680,6 +686,7 @@ class Dialog(QDialog):
                 self.t.remaining_seconds = 0
 
 
+            self.s.Write("ch1 frequency " + str(self.t.frequency) + "\n")                
             self.s.Write("ch1 start treatment\n")
             self.s.Write("ch1 buzzer short 2\n")
             self.ui.pauseButton.setEnabled(True)
@@ -709,7 +716,7 @@ class Dialog(QDialog):
         self.next_call = self.next_call + 1
         if self.t.treatment_state == 'RUNNING':
 
-            if self.t.remaining_minutes > 1:
+            if self.t.remaining_minutes > 0:
                 #si quedan minutos todavia
                 if self.t.remaining_seconds > 0:
                     self.t.remaining_seconds -= 1
@@ -718,7 +725,7 @@ class Dialog(QDialog):
                     self.t.remaining_seconds = 59
 
                 #todos los segundos actualizo ui
-                if self.t.remaining_minutes == 1:
+                if self.t.remaining_minutes == 0:
                     self.ui.timerSlider.setValue(0)
                     self.ui.Timerlabel.setText("59")
                     self.ui.unitlabel.setText("segundos")
