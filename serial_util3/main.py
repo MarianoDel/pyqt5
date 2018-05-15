@@ -10,11 +10,18 @@ from time import sleep
     http://zetcode.com/gui/pyqt5/eventssignals/
 """
 
+### CUSTOM SIGNALS ####################
 #clase de la senial
 class Communicate(QObject):
     closeApp = pyqtSignal()
 
+    # receivedData = pyqtSignal()
+    
+
 class Dialog(QDialog):
+
+    rcv_signal = pyqtSignal(str)
+    
     def __init__(self):
         super(Dialog, self).__init__()
 
@@ -37,8 +44,12 @@ class Dialog(QDialog):
         self.c = Communicate()
         self.c.closeApp.connect(self.close) #Envio3 lo dispara
 
-    # def __show__(self):
-        self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
+        #creo una senial de prueba y la conecto        
+        self.rcv_signal.connect(self.MySignalCallback)
+
+        #self.MyObjCallback la llaman desde otro thread, armo una senial
+        #antes de modificar UI
+        self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
         if self.s.port_open == False:
             self.ui.diag.setText("Sin puerto serie!!!")
             sys.exit(-1)
@@ -47,6 +58,7 @@ class Dialog(QDialog):
 
         #customs window flags
         # self.ui.setWindowFlags(Qt.FramelessWindowHint)
+
 
     def Envio1(self, event):
         self.ui.recibido.setText("env 1")
@@ -59,17 +71,24 @@ class Dialog(QDialog):
     def Envio3(self, event):
         # self.ui.recibido.setText("env 3")
         # self.s.Write("boton 3\n")
+        self.s.Close()
         self.c.closeApp.emit()
 
-    def MyObjCallBack (self, dataread):
+    def MyObjCallback (self, dataread):
         print ("callback called!")
         d = dataread[:-1]
-        self.ui.recibido.setText(d)
+        self.rcv_signal.emit(d)
+        # self.ui.recibido.setText(d)
+
+    def MySignalCallback (self, rcv):
+        print ("signal callback!")
+        self.ui.recibido.setText(rcv)
+
 
     #capturo el cierre
     def closeEvent (self, event):
         self.s.Close()
-        sleep(1)
+        sleep(2)
         event.accept()
 
 
