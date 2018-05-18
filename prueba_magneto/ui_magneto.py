@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(721, 427)
+        Dialog.resize(721, 486)
         self.t10 = QtWidgets.QPushButton(Dialog)
         self.t10.setGeometry(QtCore.QRect(20, 20, 211, 41))
         self.t10.setObjectName("t10")
@@ -43,6 +43,9 @@ class Ui_Dialog(object):
         self.start_treat = QtWidgets.QPushButton(Dialog)
         self.start_treat.setGeometry(QtCore.QRect(20, 380, 691, 41))
         self.start_treat.setObjectName("start_treat")
+        self.get_conf = QtWidgets.QPushButton(Dialog)
+        self.get_conf.setGeometry(QtCore.QRect(20, 430, 691, 41))
+        self.get_conf.setObjectName("get_conf")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -58,4 +61,5 @@ class Ui_Dialog(object):
         self.c60.setText(_translate("Dialog", "CUADRADA 60HZ"))
         self.label.setText(_translate("Dialog", "TextLabel"))
         self.start_treat.setText(_translate("Dialog", "START TREATMENT"))
+        self.get_conf.setText(_translate("Dialog", "Get All Conf"))
 

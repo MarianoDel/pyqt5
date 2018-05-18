@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>721</width>
-    <height>427</height>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -131,6 +131,19 @@
    </property>
    <property name="text">
     <string>START TREATMENT</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="get_conf">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>430</y>
+     <width>691</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Get All Conf</string>
    </property>
   </widget>
  </widget>
