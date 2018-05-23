@@ -125,7 +125,7 @@
     <rect>
      <x>20</x>
      <y>380</y>
-     <width>691</width>
+     <width>211</width>
      <height>41</height>
     </rect>
    </property>
@@ -144,6 +144,32 @@
    </property>
    <property name="text">
     <string>Get All Conf</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stop_treat">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>380</y>
+     <width>211</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>STOP TREATMENT</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pause_treat">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>380</y>
+     <width>231</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PAUSE TREATMENT</string>
    </property>
   </widget>
  </widget>

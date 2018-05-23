@@ -40,6 +40,8 @@ class Dialog(QDialog):
         self.ui.c30.clicked.connect(self.Envio_cuadrada_30)
         self.ui.c60.clicked.connect(self.Envio_cuadrada_60)
         self.ui.start_treat.clicked.connect(self.Start_Treatment)
+        self.ui.stop_treat.clicked.connect(self.Stop_Treatment)
+        self.ui.pause_treat.clicked.connect(self.Pause_Treatment)
         self.ui.get_conf.clicked.connect(self.Get_Treatment_Conf)        
 
         # #con el boton lanzo el evento close, que luego llama a closeEvent
@@ -179,6 +181,23 @@ class Dialog(QDialog):
         else:
             self.ui.label.setText("Port not Open!!!")
 
+    def Stop_Treatment (self):
+        if (self.s.port_open):
+            self.ui.label.setText("STOP Treatment")
+            self.s.Write("stop,\r\n")
+            sleep(1)
+        else:
+            self.ui.label.setText("Port not Open!!!")
+
+    def Pause_Treatment (self):
+        if (self.s.port_open):
+            self.ui.label.setText("Pausing Treatment...")
+            self.s.Write("pause,\r\n")
+            sleep(1)
+        else:
+            self.ui.label.setText("Port not Open!!!")
+
+            
     def Get_Treatment_Conf (self):
         if (self.s.port_open):
             self.ui.label.setText("Getting Conf...")            
