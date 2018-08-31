@@ -1,0 +1,220 @@
+* PROGRAMACION GUI CON QT5 y Python (PyQt5)
+** links:
+   http://pyqt.sourceforge.net/Docs/PyQt5/designer.html
+  
+   http://pythonthusiast.pythonblogs.com/230_pythonthusiast/archive/1348_developing_cross_platform_application_using_qt_pyqt_and_pyside__introduction-part_1_of_5.html
+   
+   https://www.python-course.eu/python3_course.php
+  
+   http://zetcode.com/gui/pyqt5/eventssignals/
+
+   http://projects.skylogic.ca/blog/how-to-install-pyqt5-and-build-your-first-gui-in-python-3-4/
+
+** Manual original y eventos de Riverbank
+   http://pyqt.sourceforge.net/Docs/PyQt5/index.html
+   http://pyqt.sourceforge.net/Docs/PyQt4/qevent.html
+   http://pyqt.sourceforge.net/Docs/PyQt5/signals_slots.html
+
+** Pasar de la GUI al archivo Python
+*** con el archivo del Qt Designer archivo.ui lo paso a python
+    pyuic5 archivo.ui > archivo.py
+    pyrcc5 res_arch.qrc > res_arch_rc.py    #si tiene resources
+
+*** ahora tengo que armar el main.py y vincularlo a la parte grafica
+**** Qt5 utiliza 3 clases bases de toda la interface GUI
+     - segun el tipo de interface GUI que haya creado tengo una de esas tres clases bases
+     QWidgets
+     QDialog
+     QMainWindow
+
+**** puedo enganchar la GUI de tres formas
+     direct approach
+     single inheritance
+     multiple inheritance
+
+**** ### DIRECT APPROACH ###
+     si el dialogo que arme se llama ImageDialog y la clase es QDialog
+     puedo hacer cat o head image.ui...
+     <class>ImageDialog</class>
+     <widget class="QDialog" name="ImageDialog">
+     pyuic5 image.ui > ui_imagedialog.py
+
+     import sys
+     from PyQt5.QtWidgets import QApplication, QDialog
+     from ui_imagedialog import Ui_ImageDialog
+
+     app = QApplication(sys.argv)
+     window = QDialog()
+     ui = Ui_ImageDialog()
+     ui.setupUi(window)
+
+     window.show()
+     sys.exit(app.exec_())
+
+     #si no responde la interface por ahi pifie el nombre de las clases o la funcion de inicializacion
+     puedo revisarla con cat ui_imagedialog.py
+     class Ui_ImageDialog(object):
+     def setupUi(self, ImageDialog):
+
+**** ### SINGLE INHERITANCE ### Este es el que usan casi todos
+     #con este metodo puedo tomar control de los widgets
+     import sys
+     from PyQt5.QtWidgets import QApplication, QDialog
+     from ui_imagedialog import Ui_ImageDialog
+
+     class ImageDialog(QDialog):
+     def __init__(self):
+     super(ImageDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_ImageDialog()
+        self.ui.setupUi(self)
+
+        # # Make some local modifications.
+        # self.ui.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
+        #
+        # # Connect up the buttons.
+        # self.ui.okButton.clicked.connect(self.accept)
+        # self.ui.cancelButton.clicked.connect(self.reject)
+
+        app = QApplication(sys.argv)
+        w = ImageDialog()
+        w.show()
+        sys.exit(app.exec_())
+
+**** ### MULTIPLE INHERITANCE ###
+     from PyQt5.QtGui import QDialog
+     from ui_imagedialog import Ui_ImageDialog
+     
+     class ImageDialog(QDialog, Ui_ImageDialog):
+     def __init__(self):
+     super(ImageDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.setupUi(self)
+
+        # Make some local modifications.
+        self.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
+
+        # Connect up the buttons.
+        self.okButton.clicked.connect(self.accept)
+        self.cancelButton.clicked.connect(self.reject)
+
+**** ### OTRO METODO ES UTILIZAR UIC DENTRO DEL CODIGO PYTHON ###
+     https://www.youtube.com/watch?v=OpUeZzKcA7Q
+
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import uic
+
+#nueva clase que contiene la interface
+class Ventana (QMainWindow):
+      #metodo constructor
+      def __init__(self):
+      	  #inicio un objeto QMainWindow
+	  QMainWindow.__init__(self)
+	  #cargo el archivo de interface *.ui
+	  uic.loadUi("MainWindow.ui",self)
+	  self.setWindowTitle("Nuevo Nombre")
+
+#instanciar aplicacion
+app = QApplication(sys.argv)
+#creo el objeto de la clase ventana
+vent = Ventana()
+#mostrar ventana
+vent.show()
+#ejecutar aplicacion
+app.exec_()
+
+** #### A FUTURO, VER pyqtdeploy #####
+   http://pyqt.sourceforge.net/Docs/pyqtdeploy/
+
+
+* Todo referido a la parte grafica qt-css
+https://www.youtube.com/watch?v=_sAGY_4Ptsw
+min 12.30 agrega qframe
+min 18.50 icons on buttons  (OJO QtoolButton y bo pushbutton)
+min 21 Qbutton text under icon
+min 22.25 qss para buttons (gradient background color)
+min 28 css direccionado al widget QFrame
+min 31 button checkeable
+min 32 auto exclusive property
+min 33 css para todos los botones
+min 34 css para button checked
+min 37 css para button pressed
+min 38 css para hover y border 1px
+
+
+#### ALGO DE QSLIDER
+#el qslider lo modifique siguiendo este pagina
+http://blog.qt.io/blog/2007/06/29/styling-qslider-qheaderview/
+
+QSlider::groove:vertical {
+    background: red;
+    position: absolute; /* absolutely position 4px from the left and right of the widget. setting margins on the widget should work too... */
+    left: 4px; right: 4px;
+}
+
+QSlider::handle:vertical {
+    height: 10px;
+    background: green;
+    margin: 0 -4px; /* expand outside the groove */
+}
+
+QSlider::add-page:vertical {
+    background: white;
+}
+
+QSlider::sub-page:vertical {
+    background: pink;
+}
+
+#y un retoque fino con esta otra
+http://thesmithfam.org/blog/2010/03/10/fancy-qslider-stylesheet/
+
+
+
+
+https://stackoverflow.com/questions/38071131/how-to-adjust-a-qsliders-handle
+agrandar el slider con css en c++
+
+https://wiki.python.org/moin/PyQt
+wiki de pyqt con info y ejemplos
+
+https://wiki.python.org/moin/PyQt/Using_Python_Custom_Widgets_in_Qt_Designer
+
+http://doc.qt.io/qt-5/stylesheet-examples.html
+
+
+https://stackoverflow.com/questions/20952226/customize-qdial-with-stylesheet
+
+http://acodigo.blogspot.com.ar/2016/10/pyqt-5-estilos-qss.html
+
+
+
+https://stackoverflow.com/questions/35532459/smooth-drawing-with-qpainter
+
+https://stackoverflow.com/questions/9465047/make-an-animated-wave-with-drawpolyline-in-pyside-pyqt
+
+* Algo general de Python que aplica
+** Callbacks en python
+
+   https://stackoverflow.com/questions/443885/python-callbacks-delegates-what-is-common
+
+   https://stackoverflow.com/questions/4689984/implementing-a-callback-in-python-passing-a-callable-reference-to-the-current
+
+* Algo de Python que no aplia directamente
+** #Python for Finance & Python for Quants
+   https://lectures.quantecon.org/py/learning_python.html
+
+   https://www.quantstart.com/articles
+
+   http://www.pythonforfinance.net
+
+   http://tpq.io
+
+** #Dynamics and Systems
+   https://apmonitor.com/pdc/index.php/Main/ModelSimulation
+
+** #Matplotlib
+   http://www.labri.fr/perso/nrougier/teaching/matplotlib/#ipython-and-the-pylab-mode
