@@ -202,10 +202,6 @@ class Dialog(QDialog):
         else:
             print ("puerto serie abierto OK!")
             # self.ui.ch1Button.setText("OK")
-            #Me comunico con la placa para ponerla en stand-by
-            self.s.Write("ch1 stop treatment\n")
-            self.s.Write("ch1 buzzer short 1\n")
-
 
         self.ui.pauseButton.setEnabled(False)
         self.ui.ch5Button.setEnabled(False)
@@ -233,14 +229,6 @@ class Dialog(QDialog):
         # self.SetTimerLevel(30)
         self.ui.powerSlider.setValue(100)
         self.ui.timerSlider.setValue(30)
-
-        #SIGNALS
-        # conecto seniales al los metodos
-        self.one_second_signal.connect(self.UpdateInterfaceSlot)
-        self.intermediate_timer_signal.connect(self.UpdateTimerSlot)        
-
-        
-        
 
 ## Funciones del Modulo
     def SetPowerLevel(self, event):
@@ -649,7 +637,6 @@ class Dialog(QDialog):
         if self.t.treatment_state != 'RUNNING':
             #mando signal type
             self.s.Write("ch1 signal " + self.t.signal + "\n")
-            # print (self.t.signal)
 
             ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
             self.s.Write("ch1 power led " + str(ch_new_power) + "\n")
@@ -680,13 +667,13 @@ class Dialog(QDialog):
             dummy = self.t.GetTreatmentAlarms()
 
             if (dummy != 0):
-                dummy_t_secs = (self.t.GetTreatmentTimer() * 60)/ (dummy + 1)
-                dummy_t_secs = dummy_t_secs
+                dummy_t_secs = self.t.GetTreatmentTimer() / (dummy + 1)
+                dummy_t_secs = dummy_t_secs * 60
             
                 self.objs_timer = list()
 
                 for i in range (dummy):
-                    self.objs_timer.append(TimeoutCB(dummy_t_secs * (i + 1), self.AlarmaIntermedia))
+                    self.objs_timer.append(TimeoutCB(dummy_t_secs * i, self.AlarmaIntermedia))
             #fin timers intermedios
 
             #arreglo para cuando seleccionan 1 minuto
@@ -720,10 +707,8 @@ class Dialog(QDialog):
     def AlarmaIntermedia(self):
         """ la hago sonar solamente si esta corriendo, sino no suena """
         #puede trear problemas con el PAUSE
-        # if self.t.treatment_state == 'RUNNING':
-        #     self.s.Write("ch1 buzzer half 2\n")
-        self.intermediate_timer_signal.emit()
-
+        if self.t.treatment_state == 'RUNNING':
+            self.s.Write("ch1 buzzer half 2\n")
 
     def UpdateOneSec(self, lapse):
         """ 
@@ -731,87 +716,6 @@ class Dialog(QDialog):
             lo hago tipo por estados del programa con treatmet_state
         """
         self.next_call = self.next_call + 1
-        #esto corre en otro thread entonces mando una senial para hacer update de la interface
-        self.one_second_signal.emit()        
-        #antes de volver hago la proxima llamada
-        self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
-
-    # def UpdateOneSec(self, lapse):
-    #     """ 
-    #         aca tengo que resolver todo lo que se mueve 
-    #         lo hago tipo por estados del programa con treatmet_state
-    #     """
-    #     self.next_call = self.next_call + 1
-    #     if self.t.treatment_state == 'RUNNING':
-
-    #         if self.t.remaining_minutes > 0:
-    #             #si quedan minutos todavia
-    #             if self.t.remaining_seconds > 0:
-    #                 self.t.remaining_seconds -= 1
-    #             else:
-    #                 self.t.remaining_minutes -= 1
-    #                 self.t.remaining_seconds = 59
-
-    #             #todos los segundos actualizo ui
-    #             if self.t.remaining_minutes == 0:
-    #                 self.ui.timerSlider.setValue(0)
-    #                 self.ui.Timerlabel.setText("59")
-    #                 self.ui.unitlabel.setText("segundos")
-    #             else:
-    #                 # self.ui.Timerlabel.setText(str(self.t.remaining_minutes) + ":" + str(self.t.remaining_seconds))
-    #                 self.ui.Timerlabel.setText(str('{}:{:02d}'.format(self.t.remaining_minutes, self.t.remaining_seconds)))
-    #                 self.ui.timerSlider.setValue(self.t.remaining_minutes)
-
-    #         else:
-    #             #estoy en el ultimo minuto ya uso el contador remaining_seconds
-    #             if self.t.remaining_seconds > 0:
-    #                 self.t.remaining_seconds -= 1
-
-    #             self.ui.Timerlabel.setText(str(self.t.remaining_seconds))
-    #             #o me quedo esperando en cero el fin del tratamiento                
-                        
-
-    #         #final de update de tiempos
-
-    #         #update de efetos
-    #         if self.playcolors > 4:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(114, 159, 207);")
-    #             self.playcolors = 0
-    #         elif self.playcolors > 3:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(52, 101, 164);")
-    #             self.playcolors += 1
-    #         elif self.playcolors > 2:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(32, 74, 135);")
-    #             self.playcolors += 1
-    #         elif self.playcolors > 1:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(92, 53, 102);")
-    #             self.playcolors += 1
-    #         elif self.playcolors > 0:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(117, 80, 123);")
-    #             self.playcolors += 1
-    #         else:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(173, 127, 168);")
-    #             self.playcolors += 1
-                
-                                
-    #     #fin del tratamiento por timer o confirmacion de stop
-    #     if self.t.treatment_state == 'ENDED':
-    #         # self.ui.Timerlabel.setText(str(self.t.treatment_timer))
-    #         self.ui.timerSlider.setValue(self.t.treatment_timer)
-    #         # self.SetTimerLevel(self.t.treatment_timer)
-    #         self.ui.unitlabel.setText("minutos")
-    #         self.t.treatment_state = 'ENDED_OK'
-    #         self.ui.pauseButton.setEnabled(False)
-    #         self.ui.cwaveButton.setEnabled(True)
-    #         self.ui.pulsedButton.setEnabled(True)
-    #         self.ui.modulatedButton.setEnabled(True)
-    #         self.DefaultColors()
-
-        
-    #     #antes de volver hago la proxima llamada
-    #     self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
-
-    def UpdateInterfaceSlot (self):
         if self.t.treatment_state == 'RUNNING':
 
             if self.t.remaining_minutes > 0:
@@ -878,9 +782,8 @@ class Dialog(QDialog):
             self.DefaultColors()
 
         
-    def UpdateTimerSlot (self):
-        if self.t.treatment_state == 'RUNNING':
-            self.s.Write("ch1 buzzer half 2\n")
+        #antes de volver hago la proxima llamada
+        self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
         
 
     def TreatmentColors (self):
@@ -959,11 +862,7 @@ class Dialog(QDialog):
 # paAnimation->setEndValue(QColor(Qt::red));
 # paAnimation->setDuration(1000);
 # paAnimation->start();
-    #atributos generales del la clase Dialog()
-    #SIGNALS
-    # signals para comunicacion 1 seg
-    one_second_signal = pyqtSignal()
-    intermediate_timer_signal = pyqtSignal()
+
 
     def MyObjCallBack (self, dataread):
         d = dataread[:-1]
