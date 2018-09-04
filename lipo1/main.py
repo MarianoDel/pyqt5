@@ -671,23 +671,21 @@ class Dialog(QDialog):
             ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
             self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
             
-            # #activo el timer de tratamiento
-            # self.tratamiento = Timer(self, self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
-            # self.tratamiento.start()
-            self.timer1 = TimeoutCB(self.t.GetTreatmentTimer() * 60, self.FinTratamiento)
 
-            #timers intermedios
+            ##timers intermedios
+            for i in range(len(self.intermediate_timer_list)):
+                self.intermediate_timer_list[i] = 0
+                
             dummy = self.t.GetTreatmentAlarms()
 
             if (dummy != 0):
                 dummy_t_secs = (self.t.GetTreatmentTimer() * 60)/ (dummy + 1)
                 dummy_t_secs = dummy_t_secs
             
-                self.objs_timer = list()
-
                 for i in range (dummy):
-                    self.objs_timer.append(TimeoutCB(dummy_t_secs * (i + 1), self.AlarmaIntermedia))
-            #fin timers intermedios
+                    self.intermediate_timer_list[i] = dummy_t_secs * (i + 1)
+
+            ##fin timers intermedios
 
             #arreglo para cuando seleccionan 1 minuto
             if self.t.GetTreatmentTimer() == 1:
@@ -736,81 +734,7 @@ class Dialog(QDialog):
         #antes de volver hago la proxima llamada
         self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
 
-    # def UpdateOneSec(self, lapse):
-    #     """ 
-    #         aca tengo que resolver todo lo que se mueve 
-    #         lo hago tipo por estados del programa con treatmet_state
-    #     """
-    #     self.next_call = self.next_call + 1
-    #     if self.t.treatment_state == 'RUNNING':
-
-    #         if self.t.remaining_minutes > 0:
-    #             #si quedan minutos todavia
-    #             if self.t.remaining_seconds > 0:
-    #                 self.t.remaining_seconds -= 1
-    #             else:
-    #                 self.t.remaining_minutes -= 1
-    #                 self.t.remaining_seconds = 59
-
-    #             #todos los segundos actualizo ui
-    #             if self.t.remaining_minutes == 0:
-    #                 self.ui.timerSlider.setValue(0)
-    #                 self.ui.Timerlabel.setText("59")
-    #                 self.ui.unitlabel.setText("segundos")
-    #             else:
-    #                 # self.ui.Timerlabel.setText(str(self.t.remaining_minutes) + ":" + str(self.t.remaining_seconds))
-    #                 self.ui.Timerlabel.setText(str('{}:{:02d}'.format(self.t.remaining_minutes, self.t.remaining_seconds)))
-    #                 self.ui.timerSlider.setValue(self.t.remaining_minutes)
-
-    #         else:
-    #             #estoy en el ultimo minuto ya uso el contador remaining_seconds
-    #             if self.t.remaining_seconds > 0:
-    #                 self.t.remaining_seconds -= 1
-
-    #             self.ui.Timerlabel.setText(str(self.t.remaining_seconds))
-    #             #o me quedo esperando en cero el fin del tratamiento                
-                        
-
-    #         #final de update de tiempos
-
-    #         #update de efetos
-    #         if self.playcolors > 4:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(114, 159, 207);")
-    #             self.playcolors = 0
-    #         elif self.playcolors > 3:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(52, 101, 164);")
-    #             self.playcolors += 1
-    #         elif self.playcolors > 2:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(32, 74, 135);")
-    #             self.playcolors += 1
-    #         elif self.playcolors > 1:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(92, 53, 102);")
-    #             self.playcolors += 1
-    #         elif self.playcolors > 0:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(117, 80, 123);")
-    #             self.playcolors += 1
-    #         else:
-    #             self.ui.playButton.setStyleSheet("background-color: rgb(173, 127, 168);")
-    #             self.playcolors += 1
-                
-                                
-    #     #fin del tratamiento por timer o confirmacion de stop
-    #     if self.t.treatment_state == 'ENDED':
-    #         # self.ui.Timerlabel.setText(str(self.t.treatment_timer))
-    #         self.ui.timerSlider.setValue(self.t.treatment_timer)
-    #         # self.SetTimerLevel(self.t.treatment_timer)
-    #         self.ui.unitlabel.setText("minutos")
-    #         self.t.treatment_state = 'ENDED_OK'
-    #         self.ui.pauseButton.setEnabled(False)
-    #         self.ui.cwaveButton.setEnabled(True)
-    #         self.ui.pulsedButton.setEnabled(True)
-    #         self.ui.modulatedButton.setEnabled(True)
-    #         self.DefaultColors()
-
         
-    #     #antes de volver hago la proxima llamada
-    #     self.t1seg = Timer(self.next_call - time(), self.UpdateOneSec, [1]).start()        
-
     def UpdateInterfaceSlot (self):
         if self.t.treatment_state == 'RUNNING':
 
@@ -836,12 +760,21 @@ class Dialog(QDialog):
                 #estoy en el ultimo minuto ya uso el contador remaining_seconds
                 if self.t.remaining_seconds > 0:
                     self.t.remaining_seconds -= 1
+                else:
+                    self.FinTratamiento()
 
                 self.ui.Timerlabel.setText(str(self.t.remaining_seconds))
                 #o me quedo esperando en cero el fin del tratamiento                
-                        
 
-            #final de update de tiempos
+            #timers de alarmas intermedias
+            local_remaining_secs = self.t.remaining_minutes * 60 + self.t.remaining_seconds
+            for i in range(len(self.intermediate_timer_list)):
+                if self.intermediate_timer_list[i] != 0 and self.intermediate_timer_list[i] > local_remaining_secs:
+                    self.intermediate_timer_list[i] = 0
+                    # print ("timer intermedio en segundos: %s", str(local_remaining_secs))
+                    self.AlarmaIntermedia()
+                    
+                #final de update de tiempos
 
             #update de efetos
             if self.playcolors > 4:
@@ -964,6 +897,7 @@ class Dialog(QDialog):
     # signals para comunicacion 1 seg
     one_second_signal = pyqtSignal()
     intermediate_timer_signal = pyqtSignal()
+    intermediate_timer_list = [0, 0, 0, 0]
 
     def MyObjCallBack (self, dataread):
         d = dataread[:-1]
