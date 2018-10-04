@@ -203,7 +203,7 @@ https://stackoverflow.com/questions/9465047/make-an-animated-wave-with-drawpolyl
 
    https://stackoverflow.com/questions/4689984/implementing-a-callback-in-python-passing-a-callable-reference-to-the-current
 
-* Algo de Python que no aplia directamente
+* Algo de Python que no aplica directamente
 ** #Python for Finance & Python for Quants
    https://lectures.quantecon.org/py/learning_python.html
 
