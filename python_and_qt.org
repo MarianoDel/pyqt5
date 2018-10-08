@@ -218,3 +218,38 @@ https://stackoverflow.com/questions/9465047/make-an-animated-wave-with-drawpolyl
 
 ** #Matplotlib
    http://www.labri.fr/perso/nrougier/teaching/matplotlib/#ipython-and-the-pylab-mode
+
+* PushButton checkeable
+** Para que no aparezca el hiphen en el nombre 
+   - focus policy No Focus
+
+** Chekeable
+   - si lo quiero autoexcluir lo hago desde el codigo con la funcion
+   if (button.isChecked() == True):
+       button.toggle()
+   
+* PushButton still pressed
+** no hay nuevos eventos si el boton sigue presionado
+   - se puede disparar un timer y revisar si el boton sigue presionado
+** utilizo las seniales pressed() released()
+   - cn esto conozco cuando lo apretaron y cuando lo soltaron
+
+* PushButton Image
+** con imagenes en archivos resources
+   - voy a las propiedades icon -> elijo icon desde resources
+   - muevo el tamanio de la imagen con el tamanio del icono
+
+* QtCreator
+** Archivo resources
+   - creo una carpeta dentro del proyecto resources y pongo los archivos que quiero, fotos, iconos, etc.
+
+** Resources Browser -> Edit resources
+   - segundo boton lado izquierdo New
+   - elijo el nombre del nuevo archivo resources
+   - agrego un nuevo prefix/path
+   - le voy agregando los archivos de resources que quiera, fotos por ejemplo
+     
+** Los widgets no se muestran bien en el dialogo
+*** la suma de la altura de los widgets es mayor a lo que me muestra creator
+    - aumento la geometria del grafico desde 1024 x 768 a 1024 x 900
+    - corrijo los widgets o agrego los espaciadores y vuelvo a mi geometria original
