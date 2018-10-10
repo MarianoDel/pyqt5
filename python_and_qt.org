@@ -232,12 +232,22 @@ https://stackoverflow.com/questions/9465047/make-an-animated-wave-with-drawpolyl
 ** no hay nuevos eventos si el boton sigue presionado
    - se puede disparar un timer y revisar si el boton sigue presionado
 ** utilizo las seniales pressed() released()
-   - cn esto conozco cuando lo apretaron y cuando lo soltaron
+   - con esto conozco cuando lo apretaron y cuando lo soltaron
 
 * PushButton Image
 ** con imagenes en archivos resources
    - voy a las propiedades icon -> elijo icon desde resources
    - muevo el tamanio de la imagen con el tamanio del icono
+
+* Qlabel
+** para obtener el texto
+   - str1 = qlabel.text()
+** para escribir texto
+   - qlabel.setText(str1)
+
+* Pasar de str a int
+** pasar a int
+   - new_int = int(str1)
 
 * QtCreator
 ** Archivo resources

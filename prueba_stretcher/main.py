@@ -230,7 +230,7 @@ class Dialog(QDialog):
         if (self.ui.freq30Button.isChecked() != True):
             self.ui.freq30Button.toggle()
             
-        self.t.SetSignal('30Hz')
+        self.t.SetFrequency('30Hz')
 
     def Freq_60 (self):
         if (self.ui.freq10Button.isChecked() == True):
@@ -242,13 +242,25 @@ class Dialog(QDialog):
         if (self.ui.freq60Button.isChecked() != True):
             self.ui.freq60Button.toggle()
 
-        self.t.SetSignal('60Hz')
+        self.t.SetFrequency('60Hz')
 
     def Start_Treatment (self):
         if (self.s.port_open):
             if (self.t.treatment_state == 'STOP'):
-                self.t.treatment_state = 'START'
-                self.DisableForTreatment()
+
+                #seteo el timer elegido
+                # new_t = self.ui.minutesLabel.text()
+                # self.t.SetTreatmentTimer(int(new_t))
+
+                #arreglo para cuando seleccionan 1 minuto
+                if self.t.GetTreatmentTimer() == 1:
+                    self.ui.minutesLabel.setText("59")
+                    self.ui.timeStringLabel.setText("seconds")
+                    self.t.remaining_seconds = 59
+                    self.t.remaining_minutes = 0
+                else:
+                    self.t.remaining_minutes = self.t.GetTreatmentTimer()
+                    self.t.remaining_seconds = 0
 
                 new_signal = self.t.GetSignal()
                 to_send = "signal " + new_signal
@@ -260,7 +272,17 @@ class Dialog(QDialog):
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
 
-                new_power = self.t.GetPower()
+                if new_freq == '30Hz':
+                    new_power = int(self.t.GetPower() * 0.6)
+                    if new_power < 10:
+                        new_power = 10
+                elif new_freq == '60Hz':
+                    new_power = int(self.t.GetPower() * 0.4)
+                    if new_power < 10:
+                        new_power = 10
+                else:
+                    new_power = self.t.GetPower()                    
+                    
                 to_send = 'power {:03d}'.format(new_power)
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
@@ -269,24 +291,41 @@ class Dialog(QDialog):
                     to_send = "enable channel 1"
                     self.ui.textEdit.append(to_send)
                     self.s.Write(to_send + "\r\n")
+                else:
+                    to_send = "disable channel 1"
+                    self.ui.textEdit.append(to_send)
+                    self.s.Write(to_send + "\r\n")
+                    
 
                 if (self.t.GetChannelInTreatment('ch2') == True):
                     to_send = "enable channel 2"
                     self.ui.textEdit.append(to_send)
                     self.s.Write(to_send + "\r\n")
+                else:
+                    to_send = "disable channel 2"
+                    self.ui.textEdit.append(to_send)
+                    self.s.Write(to_send + "\r\n")
+                    
 
                 if (self.t.GetChannelInTreatment('ch3') == True):
                     to_send = "enable channel 3"
                     self.ui.textEdit.append(to_send)
                     self.s.Write(to_send + "\r\n")
+                else:
+                    to_send = "disable channel 3"
+                    self.ui.textEdit.append(to_send)
+                    self.s.Write(to_send + "\r\n")
+                    
 
                 new_timer = self.t.GetTreatmentTimer()
-                to_send = "duration,00," + str(new_timer) + ",00,1"
+                to_send = 'duration,00,{:02d},00,1'.format(new_timer)
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
                 
                 self.ui.textEdit.append("Starting Treatment...")            
                 self.s.Write("start,\r\n")
+                self.t.treatment_state = 'START'
+                self.DisableForTreatment()
 
         else:
             self.ui.textEdit.append("Port not Open!!!")
@@ -307,21 +346,27 @@ class Dialog(QDialog):
     def Pause_Treatment (self):
         if (self.s.port_open):
             if (self.t.treatment_state == 'START'):
-                self.t.treatment_state = 'PAUSE'            
+                self.t.treatment_state = 'PAUSE'
+                self.ui.stopButton.setEnabled(False)
+                self.ui.pauseButton.setText("RESUME")                
                 self.ui.textEdit.append("Pausing Treatment...")
                 self.s.Write("pause,\r\n")
-                sleep(1)
-            elif (self.t.treatmet_state == 'PAUSE'):
-                self.t.treatmet_state = 'START'
+                sleep(0.1)
+            elif (self.t.treatment_state == 'PAUSE'):
+                self.t.treatment_state = 'START'
+                self.ui.stopButton.setEnabled(True)
+                self.ui.pauseButton.setText("PAUSE")
                 self.ui.textEdit.append("Resuming Treatment...")
                 self.s.Write("pause,\r\n")
-                sleep(1)                
+                sleep(0.1)                
         else:
             self.ui.textEdit.append("Port not Open!!!")            
 
 
     def DisableForTreatment (self):
-        #deshabilito botones que no se pueden tocar en tratamiento
+        # deshabilito botones que no se pueden tocar en tratamiento
+        self.ui.startButton.setEnabled(False)
+        
         self.ui.triangularButton.setEnabled(False)
         self.ui.cuadradaButton.setEnabled(False)
         self.ui.senoidalButton.setEnabled(False)
@@ -340,7 +385,9 @@ class Dialog(QDialog):
         self.ui.timeDwnButton.setEnabled(False)
 
     def EnableForTreatment (self):
-        #deshabilito botones que no se pueden tocar en tratamiento
+        # habilito botones que permiten elegir cosas fuera del tratamiento
+        self.ui.startButton.setEnabled(True)
+        
         self.ui.triangularButton.setEnabled(True)
         self.ui.cuadradaButton.setEnabled(True)
         self.ui.senoidalButton.setEnabled(True)
@@ -357,9 +404,16 @@ class Dialog(QDialog):
         self.ui.powerDwnButton.setEnabled(True)
         self.ui.timeUpButton.setEnabled(True)
         self.ui.timeDwnButton.setEnabled(True)
+        self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
+        self.ui.timeStringLabel.setText("minutes")
+
 
     def UpdateOneSec (self):
         """ paso un segundo, reviso que tengo que hacer """
+        #si el tratamiento corre hago update del label
+        if self.t.treatment_state == 'START':
+            self.UpdateTimerLabel()
+        
         # reviso si algun boton sigue presionado
 
         # botones de potencia
@@ -396,7 +450,35 @@ class Dialog(QDialog):
         if self.timeDwnButtonCnt >= 1:
             self.timeDwnButtonCnt += 1
             
+    def UpdateTimerLabel (self):
+        if self.t.remaining_minutes > 0:
+            #si quedan minutos todavia
+            if self.t.remaining_seconds > 0:
+                self.t.remaining_seconds -= 1
+            else:
+                self.t.remaining_minutes -= 1
+                self.t.remaining_seconds = 59
 
+            #todos los segundos actualizo ui
+            if self.t.remaining_minutes == 0:
+                self.ui.minutesLabel.setText("59")
+                self.ui.timeStringLabel.setText("seconds")
+            else:
+                self.ui.minutesLabel.setText(str('{}:{:02d}'.format(self.t.remaining_minutes, self.t.remaining_seconds)))
+
+        else:
+            #estoy en el ultimo minuto ya uso el contador remaining_seconds
+            if self.t.remaining_seconds > 0:
+                self.t.remaining_seconds -= 1
+                self.ui.minutesLabel.setText(str(self.t.remaining_seconds))                
+            else:
+                # termino el tratamiento, hago algo parecido al boton stop
+                self.t.treatment_state = 'STOP'
+                self.EnableForTreatment()
+                self.ui.textEdit.append("STOP Treatment")
+                self.s.Write("stop,\r\n")
+                sleep(1)
+                
     def PwrUp (self, new_pwr):
         last_pwr = self.t.GetPower()
         if ((last_pwr + new_pwr) < 100):
@@ -428,10 +510,10 @@ class Dialog(QDialog):
 
     def TimeDwn (self, new_time):
         last_time = self.t.GetTreatmentTimer()
-        if ((last_time - new_time) > 0):
+        if ((last_time - new_time) > 1):
             last_time -= new_time
         else:
-            last_time = 0
+            last_time = 1
         self.ui.minutesLabel.setText(str(last_time))
         self.t.SetTreatmentTimer(last_time)
 
@@ -453,8 +535,19 @@ class Dialog(QDialog):
         self.rcv_signal.emit(d)
 
     def MySignalCallback (self, rcv):
-        print ("signal callback!")
+        print ("signal callback!")        
         self.ui.textEdit.append(rcv)
+        # reviso si es un final de tratamiento
+        if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
+            if self.t.treatment_state == 'START':
+                # termino el tratamiento, hago algo parecido al boton stop
+                self.t.treatment_state = 'STOP'
+                self.EnableForTreatment()
+                # self.ui.textEdit.append("STOP Treatment")
+                # self.s.Write("stop,\r\n")
+                sleep(1)
+
+                
         
     #capturo el cierre
     def closeEvent (self, event):
