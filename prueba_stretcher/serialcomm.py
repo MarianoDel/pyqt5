@@ -9,19 +9,20 @@ def ReadBytes(self, cb):
     """
 
     t = threading.currentThread()
-    # i = 0
+
     while getattr(t, "do_run", True):
-    # while True:
-        # bytes_to_read = self.ser.inWaiting()
-        # if (bytes_to_read > 0):
-        #     datar = self.ser.read(bytes_to_read)
-        #     cb(datar)
         datar = self.ser.readline()
-        cb((datar).decode())
-        # cb(unicode(datar))
-        # print ("vuelta: ", i)
-        # i += 1
-        # time.sleep(1)
+        # cb((datar).decode())
+        try:
+            cb((datar).decode())
+        except:
+            pass
+            
+        # try:
+        #     datar = self.ser.readline()
+        #     cb((datar).decode())
+        # except:
+        #     cb('.')
 
     print ("closing?\n")
 
