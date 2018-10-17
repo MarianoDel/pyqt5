@@ -132,6 +132,10 @@ class Dialog(QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
+        #uso 3 botones o dos botones
+        # self.define_3_buttons = True
+        self.define_3_buttons = False        
+        
 
         # # Make some local modifications.
         self.ui.pLevel125.setDisabled(True)
@@ -169,9 +173,11 @@ class Dialog(QDialog):
         # self.ui.timerSlider.sliderPressed.connect(self.SetTimerLevel)
 
         # # Connect Button Treatments
+        if self.define_3_buttons:
+            self.ui.pauseButton.clicked.connect(self.PauseTreatment)
         self.ui.playButton.clicked.connect(self.StartTreatment)
         self.ui.stopButton.clicked.connect(self.StopTreatment)
-        self.ui.pauseButton.clicked.connect(self.PauseTreatment)
+
 
         # # Connect alarms Buttons
         self.ui.alarmButton_none.clicked.connect(self.SetAlarms)
@@ -207,7 +213,8 @@ class Dialog(QDialog):
             self.s.Write("ch1 buzzer short 1\n")
 
 
-        self.ui.pauseButton.setEnabled(False)
+        if self.define_3_buttons:
+            self.ui.pauseButton.setEnabled(False)
         self.ui.ch5Button.setEnabled(False)
         self.ui.ch6Button.setEnabled(False)
         self.ui.ch7Button.setEnabled(False)
@@ -215,6 +222,7 @@ class Dialog(QDialog):
         self.ui.freqButton.setEnabled(False)
         
         self.t = Treatment()
+        self.t.treatment_state = 'ENDED_OK'
 
         #activo el timer de 1 segundo
         self.next_call = time()
@@ -610,43 +618,30 @@ class Dialog(QDialog):
                 
 
     def PauseTreatment(self, event=None):
-        if self.t.treatment_state == 'PAUSED':
-            self.t.treatment_state = 'RUNNING'
-            self.s.Write("ch1 start treatment\n")
-            self.ui.playButton.setEnabled(True)
+        if self.define_3_buttons:
+            if self.t.treatment_state == 'PAUSED':
+                self.t.treatment_state = 'RUNNING'
+                self.s.Write("ch1 start treatment\n")
+                self.ui.playButton.setEnabled(True)
+            else:
+                self.s.Write("ch1 stop treatment\n")
+                self.t.treatment_state = 'PAUSED'
+                self.ui.playButton.setEnabled(False)
         else:
-            self.s.Write("ch1 stop treatment\n")
-            self.t.treatment_state = 'PAUSED'
-            self.ui.playButton.setEnabled(False)
+            if self.t.treatment_state == 'PAUSED':
+                self.t.treatment_state = 'RUNNING'
+                self.s.Write("ch1 start treatment\n")
+            else:
+                self.s.Write("ch1 stop treatment\n")
+                self.t.treatment_state = 'PAUSED'
 
-    def SetTimerandAlarms (self, new_timer, new_alarms):
-        """ me llaman desde el slider del timer o de los botones de las alarmas """
-        if (new_timer != 0):
-            #me llamaron desde el slider del timer
-            self.t.SetTreatmentTimer(new_timer)
 
-        if (new_timer == 0):
-            #me llamaron desde los Button de alarmas a traves de SetAlarm
-            self.t.SetTreatmentAlarms(new_alarms)
-
-    def SetAlarms(self, event=None):
-        dummy = 0
-        if self.ui.alarmButton_none.isChecked():
-            dummy = 0
-        if self.ui.alarmButton_one.isChecked():
-            dummy = 1
-        if self.ui.alarmButton_two.isChecked():
-            dummy = 2
-        if self.ui.alarmButton_four.isChecked():
-            dummy = 4
-
-        self.SetTimerandAlarms(0, dummy)
         
     def StartTreatment(self, event=None):
         #limpio contador de STOP cuando se toca play
         self.stopb_closeui = 0
         #solo ejecuto si no estaba corriendo
-        if self.t.treatment_state != 'RUNNING':
+        if self.t.treatment_state == 'ENDED_OK':
             #mando signal type
             self.s.Write("ch1 signal " + self.t.signal + "\n")
             # print (self.t.signal)
@@ -702,13 +697,56 @@ class Dialog(QDialog):
             self.s.Write("ch1 frequency " + str(self.t.frequency) + "\n")                
             self.s.Write("ch1 start treatment\n")
             self.s.Write("ch1 buzzer short 2\n")
-            self.ui.pauseButton.setEnabled(True)
+            if self.define_3_buttons:
+                self.ui.pauseButton.setEnabled(True)
+                
             self.ui.cwaveButton.setEnabled(False)
             self.ui.pulsedButton.setEnabled(False)
             self.ui.modulatedButton.setEnabled(False)
             self.TreatmentColors()
             self.t.treatment_state = 'RUNNING'
+            if self.define_3_buttons == False:
+                self.ui.playButton.setText("      PAUSE");
 
+
+        # puedo estar usando el programa de 2 botones
+        elif self.define_3_buttons == False:
+            if self.t.treatment_state == 'RUNNING' and self.ui.playButton.text() == '      PAUSE':
+                self.PauseTreatment()
+                self.ui.playButton.setText("   PLAY again")
+            else:
+                self.PauseTreatment()
+                self.ui.playButton.setText("      PAUSE")
+
+
+            
+    def SetAlarms(self, event=None):
+        dummy = 0
+        if self.ui.alarmButton_none.isChecked():
+            dummy = 0
+        if self.ui.alarmButton_one.isChecked():
+            dummy = 1
+        if self.ui.alarmButton_two.isChecked():
+            dummy = 2
+        if self.ui.alarmButton_four.isChecked():
+            dummy = 4
+
+        #self.SetTimerandAlarms(0, dummy)
+        self.t.SetTreatmentAlarms(dummy)
+        
+            
+
+    def SetTimerandAlarms (self, new_timer, new_alarms):
+        """ me llaman desde el slider del timer o de los botones de las alarmas """
+        #if (new_timer != 0):
+            #me llamaron desde el slider del timer
+        self.t.SetTreatmentTimer(new_timer)
+
+        #if (new_timer == 0):
+            #me llamaron desde los Button de alarmas a traves de SetAlarm
+            #self.t.SetTreatmentAlarms(new_alarms)
+
+            
     def FinTratamiento(self):
         self.t.treatment_state = 'ENDED'
         self.s.Write("ch1 buzzer long 3\n")
@@ -804,11 +842,15 @@ class Dialog(QDialog):
             # self.SetTimerLevel(self.t.treatment_timer)
             self.ui.unitlabel.setText("minutos")
             self.t.treatment_state = 'ENDED_OK'
-            self.ui.pauseButton.setEnabled(False)
             self.ui.cwaveButton.setEnabled(True)
             self.ui.pulsedButton.setEnabled(True)
             self.ui.modulatedButton.setEnabled(True)
             self.DefaultColors()
+            if self.define_3_buttons:
+                self.ui.pauseButton.setEnabled(False)
+            else:
+                self.ui.playButton.setText("       PLAY")
+
 
         
     def UpdateTimerSlot (self):
