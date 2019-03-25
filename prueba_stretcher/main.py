@@ -254,16 +254,12 @@ class Dialog(QDialog):
                 new_freq = new_freq.split('Hz')
                 new_freq = new_freq[0]
                 new_freq_f = float(new_freq)
-                new_freq_int = int(new_freq_f)
-                new_new_freq_f = new_freq_f - new_freq_int
-                new_freq_dec = int(new_new_freq_f * 100)
                 if new_freq_f <= 5:
                     to_send = "frequency " + "6.00Hz"
                 elif new_freq_f >= 70:
                     to_send = "frequency " + "65.00Hz"
                 else:
-                    to_send = "frequency " + str(new_freq_int) + "." + '{:02d}'.format(new_freq_dec) + "Hz"
-                    # to_send = "frequency " + str(new_freq) + "Hz"                    
+                    to_send = "frequency {:.02f}Hz".format(new_freq_f)
                     
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
