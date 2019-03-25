@@ -51,9 +51,12 @@ class Dialog(QDialog):
         self.ui.cuadradaButton.clicked.connect(self.SignalSquare)
         self.ui.senoidalButton.clicked.connect(self.SignalSinusoidal)
         
-        self.ui.freq10Button.clicked.connect(self.Freq_10)
-        self.ui.freq30Button.clicked.connect(self.Freq_30)
-        self.ui.freq60Button.clicked.connect(self.Freq_60)
+        self.ui.freq1Button.clicked.connect(self.SetNewFreq)
+        self.ui.freq2Button.clicked.connect(self.SetNewFreq)
+        self.ui.freq3Button.clicked.connect(self.SetNewFreq)
+        self.ui.freq4Button.clicked.connect(self.SetNewFreq)
+        self.ui.freq5Button.clicked.connect(self.SetNewFreq)
+        self.ui.freq6Button.clicked.connect(self.SetNewFreq)
         
         self.ui.ch1Button.clicked.connect(self.Channel1Enable)
         self.ui.ch2Button.clicked.connect(self.Channel2Enable)
@@ -94,11 +97,11 @@ class Dialog(QDialog):
         #antes de modificar UI
         self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
         if self.s.port_open == False:
-            self.ui.textEdit.append("Sin puerto serie!!!")
+            self.ui.textEdit.append("No serial port found!!!")
             # sys.exit(-1)
             #TODO: agregar un timer que vaya buscando el puerto!!!
         else:
-            self.ui.textEdit.append("puerto serie abierto OK!")
+            self.ui.textEdit.append("Serial port open OK!")
 
         #incializo el objeto de la sesion/tratamiento
         self.t = Treatment()
@@ -208,41 +211,17 @@ class Dialog(QDialog):
 
         self.t.SetSignal('sinusoidal')
 
-    def Freq_10 (self):
-        if (self.ui.freq30Button.isChecked() == True):
-            self.ui.freq30Button.toggle()
+    """
+    chequea el boton de frecuencia y guarda el texto del mismo en el objeto treatment
+    normalmente 7.83Hz
+    """
+    def SetNewFreq (self):
+        sender = self.sender()
+        if (sender.isChecked() != True):
+            sender.toggle()
 
-        if (self.ui.freq60Button.isChecked() == True):
-            self.ui.freq60Button.toggle()
-
-        if (self.ui.freq10Button.isChecked() != True):
-            self.ui.freq10Button.toggle()
-            
-        self.t.SetFrequency('10Hz')
-
-    def Freq_30 (self):
-        if (self.ui.freq10Button.isChecked() == True):
-            self.ui.freq10Button.toggle()
-
-        if (self.ui.freq60Button.isChecked() == True):
-            self.ui.freq60Button.toggle()
-
-        if (self.ui.freq30Button.isChecked() != True):
-            self.ui.freq30Button.toggle()
-            
-        self.t.SetFrequency('30Hz')
-
-    def Freq_60 (self):
-        if (self.ui.freq10Button.isChecked() == True):
-            self.ui.freq10Button.toggle()
-
-        if (self.ui.freq30Button.isChecked() == True):
-            self.ui.freq30Button.toggle()
-            
-        if (self.ui.freq60Button.isChecked() != True):
-            self.ui.freq60Button.toggle()
-
-        self.t.SetFrequency('60Hz')
+        self.ui.textEdit.append(sender.text() + " selected")
+        self.t.SetFrequency(sender.text())
 
     def Start_Treatment (self):
         if (self.s.port_open):
@@ -262,27 +241,34 @@ class Dialog(QDialog):
                     self.t.remaining_minutes = self.t.GetTreatmentTimer()
                     self.t.remaining_seconds = 0
 
+                #envio variable dummy para limpiar puerto despues de algun error
+                self.s.Write("voltage\r\n")
+                sleep(0.1)
+                
                 new_signal = self.t.GetSignal()
                 to_send = "signal " + new_signal
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
 
                 new_freq = self.t.GetFrequency()
-                to_send = "frequency " + new_freq
+                new_freq = new_freq.split('Hz')
+                new_freq = new_freq[0]
+                new_freq_f = float(new_freq)
+                new_freq_int = int(new_freq_f)
+                new_new_freq_f = new_freq_f - new_freq_int
+                new_freq_dec = int(new_new_freq_f * 100)
+                if new_freq_f <= 5:
+                    to_send = "frequency " + "6.00Hz"
+                elif new_freq_f >= 70:
+                    to_send = "frequency " + "65.00Hz"
+                else:
+                    to_send = "frequency " + str(new_freq_int) + "." + '{:02d}'.format(new_freq_dec) + "Hz"
+                    # to_send = "frequency " + str(new_freq) + "Hz"                    
+                    
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
 
-                if new_freq == '30Hz':
-                    new_power = int(self.t.GetPower() * 0.6)
-                    if new_power < 10:
-                        new_power = 10
-                elif new_freq == '60Hz':
-                    new_power = int(self.t.GetPower() * 0.4)
-                    if new_power < 10:
-                        new_power = 10
-                else:
-                    new_power = self.t.GetPower()                    
-                    
+                new_power = self.t.GetPower()                                        
                 to_send = 'power {:03d}'.format(new_power)
                 self.ui.textEdit.append(to_send)
                 self.s.Write(to_send + "\r\n")
@@ -371,9 +357,12 @@ class Dialog(QDialog):
         self.ui.cuadradaButton.setEnabled(False)
         self.ui.senoidalButton.setEnabled(False)
         
-        self.ui.freq10Button.setEnabled(False)
-        self.ui.freq30Button.setEnabled(False)
-        self.ui.freq60Button.setEnabled(False)
+        self.ui.freq1Button.setEnabled(False)
+        self.ui.freq2Button.setEnabled(False)
+        self.ui.freq3Button.setEnabled(False)
+        self.ui.freq4Button.setEnabled(False)
+        self.ui.freq5Button.setEnabled(False)
+        self.ui.freq6Button.setEnabled(False)
 
         self.ui.ch1Button.setEnabled(False)
         self.ui.ch2Button.setEnabled(False)
@@ -392,9 +381,12 @@ class Dialog(QDialog):
         self.ui.cuadradaButton.setEnabled(True)
         self.ui.senoidalButton.setEnabled(True)
         
-        self.ui.freq10Button.setEnabled(True)
-        self.ui.freq30Button.setEnabled(True)
-        self.ui.freq60Button.setEnabled(True)
+        self.ui.freq1Button.setEnabled(True)
+        self.ui.freq2Button.setEnabled(True)
+        self.ui.freq3Button.setEnabled(True)
+        self.ui.freq4Button.setEnabled(True)
+        self.ui.freq5Button.setEnabled(True)
+        self.ui.freq6Button.setEnabled(True)
 
         self.ui.ch1Button.setEnabled(True)
         self.ui.ch2Button.setEnabled(True)

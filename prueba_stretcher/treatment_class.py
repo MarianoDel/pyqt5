@@ -11,7 +11,7 @@ class Treatment():
 
         self.signal = 'triangular'
 
-        self.frequency = '10Hz'
+        self.frequency = '7.83Hz'
 
         self.treatment_timer = 30
         self.treatment_alarms = 0
