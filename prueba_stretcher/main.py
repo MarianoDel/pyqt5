@@ -95,7 +95,10 @@ class Dialog(QDialog):
 
         #self.MyObjCallback la llaman desde otro thread, armo una senial
         #antes de modificar UI
-        self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+        ## PARA SLACKWARE
+        # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+        ## PARA RASPBERRY
+        self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
         if self.s.port_open == False:
             self.ui.textEdit.append("No serial port found!!!")
             # sys.exit(-1)
