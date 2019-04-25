@@ -565,115 +565,9 @@ class Dialog(QDialog):
 
         if self.t.treatment_state == 'RUNNING':
             ch_new_power = self.t.ConvertPower(self.t.GetLedPower(sender.text()))
-            self.s.Write(str(sender.text()) + " power led " + str(ch_new_power) + "\n")
+            self.s.Write(str(sender.text()).lower() + " power led " + str(ch_new_power) + "\n")
             ch_new_power = self.t.ConvertPower(self.t.GetLaserPower(sender.text()))
-            self.s.Write(str(sender.text()) + " power laser " + str(ch_new_power) + "\n")
-
-            
-    def channel1Button(self, event=None):
-        a = PDialog()
-        a.setModal(True)
-        a.changeChannelLabel("CH1")
-        a.changeLaserLabel(self.t.GetLaserPower('ch1'))
-        a.changeLEDLabel(self.t.GetLedPower('ch1'))
-        # a.setWindowFlags(Qt.FramelessWindowHint)
-        a.setWindowTitle("Seteo de Potencias")
-        a.exec_()
-        new_power = a.ui.whatplaserLabel.text()
-        # print (new_power)
-        new_power = new_power[:-1]
-        self.t.SetLaserPower('ch1', int(new_power))
-
-        new_power = a.ui.whatpledLabel.text()
-        # print (new_power)        
-        new_power = new_power[:-1]
-        self.t.SetLedPower('ch1', int(new_power))
-
-        if self.t.treatment_state == 'RUNNING':
-            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
-            self.s.Write("ch1 power led " + str(ch_new_power) + "\n")
-            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch1'))
-            self.s.Write("ch1 power laser " + str(ch_new_power) + "\n")
-
-
-    def channel2Button(self, event=None):
-        a = PDialog()
-        a.setModal(True)
-        a.changeChannelLabel("CH2")
-        a.changeLaserLabel(self.t.GetLaserPower('ch2'))
-        a.changeLEDLabel(self.t.GetLedPower('ch2'))
-        # a.setWindowFlags(Qt.FramelessWindowHint)
-        a.setWindowTitle("Seteo de Potencias")        
-        a.exec_()
-        new_power = a.ui.whatplaserLabel.text()
-        # print (new_power)
-        new_power = new_power[:-1]
-        self.t.SetLaserPower('ch2', int(new_power))
-
-        new_power = a.ui.whatpledLabel.text()
-        # print (new_power)        
-        new_power = new_power[:-1]
-        self.t.SetLedPower('ch2', int(new_power))
-
-        if self.t.treatment_state == 'RUNNING':
-            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch2'))
-            self.s.Write("ch2 power led " + str(ch_new_power) + "\n")
-            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch2'))
-            self.s.Write("ch2 power laser " + str(ch_new_power) + "\n")
-
-
-    def channel3Button(self, event=None):
-        a = PDialog()
-        a.setModal(True)
-        a.changeChannelLabel("CH3")
-        a.changeLaserLabel(self.t.GetLaserPower('ch3'))
-        a.changeLEDLabel(self.t.GetLedPower('ch3'))
-        # a.setWindowFlags(Qt.FramelessWindowHint)
-        a.setWindowTitle("Seteo de Potencias")        
-        a.exec_()
-        new_power = a.ui.whatplaserLabel.text()
-        # print (new_power)
-        new_power = new_power[:-1]
-        self.t.SetLaserPower('ch3', int(new_power))
-
-        new_power = a.ui.whatpledLabel.text()
-        # print (new_power)        
-        new_power = new_power[:-1]
-        self.t.SetLedPower('ch3', int(new_power))
-
-        if self.t.treatment_state == 'RUNNING':
-            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch3'))
-            self.s.Write("ch3 power led " + str(ch_new_power) + "\n")
-            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch3'))
-            self.s.Write("ch3 power laser " + str(ch_new_power) + "\n")
-
-
-    def channel4Button(self, event=None):
-        a = PDialog()
-        a.setModal(True)
-        a.changeChannelLabel("CH4")
-        a.changeLaserLabel(self.t.GetLaserPower('ch4'))
-        a.changeLEDLabel(self.t.GetLedPower('ch4'))
-        # a.setWindowFlags(Qt.FramelessWindowHint)
-        a.setWindowTitle("Seteo de Potencias")        
-        a.exec_()
-        new_power = a.ui.whatplaserLabel.text()
-        # print (new_power)
-        new_power = new_power[:-1]
-        self.t.SetLaserPower('ch4', int(new_power))
-
-        new_power = a.ui.whatpledLabel.text()
-        # print (new_power)        
-        new_power = new_power[:-1]
-        self.t.SetLedPower('ch4', int(new_power))
-
-        if self.t.treatment_state == 'RUNNING':
-            ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch4'))
-            self.s.Write("ch4 power led " + str(ch_new_power) + "\n")
-            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
-            self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
-
-        
+            self.s.Write(str(sender.text()).lower() + " power laser " + str(ch_new_power) + "\n")
         
         
     #silent ending con el boton STOP
@@ -916,7 +810,7 @@ class Dialog(QDialog):
         if self.t.treatment_state == 'ENDED':
             # self.ui.Timerlabel.setText(str(self.t.treatment_timer))
             # self.ui.timerSlider.setValue(self.t.treatment_timer)
-            # self.SetTimerLevel(self.t.treatment_timer)
+            self.SetTimerLevel(self.t.treatment_timer)
             self.ui.unitlabel.setText("minutos")
             self.t.treatment_state = 'ENDED_OK'
             self.ui.cwaveButton.setEnabled(True)
