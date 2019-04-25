@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'lipo4_800_480.ui'
+# Form implementation generated from reading ui file 'lipo5_800_480.ui'
 #
 # Created by: PyQt5 UI code generator 5.10
 #
@@ -15,32 +15,6 @@ class Ui_Dialog(object):
         Dialog.setStyleSheet("background-color: rgb(85, 170, 127); /*este es el verde de siempre*/\n"
 "/*background-color: rgb(173, 127, 168); este es el violeta*/\n"
 "")
-        self.powerSlider = QtWidgets.QSlider(Dialog)
-        self.powerSlider.setGeometry(QtCore.QRect(190, 80, 91, 201))
-        self.powerSlider.setStyleSheet("QSlider::groove:vertical {\n"
-"background: red;\n"
-"position: absolute; /* absolutely position 4px from the left and right of the widget. setting margins on the widget should work too... */\n"
-"left: 4px; right: 4px;\n"
-"border: 1px solid #bbb;\n"
-"border-radius: 4px;\n"
-"}\n"
-"QSlider::handle:vertical {\n"
-"height: 30px;\n"
-"background: rgb(13, 10, 61);\n"
-"margin: 0 -4px; /* expand outside the groove */\n"
-"border: 1px solid #777;\n"
-"border-radius: 4px;\n"
-"}\n"
-"QSlider::add-page:vertical {\n"
-"background: rgb(32, 74, 135);\n"
-"}\n"
-"QSlider::sub-page:vertical {\n"
-"background: rgb(110, 202, 206);\n"
-"}")
-        self.powerSlider.setMaximum(100)
-        self.powerSlider.setOrientation(QtCore.Qt.Vertical)
-        self.powerSlider.setTickPosition(QtWidgets.QSlider.NoTicks)
-        self.powerSlider.setObjectName("powerSlider")
         self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 300, 781, 171))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
@@ -472,32 +446,6 @@ class Ui_Dialog(object):
         self.unitlabel.setFont(font)
         self.unitlabel.setAlignment(QtCore.Qt.AlignCenter)
         self.unitlabel.setObjectName("unitlabel")
-        self.timerSlider = QtWidgets.QSlider(Dialog)
-        self.timerSlider.setGeometry(QtCore.QRect(590, 80, 91, 201))
-        self.timerSlider.setStyleSheet("QSlider::groove:vertical {\n"
-"background: red;\n"
-"position: absolute; /* absolutely position 4px from the left and right of the widget. setting margins on the widget should work too... */\n"
-"left: 4px; right: 4px;\n"
-"border: 1px solid #bbb;\n"
-"border-radius: 4px;\n"
-"}\n"
-"QSlider::handle:vertical {\n"
-"height: 30px;\n"
-"background: rgb(13, 10, 61);\n"
-"margin: 0 -4px; /* expand outside the groove */\n"
-"border: 1px solid #777;\n"
-"border-radius: 4px;\n"
-"}\n"
-"QSlider::add-page:vertical {\n"
-"background: rgb(32, 74, 135);\n"
-"}\n"
-"QSlider::sub-page:vertical {\n"
-"background: rgb(110, 202, 206);\n"
-"}")
-        self.timerSlider.setMaximum(60)
-        self.timerSlider.setOrientation(QtCore.Qt.Vertical)
-        self.timerSlider.setTickPosition(QtWidgets.QSlider.NoTicks)
-        self.timerSlider.setObjectName("timerSlider")
         self.groupBox = QtWidgets.QGroupBox(Dialog)
         self.groupBox.setGeometry(QtCore.QRect(680, 101, 111, 181))
         font = QtGui.QFont()
@@ -621,18 +569,72 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
-        self.powerSlider.raise_()
+        self.powerUPButton = QtWidgets.QPushButton(Dialog)
+        self.powerUPButton.setGeometry(QtCore.QRect(210, 100, 80, 80))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.powerUPButton.sizePolicy().hasHeightForWidth())
+        self.powerUPButton.setSizePolicy(sizePolicy)
+        self.powerUPButton.setMinimumSize(QtCore.QSize(80, 80))
+        self.powerUPButton.setText("")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/images/resources/arrow_up.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.powerUPButton.setIcon(icon5)
+        self.powerUPButton.setIconSize(QtCore.QSize(55, 55))
+        self.powerUPButton.setObjectName("powerUPButton")
+        self.powerDWNButton = QtWidgets.QPushButton(Dialog)
+        self.powerDWNButton.setGeometry(QtCore.QRect(210, 190, 80, 80))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.powerDWNButton.sizePolicy().hasHeightForWidth())
+        self.powerDWNButton.setSizePolicy(sizePolicy)
+        self.powerDWNButton.setMinimumSize(QtCore.QSize(80, 80))
+        self.powerDWNButton.setText("")
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/images/resources/arrow_down.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.powerDWNButton.setIcon(icon6)
+        self.powerDWNButton.setIconSize(QtCore.QSize(55, 55))
+        self.powerDWNButton.setObjectName("powerDWNButton")
+        self.minUPButton = QtWidgets.QPushButton(Dialog)
+        self.minUPButton.setGeometry(QtCore.QRect(600, 100, 80, 80))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.minUPButton.sizePolicy().hasHeightForWidth())
+        self.minUPButton.setSizePolicy(sizePolicy)
+        self.minUPButton.setMinimumSize(QtCore.QSize(80, 80))
+        self.minUPButton.setText("")
+        self.minUPButton.setIcon(icon5)
+        self.minUPButton.setIconSize(QtCore.QSize(55, 55))
+        self.minUPButton.setObjectName("minUPButton")
+        self.minDWNButton = QtWidgets.QPushButton(Dialog)
+        self.minDWNButton.setGeometry(QtCore.QRect(600, 190, 80, 80))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.minDWNButton.sizePolicy().hasHeightForWidth())
+        self.minDWNButton.setSizePolicy(sizePolicy)
+        self.minDWNButton.setMinimumSize(QtCore.QSize(80, 80))
+        self.minDWNButton.setText("")
+        self.minDWNButton.setIcon(icon6)
+        self.minDWNButton.setIconSize(QtCore.QSize(55, 55))
+        self.minDWNButton.setObjectName("minDWNButton")
         self.verticalLayoutWidget.raise_()
         self.frame.raise_()
         self.Powerlabel.raise_()
         self.layoutWidget.raise_()
         self.Timerlabel.raise_()
         self.layoutWidget_2.raise_()
-        self.timerSlider.raise_()
         self.groupBox.raise_()
         self.label_2.raise_()
         self.unitlabel.raise_()
         self.label_3.raise_()
+        self.powerUPButton.raise_()
+        self.powerDWNButton.raise_()
+        self.minUPButton.raise_()
+        self.minDWNButton.raise_()
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -663,5 +665,7 @@ class Ui_Dialog(object):
         self.alarmButton_two.setText(_translate("Dialog", "DOS"))
         self.alarmButton_four.setText(_translate("Dialog", "CUATRO"))
         self.label_3.setText(_translate("Dialog", "  Alarmas"))
+        self.powerDWNButton.setShortcut(_translate("Dialog", "Ctrl+C, Ctrl+V"))
+        self.minDWNButton.setShortcut(_translate("Dialog", "Ctrl+C, Ctrl+V"))
 
 import res_lipo2_rc

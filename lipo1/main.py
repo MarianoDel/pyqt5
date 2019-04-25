@@ -132,11 +132,20 @@ class Dialog(QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
-        #uso 3 botones o dos botones
-        # self.define_3_buttons = True
-        self.define_3_buttons = False        
-        
+        ##### DEFINES FOR CONFIGURATION #####
+        # tipo de sistema donde corre el programa
+        self.define_SO = 'Slackware'
+        # self.define_SO = 'Raspbian'
 
+        # uso interface de 2 o 3 botones
+        # self.define_3_buttons = True
+        self.define_3_buttons = False
+
+        # es en equipo de 4 o de 8 pads
+        self.define_8_pads = False
+        # self.define_8_pads = True
+        ##### END OF DEFINES FOR CONFIGURATION #####        
+                
         # # Make some local modifications.
         self.ui.pLevel125.setDisabled(True)
         self.ui.pLevel250.setDisabled(True)
@@ -157,21 +166,28 @@ class Dialog(QDialog):
         self.ui.m600.setDisabled(True)
 
 
-        # self.ui.colorDepthCombo.addItem("2 colors (1 bit per pixel)")
-        #
         # # Connect up the buttons.
-        self.ui.ch1Button.clicked.connect(self.channel1Button)
-        self.ui.ch2Button.clicked.connect(self.channel2Button)
-        self.ui.ch3Button.clicked.connect(self.channel3Button)
-        self.ui.ch4Button.clicked.connect(self.channel4Button)
-        
-        
-        # # Connect the QSlider
-        self.ui.powerSlider.valueChanged.connect(self.SetPowerLevel)
-        self.ui.timerSlider.valueChanged.connect(self.SetTimerLevel)
-        # self.ui.timerSlider.sliderMoved.connect(self.SetTimerLevel)
-        # self.ui.timerSlider.sliderPressed.connect(self.SetTimerLevel)
+        # self.ui.ch1Button.clicked.connect(self.channel1Button)
+        # self.ui.ch2Button.clicked.connect(self.channel2Button)
+        # self.ui.ch3Button.clicked.connect(self.channel3Button)
+        # self.ui.ch4Button.clicked.connect(self.channel4Button)
+        self.ui.ch1Button.clicked.connect(self.SetNewChannelPower)
+        self.ui.ch2Button.clicked.connect(self.SetNewChannelPower)
+        self.ui.ch3Button.clicked.connect(self.SetNewChannelPower)
+        self.ui.ch4Button.clicked.connect(self.SetNewChannelPower)
 
+        if self.define_8_pads:
+            self.ui.ch5Button.clicked.connect(self.SetNewChannelPower)
+            self.ui.ch6Button.clicked.connect(self.SetNewChannelPower)
+            self.ui.ch7Button.clicked.connect(self.SetNewChannelPower)
+            self.ui.ch8Button.clicked.connect(self.SetNewChannelPower)
+
+        self.ui.powerUPButton.clicked.connect(self.SetPowerUP)
+        self.ui.powerDWNButton.clicked.connect(self.SetPowerDWN)
+        
+        self.ui.minUPButton.clicked.connect(self.SetTimerUP)
+        self.ui.minDWNButton.clicked.connect(self.SetTimerDWN)
+        
         # # Connect Button Treatments
         if self.define_3_buttons:
             self.ui.pauseButton.clicked.connect(self.PauseTreatment)
@@ -191,15 +207,14 @@ class Dialog(QDialog):
         self.ui.modulatedButton.clicked.connect(self.SetMODULATED)
         self.ui.freqButton.clicked.connect(self.SetFREQUENCY)
 
+        # self.ui.enviar2.clicked.connect(self.Envio2)
+        # self.ui.enviar3.clicked.connect(self.Envio3)
 
-  #      self.ui.enviar2.clicked.connect(self.Envio2)
-   #     self.ui.enviar3.clicked.connect(self.Envio3)
-
-#    def __show__(self):
-        # # para slackware
-        # self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
-        #para raspberry
-        self.s = SerialComm(self.MyObjCallBack, '/dev/serial0')
+        if self.define_SO == 'Slackware':
+            self.s = SerialComm(self.MyObjCallBack, '/dev/ttyACM0')
+        elif self.define_SO == 'Raspbian':
+            self.s = SerialComm(self.MyObjCallBack, '/dev/serial0')
+            
         if self.s.port_open == False:
             print ("Sin puerto serie!!!")
             # self.ui.ch1Button.setText("NO!")
@@ -215,11 +230,13 @@ class Dialog(QDialog):
 
         if self.define_3_buttons:
             self.ui.pauseButton.setEnabled(False)
-        self.ui.ch5Button.setEnabled(False)
-        self.ui.ch6Button.setEnabled(False)
-        self.ui.ch7Button.setEnabled(False)
-        self.ui.ch8Button.setEnabled(False)
-        self.ui.freqButton.setEnabled(False)
+
+        if self.define_8_pads == False:
+            self.ui.ch5Button.setEnabled(False)
+            self.ui.ch6Button.setEnabled(False)
+            self.ui.ch7Button.setEnabled(False)
+            self.ui.ch8Button.setEnabled(False)
+            self.ui.freqButton.setEnabled(False)
         
         self.t = Treatment()
         self.t.treatment_state = 'ENDED_OK'
@@ -237,10 +254,8 @@ class Dialog(QDialog):
         # print (self.st)
         # self.ui.Timerlabel.raise_()    #debiera subir el string para que no quede tapado
         # self.ui.Powerlabel.raise_()    #debiera subir el string para que no quede tapado
-        # self.SetPowerLevel(100)
-        # self.SetTimerLevel(30)
-        self.ui.powerSlider.setValue(100)
-        self.ui.timerSlider.setValue(30)
+        self.SetPowerLevel(100)
+        self.SetTimerLevel(30)
 
         #SIGNALS
         # conecto seniales al los metodos
@@ -248,9 +263,46 @@ class Dialog(QDialog):
         self.intermediate_timer_signal.connect(self.UpdateTimerSlot)        
 
         
-        
+########################
+# Funciones del Modulo #
+########################
 
-## Funciones del Modulo
+    def SetPowerUP(self, event=None):
+        general_power = self.t.GetGeneralPower()
+        
+        if (general_power < (100 - 5)):
+            general_power += 5
+        else:
+            general_power = 100
+
+        self.SetPowerLevel(general_power)
+
+    def SetPowerDWN(self, event=None):
+        general_power = self.t.GetGeneralPower()
+        
+        if (general_power > 5):
+            general_power -= 5
+
+        self.SetPowerLevel(general_power)
+
+    def SetTimerUP(self, event=None):
+        if self.t.treatment_state != 'RUNNING':
+            time = int(self.ui.Timerlabel.text())
+            if time < 60:
+                time += 1
+
+            self.SetTimerLevel(time)
+
+            
+    def SetTimerDWN(self, event=None):
+        if self.t.treatment_state != 'RUNNING':
+            time = int(self.ui.Timerlabel.text())
+            if time > 1:
+                time -= 1
+
+            self.SetTimerLevel(time)
+
+            
     def SetPowerLevel(self, event):
         self.ui.Powerlabel.setText(str(event) + "%")
         if (event == 100):
@@ -336,15 +388,7 @@ class Dialog(QDialog):
             self.ui.pLevel125.setDisabled(True)
             
         self.ui.Powerlabel.raise_()    #debiera subir el string para que no quede tapado
-        self.t.SetLaserPower('ch1', event)
-        self.t.SetLaserPower('ch2', event)
-        self.t.SetLaserPower('ch3', event)
-        self.t.SetLaserPower('ch4', event)        
-
-        self.t.SetLedPower('ch1', event)
-        self.t.SetLedPower('ch2', event)
-        self.t.SetLedPower('ch3', event)
-        self.t.SetLedPower('ch4', event)
+        self.t.SetGeneralPower(event)
 
         if self.t.treatment_state == 'RUNNING':
             ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
@@ -492,7 +536,40 @@ class Dialog(QDialog):
         if self.t.treatment_state == 'RUNNING':
             self.s.Write("ch1 frequency " + str(self.t.frequency) + "\n")
         
-        
+
+    """
+    chequea el boton de frecuencia y guarda el texto del mismo en el objeto treatment
+    normalmente 7.83Hz
+    """
+    def SetNewChannelPower (self, event=None):
+        sender = self.sender()
+
+        a = PDialog()
+        a.setModal(True)
+        a.changeChannelLabel(sender.text())
+        a.changeLaserLabel(self.t.GetLaserPower(sender.text()))
+        a.changeLEDLabel(self.t.GetLedPower(sender.text()))
+
+        a.setWindowTitle("Seteo de Potencias")
+        a.exec_()
+
+        new_power = a.ui.whatplaserLabel.text()
+        # print ("canal: " + str(sender.text()) + " potencia: " + new_power)
+        new_power = new_power[:-1]
+        self.t.SetLaserPower(sender.text(), int(new_power))
+
+        new_power = a.ui.whatpledLabel.text()
+        # print (new_power)        
+        new_power = new_power[:-1]
+        self.t.SetLedPower(sender.text(), int(new_power))
+
+        if self.t.treatment_state == 'RUNNING':
+            ch_new_power = self.t.ConvertPower(self.t.GetLedPower(sender.text()))
+            self.s.Write(str(sender.text()) + " power led " + str(ch_new_power) + "\n")
+            ch_new_power = self.t.ConvertPower(self.t.GetLaserPower(sender.text()))
+            self.s.Write(str(sender.text()) + " power laser " + str(ch_new_power) + "\n")
+
+            
     def channel1Button(self, event=None):
         a = PDialog()
         a.setModal(True)
@@ -684,7 +761,7 @@ class Dialog(QDialog):
 
             #arreglo para cuando seleccionan 1 minuto
             if self.t.GetTreatmentTimer() == 1:
-                self.ui.timerSlider.setValue(0)    #esto me cambia el label
+                # self.ui.timerSlider.setValue(0)    #esto me cambia el label
                 self.ui.Timerlabel.setText("59")
                 self.ui.unitlabel.setText("segundos")
                 self.t.remaining_seconds = 59
@@ -786,13 +863,13 @@ class Dialog(QDialog):
 
                 #todos los segundos actualizo ui
                 if self.t.remaining_minutes == 0:
-                    self.ui.timerSlider.setValue(0)
+                    # self.ui.timerSlider.setValue(0)
                     self.ui.Timerlabel.setText("59")
                     self.ui.unitlabel.setText("segundos")
                 else:
                     # self.ui.Timerlabel.setText(str(self.t.remaining_minutes) + ":" + str(self.t.remaining_seconds))
                     self.ui.Timerlabel.setText(str('{}:{:02d}'.format(self.t.remaining_minutes, self.t.remaining_seconds)))
-                    self.ui.timerSlider.setValue(self.t.remaining_minutes)
+                    # self.ui.timerSlider.setValue(self.t.remaining_minutes)
 
             else:
                 #estoy en el ultimo minuto ya uso el contador remaining_seconds
@@ -838,7 +915,7 @@ class Dialog(QDialog):
         #fin del tratamiento por timer o confirmacion de stop
         if self.t.treatment_state == 'ENDED':
             # self.ui.Timerlabel.setText(str(self.t.treatment_timer))
-            self.ui.timerSlider.setValue(self.t.treatment_timer)
+            # self.ui.timerSlider.setValue(self.t.treatment_timer)
             # self.SetTimerLevel(self.t.treatment_timer)
             self.ui.unitlabel.setText("minutos")
             self.t.treatment_state = 'ENDED_OK'
@@ -876,8 +953,8 @@ class Dialog(QDialog):
                     QSlider::sub-page:vertical {\
                     background: pink;}"
 
-        self.ui.timerSlider.setStyleSheet(s_dummy)
-        self.ui.powerSlider.setStyleSheet(s_dummy)
+        # self.ui.timerSlider.setStyleSheet(s_dummy)
+        # self.ui.powerSlider.setStyleSheet(s_dummy)
 
         #self.ui es un puntero a mi objeto dialog, pero el propio dialogo es self        
         s_dummy = "background-color: rgb(173, 127, 168);"
@@ -918,8 +995,8 @@ class Dialog(QDialog):
                     QSlider::sub-page:vertical {\
                     background: rgb(110, 202, 206);}"
                             
-        self.ui.timerSlider.setStyleSheet(s_dummy)
-        self.ui.powerSlider.setStyleSheet(s_dummy)
+        # self.ui.timerSlider.setStyleSheet(s_dummy)
+        # self.ui.powerSlider.setStyleSheet(s_dummy)
 
         #self.ui es un puntero a mi objeto dialog, pero el propio dialogo es self
         s_dummy = "background-color: rgb(85, 170, 127);"
