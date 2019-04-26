@@ -142,8 +142,8 @@ class Dialog(QDialog):
         self.define_3_buttons = False
 
         # es en equipo de 4 o de 8 pads
-        self.define_8_pads = False
-        # self.define_8_pads = True
+        # self.define_8_pads = False
+        self.define_8_pads = True
         ##### END OF DEFINES FOR CONFIGURATION #####        
                 
         # # Make some local modifications.
@@ -224,8 +224,8 @@ class Dialog(QDialog):
             print ("puerto serie abierto OK!")
             # self.ui.ch1Button.setText("OK")
             #Me comunico con la placa para ponerla en stand-by
-            self.s.Write("ch1 stop treatment\n")
-            self.s.Write("ch1 buzzer short 1\n")
+            self.s.Write("chf stop treatment\n")
+            self.s.Write("chf buzzer short 1\n")
 
 
         if self.define_3_buttons:
@@ -411,6 +411,27 @@ class Dialog(QDialog):
             ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
             self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
 
+            if self.define_8_pads:
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch5'))
+                self.s.Write("ch5 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch5'))
+                self.s.Write("ch5 power laser " + str(ch_new_power) + "\n")
+
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch6'))
+                self.s.Write("ch6 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch6'))
+                self.s.Write("ch6 power laser " + str(ch_new_power) + "\n")
+
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch7'))
+                self.s.Write("ch7 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch7'))
+                self.s.Write("ch7 power laser " + str(ch_new_power) + "\n")
+
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch8'))
+                self.s.Write("ch8 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch8'))
+                self.s.Write("ch8 power laser " + str(ch_new_power) + "\n")
+
             
         
     def SetTimerLevel(self, event):
@@ -525,7 +546,7 @@ class Dialog(QDialog):
         else:
             a.changeFreqLabel(int(self.t.frequency))
             
-        a.setWindowTitle("Seteo de F")
+        a.setWindowTitle("Seteo de Frecuencia")
         a.exec_()
         new_f = a.intfreq
         if new_f == 10:
@@ -534,7 +555,7 @@ class Dialog(QDialog):
             self.t.frequency = new_f
 
         if self.t.treatment_state == 'RUNNING':
-            self.s.Write("ch1 frequency " + str(self.t.frequency) + "\n")
+            self.s.Write("chf frequency " + str(self.t.frequency) + "\n")
         
 
     """
@@ -572,7 +593,7 @@ class Dialog(QDialog):
         
     #silent ending con el boton STOP
     def StopTreatment(self, event=None):
-        self.s.Write("ch1 stop treatment\n")
+        self.s.Write("chf stop treatment\n")
 
         if self.t.treatment_state == 'RUNNING':
             self.t.treatment_state = 'ENDED'
@@ -614,7 +635,7 @@ class Dialog(QDialog):
         #solo ejecuto si no estaba corriendo
         if self.t.treatment_state == 'ENDED_OK':
             #mando signal type
-            self.s.Write("ch1 signal " + self.t.signal + "\n")
+            self.s.Write("chf signal " + self.t.signal + "\n")
             # print (self.t.signal)
 
             ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch1'))
@@ -636,6 +657,27 @@ class Dialog(QDialog):
             self.s.Write("ch4 power led " + str(ch_new_power) + "\n")
             ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch4'))
             self.s.Write("ch4 power laser " + str(ch_new_power) + "\n")
+
+            if self.define_8_pads:
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch5'))
+                self.s.Write("ch5 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch5'))
+                self.s.Write("ch5 power laser " + str(ch_new_power) + "\n")
+
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch6'))
+                self.s.Write("ch6 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch6'))
+                self.s.Write("ch6 power laser " + str(ch_new_power) + "\n")
+
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch7'))
+                self.s.Write("ch7 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch7'))
+                self.s.Write("ch7 power laser " + str(ch_new_power) + "\n")
+
+                ch_new_power = self.t.ConvertPower(self.t.GetLedPower('ch8'))
+                self.s.Write("ch8 power led " + str(ch_new_power) + "\n")
+                ch_new_power = self.t.ConvertPower(self.t.GetLaserPower('ch8'))
+                self.s.Write("ch8 power laser " + str(ch_new_power) + "\n")
             
 
             ##timers intermedios
@@ -665,9 +707,9 @@ class Dialog(QDialog):
                 self.t.remaining_seconds = 0
 
 
-            self.s.Write("ch1 frequency " + str(self.t.frequency) + "\n")                
-            self.s.Write("ch1 start treatment\n")
-            self.s.Write("ch1 buzzer short 2\n")
+            self.s.Write("chf frequency " + str(self.t.frequency) + "\n")                
+            self.s.Write("chf start treatment\n")
+            self.s.Write("chf buzzer short 2\n")
             if self.define_3_buttons:
                 self.ui.pauseButton.setEnabled(True)
                 
@@ -720,8 +762,8 @@ class Dialog(QDialog):
             
     def FinTratamiento(self):
         self.t.treatment_state = 'ENDED'
-        self.s.Write("ch1 buzzer long 3\n")
-        self.s.Write("ch1 stop treatment\n")
+        self.s.Write("chf buzzer long 3\n")
+        self.s.Write("chf stop treatment\n")
 
 
     def AlarmaIntermedia(self):
@@ -826,7 +868,7 @@ class Dialog(QDialog):
         
     def UpdateTimerSlot (self):
         if self.t.treatment_state == 'RUNNING':
-            self.s.Write("ch1 buzzer half 2\n")
+            self.s.Write("chf buzzer half 2\n")
         
 
     def TreatmentColors (self):
