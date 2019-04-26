@@ -613,18 +613,18 @@ class Dialog(QDialog):
         if self.define_3_buttons:
             if self.t.treatment_state == 'PAUSED':
                 self.t.treatment_state = 'RUNNING'
-                self.s.Write("ch1 start treatment\n")
+                self.s.Write("chf start treatment\n")
                 self.ui.playButton.setEnabled(True)
             else:
-                self.s.Write("ch1 stop treatment\n")
+                self.s.Write("chf stop treatment\n")
                 self.t.treatment_state = 'PAUSED'
                 self.ui.playButton.setEnabled(False)
         else:
             if self.t.treatment_state == 'PAUSED':
                 self.t.treatment_state = 'RUNNING'
-                self.s.Write("ch1 start treatment\n")
+                self.s.Write("chf start treatment\n")
             else:
-                self.s.Write("ch1 stop treatment\n")
+                self.s.Write("chf stop treatment\n")
                 self.t.treatment_state = 'PAUSED'
 
 
