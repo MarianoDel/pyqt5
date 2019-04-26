@@ -546,7 +546,7 @@ class Dialog(QDialog):
         else:
             a.changeFreqLabel(int(self.t.frequency))
             
-        a.setWindowTitle("Seteo de Frecuencia")
+        a.setWindowTitle("Seteo de F")
         a.exec_()
         new_f = a.intfreq
         if new_f == 10:
