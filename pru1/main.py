@@ -1,15 +1,18 @@
 # always seem to need this
-import sys
- 
+import sys, os
+
 # This gets the Qt stuff
 import PyQt5
 from PyQt5.QtWidgets import *
  
 # This is our window from QtCreator
-import pru_manual
- 
+import ui_pru
+
+#virtualkeyboard
+os.environ["QT_IM_MODULE"] = "qtvirtualkeyboard"
+
 # create class for our Raspberry Pi GUI
-class Dialog(QDialog, pru_manual.Ui_Dialog):
+class Dialog(QDialog, ui_pru.Ui_Dialog):
    # access variables inside of the UI's file
    def sliderValue(self):
       print ("Slider moved")
