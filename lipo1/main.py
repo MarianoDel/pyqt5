@@ -598,14 +598,14 @@ class Dialog(QDialog):
         if self.t.treatment_state == 'RUNNING':
             self.t.treatment_state = 'ENDED'
 
-        if self.t.treatment_state != 'RUNNING':
-            if self.stopb_closeui > 5:
-                self.close()
-            elif self.stopb_closeui > 4: 
-                self.stopb_closeui += 1
-                self.ui.stopButton.setText(" !! ?? !!")
-            else:
-                self.stopb_closeui += 1
+        # if self.t.treatment_state != 'RUNNING':
+        #     if self.stopb_closeui > 5:
+        #         self.close()
+        #     elif self.stopb_closeui > 4: 
+        #         self.stopb_closeui += 1
+        #         self.ui.stopButton.setText(" !! ?? !!")
+        #     else:
+        #         self.stopb_closeui += 1
                 
                 
 

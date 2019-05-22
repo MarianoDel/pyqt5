@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>Inicio_listo_1108_614.png</file>
+    <file>Inicio listo.jpg</file>
+    <file>Inicio_listo_800_443.png</file>
+  </qresource>
+</RCC>
