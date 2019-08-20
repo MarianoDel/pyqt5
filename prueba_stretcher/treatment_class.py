@@ -74,5 +74,65 @@ class Treatment():
             return self.ch2
         if (ch == 'ch3'):
             return self.ch3
-            
+
+    def GetMagnetoFreqSignalPowerString (self):
+        """ 
+            Devuelve un string con toda la info combinada para el Magneto viejo 
+            "signal,%03d,%03d,0%x%x%d,%04d,%04d,%04d,%04d,%04d,%04d,1\r\n"
+            example. signal,100,100,0000,0003,0003,0003,0006,0000,0000,1
+        """
+        treat = "signal,{:03d},{:03d},0000,".format(self.power,self.power)
+
+        if self.signal == 'triangular':
+            # rising edge, maintenance, falling edge, stop time 
+            if self.frequency == '7.83Hz':
+                treat += '0061,0001,0001,0064,0000,0000,1'
+            if self.frequency == '14.3Hz':
+                treat += '0033,0001,0001,0035,0000,0000,1'
+            if self.frequency == '20.8Hz':
+                treat += '0022,0001,0001,0024,0000,0000,1'
+            if self.frequency == '27.3Hz':
+                treat += '0016,0001,0001,0019,0000,0000,1'
+            if self.frequency == '33.8Hz':
+                treat += '0012,0001,0001,0015,0000,0000,1'
+            if self.frequency == '62.6Hz':
+                treat += '0006,0001,0001,0008,0000,0000,1'
+
+        if self.signal == 'sinusoidal':
+            # rising edge, maintenance, falling edge, stop time 
+            if self.frequency == '7.83Hz':
+                treat += '0021,0021,0021,0064,0000,0000,1'
+            if self.frequency == '14.3Hz':
+                treat += '0012,0011,0012,0035,0000,0000,1'
+            if self.frequency == '20.8Hz':
+                treat += '0008,0008,0008,0024,0000,0000,1'
+            if self.frequency == '27.3Hz':
+                treat += '0006,0006,0006,0019,0000,0000,1'
+            if self.frequency == '33.8Hz':
+                treat += '0005,0004,0005,0015,0000,0000,1'
+            if self.frequency == '62.6Hz':
+                treat += '0003,0002,0003,0008,0000,0000,1'
+
+        if self.signal == 'square':
+            # rising edge, maintenance, falling edge, stop time 
+            if self.frequency == '7.83Hz':
+                treat += '0001,0061,0001,0064,0000,0000,1'
+            if self.frequency == '14.3Hz':
+                treat += '0001,0033,0001,0035,0000,0000,1'
+            if self.frequency == '20.8Hz':
+                treat += '0001,0022,0001,0024,0000,0000,1'
+            if self.frequency == '27.3Hz':
+                treat += '0001,0016,0001,0019,0000,0000,1'
+            if self.frequency == '33.8Hz':
+                treat += '0001,0012,0001,0015,0000,0000,1'
+            if self.frequency == '62.6Hz':
+                treat += '0001,0006,0001,0008,0000,0000,1'        
+
+        return treat
+
+    def GetMagnetoDurationString (self):
+        treat_time = 'duration,00,{:02d},00,1'.format(self.treatment_timer)
+        return treat_time
+        
+
         

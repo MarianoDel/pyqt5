@@ -81,6 +81,14 @@ class Dialog(QDialog):
         self.ui.startButton.clicked.connect(self.Start_Treatment)
         self.ui.stopButton.clicked.connect(self.Stop_Treatment)
         self.ui.pauseButton.clicked.connect(self.Pause_Treatment)
+
+
+        # Cambios para utilizar el programa con el Magneto
+        self.ui.ch1Button.setEnabled(False)
+        self.ui.ch2Button.setEnabled(False)
+        self.ui.ch3Button.setEnabled(False)
+        self.ui.updownButton.setEnabled(False)
+        # Fin cambios programa Magneto
         
         # #con el boton lanzo el evento close, que luego llama a closeEvent
         # self.ui.closeButton.clicked.connect(self.close)
@@ -96,9 +104,9 @@ class Dialog(QDialog):
         #self.MyObjCallback la llaman desde otro thread, armo una senial
         #antes de modificar UI
         ## PARA SLACKWARE
-        # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+        self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
         ## PARA RASPBERRY
-        self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
+        # self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
         if self.s.port_open == False:
             self.ui.textEdit.append("No serial port found!!!")
             # sys.exit(-1)
@@ -248,64 +256,82 @@ class Dialog(QDialog):
                 self.s.Write("voltage\r\n")
                 sleep(0.1)
                 
-                new_signal = self.t.GetSignal()
-                to_send = "signal " + new_signal
-                self.ui.textEdit.append(to_send)
-                self.s.Write(to_send + "\r\n")
+                # new_signal = self.t.GetSignal()
+                # to_send = "signal " + new_signal
+                # self.ui.textEdit.append(to_send)
+                # self.s.Write(to_send + "\r\n")
 
-                new_freq = self.t.GetFrequency()
-                new_freq = new_freq.split('Hz')
-                new_freq = new_freq[0]
-                new_freq_f = float(new_freq)
-                if new_freq_f <= 5:
-                    to_send = "frequency " + "6.00Hz"
-                elif new_freq_f >= 70:
-                    to_send = "frequency " + "65.00Hz"
-                else:
-                    to_send = "frequency {:.02f}Hz".format(new_freq_f)
+                # new_freq = self.t.GetFrequency()
+                # new_freq = new_freq.split('Hz')
+                # new_freq = new_freq[0]
+                # new_freq_f = float(new_freq)
+                # if new_freq_f <= 5:
+                #     to_send = "frequency " + "6.00Hz"
+                # elif new_freq_f >= 70:
+                #     to_send = "frequency " + "65.00Hz"
+                # else:
+                #     to_send = "frequency {:.02f}Hz".format(new_freq_f)
+
                     
-                self.ui.textEdit.append(to_send)
-                self.s.Write(to_send + "\r\n")
+                # self.ui.textEdit.append(to_send)
+                # self.s.Write(to_send + "\r\n")
 
-                new_power = self.t.GetPower()                                        
-                to_send = 'power {:03d}'.format(new_power)
-                self.ui.textEdit.append(to_send)
-                self.s.Write(to_send + "\r\n")
+                # new_power = self.t.GetPower()                                        
+                # to_send = 'power {:03d}'.format(new_power)
+                # self.ui.textEdit.append(to_send)
+                # self.s.Write(to_send + "\r\n")
 
-                if (self.t.GetChannelInTreatment('ch1') == True):
-                    to_send = "enable channel 1"
-                    self.ui.textEdit.append(to_send)
-                    self.s.Write(to_send + "\r\n")
-                else:
-                    to_send = "disable channel 1"
-                    self.ui.textEdit.append(to_send)
-                    self.s.Write(to_send + "\r\n")
-                    
-
-                if (self.t.GetChannelInTreatment('ch2') == True):
-                    to_send = "enable channel 2"
-                    self.ui.textEdit.append(to_send)
-                    self.s.Write(to_send + "\r\n")
-                else:
-                    to_send = "disable channel 2"
-                    self.ui.textEdit.append(to_send)
-                    self.s.Write(to_send + "\r\n")
+                # if (self.t.GetChannelInTreatment('ch1') == True):
+                #     to_send = "enable channel 1"
+                #     self.ui.textEdit.append(to_send)
+                #     self.s.Write(to_send + "\r\n")
+                # else:
+                #     to_send = "disable channel 1"
+                #     self.ui.textEdit.append(to_send)
+                #     self.s.Write(to_send + "\r\n")
                     
 
-                if (self.t.GetChannelInTreatment('ch3') == True):
-                    to_send = "enable channel 3"
-                    self.ui.textEdit.append(to_send)
-                    self.s.Write(to_send + "\r\n")
-                else:
-                    to_send = "disable channel 3"
-                    self.ui.textEdit.append(to_send)
-                    self.s.Write(to_send + "\r\n")
+                # if (self.t.GetChannelInTreatment('ch2') == True):
+                #     to_send = "enable channel 2"
+                #     self.ui.textEdit.append(to_send)
+                #     self.s.Write(to_send + "\r\n")
+                # else:
+                #     to_send = "disable channel 2"
+                #     self.ui.textEdit.append(to_send)
+                #     self.s.Write(to_send + "\r\n")
                     
 
-                new_timer = self.t.GetTreatmentTimer()
-                to_send = 'duration,00,{:02d},00,1'.format(new_timer)
-                self.ui.textEdit.append(to_send)
+                # if (self.t.GetChannelInTreatment('ch3') == True):
+                #     to_send = "enable channel 3"
+                #     self.ui.textEdit.append(to_send)
+                #     self.s.Write(to_send + "\r\n")
+                # else:
+                #     to_send = "disable channel 3"
+                #     self.ui.textEdit.append(to_send)
+                #     self.s.Write(to_send + "\r\n")
+
+                # new_timer = self.t.GetTreatmentTimer()
+                # to_send = 'duration,00,{:02d},00,1'.format(new_timer)
+                # self.ui.textEdit.append(to_send)
+                # self.s.Write(to_send + "\r\n")
+
+                # El magneto combina toda esta info en un solo string
+                # magnet_proj.org
+                to_send = self.t.GetMagnetoDurationString()
+                self.ui.textEdit.append(to_send)                
                 self.s.Write(to_send + "\r\n")
+                sleep(0.1)
+                
+                to_send = self.t.GetMagnetoFreqSignalPowerString()
+                self.ui.textEdit.append(to_send)                
+                self.s.Write(to_send + "\r\n")
+                sleep(0.1)
+
+                to_send = 'state_of_stage,1,1'
+                self.ui.textEdit.append(to_send)                
+                self.s.Write(to_send + "\r\n")
+                sleep(0.1)                
+                # Fin modificacion Magneto
                 
                 self.ui.textEdit.append("Starting Treatment...")            
                 self.s.Write("start,\r\n")
@@ -387,9 +413,11 @@ class Dialog(QDialog):
         self.ui.freq5Button.setEnabled(True)
         self.ui.freq6Button.setEnabled(True)
 
-        self.ui.ch1Button.setEnabled(True)
-        self.ui.ch2Button.setEnabled(True)
-        self.ui.ch3Button.setEnabled(True)
+        # Cambios para utilizar el programa con el Magneto
+        # self.ui.ch1Button.setEnabled(True)
+        # self.ui.ch2Button.setEnabled(True)
+        # self.ui.ch3Button.setEnabled(True)
+        # Fin cambios para utilizar el programa con el Magneto
 
         self.ui.powerUpButton.setEnabled(True)
         self.ui.powerDwnButton.setEnabled(True)
@@ -467,7 +495,8 @@ class Dialog(QDialog):
                 self.t.treatment_state = 'STOP'
                 self.EnableForTreatment()
                 self.ui.textEdit.append("STOP Treatment")
-                self.s.Write("stop,\r\n")
+                # self.s.Write("stop,\r\n")
+                self.s.Write("finish_ok,\r\n")
                 sleep(1)
                 
     def PwrUp (self, new_pwr):
@@ -529,7 +558,9 @@ class Dialog(QDialog):
         print ("signal callback!")        
         self.ui.textEdit.append(rcv)
         # reviso si es un final de tratamiento
-        if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
+        # if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
+        if rcv.startswith("STOP") or rcv.startswith("finish,"):
+        
             if self.t.treatment_state == 'START':
                 # termino el tratamiento, hago algo parecido al boton stop
                 self.t.treatment_state = 'STOP'
