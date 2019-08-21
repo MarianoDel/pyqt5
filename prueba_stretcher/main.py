@@ -30,6 +30,7 @@ class Dialog(QDialog):
     powerDwnButtonCnt = 0
     timeUpButtonCnt = 0
     timeDwnButtonCnt = 0
+    tempCnt = 0
 
     #SIGNALS
     # signals para comunicacion 1 seg
@@ -361,14 +362,16 @@ class Dialog(QDialog):
                 self.ui.stopButton.setEnabled(False)
                 self.ui.pauseButton.setText("RESUME")                
                 self.ui.textEdit.append("Pausing Treatment...")
-                self.s.Write("pause,\r\n")
+                # self.s.Write("pause,\r\n")
+                self.s.Write("pause,1\r\n")                
                 sleep(0.1)
             elif (self.t.treatment_state == 'PAUSE'):
                 self.t.treatment_state = 'START'
                 self.ui.stopButton.setEnabled(True)
                 self.ui.pauseButton.setText("PAUSE")
                 self.ui.textEdit.append("Resuming Treatment...")
-                self.s.Write("pause,\r\n")
+                # self.s.Write("pause,\r\n")
+                self.s.Write("pause,0\r\n")                
                 sleep(0.1)                
         else:
             self.ui.textEdit.append("Port not Open!!!")            
@@ -417,6 +420,7 @@ class Dialog(QDialog):
         # self.ui.ch1Button.setEnabled(True)
         # self.ui.ch2Button.setEnabled(True)
         # self.ui.ch3Button.setEnabled(True)
+        self.tempCnt = 0
         # Fin cambios para utilizar el programa con el Magneto
 
         self.ui.powerUpButton.setEnabled(True)
@@ -555,8 +559,8 @@ class Dialog(QDialog):
         self.rcv_signal.emit(d)
 
     def MySignalCallback (self, rcv):
-        print ("signal callback!")        
-        self.ui.textEdit.append(rcv)
+        print ("signal callback!")
+        # self.ui.textEdit.append(rcv)
         # reviso si es un final de tratamiento
         # if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
         if rcv.startswith("STOP") or rcv.startswith("finish,"):
@@ -565,9 +569,23 @@ class Dialog(QDialog):
                 # termino el tratamiento, hago algo parecido al boton stop
                 self.t.treatment_state = 'STOP'
                 self.EnableForTreatment()
-                # self.ui.textEdit.append("STOP Treatment")
+                self.ui.textEdit.append("Ended or Stopped Treatment")
                 # self.s.Write("stop,\r\n")
                 sleep(1)
+
+        elif rcv.startswith("temp,"):
+            # incremento un contador y lo muestro cada tanto, 10min aprox.
+            if self.tempCnt == 0 or self.tempCnt >= 600:
+                self.tempCnt = 0
+                self.ui.textEdit.append(rcv)
+
+            self.tempCnt = self.tempCnt + 1
+
+        else:
+            # el resto de los mensajes los paso directo a la pantalla
+            self.ui.textEdit.append(rcv)
+                
+    
 
                 
         
