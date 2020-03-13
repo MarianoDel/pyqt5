@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="imag">
+    <file>resources/logo_chico.png</file>
+    <file>resources/fondo_con_logo_1280x800.png</file>
     <file>resources/senoidal.png</file>
     <file>resources/cuadrada.png</file>
     <file>resources/triangular.png</file>
