@@ -26,7 +26,7 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QDialog {background-image: url(:/imag/resources/fondo_con_logo_1280x800.png)};</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -50,16 +50,6 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="stretcher_res.qrc">:/imag/resources/logo_chico.png</pixmap>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -76,11 +66,14 @@
        <widget class="QLabel" name="date_timeLabel">
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
+          <pointsize>22</pointsize>
          </font>
         </property>
         <property name="text">
          <string>TextLabel</string>
+        </property>
+        <property name="margin">
+         <number>8</number>
         </property>
        </widget>
       </item>

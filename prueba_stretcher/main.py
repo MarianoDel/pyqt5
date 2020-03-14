@@ -22,6 +22,8 @@ RUNNING_ON_RASP = 1
 USE_FOR_MAGNETO = 0
 USE_FOR_STRETCHER = 1
 USE_POWER_LIMIT = 1
+USE_STRETCHER_UPDOWN_BUTTON = 0
+USE_STRETCHER_DIAG_BUTTON = 1
 
 ### CUSTOM SIGNALS ####################
 #clase de la senial
@@ -151,6 +153,11 @@ class Dialog(QDialog):
         date_str = date_now.strftime("%d/%m/%Y - %H:%M")
         self.ui.date_timeLabel.setText(date_str)
 
+        #uso del boton UP/DOWN
+        if USE_STRETCHER_UPDOWN_BUTTON:
+            self.ui.updownButton.setText("Up / Down")
+        elif USE_STRETCHER_DIAG_BUTTON:
+            self.ui.updownButton.setText("Diagnostics")
         
         
 
@@ -174,11 +181,15 @@ class Dialog(QDialog):
             self.t.DisableChannelsInTreatment('ch3')
             
     def StretcherUpOrDown (self):
-        self.ui.textEdit.append("Stretcher UP or DOWN")
-        if (self.s.port_open):
-            self.s.Write("stretcher up\r\n")
-        else:
-            self.ui.textEdit.append("Port not Open!!!")
+        if USE_STRETCHER_UPDOWN_BUTTON:
+            self.ui.textEdit.append("Stretcher UP or DOWN")
+            if (self.s.port_open):
+                self.s.Write("stretcher up\r\n")
+            else:
+                self.ui.textEdit.append("Port not Open!!!")
+
+        # elif USE_STRETCHER_DIAG_BUTTON:
+            
 
     def UpTimePressed (self):
         self.TimeUp (1)
