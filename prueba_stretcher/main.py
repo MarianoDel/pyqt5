@@ -1,14 +1,18 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject
-from ui_stretcher import Ui_Dialog
 from serialcomm import SerialComm
 from treatment_class import Treatment
 from time import sleep, time
 from datetime import datetime
+import platform
 
 #para el timer de 1 segundo
 from threading import Timer
+
+#importo las UIs
+from ui_stretcher import Ui_Dialog
+from ui_stretcher_diag import Ui_DiagnosticsDialog
 
 
 """
@@ -17,13 +21,19 @@ from threading import Timer
 """
 
 ### GLOBALS FOR CONFIGURATION #########
+## OS where its run
 RUNNING_ON_SLACKWARE = 0
 RUNNING_ON_RASP = 1
+## Device where the interface is used
 USE_FOR_MAGNETO = 0
 USE_FOR_STRETCHER = 1
+## Apply power limits to the antennas
 USE_POWER_LIMIT = 1
+## What to do with the Up/Down Button
 USE_STRETCHER_UPDOWN_BUTTON = 0
 USE_STRETCHER_DIAG_BUTTON = 1
+## This Interface Software version
+CURRENT_VERSION = "Stretcher ver_2_1"
 
 ### CUSTOM SIGNALS ####################
 #clase de la senial
@@ -33,6 +43,89 @@ class Communicate(QObject):
     # receivedData = pyqtSignal()
     
 
+#####################################################################
+# DiagnosticsDialog Class - Secondary window for diagnostics checks #
+#####################################################################
+class DiagDialog(QDialog):
+    def __init__(self, ser_instance):
+        super(DiagDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_DiagnosticsDialog()
+        self.ui.setupUi(self)
+
+        self.ui.doneButton.clicked.connect(self.accept)
+
+        self.ser = ser_instance
+
+        #activo el timer de 2 segundos, la primera vez, luego se autollama
+        if self.ser.port_open == False:
+            self.ui.hardwareLabel.setText("No port  ")
+            self.ui.firmwareLabel.setText("No port  ")
+        else:
+            self.ui.hardwareLabel.setText("Waiting...  ")
+            self.ui.firmwareLabel.setText("Waiting...  ")
+            self.ser.Write("voltage\n")
+            # ser_instance.Write("get data\n")
+            self.next_call = time()
+            self.t3seg = Timer(self.next_call - time(), self.TimerThreeSec, [3]).start()
+
+        #recupero informacion del sistema
+        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        # print(f"distname: {distname} version: {version} id: {nid}")
+        os_text = "--" + distname + version + "-- "
+        self.ui.osLabel.setText(os_text)
+
+        (system, node, release, version, machine, processor) = platform.uname()
+        # print(f"system: {system}, node: {node}, release: {release}, version: {version}, machine: {machine}, processor: {processor}")
+        self.ui.kernelLabel.setText(release)
+        self.ui.softLabel.setText(CURRENT_VERSION)
+
+    def TimerThreeSec (self, lapse):
+        """ 
+            aca tengo que resolver todo lo que se mueve 
+            lo hago tipo por estados del programa con treatmet_state
+        """
+        self.next_call = self.next_call + lapse
+        # #esto corre en otro thread entonces mando una senial para hacer update de la interface
+        # self.one_second_signal.emit()        
+        #antes de volver hago la proxima llamada
+        self.t3seg = Timer(self.next_call - time(), self.TimerThreeSec, [3]).start()
+        arrow = self.ser.Read()
+        print(arrow)
+        
+
+
+    #     self.intfreq = 0
+
+    #     # # # Connect up the buttons.
+    #     self.ui.pushButton1.clicked.connect(self.UPFreq)
+    #     self.ui.pushButton2.clicked.connect(self.DWNFreq)
+    #     self.ui.endButton.clicked.connect(self.accept)
+
+
+    # def UPFreq (self, event=None):
+    #     if (self.intfreq < 10):
+    #         self.intfreq += 1
+
+    #     self.changeFreqLabel(self.intfreq)
+
+    # def DWNFreq (self, event=None):
+    #     if (self.intfreq > 1):
+    #         self.intfreq -= 1
+
+    #     self.changeFreqLabel(self.intfreq)
+
+    # def changeFreqLabel(self, new_f):
+    #     self.intfreq = new_f
+    #     self.ui.whatfreqLabel.setText(str(self.intfreq))
+    
+        
+### End of DiagnosticsDialog ###
+
+##############################
+# Dialog Class - Main Window #
+##############################
 class Dialog(QDialog):
 
     rcv_signal = pyqtSignal(str)
@@ -99,8 +192,8 @@ class Dialog(QDialog):
             self.ui.ch1Button.setEnabled(False)
             self.ui.ch2Button.setEnabled(False)
             self.ui.ch3Button.setEnabled(False)
-            
-        self.ui.updownButton.setEnabled(False)
+            self.ui.updownButton.setEnabled(False)            
+
         # Fin cambios programa Magneto
         
         # #con el boton lanzo el evento close, que luego llama a closeEvent
@@ -188,7 +281,20 @@ class Dialog(QDialog):
             else:
                 self.ui.textEdit.append("Port not Open!!!")
 
-        # elif USE_STRETCHER_DIAG_BUTTON:
+        elif USE_STRETCHER_DIAG_BUTTON:
+            a = DiagDialog(self.s)
+            a.setModal(True)
+            # a.changeChannelLabel(sender.text())
+            # a.changeLaserLabel(self.t.GetLaserPower(sender.text()))
+            # a.changeLEDLabel(self.t.GetLedPower(sender.text()))
+
+            # a.setWindowTitle("Seteo de Potencias")
+            a.exec_()
+
+            # new_power = a.ui.whatplaserLabel.text()
+            # # print ("canal: " + str(sender.text()) + " potencia: " + new_power)
+            # new_power = new_power[:-1]
+            # self.t.SetLaserPower(sender.text(), int(new_power))
             
 
     def UpTimePressed (self):
@@ -643,10 +749,7 @@ class Dialog(QDialog):
             # el resto de los mensajes los paso directo a la pantalla
             self.ui.textEdit.append(rcv)
                 
-    
-
-                
-        
+                          
     #capturo el cierre
     def closeEvent (self, event):
         self.ui.textEdit.append("Closing, Please Wait...")
@@ -654,9 +757,11 @@ class Dialog(QDialog):
         sleep(2)
         event.accept()
 
-    ###### FIN CLASS DIALOG
+### End of Dialog ###
 
-
+############
+# Main App #
+############
 app = QApplication(sys.argv)
 w = Dialog()
 #http://doc.qt.io/qt-5/qt.html#WindowType-enum
@@ -664,3 +769,6 @@ w.setWindowFlags(Qt.CustomizeWindowHint)
 # w.setWindowFlags(Qt.FramelessWindowHint)
 w.show()
 sys.exit(app.exec_())
+
+
+### End of File ###
