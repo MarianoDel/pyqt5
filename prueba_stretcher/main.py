@@ -391,8 +391,8 @@ class Dialog(QDialog):
                     self.t.remaining_minutes = self.t.GetTreatmentTimer()
                     self.t.remaining_seconds = 0
 
-                #envio variable dummy para limpiar puerto despues de algun error
-                self.s.Write("voltage\r\n")
+                # limpio el puerto y luego la configuracion
+                self.s.Write("keepalive,\r\n")
                 sleep(0.1)
 
                 if USE_FOR_STRETCHER:
@@ -480,7 +480,7 @@ class Dialog(QDialog):
                     sleep(0.1)                
                 # Fin modificacion Magneto
                 
-                self.ui.textEdit.append("Starting Treatment...")            
+                self.ui.textEdit.append("Starting Treatment...")
                 self.s.Write("start,\r\n")
                 self.t.treatment_state = 'START'
                 self.DisableForTreatment()
@@ -495,6 +495,10 @@ class Dialog(QDialog):
                 self.t.treatment_state = 'STOP'
                 self.EnableForTreatment()
                 self.ui.textEdit.append("STOP Treatment")
+
+                # limpio el puerto y mando terminacion
+                self.s.Write("keepalive,\r\n")
+                sleep(0.1)
                 self.s.Write("stop,\r\n")
                 sleep(1)
         else:
@@ -508,15 +512,20 @@ class Dialog(QDialog):
                 self.ui.stopButton.setEnabled(False)
                 self.ui.pauseButton.setText("RESUME")                
                 self.ui.textEdit.append("Pausing Treatment...")
-                # self.s.Write("pause,\r\n")
+                # limpio el puerto y mando la pausa                
+                self.s.Write("keepalive,\r\n")
+                sleep(0.1)
                 self.s.Write("pause,1\r\n")                
                 sleep(0.1)
+                
             elif (self.t.treatment_state == 'PAUSE'):
                 self.t.treatment_state = 'START'
                 self.ui.stopButton.setEnabled(True)
                 self.ui.pauseButton.setText("PAUSE")
                 self.ui.textEdit.append("Resuming Treatment...")
-                # self.s.Write("pause,\r\n")
+                # limpio el puerto y mando la pausa                
+                self.s.Write("keepalive,\r\n")
+                sleep(0.1)
                 self.s.Write("pause,0\r\n")                
                 sleep(0.1)                
         else:
@@ -663,7 +672,10 @@ class Dialog(QDialog):
                 self.t.treatment_state = 'STOP'
                 self.EnableForTreatment()
                 self.ui.textEdit.append("STOP Treatment")
-                # self.s.Write("stop,\r\n")
+
+                # limpio el puerto y mando terminacion
+                self.s.Write("keepalive,\r\n")
+                sleep(0.1)
                 self.s.Write("finish_ok,\r\n")
                 sleep(1)
                 
