@@ -13,6 +13,7 @@ from threading import Timer
 #importo las UIs
 from ui_stretcher import Ui_Dialog
 from ui_stretcher_diag import Ui_DiagnosticsDialog
+from ui_stretcher_rtc import Ui_RtcDialog
 
 
 """
@@ -22,8 +23,8 @@ from ui_stretcher_diag import Ui_DiagnosticsDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 0
-RUNNING_ON_RASP = 1
+RUNNING_ON_SLACKWARE = 1
+RUNNING_ON_RASP = 0
 ## Device where the interface is used
 USE_FOR_MAGNETO = 0
 USE_FOR_STRETCHER = 1
@@ -31,7 +32,8 @@ USE_FOR_STRETCHER = 1
 USE_POWER_LIMIT = 1
 ## What to do with the Up/Down Button
 USE_STRETCHER_UPDOWN_BUTTON = 0
-USE_STRETCHER_DIAG_BUTTON = 1
+USE_STRETCHER_DIAG_BUTTON = 0
+USE_STRETCHER_RTC_BUTTON = 1
 ## This Interface Software version
 CURRENT_VERSION = "Stretcher ver_2_1"
 
@@ -42,6 +44,148 @@ class Communicate(QObject):
 
     # receivedData = pyqtSignal()
     
+
+##################################################
+# RtcDialog Class - to set the RTC on the system #
+##################################################
+class RtcDialog(QDialog):
+    def __init__(self, ser_instance):
+        super(RtcDialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_RtcDialog()
+        self.ui.setupUi(self)
+
+        self.ui.doneButton.clicked.connect(self.accept)
+
+        self.ui.UpButton.clicked.connect(self.UpBtn)
+        self.ui.DwnButton.clicked.connect(self.DwnBtn)
+
+        self.ui.dayButton.clicked.connect(self.ChangeFocusDay)
+        self.ui.monthButton.clicked.connect(self.ChangeFocusMonth)
+        self.ui.yearButton.clicked.connect(self.ChangeFocusYear)
+        self.ui.hourButton.clicked.connect(self.ChangeFocusHour)
+        self.ui.minuteButton.clicked.connect(self.ChangeFocusMinute)
+        self.new_focus = "DAY"
+
+
+    def UpBtn (self, event=None):
+        day = int(self.ui.dayButton.text())
+        month = int(self.ui.monthButton.text())
+        year = int(self.ui.yearButton.text())
+        hour = int(self.ui.hourButton.text())
+        minute = int(self.ui.minuteButton.text())
+
+        if self.new_focus == "DAY":
+            if day < 31:
+                day += 1
+
+        if self.new_focus == "MONTH":
+            if month < 12:
+                month += 1
+
+        if self.new_focus == "YEAR":
+            if year < 99:
+                year += 1
+                
+        if self.new_focus == "HOUR":
+            if hour < 23:
+                hour += 1
+
+        if self.new_focus == "MINUTE":
+            if minute < 59:
+                minute += 1
+                
+        self.UpdateNumbers(day, month, year, hour, minute)
+
+        
+    def DwnBtn (self, event=None):
+        day = int(self.ui.dayButton.text())
+        month = int(self.ui.monthButton.text())
+        year = int(self.ui.yearButton.text())
+        hour = int(self.ui.hourButton.text())
+        minute = int(self.ui.minuteButton.text())
+        
+        if self.new_focus == "DAY":
+            if day > 1:
+                day -= 1
+
+        if self.new_focus == "MONTH":
+            if month > 1:
+                month -= 1
+
+        if self.new_focus == "YEAR":
+            if year > 0:
+                year -= 1
+                
+        if self.new_focus == "HOUR":
+            if hour > 0:
+                hour -= 1
+
+        if self.new_focus == "MINUTE":
+            if minute > 0:
+                minute -= 1
+
+        self.UpdateNumbers(day, month, year, hour, minute)
+        
+
+    def ChangeFocusDay (self):
+        self.ClearFocus()
+        self.new_focus = "DAY"
+        self.ui.dayButton.setStyleSheet("background-color: rgb(170, 170, 255);\
+                                         border: 0px;")
+
+
+    def ChangeFocusMonth (self):
+        self.ClearFocus()
+        self.new_focus = "MONTH"
+        self.ui.monthButton.setStyleSheet("background-color: rgb(170, 170, 255);\
+                                          border: 0px;")
+
+
+    def ChangeFocusYear (self):
+        self.ClearFocus()
+        self.new_focus = "YEAR"
+        self.ui.yearButton.setStyleSheet("background-color: rgb(170, 170, 255);\
+                                          border: 0px;")
+
+
+    def ChangeFocusHour (self):
+        self.ClearFocus()
+        self.new_focus = "HOUR"
+        self.ui.hourButton.setStyleSheet("background-color: rgb(170, 170, 255);\
+                                          border: 0px;")
+
+
+    def ChangeFocusMinute (self):
+        self.ClearFocus()
+        self.new_focus = "MINUTE"
+        self.ui.minuteButton.setStyleSheet("background-color: rgb(170, 170, 255);\
+                                            border: 0px;")
+
+        
+    def ClearFocus (self):
+        self.ui.dayButton.setStyleSheet("background-color: rgb(255, 170, 255);\
+                                         border: 0px;")
+        self.ui.monthButton.setStyleSheet("background-color: rgb(255, 170, 255);\
+                                          border: 0px;")
+        self.ui.yearButton.setStyleSheet("background-color: rgb(255, 170, 255);\
+                                          border: 0px;")
+        self.ui.hourButton.setStyleSheet("background-color: rgb(255, 170, 255);\
+                                          border: 0px;")
+        self.ui.minuteButton.setStyleSheet("background-color: rgb(255, 170, 255);\
+                                            border: 0px;")
+
+
+    def UpdateNumbers (self, d, m, y, h, mm):
+        self.ui.dayButton.setText(f"{d:02d}")
+        self.ui.monthButton.setText(f"{m:02d}")
+        self.ui.yearButton.setText(f"{y:02d}")
+        self.ui.hourButton.setText(f"{h:02d}")
+        self.ui.minuteButton.setText(f"{mm:02d}")
+        
+### End of RtcDialog ###
+
 
 #####################################################################
 # DiagnosticsDialog Class - Secondary window for diagnostics checks #
@@ -122,6 +266,7 @@ class DiagDialog(QDialog):
     
         
 ### End of DiagnosticsDialog ###
+
 
 ##############################
 # Dialog Class - Main Window #
@@ -251,6 +396,8 @@ class Dialog(QDialog):
             self.ui.updownButton.setText("Up / Down")
         elif USE_STRETCHER_DIAG_BUTTON:
             self.ui.updownButton.setText("Diagnostics")
+        elif USE_STRETCHER_RTC_BUTTON:
+            self.ui.updownButton.setText("RTC change")
         
         
 
@@ -291,10 +438,19 @@ class Dialog(QDialog):
             # a.setWindowTitle("Seteo de Potencias")
             a.exec_()
 
-            # new_power = a.ui.whatplaserLabel.text()
-            # # print ("canal: " + str(sender.text()) + " potencia: " + new_power)
-            # new_power = new_power[:-1]
-            # self.t.SetLaserPower(sender.text(), int(new_power))
+        elif USE_STRETCHER_RTC_BUTTON:
+            a = RtcDialog(self.s)
+            a.setModal(True)
+
+            date_now = datetime.today()
+            a.ui.dayButton.setText(date_now.strftime("%d"))
+            a.ui.monthButton.setText(date_now.strftime("%m"))
+            a.ui.yearButton.setText(date_now.strftime("%y"))
+
+            a.ui.hourButton.setText(date_now.strftime("%H"))
+            a.ui.minuteButton.setText(date_now.strftime("%M"))            
+
+            a.exec_()
             
 
     def UpTimePressed (self):
