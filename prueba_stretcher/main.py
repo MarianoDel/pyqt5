@@ -6,6 +6,7 @@ from treatment_class import Treatment
 from time import sleep, time
 from datetime import datetime
 import platform
+import os
 
 #para el timer de 1 segundo
 from threading import Timer
@@ -34,6 +35,9 @@ USE_POWER_LIMIT = 1
 USE_STRETCHER_UPDOWN_BUTTON = 0
 USE_STRETCHER_DIAG_BUTTON = 0
 USE_STRETCHER_RTC_BUTTON = 1
+## if the RTC Button exists what to do with the info
+USE_RTC_STRING_FOR_PRINT = 1
+USE_RTC_STRING_FOR_COMMAND = 0
 ## This Interface Software version
 CURRENT_VERSION = "Stretcher ver_2_1"
 
@@ -451,7 +455,17 @@ class Dialog(QDialog):
             a.ui.minuteButton.setText(date_now.strftime("%M"))            
 
             a.exec_()
-            
+            new_day = a.ui.dayButton.text()
+            new_month = a.ui.monthButton.text()
+            new_year = a.ui.yearButton.text()
+            new_hour = a.ui.hourButton.text()
+            new_minute = a.ui.minuteButton.text()
+            # print(f"{new_day}/{new_month}/{new_year} {new_hour}:{new_minute}")
+            myCmd = "sudo date -s {0}/{1}/20{2} {3}:{4}".format(new_day, new_month, new_year, new_hour, new_minute)
+            if USE_RTC_STRING_FOR_PRINT:
+                print(myCmd)
+            elif USE_RTC_STRING_FOR_COMMAND:
+                os.system(myCmd)
 
     def UpTimePressed (self):
         self.TimeUp (1)
