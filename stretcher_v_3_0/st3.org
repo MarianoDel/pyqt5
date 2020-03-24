@@ -1,0 +1,42 @@
+* Programa partiendo de rasp lipo 15-05-2019
+** config.txt
+*** Uart
+   - la primera linea
+     enable_uart=1
+
+*** HDMI
+    - comento todo, se ve que no necesita nada aca
+
+*** Splash - Rainbow Image
+    - se lo saco con
+      disable_splash=1
+
+*** Cambio RTC
+    - al final del archivo
+      #modificacion 16-03-2020 para RTC
+    dtparam=i2c_arm=on
+    dtoverlay=i2c-rtc,ds3231
+
+** cmdline.txt
+   - no toco nada
+
+** /home/pi/.xsession
+*** para ejecutar programa pantalla completa
+    #!/bin/sh                                                                                                                             
+
+    #exec /usr/bin/python3 /home/pi/lipo1/main.py
+    exec /usr/bin/python3 /home/pi/stretcher_v_3_0/main.py
+
+** /etc/rc.local
+   - comento todo y al final agrego para el RTC
+     /sbin/hwclock -s
+     exit 0
+
+** FALTA MODIFICAR SPLASH SCREEN REVISAR!!!
+
+* Me parece falta quitar un servicio en el RTC VERIFICAR
+     
+
+
+
+
