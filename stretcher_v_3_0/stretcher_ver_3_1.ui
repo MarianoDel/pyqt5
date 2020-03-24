@@ -293,22 +293,6 @@ border:2px solid rgb(55, 52, 53);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>450</x>
-     <y>621</y>
-     <width>791</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border:4px outset;
-background-color: rgb(246, 255, 254);
-border-radius: 16px;
-color: rgb(0, 85, 255);</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
@@ -921,6 +905,23 @@ border:2px solid rgb(55, 52, 53);</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>453</x>
+     <y>619</y>
+     <width>791</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border:2px outset;
+background-color: rgb(246, 255, 254);
+border-radius: 16px;
+color: rgb(0, 85, 255);
+border-color: rgb(55, 52, 53);</string>
    </property>
   </widget>
  </widget>

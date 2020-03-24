@@ -72,6 +72,47 @@ class ButtonStyles():
                              border-radius: 10px;\
                              border:2px solid rgb(55, 52, 53);"
 
+        self.freq1_disable = "background-image: url(:/frequencies/resources/7_83Hz.png);\
+                             background-color: rgb(245, 245, 245);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq2_disable = "background-image: url(:/frequencies/resources/11_79Hz.png);\
+                             background-color: rgb(245, 245, 245);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq3_disable = "background-image: url(:/frequencies/resources/16_67Hz.png);\
+                             background-color: rgb(245, 245, 245);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq4_disable = "background-image: url(:/frequencies/resources/23_58Hz.png);\
+                             background-color: rgb(245, 245, 245);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq5_disable = "background-image: url(:/frequencies/resources/30_80Hz.png);\
+                             background-color: rgb(245, 245, 245);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq6_disable = "background-image: url(:/frequencies/resources/62_64Hz.png);\
+                             background-color: rgb(245, 245, 245);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+        
+
+        self.ch_enable = "color: rgb(55, 52, 53);\
+                          background-color: rgb(157, 211, 175);\
+                          border-radius: 10px;\
+                          border:2px solid rgb(55, 52, 53);"
+
+        self.ch_disable = "color: rgb(55, 52, 53);\
+                          background-color: rgb(245, 245, 245);\
+                          border-radius: 10px;\
+                          border:2px solid rgb(55, 52, 53);"
+        
         
         
 ### end of file ###

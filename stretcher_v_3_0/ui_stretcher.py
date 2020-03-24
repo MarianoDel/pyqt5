@@ -142,13 +142,6 @@ class Ui_Dialog(object):
 "border:2px solid rgb(55, 52, 53);")
         self.startButton.setText("")
         self.startButton.setObjectName("startButton")
-        self.textEdit = QtWidgets.QLineEdit(Dialog)
-        self.textEdit.setGeometry(QtCore.QRect(450, 621, 791, 151))
-        self.textEdit.setStyleSheet("border:4px outset;\n"
-"background-color: rgb(246, 255, 254);\n"
-"border-radius: 16px;\n"
-"color: rgb(0, 85, 255);")
-        self.textEdit.setObjectName("textEdit")
         self.layoutWidget1 = QtWidgets.QWidget(Dialog)
         self.layoutWidget1.setGeometry(QtCore.QRect(60, 150, 346, 102))
         self.layoutWidget1.setObjectName("layoutWidget1")
@@ -454,6 +447,14 @@ class Ui_Dialog(object):
         self.date_timeLabel.setStyleSheet("color: rgb(55, 52, 53);")
         self.date_timeLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.date_timeLabel.setObjectName("date_timeLabel")
+        self.textEdit = QtWidgets.QTextEdit(Dialog)
+        self.textEdit.setGeometry(QtCore.QRect(453, 619, 791, 151))
+        self.textEdit.setStyleSheet("border:2px outset;\n"
+"background-color: rgb(246, 255, 254);\n"
+"border-radius: 16px;\n"
+"color: rgb(0, 85, 255);\n"
+"border-color: rgb(55, 52, 53);")
+        self.textEdit.setObjectName("textEdit")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

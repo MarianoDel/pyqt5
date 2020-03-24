@@ -7,20 +7,19 @@ class Treatment():
     """ Clase para guardar valores de tratamiento """
 
     def __init__(self):
+        ## Parametros por Default
         self.power = 70
-
+        self.max_power = 100
+        self.min_power = 10
         self.signal = 'triangular'
-
         self.frequency = '7.83Hz'
-
-        self.treatment_timer = 30
-        self.treatment_alarms = 0
-
-        self.treatment_state = 'STOP'
-
+        self.treatment_timer = 60
+        self.max_treatment_timer = 120
+        self.min_treatment_timer = 1
         self.ch1 = True
         self.ch2 = True
         self.ch3 = True
+        self.treatment_state = 'STOP'
 
         #contadores internos
         self.remaining_minutes = 0
