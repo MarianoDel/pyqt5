@@ -452,7 +452,7 @@ class Ui_Dialog(object):
         self.textEdit.setStyleSheet("border:2px outset;\n"
 "background-color: rgb(246, 255, 254);\n"
 "border-radius: 16px;\n"
-"color: rgb(0, 85, 255);\n"
+"color: rgb(0, 0, 127);\n"
 "border-color: rgb(55, 52, 53);")
         self.textEdit.setObjectName("textEdit")
 

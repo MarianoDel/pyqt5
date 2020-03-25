@@ -6,16 +6,14 @@ from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
 from time import sleep, time
 from datetime import datetime
-import platform
-import os
+
 
 #para el timer de 1 segundo
 from threading import Timer
 
-#importo las UIs
+#Here import the UIs or the classes that got the UIs
 from ui_stretcher import Ui_Dialog
-# from ui_stretcher_diag import Ui_DiagnosticsDialog
-# from ui_stretcher_rtc import Ui_RtcDialog
+from first_dlg_cls import FirstDialog
 
 
 """
@@ -29,11 +27,6 @@ RUNNING_ON_SLACKWARE = 1
 RUNNING_ON_RASP = 0
 ## Apply power limits to the antennas
 USE_POWER_LIMIT = 1
-## what to do with the info
-USE_RTC_STRING_FOR_PRINT = 0
-USE_RTC_STRING_FOR_COMMAND = 1
-## This Interface Software version
-CURRENT_VERSION = "Stretcher ver_3_1"
 
 ### CUSTOM SIGNALS ####################
 #clase de la senial
@@ -43,232 +36,8 @@ class Communicate(QObject):
     # receivedData = pyqtSignal()
     
 
-##################################################
-# RtcDialog Class - to set the RTC on the system #
-##################################################
-# class RtcDialog(QDialog):
-#     def __init__(self, ser_instance):
-#         super(RtcDialog, self).__init__()
-
-#         # Set up the user interface from Designer.
-#         self.ui = Ui_RtcDialog()
-#         self.ui.setupUi(self)
-
-#         self.ui.doneButton.clicked.connect(self.accept)
-
-#         self.ui.UpButton.clicked.connect(self.UpBtn)
-#         self.ui.DwnButton.clicked.connect(self.DwnBtn)
-
-#         self.ui.dayButton.clicked.connect(self.ChangeFocusDay)
-#         self.ui.monthButton.clicked.connect(self.ChangeFocusMonth)
-#         self.ui.yearButton.clicked.connect(self.ChangeFocusYear)
-#         self.ui.hourButton.clicked.connect(self.ChangeFocusHour)
-#         self.ui.minuteButton.clicked.connect(self.ChangeFocusMinute)
-#         self.new_focus = "DAY"
 
 
-#     def UpBtn (self, event=None):
-#         day = int(self.ui.dayButton.text())
-#         month = int(self.ui.monthButton.text())
-#         year = int(self.ui.yearButton.text())
-#         hour = int(self.ui.hourButton.text())
-#         minute = int(self.ui.minuteButton.text())
-
-#         if self.new_focus == "DAY":
-#             if day < 31:
-#                 day += 1
-
-#         if self.new_focus == "MONTH":
-#             if month < 12:
-#                 month += 1
-
-#         if self.new_focus == "YEAR":
-#             if year < 99:
-#                 year += 1
-                
-#         if self.new_focus == "HOUR":
-#             if hour < 23:
-#                 hour += 1
-
-#         if self.new_focus == "MINUTE":
-#             if minute < 59:
-#                 minute += 1
-                
-#         self.UpdateNumbers(day, month, year, hour, minute)
-
-        
-#     def DwnBtn (self, event=None):
-#         day = int(self.ui.dayButton.text())
-#         month = int(self.ui.monthButton.text())
-#         year = int(self.ui.yearButton.text())
-#         hour = int(self.ui.hourButton.text())
-#         minute = int(self.ui.minuteButton.text())
-        
-#         if self.new_focus == "DAY":
-#             if day > 1:
-#                 day -= 1
-
-#         if self.new_focus == "MONTH":
-#             if month > 1:
-#                 month -= 1
-
-#         if self.new_focus == "YEAR":
-#             if year > 0:
-#                 year -= 1
-                
-#         if self.new_focus == "HOUR":
-#             if hour > 0:
-#                 hour -= 1
-
-#         if self.new_focus == "MINUTE":
-#             if minute > 0:
-#                 minute -= 1
-
-#         self.UpdateNumbers(day, month, year, hour, minute)
-        
-
-#     def ChangeFocusDay (self):
-#         self.ClearFocus()
-#         self.new_focus = "DAY"
-#         self.ui.dayButton.setStyleSheet("background-color: rgb(170, 170, 255);\
-#                                          border: 0px;")
-
-
-#     def ChangeFocusMonth (self):
-#         self.ClearFocus()
-#         self.new_focus = "MONTH"
-#         self.ui.monthButton.setStyleSheet("background-color: rgb(170, 170, 255);\
-#                                           border: 0px;")
-
-
-#     def ChangeFocusYear (self):
-#         self.ClearFocus()
-#         self.new_focus = "YEAR"
-#         self.ui.yearButton.setStyleSheet("background-color: rgb(170, 170, 255);\
-#                                           border: 0px;")
-
-
-#     def ChangeFocusHour (self):
-#         self.ClearFocus()
-#         self.new_focus = "HOUR"
-#         self.ui.hourButton.setStyleSheet("background-color: rgb(170, 170, 255);\
-#                                           border: 0px;")
-
-
-#     def ChangeFocusMinute (self):
-#         self.ClearFocus()
-#         self.new_focus = "MINUTE"
-#         self.ui.minuteButton.setStyleSheet("background-color: rgb(170, 170, 255);\
-#                                             border: 0px;")
-
-        
-#     def ClearFocus (self):
-#         self.ui.dayButton.setStyleSheet("background-color: rgb(255, 170, 255);\
-#                                          border: 0px;")
-#         self.ui.monthButton.setStyleSheet("background-color: rgb(255, 170, 255);\
-#                                           border: 0px;")
-#         self.ui.yearButton.setStyleSheet("background-color: rgb(255, 170, 255);\
-#                                           border: 0px;")
-#         self.ui.hourButton.setStyleSheet("background-color: rgb(255, 170, 255);\
-#                                           border: 0px;")
-#         self.ui.minuteButton.setStyleSheet("background-color: rgb(255, 170, 255);\
-#                                             border: 0px;")
-
-
-#     def UpdateNumbers (self, d, m, y, h, mm):
-#         self.ui.dayButton.setText("{0:02d}".format(d))
-#         self.ui.monthButton.setText("{0:02d}".format(m))
-#         self.ui.yearButton.setText("{0:02d}".format(y))
-#         self.ui.hourButton.setText("{0:02d}".format(h))
-#         self.ui.minuteButton.setText("{0:02d}".format(mm))
-#         # self.ui.dayButton.setText(f"{d:02d}")
-#         # self.ui.monthButton.setText(f"{m:02d}")
-#         # self.ui.yearButton.setText(f"{y:02d}")
-#         # self.ui.hourButton.setText(f"{h:02d}")
-#         # self.ui.minuteButton.setText(f"{mm:02d}")
-        
-### End of RtcDialog ###
-
-
-#####################################################################
-# DiagnosticsDialog Class - Secondary window for diagnostics checks #
-#####################################################################
-# class DiagDialog(QDialog):
-#     def __init__(self, ser_instance):
-#         super(DiagDialog, self).__init__()
-
-#         # Set up the user interface from Designer.
-#         self.ui = Ui_DiagnosticsDialog()
-#         self.ui.setupUi(self)
-
-#         self.ui.doneButton.clicked.connect(self.accept)
-
-#         self.ser = ser_instance
-
-#         #activo el timer de 2 segundos, la primera vez, luego se autollama
-#         if self.ser.port_open == False:
-#             self.ui.hardwareLabel.setText("No port  ")
-#             self.ui.firmwareLabel.setText("No port  ")
-#         else:
-#             self.ui.hardwareLabel.setText("Waiting...  ")
-#             self.ui.firmwareLabel.setText("Waiting...  ")
-#             self.ser.Write("voltage\n")
-#             # ser_instance.Write("get data\n")
-#             self.next_call = time()
-#             self.t3seg = Timer(self.next_call - time(), self.TimerThreeSec, [3]).start()
-
-#         #recupero informacion del sistema
-#         (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
-#         # print(f"distname: {distname} version: {version} id: {nid}")
-#         os_text = "--" + distname + version + "-- "
-#         self.ui.osLabel.setText(os_text)
-
-#         (system, node, release, version, machine, processor) = platform.uname()
-#         # print(f"system: {system}, node: {node}, release: {release}, version: {version}, machine: {machine}, processor: {processor}")
-#         self.ui.kernelLabel.setText(release)
-#         self.ui.softLabel.setText(CURRENT_VERSION)
-
-#     def TimerThreeSec (self, lapse):
-#         """ 
-#             aca tengo que resolver todo lo que se mueve 
-#             lo hago tipo por estados del programa con treatmet_state
-#         """
-#         self.next_call = self.next_call + lapse
-#         # #esto corre en otro thread entonces mando una senial para hacer update de la interface
-#         # self.one_second_signal.emit()        
-#         #antes de volver hago la proxima llamada
-#         self.t3seg = Timer(self.next_call - time(), self.TimerThreeSec, [3]).start()
-#         arrow = self.ser.Read()
-#         print(arrow)
-        
-
-
-#     #     self.intfreq = 0
-
-#     #     # # # Connect up the buttons.
-#     #     self.ui.pushButton1.clicked.connect(self.UPFreq)
-#     #     self.ui.pushButton2.clicked.connect(self.DWNFreq)
-#     #     self.ui.endButton.clicked.connect(self.accept)
-
-
-#     # def UPFreq (self, event=None):
-#     #     if (self.intfreq < 10):
-#     #         self.intfreq += 1
-
-#     #     self.changeFreqLabel(self.intfreq)
-
-#     # def DWNFreq (self, event=None):
-#     #     if (self.intfreq > 1):
-#     #         self.intfreq -= 1
-
-#     #     self.changeFreqLabel(self.intfreq)
-
-#     # def changeFreqLabel(self, new_f):
-#     #     self.intfreq = new_f
-#     #     self.ui.whatfreqLabel.setText(str(self.intfreq))
-    
-        
-### End of DiagnosticsDialog ###
 
 
 ##############################
@@ -345,19 +114,19 @@ class Dialog(QDialog):
         self.minutes_last = date_now.minute
         self.UpdateDateTime(date_now)
         
-    #     # #con el boton lanzo el evento close, que luego llama a closeEvent
-    #     # self.ui.closeButton.clicked.connect(self.close)
-    #     self.ui.textEdit.setText('')
+        # #con el boton lanzo el evento close, que luego llama a closeEvent
+        # self.ui.closeButton.clicked.connect(self.close)
+        self.ui.textEdit.setText('')
 
-    #     #creo el evento y lo conecto al slot
-    #     self.c = Communicate()
-    #     self.c.closeApp.connect(self.close) #Envio3 lo dispara
+        #creo el evento y lo conecto al slot
+        self.c = Communicate()
+        self.c.closeApp.connect(self.close) #Envio3 lo dispara
 
-    #     #creo una senial de prueba y la conecto        
-    #     self.rcv_signal.connect(self.MySignalCallback)
+        #creo una senial de prueba y la conecto        
+        self.rcv_signal.connect(self.MySignalCallback)
 
-    #     #self.MyObjCallback la llaman desde otro thread, armo una senial
-    #     #antes de modificar UI
+        #self.MyObjCallback la llaman desde otro thread, armo una senial
+        #antes de modificar UI
 
         ## PARA SLACKWARE
         if RUNNING_ON_SLACKWARE:
@@ -381,6 +150,9 @@ class Dialog(QDialog):
         #SIGNALS
         # conecto senial del timer a la funcion de Update
         self.one_second_signal.connect(self.UpdateOneSec)
+
+        ### For last call to the first f*** dialog
+        self.FirstDialogScreen()
 
 
     def UpdateDateTime(self, new_date_time):
@@ -974,6 +746,14 @@ class Dialog(QDialog):
         self.s.Close()
         sleep(2)
         event.accept()
+
+
+    ## Initial Screen
+    def FirstDialogScreen (self):
+        a = FirstDialog()
+        a.setModal(True)
+        a.exec_()
+
 
 ### End of Dialog ###
 
