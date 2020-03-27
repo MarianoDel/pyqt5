@@ -112,6 +112,19 @@ class ButtonStyles():
                           background-color: rgb(245, 245, 245);\
                           border-radius: 10px;\
                           border:2px solid rgb(55, 52, 53);"
+
+        self.start_enable = "background-image: url(:/buttons/resources/Play.png);\
+                             color: rgb(55, 52, 53);\
+                             background-color: rgb(157, 211, 175);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.start_disable = "background-image: url(:/buttons/resources/Play.png);\
+                              color: rgb(55, 52, 53);\
+                              background-color: rgb(245, 245, 245);\
+                              border-radius: 10px;\
+                              border:2px solid rgb(55, 52, 53);"
+        
         
         
         

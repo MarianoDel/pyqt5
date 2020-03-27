@@ -13,7 +13,9 @@ from threading import Timer
 
 #Here import the UIs or the classes that got the UIs
 from ui_stretcher import Ui_Dialog
-from first_dlg_cls import FirstDialog
+from dlg_first_cls import FirstDialog
+from dlg_treat_cls import TreatmentDialog
+
 
 
 """
@@ -27,6 +29,8 @@ RUNNING_ON_SLACKWARE = 1
 RUNNING_ON_RASP = 0
 ## Apply power limits to the antennas
 USE_POWER_LIMIT = 1
+## No calls for debug
+NO_CALL_FIRST_DLG = 1
 
 ### CUSTOM SIGNALS ####################
 #clase de la senial
@@ -93,7 +97,7 @@ class Dialog(QDialog):
         self.ui.min30Button.clicked.connect(self.TimeSet)
         self.ui.min45Button.clicked.connect(self.TimeSet)
         
-        # self.ui.startButton.clicked.connect(self.Start_Treatment)
+        self.ui.startButton.clicked.connect(self.StartTreatment)
     #     self.ui.stopButton.clicked.connect(self.Stop_Treatment)
     #     self.ui.pauseButton.clicked.connect(self.Pause_Treatment)
 
@@ -152,7 +156,8 @@ class Dialog(QDialog):
         self.one_second_signal.connect(self.UpdateOneSec)
 
         ### For last call to the first f*** dialog
-        self.FirstDialogScreen()
+        if NO_CALL_FIRST_DLG == 0:
+            self.FirstDialogScreen()
 
 
     def UpdateDateTime(self, new_date_time):
@@ -293,15 +298,20 @@ class Dialog(QDialog):
         
         if sender.objectName() == 'triangularButton':
             self.ui.triangularButton.setStyleSheet(self.ss.triangular_enable)
+            self.ui.textEdit.append("tringular signal selected")
             self.t.SetSignal('triangular')
 
         elif sender.objectName() == 'squareButton':
             self.ui.squareButton.setStyleSheet(self.ss.square_enable)
+            self.ui.textEdit.append("square signal selected")            
             self.t.SetSignal('square')
 
         elif sender.objectName() == 'sinusoidalButton':
-            self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_enable)            
+            self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_enable)
+            self.ui.textEdit.append("sinusoidal signal selected")            
             self.t.SetSignal('sinusoidal')
+
+        self.CheckForStart()
 
 
     def FrequencyDisableAll(self):
@@ -311,6 +321,7 @@ class Dialog(QDialog):
         self.ui.freq4Button.setStyleSheet(self.ss.freq4_disable)
         self.ui.freq5Button.setStyleSheet(self.ss.freq5_disable)
         self.ui.freq6Button.setStyleSheet(self.ss.freq6_disable)
+        self.t.SetFrequency('None')
 
 
     def FrequencyChange (self):
@@ -320,27 +331,35 @@ class Dialog(QDialog):
         
         if sender.objectName() == 'freq1Button':
             self.ui.freq1Button.setStyleSheet(self.ss.freq1_enable)
+            self.ui.textEdit.append("7.83Hz selected")
             self.t.SetFrequency('7.83Hz')
 
         if sender.objectName() == 'freq2Button':
             self.ui.freq2Button.setStyleSheet(self.ss.freq2_enable)
+            self.ui.textEdit.append("11.79Hz selected")            
             self.t.SetFrequency('11.79Hz')
 
         if sender.objectName() == 'freq3Button':
             self.ui.freq3Button.setStyleSheet(self.ss.freq3_enable)
+            self.ui.textEdit.append("16.67Hz selected")            
             self.t.SetFrequency('16.67Hz')
 
         if sender.objectName() == 'freq4Button':
             self.ui.freq4Button.setStyleSheet(self.ss.freq4_enable)
+            self.ui.textEdit.append("23.58Hz selected")            
             self.t.SetFrequency('23.58Hz')
 
         if sender.objectName() == 'freq5Button':
             self.ui.freq5Button.setStyleSheet(self.ss.freq5_enable)
+            self.ui.textEdit.append("30.80Hz selected")            
             self.t.SetFrequency('30.80Hz')
 
         if sender.objectName() == 'freq6Button':
             self.ui.freq6Button.setStyleSheet(self.ss.freq6_enable)
+            self.ui.textEdit.append("62.64Hz selected")            
             self.t.SetFrequency('62.64Hz')
+
+        self.CheckForStart()
             
             
     def ChannelChange (self):
@@ -369,7 +388,9 @@ class Dialog(QDialog):
             else:
                 self.ui.ch3Button.setStyleSheet(self.ss.ch_disable)
                 self.t.DisableChannelsInTreatment('ch3')
-                
+
+        self.CheckForStart()
+        
         
     def TimeSet (self):
         sender = self.sender()
@@ -382,103 +403,27 @@ class Dialog(QDialog):
             self.ui.minutesLabel.setText('45')
             self.t.SetTreatmentTimer(45)
 
+
+    def CheckForStart (self):
+        if self.CheckCompleteConf() == True:
+            self.ui.startButton.setStyleSheet(self.ss.start_enable)
+        else:
+            self.ui.startButton.setStyleSheet(self.ss.start_disable)
+
+
+    def CheckCompleteConf (self):
+        if (self.t.GetFrequency() != 'None' and
+            self.t.GetSignal() != 'None'):
+           if (self.t.GetChannelInTreatment('ch1') != False or
+               self.t.GetChannelInTreatment('ch2') != False or
+               self.t.GetChannelInTreatment('ch3') != False):
+               return True
+           else:
+               return False
+        else:
+            return False
         
-
-
-    # def Start_Treatment (self):
-    #     if (self.s.port_open):
-    #         if (self.t.treatment_state == 'STOP'):
-
-    #             #seteo el timer elegido
-    #             # new_t = self.ui.minutesLabel.text()
-    #             # self.t.SetTreatmentTimer(int(new_t))
-
-    #             #arreglo para cuando seleccionan 1 minuto
-    #             if self.t.GetTreatmentTimer() == 1:
-    #                 self.ui.minutesLabel.setText("59")
-    #                 self.ui.timeStringLabel.setText("seconds")
-    #                 self.t.remaining_seconds = 59
-    #                 self.t.remaining_minutes = 0
-    #             else:
-    #                 self.t.remaining_minutes = self.t.GetTreatmentTimer()
-    #                 self.t.remaining_seconds = 0
-
-    #             # limpio el puerto y luego la configuracion
-    #             self.s.Write("keepalive,\r\n")
-    #             sleep(0.1)
-
-    #             new_signal = self.t.GetSignal()
-    #             to_send = "signal " + new_signal
-    #             self.ui.textEdit.append(to_send)
-    #             self.s.Write(to_send + "\r\n")
-
-    #             new_freq = self.t.GetFrequency()
-    #             new_freq = new_freq.split('Hz')
-    #             new_freq = new_freq[0]
-    #             new_freq_f = float(new_freq)
-    #             if new_freq_f <= 5:
-    #                 to_send = "frequency " + "6.00Hz"
-    #             elif new_freq_f >= 70:
-    #                 to_send = "frequency " + "65.00Hz"
-    #             else:
-    #                 to_send = "frequency {:.02f}Hz".format(new_freq_f)
-
-                    
-    #             self.ui.textEdit.append(to_send)
-    #             self.s.Write(to_send + "\r\n")
-
-    #             new_power = self.t.GetPower()
-    #             if USE_POWER_LIMIT:
-    #                 if new_signal == 'triangular' or new_signal == 'sinusoidal':
-    #                     new_power = int(new_power * 70 / 100)
-    #                 else:
-    #                     new_power = int(new_power * 50 / 100)
-
-    #             to_send = 'power {:03d}'.format(new_power)
-    #             self.ui.textEdit.append(to_send)
-    #             self.s.Write(to_send + "\r\n")
-
-    #             if (self.t.GetChannelInTreatment('ch1') == True):
-    #                 to_send = "enable channel 1"
-    #                 self.ui.textEdit.append(to_send)
-    #                 self.s.Write(to_send + "\r\n")
-    #             else:
-    #                 to_send = "disable channel 1"
-    #                 self.ui.textEdit.append(to_send)
-    #                 self.s.Write(to_send + "\r\n")
-                    
-
-    #             if (self.t.GetChannelInTreatment('ch2') == True):
-    #                 to_send = "enable channel 2"
-    #                 self.ui.textEdit.append(to_send)
-    #                 self.s.Write(to_send + "\r\n")
-    #             else:
-    #                 to_send = "disable channel 2"
-    #                 self.ui.textEdit.append(to_send)
-    #                 self.s.Write(to_send + "\r\n")
-                    
-
-    #             if (self.t.GetChannelInTreatment('ch3') == True):
-    #                 to_send = "enable channel 3"
-    #                 self.ui.textEdit.append(to_send)
-    #                 self.s.Write(to_send + "\r\n")
-    #             else:
-    #                 to_send = "disable channel 3"
-    #                 self.ui.textEdit.append(to_send)
-    #                 self.s.Write(to_send + "\r\n")
-
-    #             new_timer = self.t.GetTreatmentTimer()
-    #             to_send = 'duration,00,{:02d},00,1'.format(new_timer)
-    #             self.ui.textEdit.append(to_send)
-    #             self.s.Write(to_send + "\r\n")
-                
-    #             self.ui.textEdit.append("Starting Treatment...")
-    #             self.s.Write("start,\r\n")
-    #             self.t.treatment_state = 'START'
-    #             self.DisableForTreatment()
-
-    #     else:
-    #         self.ui.textEdit.append("Port not Open!!!")
+        
 
 
     # def Stop_Treatment (self):
@@ -618,40 +563,7 @@ class Dialog(QDialog):
             self.minutes_last = date_now.minute
             self.UpdateDateTime(date_now)            
             
-            
-    # def UpdateTimerLabel (self):
-    #     if self.t.remaining_minutes > 0:
-    #         #si quedan minutos todavia
-    #         if self.t.remaining_seconds > 0:
-    #             self.t.remaining_seconds -= 1
-    #         else:
-    #             self.t.remaining_minutes -= 1
-    #             self.t.remaining_seconds = 59
-
-    #         #todos los segundos actualizo ui
-    #         if self.t.remaining_minutes == 0:
-    #             self.ui.minutesLabel.setText("59")
-    #             self.ui.timeStringLabel.setText("seconds")
-    #         else:
-    #             self.ui.minutesLabel.setText(str('{}:{:02d}'.format(self.t.remaining_minutes, self.t.remaining_seconds)))
-
-    #     else:
-    #         #estoy en el ultimo minuto ya uso el contador remaining_seconds
-    #         if self.t.remaining_seconds > 0:
-    #             self.t.remaining_seconds -= 1
-    #             self.ui.minutesLabel.setText(str(self.t.remaining_seconds))                
-    #         else:
-    #             # termino el tratamiento, hago algo parecido al boton stop
-    #             self.t.treatment_state = 'STOP'
-    #             self.EnableForTreatment()
-    #             self.ui.textEdit.append("STOP Treatment")
-
-    #             # limpio el puerto y mando terminacion
-    #             self.s.Write("keepalive,\r\n")
-    #             sleep(0.1)
-    #             self.s.Write("finish_ok,\r\n")
-    #             sleep(1)
-                
+                            
     def PwrUp (self, new_pwr):
         last_pwr = self.t.GetPower()
         max_pwr = self.t.max_power
@@ -754,6 +666,15 @@ class Dialog(QDialog):
         a.setModal(True)
         a.exec_()
 
+    ## Treatment Screen
+    def StartTreatment (self):
+        if self.CheckCompleteConf() == True:
+            a = TreatmentDialog(self.t, self.ss, self.s)
+            a.setModal(True)
+            a.exec_()
+        else:
+            self.ui.textEdit.append("Complete all params before start")
+        
 
 ### End of Dialog ###
 

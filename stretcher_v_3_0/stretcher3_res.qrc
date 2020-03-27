@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="background">
+    <file>resources/Pantalla_session_B.png</file>
+    <file>resources/Pantalla_session.png</file>
     <file>resources/Pantalla_00.png</file>
     <file>resources/Background_2.png</file>
     <file>resources/Background_3.png</file>
@@ -14,6 +16,9 @@
     <file>resources/62_64Hz.png</file>
   </qresource>
   <qresource prefix="buttons">
+    <file>resources/Rsm.png</file>
+    <file>resources/Stop.png</file>
+    <file>resources/Stop-Pause.png</file>
     <file>resources/30min.png</file>
     <file>resources/40min.png</file>
     <file>resources/Abajo.png</file>

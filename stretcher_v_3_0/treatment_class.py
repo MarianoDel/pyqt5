@@ -11,8 +11,8 @@ class Treatment():
         self.power = 70
         self.max_power = 100
         self.min_power = 10
-        self.signal = 'triangular'
-        self.frequency = '7.83Hz'
+        self.signal = 'None'
+        self.frequency = 'None'
         self.treatment_timer = 60
         self.max_treatment_timer = 120
         self.min_treatment_timer = 1
