@@ -26,7 +26,7 @@ class TreatmentDialog(QDialog):
         self.ui = Ui_TreatmentDialog()
         self.ui.setupUi(self)
 
-        # get the close event
+        # get the close event and connect the buttons
         self.ui.signalButton.clicked.connect(self.accept)
         self.ui.stop_rsmButton.clicked.connect(self.StopRsmTreatment)
         self.ui.stopButton.clicked.connect(self.StopTreatment)
@@ -203,6 +203,99 @@ class TreatmentDialog(QDialog):
         #     self.ui.textEdit.append("Port not Open!!!")
 
 
+    # def Stop_Treatment (self):
+    #     if (self.s.port_open):
+    #         if (self.t.treatment_state == 'START'):
+    #             self.t.treatment_state = 'STOP'
+    #             self.EnableForTreatment()
+    #             self.ui.textEdit.append("STOP Treatment")
+
+    #             # limpio el puerto y mando terminacion
+    #             self.s.Write("keepalive,\r\n")
+    #             sleep(0.1)
+    #             self.s.Write("stop,\r\n")
+    #             sleep(1)
+    #     else:
+    #         self.ui.textEdit.append("Port not Open!!!")
+            
+
+    # def Pause_Treatment (self):
+    #     if (self.s.port_open):
+    #         if (self.t.treatment_state == 'START'):
+    #             self.t.treatment_state = 'PAUSE'
+    #             self.ui.stopButton.setEnabled(False)
+    #             self.ui.pauseButton.setText("RESUME")                
+    #             self.ui.textEdit.append("Pausing Treatment...")
+    #             # limpio el puerto y mando la pausa                
+    #             self.s.Write("keepalive,\r\n")
+    #             sleep(0.1)
+    #             self.s.Write("pause,1\r\n")                
+    #             sleep(0.1)
+                
+    #         elif (self.t.treatment_state == 'PAUSE'):
+    #             self.t.treatment_state = 'START'
+    #             self.ui.stopButton.setEnabled(True)
+    #             self.ui.pauseButton.setText("PAUSE")
+    #             self.ui.textEdit.append("Resuming Treatment...")
+    #             # limpio el puerto y mando la pausa                
+    #             self.s.Write("keepalive,\r\n")
+    #             sleep(0.1)
+    #             self.s.Write("pause,0\r\n")                
+    #             sleep(0.1)                
+    #     else:
+    #         self.ui.textEdit.append("Port not Open!!!")            
+
+
+    # def DisableForTreatment (self):
+    #     # deshabilito botones que no se pueden tocar en tratamiento
+    #     self.ui.startButton.setEnabled(False)
+        
+    #     self.ui.triangularButton.setEnabled(False)
+    #     self.ui.cuadradaButton.setEnabled(False)
+    #     self.ui.senoidalButton.setEnabled(False)
+        
+    #     self.ui.freq1Button.setEnabled(False)
+    #     self.ui.freq2Button.setEnabled(False)
+    #     self.ui.freq3Button.setEnabled(False)
+    #     self.ui.freq4Button.setEnabled(False)
+    #     self.ui.freq5Button.setEnabled(False)
+    #     self.ui.freq6Button.setEnabled(False)
+
+    #     self.ui.ch1Button.setEnabled(False)
+    #     self.ui.ch2Button.setEnabled(False)
+    #     self.ui.ch3Button.setEnabled(False)
+
+    #     self.ui.powerUpButton.setEnabled(False)
+    #     self.ui.powerDwnButton.setEnabled(False)
+    #     self.ui.timeUpButton.setEnabled(False)
+    #     self.ui.timeDwnButton.setEnabled(False)
+
+    # def EnableForTreatment (self):
+    #     # habilito botones que permiten elegir cosas fuera del tratamiento
+    #     self.ui.startButton.setEnabled(True)
+        
+    #     self.ui.triangularButton.setEnabled(True)
+    #     self.ui.cuadradaButton.setEnabled(True)
+    #     self.ui.senoidalButton.setEnabled(True)
+        
+    #     self.ui.freq1Button.setEnabled(True)
+    #     self.ui.freq2Button.setEnabled(True)
+    #     self.ui.freq3Button.setEnabled(True)
+    #     self.ui.freq4Button.setEnabled(True)
+    #     self.ui.freq5Button.setEnabled(True)
+    #     self.ui.freq6Button.setEnabled(True)
+
+    #     self.ui.ch1Button.setEnabled(True)
+    #     self.ui.ch2Button.setEnabled(True)
+    #     self.ui.ch3Button.setEnabled(True)
+
+    #     self.ui.powerUpButton.setEnabled(True)
+    #     self.ui.powerDwnButton.setEnabled(True)
+    #     self.ui.timeUpButton.setEnabled(True)
+    #     self.ui.timeDwnButton.setEnabled(True)
+    #     self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
+    #     self.ui.timeStringLabel.setText("minutes")
+        
     def UpdateTimerAndLabels (self):
         if (self.treat.remaining_minutes > 0 or
             self.treat.remaining_seconds > 0):

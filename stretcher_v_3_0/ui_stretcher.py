@@ -455,6 +455,12 @@ class Ui_Dialog(object):
 "color: rgb(0, 0, 127);\n"
 "border-color: rgb(55, 52, 53);")
         self.textEdit.setObjectName("textEdit")
+        self.diagButton = QtWidgets.QPushButton(Dialog)
+        self.diagButton.setGeometry(QtCore.QRect(90, 30, 141, 41))
+        self.diagButton.setStyleSheet("background-color: rgba(255, 255, 255, 0);\n"
+"border: 0px")
+        self.diagButton.setText("")
+        self.diagButton.setObjectName("diagButton")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

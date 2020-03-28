@@ -924,6 +924,23 @@ color: rgb(0, 0, 127);
 border-color: rgb(55, 52, 53);</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="diagButton">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>30</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(255, 255, 255, 0);
+border: 0px</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="stretcher3_res.qrc"/>

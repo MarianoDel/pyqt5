@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 #get the UI from here
-from ui_stretcher_rtc import Ui_RtcDialog
+from ui_rtc_dlg import Ui_RtcDialog
 
 ## what to do with the info
 USE_RTC_STRING_FOR_PRINT = 0

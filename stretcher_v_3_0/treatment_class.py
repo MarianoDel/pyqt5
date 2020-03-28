@@ -25,10 +25,16 @@ class Treatment():
         self.remaining_minutes = 0
         self.remaining_seconds = 0
 
+        # version actual de soft
+        self.current_version = 'Stretcher_ver_1_0'
+
+
+    def SetCurrentVersion (self, version):
+        self.current_version = version
 
     def SetSignal (self, snl):
         self.signal = snl
-
+        
     def GetSignal (self):
         return self.signal
             
