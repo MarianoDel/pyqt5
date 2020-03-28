@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from time import sleep, time
 from threading import Timer
 from datetime import datetime
@@ -17,6 +17,7 @@ class TreatmentDialog(QDialog):
     #SIGNALS
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
+    # progress_signal = pyqtSignal()
 
     def __init__(self, treat_obj, style_obj, ser_instance):
         super(TreatmentDialog, self).__init__()
@@ -40,9 +41,16 @@ class TreatmentDialog(QDialog):
         self.next_call = time()
         self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
 
-        #SIGNALS
+        # progress timer, this one is qt
+        self.progress_timer = QTimer()
+
+        # progress states
+        self.stop_rsm_state = 'stoping'
+
+        # CONNECT SIGNALS
         # connect the timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
+        # self.progress_signal.connect(self.UpdateProgressStopRsmSM)
 
         self.treat = treat_obj
         self.style = style_obj
@@ -188,6 +196,7 @@ class TreatmentDialog(QDialog):
                 # self.ui.textEdit.append("Starting Treatment...")
                 # self.s.Write("start,\r\n")
             self.treat.treatment_state = 'START'
+            self.ui.progressLabel.setText('Session in Progress')
             self.ui.textEdit.append("Starting Treatment...")
 
         # else:
@@ -212,6 +221,10 @@ class TreatmentDialog(QDialog):
             # termino el tratamiento, hago algo parecido al boton stop
             self.treat.treatment_state = 'STOP'
             self.ui.textEdit.append("STOP Treatment")
+            self.ui.progressLabel.setStyleSheet(self.style.label_blue)
+            self.stop_rsm_state = 'ending'
+            self.progress_timer.singleShot(300, self.ProgressEndSM)
+
 
             # # limpio el puerto y mando terminacion
             # self.s.Write("keepalive,\r\n")
@@ -221,27 +234,121 @@ class TreatmentDialog(QDialog):
 
     def StopRsmTreatment(self):
         self.treat.treatment_state = 'PAUSE'
-        self.ui.progressLabel.setText('Pausing...')
         self.ui.stop_rsmButton.setEnabled(False)
+        self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_disable)
         self.ui.stopButton.raise_()
         self.ui.rsmButton.raise_()
-        sleep(1)
-        self.ui.progressLabel.setText('Session Paused')
-        self.ui.stopButton.setEnabled(True)
-        self.ui.rsmButton.setEnabled(True)
-        
-        
 
+        self.stop_rsm_state = 'pausing'
+        self.progress_timer.singleShot(300, self.ProgressStopRsmSM)
+        
+        
     def StopTreatment(self):
-        print("stop button")
+        self.stop_rsm_state = 'stoping'
+        self.progress_timer.singleShot(300, self.ProgressStopSM)
+
 
     def RsmTreatment(self):
-        print("resume button")
-        self.ui.stop_rsmButton.setEnabled(True)
         self.ui.stopButton.setEnabled(False)
         self.ui.rsmButton.setEnabled(False)
         self.ui.stop_rsmButton.raise_()
+        self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_enable)
+
+        self.stop_rsm_state = 'resuming'
+        self.progress_timer.singleShot(300, self.ProgressRsmSM)
         
+
+
+    """ posible states from stop_rsmButton pausing, paused """
+    def ProgressStopRsmSM(self):
+        if self.stop_rsm_state == 'pausing':
+            self.ui.progressLabel.setText('Pausing.')
+            self.stop_rsm_state = 'pausing1'
+            self.progress_timer.singleShot(300, self.ProgressStopRsmSM)
+
+        elif self.stop_rsm_state == 'pausing1':
+            self.ui.progressLabel.setText('Pausing..')
+            self.stop_rsm_state = 'pausing2'
+            self.progress_timer.singleShot(300, self.ProgressStopRsmSM)            
+
+        elif self.stop_rsm_state == 'pausing2':
+            self.ui.progressLabel.setText('Pausing...')
+            self.stop_rsm_state = 'paused'
+            self.progress_timer.singleShot(300, self.ProgressStopRsmSM)            
+
+        elif self.stop_rsm_state == 'paused':
+            self.ui.progressLabel.setText('Session Paused')
+            self.ui.progressLabel.setStyleSheet(self.style.label_red)
+            self.ui.stopButton.setEnabled(True)
+            self.ui.rsmButton.setEnabled(True)
+
+
+    """ posible states from rsmButton resuming, resumed """
+    def ProgressRsmSM(self):
+        if self.stop_rsm_state == 'resuming':
+            self.ui.progressLabel.setText('Resuming.')
+            self.stop_rsm_state = 'resuming1'
+            self.progress_timer.singleShot(300, self.ProgressRsmSM)
+
+        elif self.stop_rsm_state == 'resuming1':
+            self.ui.progressLabel.setText('Resuming..')
+            self.stop_rsm_state = 'resuming2'
+            self.progress_timer.singleShot(300, self.ProgressRsmSM)            
+
+        elif self.stop_rsm_state == 'resuming2':
+            self.ui.progressLabel.setText('Resuming...')
+            self.stop_rsm_state = 'resumed'
+            self.progress_timer.singleShot(300, self.ProgressRsmSM)            
+
+        elif self.stop_rsm_state == 'resumed':
+            self.ui.progressLabel.setText('Session in Progress')
+            self.ui.progressLabel.setStyleSheet(self.style.label_green)
+            self.treat.treatment_state = 'START'
+            self.ui.stop_rsmButton.setEnabled(True)
+
+
+    """ posible states from stopButton stoping, stoped """
+    def ProgressStopSM(self):
+        if self.stop_rsm_state == 'stoping':
+            self.ui.progressLabel.setText('Stoping.')
+            self.stop_rsm_state = 'stoping1'
+            self.progress_timer.singleShot(300, self.ProgressStopSM)
+
+        elif self.stop_rsm_state == 'stoping1':
+            self.ui.progressLabel.setText('Stoping..')
+            self.stop_rsm_state = 'stoping2'
+            self.progress_timer.singleShot(300, self.ProgressStopSM)            
+
+        elif self.stop_rsm_state == 'stoping2':
+            self.ui.progressLabel.setText('Stoping...')
+            self.stop_rsm_state = 'stoped'
+            self.progress_timer.singleShot(300, self.ProgressStopSM)            
+
+        elif self.stop_rsm_state == 'stoped':
+            self.accept()
+
+
+    """ posible states from the timer ending treatment ending, ended """
+    def ProgressEndSM(self):
+        if self.stop_rsm_state == 'ending':
+            self.ui.progressLabel.setText('Ending Treatment.')
+            self.stop_rsm_state = 'ending1'
+            self.progress_timer.singleShot(300, self.ProgressEndSM)
+
+        elif self.stop_rsm_state == 'ending1':
+            self.ui.progressLabel.setText('Ending Treatment..')
+            self.stop_rsm_state = 'ending2'
+            self.progress_timer.singleShot(300, self.ProgressEndSM)            
+
+        elif self.stop_rsm_state == 'ending2':
+            self.ui.progressLabel.setText('Ending Treatment...')
+            self.stop_rsm_state = 'ended'
+            self.progress_timer.singleShot(300, self.ProgressEndSM)            
+
+        elif self.stop_rsm_state == 'ended':
+            self.accept()
+
+
 
         
 ### end of file ###
