@@ -173,122 +173,38 @@ class Dialog(QDialog):
         self.TimeUp (1)
         self.timeUpButtonCnt = 1
 
+        
     def UpTimeReleased (self):
         self.timeUpButtonCnt = 0
+
         
     def DwnTimePressed (self):
         self.TimeDwn(1)
         self.timeDwnButtonCnt = 1
 
+        
     def DwnTimeReleased (self):
         self.timeDwnButtonCnt = 0
+
         
     def UpPowerPressed (self):
         self.PwrUp (1)
         self.powerUpButtonCnt = 1
 
+        
     def UpPowerReleased (self):
         self.powerUpButtonCnt = 0
+
         
     def DwnPowerPressed (self):
         self.PwrDwn(1)
         self.powerDwnButtonCnt = 1
 
+        
     def DwnPowerReleased (self):
         self.powerDwnButtonCnt = 0
 
-    ############
-    # Old Code #
-    ############
-    # """
-    # chequea el boton de frecuencia y guarda el texto del mismo en el objeto treatment
-    # normalmente 7.83Hz
-    # """
-    # def SetNewFreq (self):
-    #     sender = self.sender()
-    #     if (sender.isChecked() != True):
-    #         sender.toggle()
-
-    #     self.ui.textEdit.append(sender.text() + " selected")
-    #     self.t.SetFrequency(sender.text())
-
-
-    # def SignalEnableButton(self, button):
-    #     if button == 'triangular':
-    #         self.ui.triangularButton.setStyleSheet(self.ss.triangular_enable)
-            
-    #     elif button == 'square':
-    #         self.ui.squareButton.setStyleSheet(self.ss.square_enable)
-            
-    #     elif button == 'sinusoidal':
-    #         self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_enable)
-
-
-    # def FrequencyEnableButton(self, button):
-    #     if button == 'freq1':
-    #         self.ui.freq1Button.setStyleSheet(self.ss.freq1_enable)
-
-    #     elif button == 'freq2':
-    #         self.ui.freq2Button.setStyleSheet(self.ss.freq2_enable)
-
-    #     elif button == 'freq3':
-    #         self.ui.freq3Button.setStyleSheet(self.ss.freq3_enable)
-
-    #     elif button == 'freq4':
-    #         self.ui.freq4Button.setStyleSheet(self.ss.freq4_enable)
-
-    #     elif button == 'freq5':
-    #         self.ui.freq5Button.setStyleSheet(self.ss.freq5_enable)
-
-    #     elif button == 'freq6':
-    #         self.ui.freq6Button.setStyleSheet(self.ss.freq6_enable)
-
-    # def StretcherUpOrDown (self):
-    #     if USE_STRETCHER_UPDOWN_BUTTON:
-    #         self.ui.textEdit.append("Stretcher UP or DOWN")
-    #         if (self.s.port_open):
-    #             self.s.Write("stretcher up\r\n")
-    #         else:
-    #             self.ui.textEdit.append("Port not Open!!!")
-
-    #     elif USE_STRETCHER_DIAG_BUTTON:
-    #         a = DiagDialog(self.s)
-    #         a.setModal(True)
-    #         # a.changeChannelLabel(sender.text())
-    #         # a.changeLaserLabel(self.t.GetLaserPower(sender.text()))
-    #         # a.changeLEDLabel(self.t.GetLedPower(sender.text()))
-
-    #         # a.setWindowTitle("Seteo de Potencias")
-    #         a.exec_()
-
-    #     elif USE_STRETCHER_RTC_BUTTON:
-    #         a = RtcDialog(self.s)
-    #         a.setModal(True)
-
-    #         date_now = datetime.today()
-    #         a.ui.dayButton.setText(date_now.strftime("%d"))
-    #         a.ui.monthButton.setText(date_now.strftime("%m"))
-    #         a.ui.yearButton.setText(date_now.strftime("%y"))
-
-    #         a.ui.hourButton.setText(date_now.strftime("%H"))
-    #         a.ui.minuteButton.setText(date_now.strftime("%M"))            
-
-    #         a.exec_()
-    #         new_day = a.ui.dayButton.text()
-    #         new_month = a.ui.monthButton.text()
-    #         new_year = a.ui.yearButton.text()
-    #         new_hour = a.ui.hourButton.text()
-    #         new_minute = a.ui.minuteButton.text()
-    #         # print(f"{new_day}/{new_month}/{new_year} {new_hour}:{new_minute}")
-    #         myCmd = "sudo date -s {0}/{1}/20{2} {3}:{4}".format(new_day, new_month, new_year, new_hour, new_minute)
-    #         if USE_RTC_STRING_FOR_PRINT:
-    #             print(myCmd)
-    #         elif USE_RTC_STRING_FOR_COMMAND:
-    #             os.system(myCmd)
-
-    ############
-    # New Code #
-    ############
+        
     def SignalDisableAll(self):
         self.ui.triangularButton.setStyleSheet(self.ss.triangular_disable)
         self.ui.squareButton.setStyleSheet(self.ss.square_disable)
@@ -526,12 +442,14 @@ class Dialog(QDialog):
         self.next_call = self.next_call + 1
         self.one_second_signal.emit()        
         self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()        
+
         
     def MyObjCallback (self, dataread):
         print ("callback called!")
         d = dataread[:-1]
         self.rcv_signal.emit(d)
 
+        
     def MySignalCallback (self, rcv):
         print ("signal callback!")
         # self.ui.textEdit.append(rcv)
@@ -574,6 +492,7 @@ class Dialog(QDialog):
         a.setModal(True)
         a.exec_()
 
+        
     ## Treatment Screen
     def TreatmentScreen (self):
         if self.CheckCompleteConf() == True:

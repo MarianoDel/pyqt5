@@ -48,8 +48,6 @@ class DiagnosticsDialog(QDialog):
         # connect the timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
 
-        
-        #activo el timer de 2 segundos, la primera vez, luego se autollama
         if self.ser.port_open == False:
             self.ui.hardwareLabel.setText("No port  ")
             self.ui.firmwareLabel.setText("No port  ")
@@ -58,17 +56,13 @@ class DiagnosticsDialog(QDialog):
             self.ui.firmwareLabel.setText("Waiting...  ")
             self.ser.Write("voltage\n")
             # ser_instance.Write("get data\n")
-            self.next_call = time()
-            self.t3seg = Timer(self.next_call - time(), self.TimerThreeSec, [3]).start()
-
+            
         #recupero informacion del sistema
         (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
-        # print(f"distname: {distname} version: {version} id: {nid}")
         os_text = "--" + distname + version + "-- "
         self.ui.osLabel.setText(os_text)
 
         (system, node, release, version, machine, processor) = platform.uname()
-        # print(f"system: {system}, node: {node}, release: {release}, version: {version}, machine: {machine}, processor: {processor}")
         self.ui.kernelLabel.setText(release)
         self.ui.softLabel.setText(self.t.current_version)
 
@@ -93,48 +87,8 @@ class DiagnosticsDialog(QDialog):
             self.UpdateDateTime(date_now)
 
             
-    def TimerThreeSec (self, lapse):
-        """ 
-            aca tengo que resolver todo lo que se mueve 
-            lo hago tipo por estados del programa con treatmet_state
-        """
-        self.next_call = self.next_call + lapse
-        # #esto corre en otro thread entonces mando una senial para hacer update de la interface
-        # self.one_second_signal.emit()        
-        #antes de volver hago la proxima llamada
-        self.t3seg = Timer(self.next_call - time(), self.TimerThreeSec, [3]).start()
-        arrow = self.ser.Read()
-        print(arrow)
-        
-
-
-    #     self.intfreq = 0
-
-    #     # # # Connect up the buttons.
-    #     self.ui.pushButton1.clicked.connect(self.UPFreq)
-    #     self.ui.pushButton2.clicked.connect(self.DWNFreq)
-    #     self.ui.endButton.clicked.connect(self.accept)
-
-
-    # def UPFreq (self, event=None):
-    #     if (self.intfreq < 10):
-    #         self.intfreq += 1
-
-    #     self.changeFreqLabel(self.intfreq)
-
-    # def DWNFreq (self, event=None):
-    #     if (self.intfreq > 1):
-    #         self.intfreq -= 1
-
-    #     self.changeFreqLabel(self.intfreq)
-
-    # def changeFreqLabel(self, new_f):
-    #     self.intfreq = new_f
-    #     self.ui.whatfreqLabel.setText(str(self.intfreq))
-    
     ## RtcScreen
     def RtcScreen (self):
-        print("rtc button presed!!!")
         a = RtcDialog()
         a.setModal(True)
 
@@ -147,6 +101,14 @@ class DiagnosticsDialog(QDialog):
         a.ui.minuteButton.setText(date_now.strftime("%M"))            
 
         a.exec_()
+        new_day = a.ui.dayButton.text()
+        new_month = a.ui.monthButton.text()
+        new_year = a.ui.yearButton.text()
+        new_hour = a.ui.hourButton.text()
+        new_minute = a.ui.minuteButton.text()
+        myCmd = "sudo date -s {0}/{1}/20{2} {3}:{4}".format(new_day, new_month, new_year, new_hour, new_minute)
+        print(myCmd)
+        # os.system(myCmd)
         
         
 ### end of file ###
