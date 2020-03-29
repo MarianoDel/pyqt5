@@ -31,10 +31,10 @@ class PowerControlDialog(QDialog):
         self.squarelimit = 100
         self.sinuslimit = 100
         self.peak = 3.6
-        self.resistance065 = 42
-        self.resistance080 = 21
-        self.tempcoef065 = 2.2
-        self.tempcoef080 = 1.8
+        self.resistance065 = 47
+        self.resistance080 = 23.5
+        self.tempcoef065 = 0.2627
+        self.tempcoef080 = 0.2627
         self.tempamb = 25
         
 
