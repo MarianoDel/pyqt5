@@ -9,5 +9,7 @@ pyuic5 stretcher_first_dlg.ui > ui_first_dlg.py
 pyuic5 stretcher_treatment_dlg.ui > ui_treatment_dlg.py
 pyuic5 stretcher_diags_dlg.ui > ui_diagnostics_dlg.py
 pyuic5 stretcher_rtc_dlg.ui > ui_rtc_dlg.py
+pyuic5 stretcher_pwr_ctrl_dlg.ui > ui_pwr_ctrl_dlg.py
+
 
 

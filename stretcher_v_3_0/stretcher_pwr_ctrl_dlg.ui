@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>powerControlDialog</class>
- <widget class="QDialog" name="powerControlDialog">
+ <class>PowerControlDialog</class>
+ <widget class="QDialog" name="PowerControlDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -581,6 +581,24 @@ border:2px solid rgb(55, 52, 53);</string>
    </property>
    <property name="text">
     <string>100%</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="doneButton">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>451</y>
+     <width>271</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Done!</string>
    </property>
   </widget>
  </widget>

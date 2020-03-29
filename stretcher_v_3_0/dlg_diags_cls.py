@@ -10,6 +10,7 @@ import os
 #get the UI from here
 from ui_diagnostics_dlg import Ui_DiagnosticsDialog
 from dlg_rtc_cls import RtcDialog
+from dlg_pwr_ctrl_cls import PowerControlDialog
 
 
 #####################################################################
@@ -31,6 +32,7 @@ class DiagnosticsDialog(QDialog):
         # get the close event and connect the buttons        
         self.ui.doneButton.clicked.connect(self.accept)
         self.ui.rtcButton.clicked.connect(self.RtcScreen)
+        self.ui.max_powerButton.clicked.connect(self.PowerScreen)
 
         self.ser = ser_instance
         self.t = treatment_instance
@@ -109,6 +111,13 @@ class DiagnosticsDialog(QDialog):
         myCmd = "sudo date -s {0}/{1}/20{2} {3}:{4}".format(new_day, new_month, new_year, new_hour, new_minute)
         print(myCmd)
         # os.system(myCmd)
+
+
+    ## PowerScreen
+    def PowerScreen (self):
+        a = PowerControlDialog()
+        a.setModal(True)
+        a.exec_()
         
         
 ### end of file ###
