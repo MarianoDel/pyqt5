@@ -446,7 +446,7 @@ class Dialog(QDialog):
         
     def MyObjCallback (self, dataread):
         print ("callback called!")
-        d = dataread[:-1]
+        d = dataread.rstrip()
         self.rcv_signal.emit(d)
 
         

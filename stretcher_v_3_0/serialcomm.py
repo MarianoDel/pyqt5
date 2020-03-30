@@ -4,28 +4,16 @@ import time
 
 
 def ReadBytes(self, cb):
-    """
-    Loop para leer bytes del puerto serie, hasta un \n (readline) o con timer???
-    """
-
     t = threading.currentThread()
 
     while getattr(t, "do_run", True):
         datar = self.ser.readline()
-        # cb((datar).decode())
-        try:
-            cb((datar).decode())
-        except:
-            pass
-            
-        # try:
-        #     datar = self.ser.readline()
-        #     cb((datar).decode())
-        # except:
-        #     cb('.')
-
-    print ("closing?\n")
-
+        ## timeout or readed bytes
+        if self.ser.in_waiting != 0:
+            try:
+                cb((datar).decode())
+            except:
+                pass        
 
 
 class SerialComm:
@@ -51,7 +39,7 @@ class SerialComm:
         # print (velocidad)
         # callback()
         try:
-            self.ser = serial.Serial(port, velocidad)
+            self.ser = serial.Serial(port, velocidad, timeout=0.5)
             if (self.ser != None):
                 print ("Port Open\n")
                 self.port_open = True
@@ -73,10 +61,13 @@ class SerialComm:
 
     def Close(self):
         if (self.port_open == True):
-            print ("quito thread\n")
-            self.port_open = False
+            print ("stop read thread")
             self.hilo1.do_run = False
-            self.ser.cancel_read()
-            time.sleep(1)
-            self.ser.close()
             self.hilo1.join()
+            
+            print ("close serial port")
+            self.port_open = False
+            self.ser.close()
+
+
+
