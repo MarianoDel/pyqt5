@@ -322,6 +322,35 @@ border:2px solid rgb(55, 52, 53);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QPushButton" name="doneButton">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>500</y>
+     <width>621</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>28</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+border: 0px;
+color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Tap to return to a previus screen</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="stretcher3_res.qrc"/>

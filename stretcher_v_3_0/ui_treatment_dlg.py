@@ -134,6 +134,19 @@ class Ui_TreatmentDialog(object):
 "border:2px solid rgb(55, 52, 53);")
         self.rsmButton.setText("")
         self.rsmButton.setObjectName("rsmButton")
+        self.doneButton = QtWidgets.QPushButton(TreatmentDialog)
+        self.doneButton.setGeometry(QtCore.QRect(450, 500, 621, 41))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.doneButton.setFont(font)
+        self.doneButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.doneButton.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border: 0px;\n"
+"color: rgb(55, 52, 53);")
+        self.doneButton.setObjectName("doneButton")
 
         self.retranslateUi(TreatmentDialog)
         QtCore.QMetaObject.connectSlotsByName(TreatmentDialog)
@@ -147,5 +160,6 @@ class Ui_TreatmentDialog(object):
         self.remaining_secsLabel.setText(_translate("TreatmentDialog", "59\'\'"))
         self.remaining_minsLabel.setText(_translate("TreatmentDialog", "115\'"))
         self.minutesLabel.setText(_translate("TreatmentDialog", "120\'"))
+        self.doneButton.setText(_translate("TreatmentDialog", "Tap to return to a previus screen"))
 
 import stretcher3_res_rc

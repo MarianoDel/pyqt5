@@ -133,9 +133,23 @@ class ButtonStyles():
         self.stop_rsm_disable = "background-color: rgb(255, 255, 255);\
                                  border: 0px;"
 
+        self.stop_rsm_rewind = "background-image: url(:/buttons/resources/rewind.png);\
+                                background-color: rgb(157, 211, 175);\
+                                border-radius: 10px;\
+                                border:2px solid rgb(55, 52, 53);"
+        
         self.label_green = "color: rgb(0, 163, 86);"
         self.label_red = "color: rgb(237, 50, 55);"
         self.label_blue = "color: rgb(65, 105, 128);"
+
+        self.ended_label_enable = "background-color: rgb(255, 255, 255);\
+                                   border: 0px;\
+                                   color: rgb(55, 52, 53);"
+
+        self.ended_label_disable = "background-color: rgb(255, 255, 255);\
+                                   border: 0px;\
+                                   color: rgb(255, 255, 255);"
+        
         
         
         

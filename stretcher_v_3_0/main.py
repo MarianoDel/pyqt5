@@ -485,6 +485,8 @@ class Dialog(QDialog):
     ## Treatment Screen
     def TreatmentScreen (self):
         if self.CheckCompleteConf() == True:
+            self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
+            
             a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
             a.setModal(True)
             a.exec_()

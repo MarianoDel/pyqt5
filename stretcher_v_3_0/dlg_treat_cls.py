@@ -33,8 +33,12 @@ class TreatmentDialog(QDialog):
         self.style = style_obj
         self.s = ser_instance
 
+        self.ui.doneButton.setEnabled(False)
+        self.ui.doneButton.setStyleSheet(self.style.ended_label_disable)
+        self.ended_label = False
+        
         # get the close event and connect the buttons
-        self.ui.signalButton.clicked.connect(self.accept)
+        self.ui.doneButton.clicked.connect(self.FinishThisDialog)
         self.ui.stop_rsmButton.clicked.connect(self.StopRsmTreatment)
         self.ui.stopButton.clicked.connect(self.StopTreatment)
         self.ui.rsmButton.clicked.connect(self.RsmTreatment)        
@@ -119,11 +123,13 @@ class TreatmentDialog(QDialog):
         if self.treat.treatment_state == 'START':
             self.UpdateTimerAndLabels()
 
+        if self.treat.treatment_state == 'ENDED':
+            self.UpdateEndedLabels()
+
 
     def StartTreatment (self):
         print(self.treat.treatment_state)
-        if (self.treat.treatment_state == 'STOP'):
-
+        if self.treat.treatment_state == 'STOP':
             total_mins = self.treat.GetTreatmentTimer()
             self.ui.remaining_minsLabel.setText(str(total_mins) + "'")
             self.ui.remaining_secsLabel.setText("00''")
@@ -274,49 +280,6 @@ class TreatmentDialog(QDialog):
             self.InsertLocalText("STOP Treatment")
             
             
-    # def Stop_Treatment (self):
-    #     if (self.s.port_open):
-    #         if (self.t.treatment_state == 'START'):
-    #             self.t.treatment_state = 'STOP'
-    #             self.EnableForTreatment()
-    #             self.ui.textEdit.append("STOP Treatment")
-
-    #             # limpio el puerto y mando terminacion
-    #             self.s.Write("keepalive,\r\n")
-    #             sleep(0.1)
-    #             self.s.Write("stop,\r\n")
-    #             sleep(1)
-    #     else:
-    #         self.ui.textEdit.append("Port not Open!!!")
-            
-
-    # def Pause_Treatment (self):
-    #     if (self.s.port_open):
-    #         if (self.t.treatment_state == 'START'):
-    #             self.t.treatment_state = 'PAUSE'
-    #             self.ui.stopButton.setEnabled(False)
-    #             self.ui.pauseButton.setText("RESUME")                
-    #             self.ui.textEdit.append("Pausing Treatment...")
-    #             # limpio el puerto y mando la pausa                
-    #             self.s.Write("keepalive,\r\n")
-    #             sleep(0.1)
-    #             self.s.Write("pause,1\r\n")                
-    #             sleep(0.1)
-                
-    #         elif (self.t.treatment_state == 'PAUSE'):
-    #             self.t.treatment_state = 'START'
-    #             self.ui.stopButton.setEnabled(True)
-    #             self.ui.pauseButton.setText("PAUSE")
-    #             self.ui.textEdit.append("Resuming Treatment...")
-    #             # limpio el puerto y mando la pausa                
-    #             self.s.Write("keepalive,\r\n")
-    #             sleep(0.1)
-    #             self.s.Write("pause,0\r\n")                
-    #             sleep(0.1)                
-    #     else:
-    #         self.ui.textEdit.append("Port not Open!!!")            
-
-        
     def UpdateTimerAndLabels (self):
         if (self.treat.remaining_minutes > 0 or
             self.treat.remaining_seconds > 0):
@@ -334,30 +297,41 @@ class TreatmentDialog(QDialog):
         else:
             # termino el tratamiento, hago algo parecido al boton stop
             self.treat.treatment_state = 'STOP'
+            self.ui.remaining_secsLabel.setText("0''")
             self.ui.textEdit.append("STOP Treatment")
             self.ui.progressLabel.setStyleSheet(self.style.label_blue)
             self.stop_rsm_state = 'ending'
             self.progress_timer.singleShot(300, self.ProgressEndSM)
 
+            self.init_state = 'clean'
+            self.SendStopSM()        
 
-            # # limpio el puerto y mando terminacion
-            # self.s.Write("keepalive,\r\n")
-            # sleep(0.1)
-            # self.s.Write("finish_ok,\r\n")
-            # sleep(1)
-
+            
+    def UpdateEndedLabels (self):
+        if self.ended_label == True:
+            self.ended_label = False
+            self.ui.doneButton.setStyleSheet(self.style.ended_label_disable)
+        else:
+            self.ended_label = True
+            self.ui.doneButton.setStyleSheet(self.style.ended_label_enable)
+            
+        
     def StopRsmTreatment(self):
-        self.treat.treatment_state = 'PAUSE'
-        self.ui.stop_rsmButton.setEnabled(False)
-        self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_disable)
-        self.ui.stopButton.raise_()
-        self.ui.rsmButton.raise_()
+        if self.treat.treatment_state == 'START':
+            self.treat.treatment_state = 'PAUSE'
+            self.ui.stop_rsmButton.setEnabled(False)
+            self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_disable)
+            self.ui.stopButton.raise_()
+            self.ui.rsmButton.raise_()
 
-        self.stop_rsm_state = 'pausing'
-        self.progress_timer.singleShot(300, self.ProgressStopRsmSM)
+            self.stop_rsm_state = 'pausing'
+            self.progress_timer.singleShot(300, self.ProgressStopRsmSM)
 
-        self.init_state = 'clean'
-        self.SendPauseSM()
+            self.init_state = 'clean'
+            self.SendPauseSM()
+
+        if self.treat.treatment_state == 'ENDED':
+            self.FinishThisDialog()
         
         
     def StopTreatment(self):
@@ -448,7 +422,7 @@ class TreatmentDialog(QDialog):
 
         elif self.stop_rsm_state == 'stoped':
             self.treat.treatment_state = 'STOP'
-            self.accept()
+            self.FinishThisDialog()
 
 
     """ posible states from the timer ending treatment ending, ended """
@@ -469,7 +443,10 @@ class TreatmentDialog(QDialog):
             self.progress_timer.singleShot(300, self.ProgressEndSM)            
 
         elif self.stop_rsm_state == 'ended':
-            self.accept()
+            self.ui.progressLabel.setText('Session Finished')
+            self.treat.treatment_state = 'ENDED'
+            self.ui.doneButton.setEnabled(True)
+            self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_rewind)
 
 
     def SerialDataCallback (self, rcv):
@@ -483,8 +460,10 @@ class TreatmentDialog(QDialog):
                 # termino el tratamiento, hago algo parecido al boton stop
                 self.treat.treatment_state = 'STOP'
                 self.InsertLocalText("Ended or Stopped Treatment")
-                # self.s.Write("stop,\r\n")
-                # sleep(1)
+                self.ui.progressLabel.setStyleSheet(self.style.label_red)
+                self.stop_rsm_state = 'ending'
+                self.progress_timer.singleShot(300, self.ProgressEndSM)
+
         else:
             # el resto de los mensajes los paso directo a la pantalla
             # self.ui.textEdit.append(rcv)
@@ -501,6 +480,8 @@ class TreatmentDialog(QDialog):
         self.ui.textEdit.append(new_text)
         
 
+    def FinishThisDialog (self):
+        self.accept()
 
         
 ### end of file ###

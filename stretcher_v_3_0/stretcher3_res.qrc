@@ -17,6 +17,7 @@
     <file>resources/62_64Hz.png</file>
   </qresource>
   <qresource prefix="buttons">
+    <file>resources/rewind.png</file>
     <file>resources/Rsm.png</file>
     <file>resources/Stop.png</file>
     <file>resources/Stop-Pause.png</file>
