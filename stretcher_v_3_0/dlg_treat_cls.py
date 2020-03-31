@@ -48,13 +48,10 @@ class TreatmentDialog(QDialog):
         self.minutes_last = date_now.minute
         self.UpdateDateTime(date_now)
 
-        # to start 1 second timer
-        self.next_call = time()
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
-
-        # progress timer, this one is qt
+        # progress timer, these ones are qt
         self.progress_timer = QTimer()
         self.init_timer = QTimer()
+        self.t1sec = QTimer()
 
         # progress states machine -SM-
         self.stop_rsm_state = 'stoping'
@@ -97,6 +94,11 @@ class TreatmentDialog(QDialog):
         self.ui.stopButton.setEnabled(False)
         self.ui.rsmButton.setEnabled(False)
         self.ui.stop_rsmButton.raise_()
+
+        ## start the timer
+        self.t1sec.timeout.connect(self.TimerOneSec)
+        self.t1sec.start(1000)
+
         ## Effectively start treatment
         self.StartTreatment()
 
@@ -106,10 +108,8 @@ class TreatmentDialog(QDialog):
         self.ui.date_timeLabel.setText(date_str)
 
 
-        """ This runs in other thread is a better idea to use a signal to change the UI """
-    def TimerOneSec(self, lapse):
-        self.next_call = self.next_call + 1        
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
+    """ Emit a signal to not delay the timer response """
+    def TimerOneSec(self):        
         self.one_second_signal.emit()
 
 
@@ -481,6 +481,7 @@ class TreatmentDialog(QDialog):
         
 
     def FinishThisDialog (self):
+        # self.t1seg.cancel()
         self.accept()
 
         

@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QColor
 from serialcomm import SerialComm
 from treatment_class import Treatment
@@ -153,9 +153,10 @@ class Dialog(QDialog):
             self.s.Write("keepalive,\r\n")
 
 
-        #activo el timer de 1 segundo, la primera vez, luego se autollama
-        self.next_call = time()
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
+        #activo el timer de 1 segundo, es repetitivo
+        self.t1seg = QTimer()
+        self.t1seg.timeout.connect(self.TimerOneSec)
+        self.t1seg.start(1000)
 
         #SIGNALS
         # conecto senial del timer a la funcion de Update
@@ -339,11 +340,10 @@ class Dialog(QDialog):
            if (self.t.GetChannelInTreatment('ch1') != False or
                self.t.GetChannelInTreatment('ch2') != False or
                self.t.GetChannelInTreatment('ch3') != False):
-               return True
-           else:
-               return False
-        else:
-            return False
+               if self.s.port_open == True:
+                   return True
+
+        return False
 
 
     def UpdateOneSec (self):
@@ -436,14 +436,8 @@ class Dialog(QDialog):
         self.t.SetTreatmentTimer(last_time)
 
         
-    def TimerOneSec(self, lapse):
-        """ 
-            envio seniales cada 1 segundo y vuelvo a llamar al timer
-            se auto llama
-        """
-        self.next_call = self.next_call + 1
+    def TimerOneSec(self):
         self.one_second_signal.emit()        
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()        
 
         
     def MyObjCallback (self, dataread):

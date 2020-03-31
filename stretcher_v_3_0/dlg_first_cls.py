@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from time import time
 from threading import Timer
 from datetime import datetime
@@ -34,8 +34,9 @@ class FirstDialog(QDialog):
         self.UpdateDateTime(date_now)
 
         # to start 1 second timer
-        self.next_call = time()
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
+        self.t1seg = QTimer()
+        self.t1seg.timeout.connect(self.TimerOneSec)
+        self.t1seg.start(1000)
 
         #SIGNALS
         # connect the timer signal to the Update
@@ -47,10 +48,8 @@ class FirstDialog(QDialog):
         self.ui.date_timeLabel.setText(date_str)
 
 
-        """ This runs in other thread is a better idea to use a signal to change the UI """
-    def TimerOneSec(self, lapse):
-        self.next_call = self.next_call + 1        
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
+        """ QTimer callback emit a signal to not upset the timer interval """
+    def TimerOneSec(self):
         self.one_second_signal.emit()
 
 
