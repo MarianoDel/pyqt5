@@ -1,5 +1,4 @@
-
-
+import configparser
 
 
 
@@ -29,9 +28,10 @@ class Treatment():
         self.current_version = 'Stretcher_ver_1_0'
 
         #data from config.txt file
-        self.triangular_power_limit = 100
-        self.square_power_limit = 100
-        self.sinusoidal_power_limit = 100
+        # self.triangular_power_limit = 0
+        # self.square_power_limit = 0
+        # self.sinusoidal_power_limit = 0
+        self.ReadConfigFile()
 
 
     def SetCurrentVersion (self, version):
@@ -148,9 +148,57 @@ class Treatment():
 
         return treat
 
+    
     def GetMagnetoDurationString (self):
         treat_time = 'duration,00,{:02d},00,1'.format(self.treatment_timer)
         return treat_time
         
 
-        
+    def ReadConfigFile (self):
+        config = configparser.RawConfigParser()
+        config.read('config.txt')
+        t_pwr = config.get('power_limits', 'triangular', fallback = '100')
+        sq_pwr = config.get('power_limits', 'square', fallback = '100')
+        sin_pwr = config.get('power_limits', 'sinusoidal', fallback = '100')
+        self.triangular_power_limit = int(t_pwr)
+        self.square_power_limit = int(sq_pwr)
+        self.sinusoidal_power_limit = int(sin_pwr)
+
+        p_curr = config.get('static_params', 'peak_current', fallback = '3.6')
+        r065 = config.get('static_params', 'resistance065', fallback = '47')
+        r080 = config.get('static_params', 'resistance080', fallback = '23.5')
+        t065 = config.get('static_params', 'tempcoef065', fallback = '0.2627')
+        t080 = config.get('static_params', 'tempcoef080', fallback = '0.2627')
+        ta = config.get('static_params', 'tempamb', fallback = '25')        
+        self.peak_current = float(p_curr)        
+        self.resistance065 = float(r065)
+        self.resistance080 = float(r080)
+        self.tempcoef065 = float(t065)
+        self.tempcoef080 = float(t080)
+        self.tempamb = float(ta)
+
+
+    def SaveConfigFile (self):
+        config = configparser.RawConfigParser()
+
+        config.add_section('power_limits')
+        config.set('power_limits', 'triangular', str(self.triangular_power_limit))
+        config.set('power_limits', 'square', str(self.square_power_limit))
+        config.set('power_limits', 'sinusoidal', str(self.sinusoidal_power_limit))
+
+        config.add_section('static_params')
+        config.set('static_params', 'peak_current', str(self.peak_current))
+        config.set('static_params', 'resistance065', str(self.resistance065))
+        config.set('static_params', 'resistance080', str(self.resistance080))
+        config.set('static_params', 'tempcoef065', str(self.tempcoef065))
+        config.set('static_params', 'tempcoef080', str(self.tempcoef080))
+        config.set('static_params', 'tempamb', str(self.tempamb))
+
+
+        # Writing our configuration file to 'example.cfg'
+        with open('config.txt', 'w') as configfile:
+            config.write(configfile)
+            
+
+
+### end of file ###

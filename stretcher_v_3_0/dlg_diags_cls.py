@@ -115,7 +115,7 @@ class DiagnosticsDialog(QDialog):
 
     ## PowerScreen
     def PowerScreen (self):
-        a = PowerControlDialog()
+        a = PowerControlDialog(self.t)
         a.setModal(True)
         a.exec_()
         

@@ -29,8 +29,6 @@ from dlg_diags_cls import DiagnosticsDialog
 ## OS where its run
 RUNNING_ON_SLACKWARE = 1
 RUNNING_ON_RASP = 0
-## Apply power limits to the antennas
-USE_POWER_LIMIT = 1
 ## No calls for debug
 NO_CALL_FIRST_DLG = 1
 
