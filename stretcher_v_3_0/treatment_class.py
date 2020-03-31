@@ -28,6 +28,11 @@ class Treatment():
         # version actual de soft
         self.current_version = 'Stretcher_ver_1_0'
 
+        #data from config.txt file
+        self.triangular_power_limit = 100
+        self.square_power_limit = 100
+        self.sinusoidal_power_limit = 100
+
 
     def SetCurrentVersion (self, version):
         self.current_version = version
@@ -44,6 +49,14 @@ class Treatment():
     def GetPower(self):
         return self.power
 
+    def GetPowerLimit (self, signal):
+        if signal == 'triangular':
+            return self.triangular_power_limit
+        elif signal == 'square':
+            return self.square_power_limit
+        else:
+            return self.sinusoidal_power_limit
+    
     def SetFrequency(self, fq):
         self.frequency = fq
 

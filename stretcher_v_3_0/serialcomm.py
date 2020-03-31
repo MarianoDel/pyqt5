@@ -9,8 +9,9 @@ def ReadBytes(self, cb):
     while getattr(t, "do_run", True):
         datar = self.ser.readline()
         ## timeout or readed bytes
-        if self.ser.in_waiting != 0:
+        if datar != b'':
             try:
+                print(datar)
                 cb((datar).decode())
             except:
                 pass        

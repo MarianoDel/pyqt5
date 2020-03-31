@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
+from PyQt5.QtGui import QColor
 from time import sleep, time
 from threading import Timer
 from datetime import datetime
@@ -19,12 +20,18 @@ class TreatmentDialog(QDialog):
     one_second_signal = pyqtSignal()
     # progress_signal = pyqtSignal()
 
-    def __init__(self, treat_obj, style_obj, ser_instance):
+    def __init__(self, treat_obj, style_obj, ser_instance, parent=None):
         super(TreatmentDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_TreatmentDialog()
         self.ui.setupUi(self)
+
+        # get the parent reference and data
+        self.parent = parent
+        self.treat = treat_obj
+        self.style = style_obj
+        self.s = ser_instance
 
         # get the close event and connect the buttons
         self.ui.signalButton.clicked.connect(self.accept)
@@ -43,18 +50,18 @@ class TreatmentDialog(QDialog):
 
         # progress timer, this one is qt
         self.progress_timer = QTimer()
+        self.init_timer = QTimer()
 
-        # progress states
+        # progress states machine -SM-
         self.stop_rsm_state = 'stoping'
+        self.init_state = 'start'
 
         # CONNECT SIGNALS
         # connect the timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
+        self.parent.rcv_signal.connect(self.SerialDataCallback)
         # self.progress_signal.connect(self.UpdateProgressStopRsmSM)
 
-        self.treat = treat_obj
-        self.style = style_obj
-        self.s = ser_instance
 
         ## Default Screen
         self.ui.progressLabel.setText('Session Starting...')
@@ -114,7 +121,6 @@ class TreatmentDialog(QDialog):
 
 
     def StartTreatment (self):
-        # if (self.s.port_open):
         print(self.treat.treatment_state)
         if (self.treat.treatment_state == 'STOP'):
 
@@ -124,85 +130,150 @@ class TreatmentDialog(QDialog):
             self.treat.remaining_minutes = total_mins
             self.treat.remaining_seconds = 0
 
-                # # limpio el puerto y luego la configuracion
-                # self.s.Write("keepalive,\r\n")
-                # sleep(0.1)
+            self.init_state = 'clean'
+            self.SendStartSM()
 
-                # new_signal = self.t.GetSignal()
-                # to_send = "signal " + new_signal
-                # self.ui.textEdit.append(to_send)
-                # self.s.Write(to_send + "\r\n")
-
-                # new_freq = self.t.GetFrequency()
-                # new_freq = new_freq.split('Hz')
-                # new_freq = new_freq[0]
-                # new_freq_f = float(new_freq)
-                # if new_freq_f <= 5:
-                #     to_send = "frequency " + "6.00Hz"
-                # elif new_freq_f >= 70:
-                #     to_send = "frequency " + "65.00Hz"
-                # else:
-                #     to_send = "frequency {:.02f}Hz".format(new_freq_f)
-
-                    
-                # self.ui.textEdit.append(to_send)
-                # self.s.Write(to_send + "\r\n")
-
-                # new_power = self.t.GetPower()
-                # if USE_POWER_LIMIT:
-                #     if new_signal == 'triangular' or new_signal == 'sinusoidal':
-                #         new_power = int(new_power * 70 / 100)
-                #     else:
-                #         new_power = int(new_power * 50 / 100)
-
-                # to_send = 'power {:03d}'.format(new_power)
-                # self.ui.textEdit.append(to_send)
-                # self.s.Write(to_send + "\r\n")
-
-                # if (self.t.GetChannelInTreatment('ch1') == True):
-                #     to_send = "enable channel 1"
-                #     self.ui.textEdit.append(to_send)
-                #     self.s.Write(to_send + "\r\n")
-                # else:
-                #     to_send = "disable channel 1"
-                #     self.ui.textEdit.append(to_send)
-                #     self.s.Write(to_send + "\r\n")
-                    
-
-                # if (self.t.GetChannelInTreatment('ch2') == True):
-                #     to_send = "enable channel 2"
-                #     self.ui.textEdit.append(to_send)
-                #     self.s.Write(to_send + "\r\n")
-                # else:
-                #     to_send = "disable channel 2"
-                #     self.ui.textEdit.append(to_send)
-                #     self.s.Write(to_send + "\r\n")
-                    
-
-                # if (self.t.GetChannelInTreatment('ch3') == True):
-                #     to_send = "enable channel 3"
-                #     self.ui.textEdit.append(to_send)
-                #     self.s.Write(to_send + "\r\n")
-                # else:
-                #     to_send = "disable channel 3"
-                #     self.ui.textEdit.append(to_send)
-                #     self.s.Write(to_send + "\r\n")
-
-                # new_timer = self.t.GetTreatmentTimer()
-                # to_send = 'duration,00,{:02d},00,1'.format(new_timer)
-                # self.ui.textEdit.append(to_send)
-                # self.s.Write(to_send + "\r\n")
-                
-                # self.ui.textEdit.append("Starting Treatment...")
-                # self.s.Write("start,\r\n")
             self.treat.treatment_state = 'START'
             self.ui.progressLabel.setText('Session in Progress')
             self.ui.textEdit.append("Starting Treatment...")
 
-        # else:
-        #     self.ui.textEdit.append("Port not Open!!!")
+
+    def SendStartSM (self):
+        if self.init_state == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.s.Write("keepalive,\r\n")
+            
+            self.init_state = 'signal'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'signal':
+            new_signal = self.treat.GetSignal()
+            to_send = "signal " + new_signal
+            self.s.Write(to_send + "\r\n")
+
+            self.InsertLocalText(to_send)
+            self.init_state = 'frequency'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'frequency':
+            new_freq = self.treat.GetFrequency()
+            new_freq = new_freq.split('Hz')
+            new_freq = new_freq[0]
+            new_freq_f = float(new_freq)
+            if new_freq_f <= 5:
+                to_send = "frequency " + "6.00Hz"
+            elif new_freq_f >= 70:
+                to_send = "frequency " + "65.00Hz"
+            else:
+                to_send = "frequency {:.02f}Hz".format(new_freq_f)
+
+            self.s.Write(to_send + "\r\n")
+
+            self.InsertLocalText(to_send)
+            self.init_state = 'power'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'power':
+            this_signal = self.treat.GetSignal()
+            new_power_limit = self.treat.GetPowerLimit(this_signal)
+            new_power = self.treat.GetPower()
+            new_power = int(new_power * new_power_limit / 100)
+            to_send = 'power {:03d}'.format(new_power)
+            self.s.Write(to_send + "\r\n")
+
+            self.InsertLocalText(to_send)
+            self.init_state = 'channel1'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'channel1':
+            if (self.treat.GetChannelInTreatment('ch1') == True):
+                to_send = "enable channel 1"
+                self.s.Write(to_send + "\r\n")                
+            else:
+                to_send = "disable channel 1"
+                self.s.Write(to_send + "\r\n")
+                    
+            self.InsertLocalText(to_send)
+            self.init_state = 'channel2'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'channel2':
+            if (self.treat.GetChannelInTreatment('ch2') == True):
+                to_send = "enable channel 2"
+                self.s.Write(to_send + "\r\n")
+            else:
+                to_send = "disable channel 2"
+                self.s.Write(to_send + "\r\n")
+
+            self.InsertLocalText(to_send)
+            self.init_state = 'channel3'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'channel3':
+            if (self.treat.GetChannelInTreatment('ch3') == True):
+                to_send = "enable channel 3"
+                self.s.Write(to_send + "\r\n")
+            else:
+                to_send = "disable channel 3"
+                self.s.Write(to_send + "\r\n")
+
+            self.InsertLocalText(to_send)
+            self.init_state = 'duration'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'duration':
+            new_timer = self.treat.GetTreatmentTimer()
+            to_send = 'duration,00,{:02d},00,1'.format(new_timer)
+            self.s.Write(to_send + "\r\n")
+
+            self.InsertLocalText(to_send)
+            self.init_state = 'start'
+            self.init_timer.singleShot(100, self.SendStartSM)
+
+        elif self.init_state == 'start':
+            self.InsertLocalText("Starting Treatment...")
+            self.s.Write("start,\r\n")
 
 
+    def SendPauseSM (self):
+        if self.init_state == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.s.Write("keepalive,\r\n")
+            
+            self.init_state = 'pause'
+            self.init_timer.singleShot(100, self.SendPauseSM)
+
+        elif self.init_state == 'pause':
+            self.s.Write("pause,1\r\n")                
+            self.InsertLocalText("Pausing Treatment...")
+
+            
+    def SendResumeSM (self):
+        if self.init_state == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.s.Write("keepalive,\r\n")
+            
+            self.init_state = 'resume'
+            self.init_timer.singleShot(100, self.SendResumeSM)
+
+        elif self.init_state == 'resume':
+            self.s.Write("pause,0\r\n")                
+            self.InsertLocalText("Resuming Treatment...")
+            
+            
+    def SendStopSM (self):
+        if self.init_state == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.s.Write("keepalive,\r\n")
+            
+            self.init_state = 'stop'
+            self.init_timer.singleShot(100, self.SendStopSM)
+
+        elif self.init_state == 'stop':
+            self.s.Write("stop,\r\n")                
+            self.InsertLocalText("STOP Treatment")
+            
+            
     # def Stop_Treatment (self):
     #     if (self.s.port_open):
     #         if (self.t.treatment_state == 'START'):
@@ -245,56 +316,6 @@ class TreatmentDialog(QDialog):
     #     else:
     #         self.ui.textEdit.append("Port not Open!!!")            
 
-
-    # def DisableForTreatment (self):
-    #     # deshabilito botones que no se pueden tocar en tratamiento
-    #     self.ui.startButton.setEnabled(False)
-        
-    #     self.ui.triangularButton.setEnabled(False)
-    #     self.ui.cuadradaButton.setEnabled(False)
-    #     self.ui.senoidalButton.setEnabled(False)
-        
-    #     self.ui.freq1Button.setEnabled(False)
-    #     self.ui.freq2Button.setEnabled(False)
-    #     self.ui.freq3Button.setEnabled(False)
-    #     self.ui.freq4Button.setEnabled(False)
-    #     self.ui.freq5Button.setEnabled(False)
-    #     self.ui.freq6Button.setEnabled(False)
-
-    #     self.ui.ch1Button.setEnabled(False)
-    #     self.ui.ch2Button.setEnabled(False)
-    #     self.ui.ch3Button.setEnabled(False)
-
-    #     self.ui.powerUpButton.setEnabled(False)
-    #     self.ui.powerDwnButton.setEnabled(False)
-    #     self.ui.timeUpButton.setEnabled(False)
-    #     self.ui.timeDwnButton.setEnabled(False)
-
-    # def EnableForTreatment (self):
-    #     # habilito botones que permiten elegir cosas fuera del tratamiento
-    #     self.ui.startButton.setEnabled(True)
-        
-    #     self.ui.triangularButton.setEnabled(True)
-    #     self.ui.cuadradaButton.setEnabled(True)
-    #     self.ui.senoidalButton.setEnabled(True)
-        
-    #     self.ui.freq1Button.setEnabled(True)
-    #     self.ui.freq2Button.setEnabled(True)
-    #     self.ui.freq3Button.setEnabled(True)
-    #     self.ui.freq4Button.setEnabled(True)
-    #     self.ui.freq5Button.setEnabled(True)
-    #     self.ui.freq6Button.setEnabled(True)
-
-    #     self.ui.ch1Button.setEnabled(True)
-    #     self.ui.ch2Button.setEnabled(True)
-    #     self.ui.ch3Button.setEnabled(True)
-
-    #     self.ui.powerUpButton.setEnabled(True)
-    #     self.ui.powerDwnButton.setEnabled(True)
-    #     self.ui.timeUpButton.setEnabled(True)
-    #     self.ui.timeDwnButton.setEnabled(True)
-    #     self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
-    #     self.ui.timeStringLabel.setText("minutes")
         
     def UpdateTimerAndLabels (self):
         if (self.treat.remaining_minutes > 0 or
@@ -334,11 +355,17 @@ class TreatmentDialog(QDialog):
 
         self.stop_rsm_state = 'pausing'
         self.progress_timer.singleShot(300, self.ProgressStopRsmSM)
+
+        self.init_state = 'clean'
+        self.SendPauseSM()
         
         
     def StopTreatment(self):
         self.stop_rsm_state = 'stoping'
         self.progress_timer.singleShot(300, self.ProgressStopSM)
+
+        self.init_state = 'clean'
+        self.SendStopSM()        
 
 
     def RsmTreatment(self):
@@ -349,7 +376,9 @@ class TreatmentDialog(QDialog):
 
         self.stop_rsm_state = 'resuming'
         self.progress_timer.singleShot(300, self.ProgressRsmSM)
-        
+
+        self.init_state = 'clean'
+        self.SendResumeSM()        
 
 
     """ posible states from stop_rsmButton pausing, paused """
@@ -418,6 +447,7 @@ class TreatmentDialog(QDialog):
             self.progress_timer.singleShot(300, self.ProgressStopSM)            
 
         elif self.stop_rsm_state == 'stoped':
+            self.treat.treatment_state = 'STOP'
             self.accept()
 
 
@@ -441,6 +471,35 @@ class TreatmentDialog(QDialog):
         elif self.stop_rsm_state == 'ended':
             self.accept()
 
+
+    def SerialDataCallback (self, rcv):
+        print ("serial data callback!")
+        # self.ui.textEdit.append(rcv)
+        # reviso si es un final de tratamiento
+        # if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
+        if rcv.startswith("STOP") or rcv.startswith("finish,"):
+        
+            if self.treat.treatment_state == 'START':
+                # termino el tratamiento, hago algo parecido al boton stop
+                self.treat.treatment_state = 'STOP'
+                self.InsertLocalText("Ended or Stopped Treatment")
+                # self.s.Write("stop,\r\n")
+                # sleep(1)
+        else:
+            # el resto de los mensajes los paso directo a la pantalla
+            # self.ui.textEdit.append(rcv)
+            self.InsertForeingText(rcv)
+                
+
+    def InsertLocalText (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(255, 0, 0))
+        self.ui.textEdit.append(new_text)
+
+        
+    def InsertForeingText (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(0, 255, 0))
+        self.ui.textEdit.append(new_text)
+        
 
 
         

@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject
+from PyQt5.QtGui import QColor
 from serialcomm import SerialComm
 from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
@@ -43,10 +44,6 @@ class Communicate(QObject):
 
     # receivedData = pyqtSignal()
     
-
-
-
-
 
 ##############################
 # Dialog Class - Main Window #
@@ -133,6 +130,9 @@ class Dialog(QDialog):
         #creo una senial de prueba y la conecto        
         self.rcv_signal.connect(self.MySignalCallback)
 
+        # progress states machine -SM-
+        # self.comms_state = 'stoping'
+
         #self.MyObjCallback la llaman desde otro thread, armo una senial
         #antes de modificar UI
 
@@ -148,7 +148,9 @@ class Dialog(QDialog):
             # sys.exit(-1)
             #TODO: agregar un timer que vaya buscando el puerto!!!
         else:
-            self.ui.textEdit.append("Serial port open OK!")
+            self.InsertLocalText("Serial port open OK!")
+            self.InsertLocalText("Comm with Power:")
+            self.s.Write("keepalive,\r\n")
 
 
         #activo el timer de 1 segundo, la primera vez, luego se autollama
@@ -452,37 +454,24 @@ class Dialog(QDialog):
         
     def MySignalCallback (self, rcv):
         print ("signal callback!")
-        # self.ui.textEdit.append(rcv)
-        # reviso si es un final de tratamiento
-        # if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
-        if rcv.startswith("STOP") or rcv.startswith("finish,"):
-        
-            if self.t.treatment_state == 'START':
-                # termino el tratamiento, hago algo parecido al boton stop
-                self.t.treatment_state = 'STOP'
-                self.EnableForTreatment()
-                self.ui.textEdit.append("Ended or Stopped Treatment")
-                # self.s.Write("stop,\r\n")
-                sleep(1)
-
-        elif rcv.startswith("temp,"):
-            # incremento un contador y lo muestro cada tanto, 10min aprox.
-            if self.tempCnt == 0 or self.tempCnt >= 600:
-                self.tempCnt = 0
-                self.ui.textEdit.append(rcv)
-
-            self.tempCnt = self.tempCnt + 1
-
-        else:
-            # el resto de los mensajes los paso directo a la pantalla
-            self.ui.textEdit.append(rcv)
+        self.InsertForeingText(rcv)
                 
-                          
+
+    def InsertLocalText (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(255, 0, 0))
+        self.ui.textEdit.append(new_text)
+
+        
+    def InsertForeingText (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(0, 255, 0))
+        self.ui.textEdit.append(new_text)
+        
+        
     #capturo el cierre
     def closeEvent (self, event):
         self.ui.textEdit.append("Closing, Please Wait...")
         self.s.Close()
-        sleep(2)
+        # sleep(2)
         event.accept()
 
 
@@ -496,11 +485,12 @@ class Dialog(QDialog):
     ## Treatment Screen
     def TreatmentScreen (self):
         if self.CheckCompleteConf() == True:
-            a = TreatmentDialog(self.t, self.ss, self.s)
+            a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
             a.setModal(True)
             a.exec_()
         else:
-            self.ui.textEdit.append("Complete all params before start")
+            # self.ui.textEdit.append("Complete all params before start")
+            self.InsertLocalText("Complete all params before start")
 
 
     ## DiagnosticsSreen
