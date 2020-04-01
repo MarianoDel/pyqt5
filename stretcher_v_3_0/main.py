@@ -28,10 +28,10 @@ from dlg_mems_cls import MemoryDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 1
-RUNNING_ON_RASP = 0
+RUNNING_ON_SLACKWARE = 0
+RUNNING_ON_RASP = 1
 ## No calls for debug
-NO_CALL_FIRST_DLG = 1
+NO_CALL_FIRST_DLG = 0
 
 ## This Interface Software version
 CURRENT_VERSION = "Stretcher_ver_3_1"
@@ -640,7 +640,7 @@ class Dialog(QDialog):
 
     ## Initial Screen
     def FirstDialogScreen (self):
-        a = FirstDialog()
+        a = FirstDialog(self.ss)
         a.setModal(True)
         a.exec_()
 

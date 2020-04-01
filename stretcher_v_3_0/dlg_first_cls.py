@@ -18,13 +18,15 @@ class FirstDialog(QDialog):
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
 
-    def __init__(self):
+    def __init__(self, style_obj):
         super(FirstDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_FirstDialog()
         self.ui.setupUi(self)
 
+        self.style = style_obj
+        self.ended_label = False
         # get the close event
         self.ui.doneButton.clicked.connect(self.accept)
 
@@ -58,7 +60,15 @@ class FirstDialog(QDialog):
         date_now = datetime.today()
         if date_now.minute != self.minutes_last:
             self.minutes_last = date_now.minute
-            self.UpdateDateTime(date_now)            
+            self.UpdateDateTime(date_now)
+
+        if self.ended_label == True:
+            self.ended_label = False
+            self.ui.doneButton.setStyleSheet(self.style.ended_label_disable)
+        else:
+            self.ended_label = True
+            self.ui.doneButton.setStyleSheet(self.style.ended_label_enable)
+
 
         
 ### end of file ###
