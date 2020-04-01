@@ -17,6 +17,7 @@ from ui_stretcher import Ui_Dialog
 from dlg_first_cls import FirstDialog
 from dlg_treat_cls import TreatmentDialog
 from dlg_diags_cls import DiagnosticsDialog
+from dlg_mems_cls import MemoryDialog
 
 
 
@@ -48,15 +49,8 @@ class Communicate(QObject):
 ##############################
 class Dialog(QDialog):
 
-    rcv_signal = pyqtSignal(str)
-    powerUpButtonCnt = 0
-    powerDwnButtonCnt = 0
-    timeUpButtonCnt = 0
-    timeDwnButtonCnt = 0
-    tempCnt = 0
-
     #SIGNALS
-    # signals para comunicacion 1 seg
+    rcv_signal = pyqtSignal(str)
     one_second_signal = pyqtSignal()
 
     
@@ -93,6 +87,13 @@ class Dialog(QDialog):
         self.ui.timeDwnButton.pressed.connect(self.DwnTimePressed)
         self.ui.timeDwnButton.released.connect(self.DwnTimeReleased)
 
+        self.ui.mem1Button.pressed.connect(self.Memory1Pressed)
+        self.ui.mem1Button.released.connect(self.Memory1Released)
+        self.ui.mem2Button.pressed.connect(self.Memory2Pressed)
+        self.ui.mem2Button.released.connect(self.Memory2Released)
+        self.ui.mem3Button.pressed.connect(self.Memory3Pressed)
+        self.ui.mem3Button.released.connect(self.Memory3Released)
+        
         self.ui.min30Button.clicked.connect(self.TimeSet)
         self.ui.min45Button.clicked.connect(self.TimeSet)
         
@@ -112,7 +113,7 @@ class Dialog(QDialog):
         self.ui.powerLabel.setText(str(self.t.GetPower()))
         self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
 
-        ### to carry on with date-time
+        ## to carry on with date-time
         date_now = datetime.today()
         self.minutes_last = date_now.minute
         self.UpdateDateTime(date_now)
@@ -125,14 +126,17 @@ class Dialog(QDialog):
         self.c = Communicate()
         self.c.closeApp.connect(self.close) #Envio3 lo dispara
 
-        #creo una senial de prueba y la conecto        
+        ## connect with serial data rx signal
         self.rcv_signal.connect(self.MySignalCallback)
 
-        # progress states machine -SM-
-        # self.comms_state = 'stoping'
-
-        #self.MyObjCallback la llaman desde otro thread, armo una senial
-        #antes de modificar UI
+        ## counters for buttons with press release functionality
+        self.powerUpButtonCnt = 0
+        self.powerDwnButtonCnt = 0
+        self.timeUpButtonCnt = 0
+        self.timeDwnButtonCnt = 0
+        self.mem1ButtonCnt = 0
+        self.mem2ButtonCnt = 0
+        self.mem3ButtonCnt = 0
 
         ## PARA SLACKWARE
         if RUNNING_ON_SLACKWARE:
@@ -151,7 +155,7 @@ class Dialog(QDialog):
             self.s.Write("keepalive,\r\n")
 
 
-        #activo el timer de 1 segundo, es repetitivo
+        ## activate the 1 second timer it is repetitive
         self.t1seg = QTimer()
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
@@ -159,6 +163,9 @@ class Dialog(QDialog):
         #SIGNALS
         # conecto senial del timer a la funcion de Update
         self.one_second_signal.connect(self.UpdateOneSec)
+
+        ## read and update memory buttons
+        self.ReadMemConfig()
 
         ### For last call to the first f*** dialog
         if NO_CALL_FIRST_DLG == 0:
@@ -205,7 +212,87 @@ class Dialog(QDialog):
     def DwnPowerReleased (self):
         self.powerDwnButtonCnt = 0
 
+    def Memory1Pressed (self):
+        self.mem1ButtonCnt = 1
         
+    def Memory1Released (self):
+        if (self.mem1ButtonCnt > 0 and
+            self.mem1ButtonCnt < 3):
+            self.mem1ButtonCnt = 0
+            
+            #get memory values
+            if self.t.mem1_treat_time == 'None':
+                self.InsertLocalText("Not much to do with memory1!")
+            else:
+                self.SignalChangeTo(self.t.mem1_signal)
+                self.FrequencyChangeTo(self.t.mem1_frequency)
+                self.ui.minutesLabel.setText(self.t.mem1_treat_time)
+                self.t.SetTreatmentTimer(int(self.t.mem1_treat_time))
+                self.ui.powerLabel.setText(self.t.mem1_power)
+                self.t.SetPower(int(self.t.mem1_power))
+
+
+    def Memory1Config (self):
+        if self.CheckCompleteConf() == True:
+            self.MemoryScreen()
+        else:
+            self.InsertLocalText("Select all parameters first!")
+
+
+    def Memory2Pressed (self):
+        self.mem2ButtonCnt = 1
+        
+    def Memory2Released (self):
+        if (self.mem2ButtonCnt > 0 and
+            self.mem2ButtonCnt < 3):
+            self.mem2ButtonCnt = 0
+            
+            #get memory values
+            if self.t.mem2_treat_time == 'None':
+                self.InsertLocalText("Not much to do with memory2!")
+            else:
+                self.SignalChangeTo(self.t.mem2_signal)
+                self.FrequencyChangeTo(self.t.mem2_frequency)
+                self.ui.minutesLabel.setText(self.t.mem2_treat_time)
+                self.t.SetTreatmentTimer(int(self.t.mem2_treat_time))
+                self.ui.powerLabel.setText(self.t.mem2_power)
+                self.t.SetPower(int(self.t.mem2_power))
+
+
+    def Memory2Config (self):
+        if self.CheckCompleteConf() == True:
+            self.MemoryScreen()
+        else:
+            self.InsertLocalText("Select all parameters first!")
+
+
+    def Memory3Pressed (self):
+        self.mem3ButtonCnt = 1
+        
+    def Memory3Released (self):
+        if (self.mem3ButtonCnt > 0 and
+            self.mem3ButtonCnt < 3):
+            self.mem3ButtonCnt = 0
+            
+            #get memory values
+            if self.t.mem3_treat_time == 'None':
+                self.InsertLocalText("Not much to do with memory3!")
+            else:
+                self.SignalChangeTo(self.t.mem3_signal)
+                self.FrequencyChangeTo(self.t.mem3_frequency)
+                self.ui.minutesLabel.setText(self.t.mem3_treat_time)
+                self.t.SetTreatmentTimer(int(self.t.mem3_treat_time))
+                self.ui.powerLabel.setText(self.t.mem3_power)
+                self.t.SetPower(int(self.t.mem3_power))
+
+
+    def Memory3Config (self):
+        if self.CheckCompleteConf() == True:
+            self.MemoryScreen()
+        else:
+            self.InsertLocalText("Select all parameters first!")
+
+            
     def SignalDisableAll(self):
         self.ui.triangularButton.setStyleSheet(self.ss.triangular_disable)
         self.ui.squareButton.setStyleSheet(self.ss.square_disable)
@@ -215,24 +302,36 @@ class Dialog(QDialog):
     def SignalChange (self):
         sender = self.sender()
 
+        if sender.objectName() == 'triangularButton':
+            self.SignalChangeTo('triangular')
+
+        elif sender.objectName() == 'squareButton':
+            self.SignalChangeTo('square')
+
+        elif sender.objectName() == 'sinusoidalButton':
+            self.SignalChangeTo('sinusoidal')
+
+        self.CheckForStart()
+
+        
+    def SignalChangeTo (self, new_signal):
         self.SignalDisableAll()
         
-        if sender.objectName() == 'triangularButton':
+        if new_signal == 'triangular':
             self.ui.triangularButton.setStyleSheet(self.ss.triangular_enable)
             self.ui.textEdit.append("tringular signal selected")
             self.t.SetSignal('triangular')
 
-        elif sender.objectName() == 'squareButton':
+        elif new_signal == 'square':
             self.ui.squareButton.setStyleSheet(self.ss.square_enable)
             self.ui.textEdit.append("square signal selected")            
             self.t.SetSignal('square')
 
-        elif sender.objectName() == 'sinusoidalButton':
+        elif new_signal == 'sinusoidal':
             self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_enable)
             self.ui.textEdit.append("sinusoidal signal selected")            
             self.t.SetSignal('sinusoidal')
-
-        self.CheckForStart()
+        
 
 
     def FrequencyDisableAll(self):
@@ -248,39 +347,60 @@ class Dialog(QDialog):
     def FrequencyChange (self):
         sender = self.sender()
 
+        if sender.objectName() == 'freq1Button':
+            self.FrequencyChangeTo('7.83Hz')
+
+        if sender.objectName() == 'freq2Button':
+            self.FrequencyChangeTo('11.79Hz')
+
+        if sender.objectName() == 'freq3Button':
+            self.FrequencyChangeTo('16.67Hz')
+
+        if sender.objectName() == 'freq4Button':
+            self.FrequencyChangeTo('23.58Hz')
+
+        if sender.objectName() == 'freq5Button':
+            self.FrequencyChangeTo('30.80Hz')
+
+        if sender.objectName() == 'freq6Button':
+            self.FrequencyChangeTo('62.64Hz')
+
+        self.CheckForStart()
+
+
+    def FrequencyChangeTo (self, new_freq):
         self.FrequencyDisableAll()
         
-        if sender.objectName() == 'freq1Button':
+        if new_freq == '7.83Hz':
             self.ui.freq1Button.setStyleSheet(self.ss.freq1_enable)
             self.ui.textEdit.append("7.83Hz selected")
             self.t.SetFrequency('7.83Hz')
 
-        if sender.objectName() == 'freq2Button':
+        if new_freq == '11.79Hz':
             self.ui.freq2Button.setStyleSheet(self.ss.freq2_enable)
             self.ui.textEdit.append("11.79Hz selected")            
             self.t.SetFrequency('11.79Hz')
 
-        if sender.objectName() == 'freq3Button':
+        if new_freq == '16.67Hz':
             self.ui.freq3Button.setStyleSheet(self.ss.freq3_enable)
             self.ui.textEdit.append("16.67Hz selected")            
             self.t.SetFrequency('16.67Hz')
 
-        if sender.objectName() == 'freq4Button':
+        if new_freq == '23.58Hz':
             self.ui.freq4Button.setStyleSheet(self.ss.freq4_enable)
             self.ui.textEdit.append("23.58Hz selected")            
             self.t.SetFrequency('23.58Hz')
 
-        if sender.objectName() == 'freq5Button':
+        if new_freq == '30.80Hz':
             self.ui.freq5Button.setStyleSheet(self.ss.freq5_enable)
             self.ui.textEdit.append("30.80Hz selected")            
             self.t.SetFrequency('30.80Hz')
 
-        if sender.objectName() == 'freq6Button':
+        if new_freq == '62.64Hz':
             self.ui.freq6Button.setStyleSheet(self.ss.freq6_enable)
             self.ui.textEdit.append("62.64Hz selected")            
             self.t.SetFrequency('62.64Hz')
 
-        self.CheckForStart()
             
             
     def ChannelChange (self):
@@ -326,7 +446,8 @@ class Dialog(QDialog):
 
 
     def CheckForStart (self):
-        if self.CheckCompleteConf() == True:
+        if (self.CheckCompleteConf() == True and
+            self.s.port_open == True):
             self.ui.startButton.setStyleSheet(self.ss.start_enable)
         else:
             self.ui.startButton.setStyleSheet(self.ss.start_disable)
@@ -338,8 +459,7 @@ class Dialog(QDialog):
            if (self.t.GetChannelInTreatment('ch1') != False or
                self.t.GetChannelInTreatment('ch2') != False or
                self.t.GetChannelInTreatment('ch3') != False):
-               if self.s.port_open == True:
-                   return True
+                return True
 
         return False
 
@@ -380,6 +500,24 @@ class Dialog(QDialog):
             self.timeDwnButtonCnt += 1            
         elif self.timeDwnButtonCnt == 1:
             self.timeDwnButtonCnt += 1
+
+        if self.mem1ButtonCnt > 3:
+            self.mem1ButtonCnt = 0
+            self.Memory1Config()
+        elif self.mem1ButtonCnt > 0:
+            self.mem1ButtonCnt += 1
+
+        if self.mem2ButtonCnt > 3:
+            self.mem2ButtonCnt = 0
+            self.Memory2Config()
+        elif self.mem2ButtonCnt > 0:
+            self.mem2ButtonCnt += 1
+
+        if self.mem3ButtonCnt > 3:
+            self.mem3ButtonCnt = 0
+            self.Memory3Config()
+        elif self.mem3ButtonCnt > 0:
+            self.mem3ButtonCnt += 1
 
         date_now = datetime.today()
         if date_now.minute != self.minutes_last:
@@ -458,7 +596,36 @@ class Dialog(QDialog):
         self.ui.textEdit.setTextColor(QColor(0, 255, 0))
         self.ui.textEdit.append(new_text)
         
+
+    def ReadMemConfig (self):
+        if self.t.mem1_treat_time != 'None':
+            self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min')
+            self.ui.mem12Label.setText(self.t.mem1_frequency + ' - ' + self.t.mem1_power + '%')
+            self.ui.mem13Label.setText((self.t.mem1_signal).capitalize())
+        else:
+            self.ui.mem11Label.setText('Empty')
+            self.ui.mem12Label.setText('')
+            self.ui.mem13Label.setText('')
         
+        if self.t.mem2_treat_time != 'None':
+            self.ui.mem21Label.setText(self.t.mem2_treat_time + 'min')
+            self.ui.mem22Label.setText(self.t.mem2_frequency + ' - ' + self.t.mem2_power + '%')
+            self.ui.mem23Label.setText((self.t.mem2_signal).capitalize())
+        else:
+            self.ui.mem21Label.setText('Empty')
+            self.ui.mem22Label.setText('')
+            self.ui.mem23Label.setText('')
+
+        if self.t.mem3_treat_time != 'None':
+            self.ui.mem31Label.setText(self.t.mem3_treat_time + 'min')
+            self.ui.mem32Label.setText(self.t.mem3_frequency + ' - ' + self.t.mem3_power + '%')
+            self.ui.mem33Label.setText((self.t.mem3_signal).capitalize())
+        else:
+            self.ui.mem31Label.setText('Empty')
+            self.ui.mem32Label.setText('')
+            self.ui.mem33Label.setText('')
+            
+            
     #capturo el cierre
     def closeEvent (self, event):
         self.ui.textEdit.append("Closing, Please Wait...")
@@ -476,7 +643,7 @@ class Dialog(QDialog):
         
     ## Treatment Screen
     def TreatmentScreen (self):
-        if self.CheckCompleteConf() == True:
+        if self.CheckForStart() == True:
             self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
             
             a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
@@ -491,6 +658,13 @@ class Dialog(QDialog):
     def DiagnosticsScreen (self):
         print("diag button presed!!!")
         a = DiagnosticsDialog(self.s, self.t)
+        a.setModal(True)
+        a.exec_()
+
+
+    ## MemoryScreen
+    def MemoryScreen (self):
+        a = MemoryDialog()
         a.setModal(True)
         a.exec_()
 

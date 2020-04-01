@@ -27,10 +27,6 @@ class Treatment():
         # version actual de soft
         self.current_version = 'Stretcher_ver_1_0'
 
-        #data from config.txt file
-        # self.triangular_power_limit = 0
-        # self.square_power_limit = 0
-        # self.sinusoidal_power_limit = 0
         self.ReadConfigFile()
 
 
@@ -177,6 +173,21 @@ class Treatment():
         self.tempcoef080 = float(t080)
         self.tempamb = float(ta)
 
+        self.mem1_frequency = config.get('mem1', 'frequency', fallback = 'None')
+        self.mem1_signal = config.get('mem1', 'signal', fallback = 'None')
+        self.mem1_treat_time = config.get('mem1', 'time', fallback = 'None')
+        self.mem1_power = config.get('mem1', 'power', fallback = 'None')
+
+        self.mem2_frequency = config.get('mem2', 'frequency', fallback = 'None')
+        self.mem2_signal = config.get('mem2', 'signal', fallback = 'None')
+        self.mem2_treat_time = config.get('mem2', 'time', fallback = 'None')
+        self.mem2_power = config.get('mem2', 'power', fallback = 'None')
+
+        self.mem3_frequency = config.get('mem3', 'frequency', fallback = 'None')
+        self.mem3_signal = config.get('mem3', 'signal', fallback = 'None')
+        self.mem3_treat_time = config.get('mem3', 'time', fallback = 'None')
+        self.mem3_power = config.get('mem3', 'power', fallback = 'None')
+        
 
     def SaveConfigFile (self):
         config = configparser.RawConfigParser()
@@ -194,7 +205,24 @@ class Treatment():
         config.set('static_params', 'tempcoef080', str(self.tempcoef080))
         config.set('static_params', 'tempamb', str(self.tempamb))
 
+        config.add_section('mem1')
+        config.set('mem1', 'frequency', self.mem1_frequency)
+        config.set('mem1', 'signal', self.mem1_signal)
+        config.set('mem1', 'time', self.mem1_treat_time)
+        config.set('mem1', 'power', self.mem1_power)
 
+        config.add_section('mem2')
+        config.set('mem2', 'frequency', self.mem2_frequency)
+        config.set('mem2', 'signal', self.mem2_signal)
+        config.set('mem2', 'time', self.mem2_treat_time)
+        config.set('mem2', 'power', self.mem2_power)
+
+        config.add_section('mem3')
+        config.set('mem3', 'frequency', self.mem3_frequency)
+        config.set('mem3', 'signal', self.mem3_signal)
+        config.set('mem3', 'time', self.mem3_treat_time)
+        config.set('mem3', 'power', self.mem3_power)
+        
         # Writing our configuration file to 'example.cfg'
         with open('config.txt', 'w') as configfile:
             config.write(configfile)
