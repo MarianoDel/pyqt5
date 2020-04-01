@@ -228,5 +228,45 @@ class Treatment():
             config.write(configfile)
             
 
+    def MoveCurrentConfToMem (self, which_mem):
+        if which_mem == 'mem1':
+            self.mem1_frequency = self.frequency
+            self.mem1_signal = self.signal
+            self.mem1_treat_time = str(self.treatment_timer)
+            self.mem1_power = str(self.power)
+
+        if which_mem == 'mem2':
+            self.mem2_frequency = self.frequency
+            self.mem2_signal = self.signal
+            self.mem2_treat_time = str(self.treatment_timer)
+            self.mem2_power = str(self.power)
+
+        if which_mem == 'mem3':
+            self.mem3_frequency = self.frequency
+            self.mem3_signal = self.signal
+            self.mem3_treat_time = str(self.treatment_timer)
+            self.mem3_power = str(self.power)
+
+
+    def EmptyMem (self, which_mem):
+        if which_mem == 'mem1':
+            self.mem1_frequency = 'None'
+            self.mem1_signal = 'None'
+            self.mem1_treat_time = 'None'
+            self.mem1_power = 'None'
+
+        if which_mem == 'mem2':
+            self.mem2_frequency = 'None'
+            self.mem2_signal = 'None'
+            self.mem2_treat_time = 'None'
+            self.mem2_power = 'None'
+
+        if which_mem == 'mem3':
+            self.mem3_frequency = 'None'
+            self.mem3_signal = 'None'
+            self.mem3_treat_time = 'None'
+            self.mem3_power = 'None'
+            
+
 
 ### end of file ###

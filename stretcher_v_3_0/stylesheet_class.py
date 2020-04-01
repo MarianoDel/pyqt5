@@ -150,7 +150,21 @@ class ButtonStyles():
                                    border: 0px;\
                                    color: rgb(255, 255, 255);"
         
-        
+
+        self.mem1_button_enable = "color: rgb(55, 52, 53);\
+                                   background-color: rgb(255, 244, 230);\
+                                   border-radius: 10px;\
+                                   border:2px solid rgb(55, 52, 53);"
+
+        self.mem2_button_enable = "color: rgb(55, 52, 53);\
+                                   background-color: rgb(255, 232, 204);\
+                                   border-radius: 10px;\
+                                   border:2px solid rgb(55, 52, 53);"
+
+        self.mem3_button_enable = "color: rgb(55, 52, 53);\
+                                   background-color: rgb(255, 221, 179);\
+                                   border-radius: 10px;\
+                                   border:2px solid rgb(55, 52, 53);"
         
         
         

@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>430</width>
-    <height>180</height>
+    <height>275</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="mem1Button">
+  <widget class="QPushButton" name="memButton">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -119,6 +119,42 @@ border:2px solid rgb(55, 52, 53);</string>
    </property>
    <property name="text">
     <string>Empty Mem</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>200</y>
+     <width>211</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>50</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>20</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);
+background-color: rgb(243, 74, 125);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Back!</string>
    </property>
   </widget>
  </widget>

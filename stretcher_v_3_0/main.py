@@ -165,7 +165,7 @@ class Dialog(QDialog):
         self.one_second_signal.connect(self.UpdateOneSec)
 
         ## read and update memory buttons
-        self.ReadMemConfig()
+        self.UpdateMemLabels()
 
         ### For last call to the first f*** dialog
         if NO_CALL_FIRST_DLG == 0:
@@ -234,7 +234,7 @@ class Dialog(QDialog):
 
     def Memory1Config (self):
         if self.CheckCompleteConf() == True:
-            self.MemoryScreen()
+            self.MemoryScreen('mem1')
         else:
             self.InsertLocalText("Select all parameters first!")
 
@@ -261,7 +261,7 @@ class Dialog(QDialog):
 
     def Memory2Config (self):
         if self.CheckCompleteConf() == True:
-            self.MemoryScreen()
+            self.MemoryScreen('mem2')
         else:
             self.InsertLocalText("Select all parameters first!")
 
@@ -288,7 +288,7 @@ class Dialog(QDialog):
 
     def Memory3Config (self):
         if self.CheckCompleteConf() == True:
-            self.MemoryScreen()
+            self.MemoryScreen('mem3')
         else:
             self.InsertLocalText("Select all parameters first!")
 
@@ -597,7 +597,7 @@ class Dialog(QDialog):
         self.ui.textEdit.append(new_text)
         
 
-    def ReadMemConfig (self):
+    def UpdateMemLabels (self):
         if self.t.mem1_treat_time != 'None':
             self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min')
             self.ui.mem12Label.setText(self.t.mem1_frequency + ' - ' + self.t.mem1_power + '%')
@@ -633,6 +633,10 @@ class Dialog(QDialog):
         # sleep(2)
         event.accept()
 
+        
+####################################
+# Different Screens Calls are here #
+####################################
 
     ## Initial Screen
     def FirstDialogScreen (self):
@@ -663,10 +667,22 @@ class Dialog(QDialog):
 
 
     ## MemoryScreen
-    def MemoryScreen (self):
-        a = MemoryDialog()
+    def MemoryScreen (self, which_mem):
+        a = MemoryDialog(self.ss, which_mem)
         a.setModal(True)
         a.exec_()
+
+        if a.action == 'save':
+            self.t.MoveCurrentConfToMem(which_mem)
+            self.t.SaveConfigFile()
+            self.UpdateMemLabels()
+        
+        if a.action == 'empty':
+            self.t.EmptyMem(which_mem)
+            self.t.SaveConfigFile()
+            self.UpdateMemLabels()            
+
+            
 
         
 
