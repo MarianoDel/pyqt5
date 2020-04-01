@@ -28,8 +28,8 @@ from dlg_mems_cls import MemoryDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 0
-RUNNING_ON_RASP = 1
+RUNNING_ON_SLACKWARE = 1
+RUNNING_ON_RASP = 0
 ## No calls for debug
 NO_CALL_FIRST_DLG = 0
 
@@ -647,12 +647,15 @@ class Dialog(QDialog):
         
     ## Treatment Screen
     def TreatmentScreen (self):
-        if self.CheckForStart() == True:
-            self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
+        if self.CheckCompleteConf() == True:
+            if self.s.port_open == True:
+                self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
             
-            a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
-            a.setModal(True)
-            a.exec_()
+                a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
+                a.setModal(True)
+                a.exec_()
+            else:
+                self.InsertLocalText("Serial Port Not Open!")
         else:
             # self.ui.textEdit.append("Complete all params before start")
             self.InsertLocalText("Complete all params before start")
