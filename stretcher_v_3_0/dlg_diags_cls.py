@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from time import time
 from threading import Timer
 from datetime import datetime
@@ -11,6 +11,10 @@ import os
 from ui_diagnostics_dlg import Ui_DiagnosticsDialog
 from dlg_rtc_cls import RtcDialog
 from dlg_pwr_ctrl_cls import PowerControlDialog
+
+## what to do with the RTC info
+USE_RTC_STRING_FOR_PRINT = 1
+USE_RTC_STRING_FOR_COMMAND = 0
 
 
 #####################################################################
@@ -43,8 +47,9 @@ class DiagnosticsDialog(QDialog):
         self.UpdateDateTime(date_now)
 
         # to start 1 second timer
-        self.next_call = time()
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
+        self.t1seg = QTimer()
+        self.t1seg.timeout.connect(self.TimerOneSec)
+        self.t1seg.start(1000)
 
         # CONNECT SIGNALS
         # connect the timer signal to the Update
@@ -74,10 +79,8 @@ class DiagnosticsDialog(QDialog):
         self.ui.date_timeLabel.setText(date_str)
 
 
-        """ This runs in other thread is a better idea to use a signal to change the UI """
-    def TimerOneSec(self, lapse):
-        self.next_call = self.next_call + 1        
-        self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
+        """ QTimer callback emit a signal to not upset the timer interval """
+    def TimerOneSec(self):
         self.one_second_signal.emit()
 
 
@@ -108,9 +111,24 @@ class DiagnosticsDialog(QDialog):
         new_year = a.ui.yearButton.text()
         new_hour = a.ui.hourButton.text()
         new_minute = a.ui.minuteButton.text()
-        myCmd = "sudo date -s {0}/{1}/20{2} {3}:{4}".format(new_day, new_month, new_year, new_hour, new_minute)
-        print(myCmd)
-        # os.system(myCmd)
+        myCmd1 = "sudo date -s {0}/{1}/20{2}".format(new_day, new_month, new_year)
+        myCmd2 = "sudo date -s {0}:{1}:00".format(new_hour, new_minute)
+        myCmd3 = "sudo hwclock -w"        #guardo info del date en hwclock
+        if USE_RTC_STRING_FOR_PRINT:
+            print(myCmd1)
+            print(myCmd2)
+            print(myCmd3)            
+
+        if USE_RTC_STRING_FOR_COMMAND:
+            os.system(myCmd1)
+            os.system(myCmd2)            
+            os.system(myCmd3)
+
+        # do a UI update
+        date_now = datetime.today()
+        self.minutes_last = date_now.minute
+        self.UpdateDateTime(date_now)
+
 
 
     ## PowerScreen

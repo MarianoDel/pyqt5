@@ -8,9 +8,6 @@ from datetime import datetime
 #get the UI from here
 from ui_rtc_dlg import Ui_RtcDialog
 
-## what to do with the info
-USE_RTC_STRING_FOR_PRINT = 0
-USE_RTC_STRING_FOR_COMMAND = 1
 
 ##################################################
 # RtcDialog Class - to set the RTC on the system #

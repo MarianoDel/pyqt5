@@ -28,8 +28,8 @@ from dlg_mems_cls import MemoryDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 1
-RUNNING_ON_RASP = 0
+RUNNING_ON_SLACKWARE = 0
+RUNNING_ON_RASP = 1
 ## No calls for debug
 NO_CALL_FIRST_DLG = 0
 
