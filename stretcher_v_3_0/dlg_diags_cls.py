@@ -12,10 +12,6 @@ from ui_diagnostics_dlg import Ui_DiagnosticsDialog
 from dlg_rtc_cls import RtcDialog
 from dlg_pwr_ctrl_cls import PowerControlDialog
 
-## what to do with the RTC info
-USE_RTC_STRING_FOR_PRINT = 1
-USE_RTC_STRING_FOR_COMMAND = 0
-
 
 #####################################################################
 # DiagnosticsDialog Class - Secondary window for diagnostics checks #
@@ -114,12 +110,12 @@ class DiagnosticsDialog(QDialog):
         myCmd1 = "sudo date -s {0}/{1}/20{2}".format(new_day, new_month, new_year)
         myCmd2 = "sudo date -s {0}:{1}:00".format(new_hour, new_minute)
         myCmd3 = "sudo hwclock -w"        #guardo info del date en hwclock
-        if USE_RTC_STRING_FOR_PRINT:
+        if self.t.GetCurrentSystem == 'slackware':
             print(myCmd1)
             print(myCmd2)
             print(myCmd3)            
 
-        if USE_RTC_STRING_FOR_COMMAND:
+        elif self.t.GetCurrentSystem == 'raspbian':
             os.system(myCmd1)
             os.system(myCmd2)            
             os.system(myCmd3)

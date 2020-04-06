@@ -28,8 +28,8 @@ from dlg_mems_cls import MemoryDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 0
-RUNNING_ON_RASP = 1
+RUNNING_ON_SLACKWARE = 1
+RUNNING_ON_RASP = 0
 ## No calls for debug
 NO_CALL_FIRST_DLG = 0
 
@@ -103,6 +103,10 @@ class Dialog(QDialog):
         ## Init treatment object
         self.t = Treatment()
         self.t.SetCurrentVersion(CURRENT_VERSION)
+        if RUNNING_ON_SLACKWARE:
+            self.t.SetCurrentSystem('slackware')
+        elif RUNNING_ON_RASP:
+            self.t.SetCurrentSystem('raspbian')
 
         ## Init stylesheet object
         self.ss = ButtonStyles()
@@ -139,10 +143,10 @@ class Dialog(QDialog):
         self.mem3ButtonCnt = 0
 
         ## PARA SLACKWARE
-        if RUNNING_ON_SLACKWARE:
+        if self.t.GetCurrentSystem() == 'slackware':
             self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
         ## PARA RASPBERRY
-        if RUNNING_ON_RASP:
+        elif self.t.GetCurrentSystem() == 'raspbian':
             self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
             
         if self.s.port_open == False:

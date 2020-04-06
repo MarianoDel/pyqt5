@@ -27,9 +27,21 @@ class Treatment():
         # version actual de soft
         self.current_version = 'Stretcher_ver_1_0'
 
+        # tipo de OS donde corre
+        self.current_system = ''
+
         self.ReadConfigFile()
 
 
+    def SetCurrentSystem (self, system):
+        self.current_system = system
+
+    def GetCurrentSystem (self):
+        return self.current_system
+        
+    def SetCurrentVersion (self, version):
+        self.current_version = version
+        
     def SetCurrentVersion (self, version):
         self.current_version = version
 

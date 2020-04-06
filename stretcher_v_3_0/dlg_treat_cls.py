@@ -229,13 +229,13 @@ class TreatmentDialog(QDialog):
 
         elif self.init_state == 'duration':
             new_timer = self.treat.GetTreatmentTimer()
-            to_send = 'duration,00,{:02d},00,1'.format(new_timer)
+            to_send = 'duration,{:03d},'.format(new_timer)
             self.s.Write(to_send + "\r\n")
 
             self.InsertLocalText(to_send)
             self.init_state = 'start'
             self.init_timer.singleShot(100, self.SendStartSM)
-
+            
         elif self.init_state == 'start':
             self.InsertLocalText("Starting Treatment...")
             self.s.Write("start,\r\n")
@@ -278,7 +278,26 @@ class TreatmentDialog(QDialog):
         elif self.init_state == 'stop':
             self.s.Write("stop,\r\n")                
             self.InsertLocalText("STOP Treatment")
+
+            self.init_state = 'stop_bips'
+            self.init_timer.singleShot(100, self.SendStopSM)
             
+        elif self.init_state == 'stop_bips':
+            self.s.Write("buzzer short 3,\r\n")
+
+
+    def SendStopNoBuzzerSM (self):
+        if self.init_state == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.s.Write("keepalive,\r\n")
+            
+            self.init_state = 'stop'
+            self.init_timer.singleShot(100, self.SendStopSM)
+
+        elif self.init_state == 'stop':
+            self.s.Write("stop,\r\n")                
+            self.InsertLocalText("STOP Treatment")
+
             
     def UpdateTimerAndLabels (self):
         if (self.treat.remaining_minutes > 0 or
@@ -339,7 +358,7 @@ class TreatmentDialog(QDialog):
         self.progress_timer.singleShot(300, self.ProgressStopSM)
 
         self.init_state = 'clean'
-        self.SendStopSM()        
+        self.SendStopNoBuzzerSM()
 
 
     def RsmTreatment(self):

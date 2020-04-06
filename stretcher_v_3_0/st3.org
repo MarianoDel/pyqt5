@@ -35,7 +35,31 @@
 ** FALTA MODIFICAR SPLASH SCREEN REVISAR!!!
 
 * Me parece falta quitar un servicio en el RTC VERIFICAR
-     
+
+* Lo que falta para terminar 
+** TODO Logging
+   https://docs.python.org/3/howto/logging.html
+
+   https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/
+
+
+** TODO Modificar duration y buzzer
+*** duration debe ir en minutos
+    modificar gui
+    modificar power
+
+*** buzzer
+    se tiene que permitir un mensaje de buzzer largo y bips
+
+** TODO Serial Number
+   pedir el numero de serie del micro, ver magneto
+
+** TODO Tension de fuentes
+   pedir correctamente la tension de las fuentes de placa power
+
+** TODO View LAN IP
+   poder configurar o por lo menos conocer la ip del dispositivo
+
 
 
 
