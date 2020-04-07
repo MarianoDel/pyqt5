@@ -118,6 +118,11 @@ class DiagnosticsDialog(QDialog):
         elif self.comm_progress == 'hardware_and_software':
             self.ser.Write("hard_soft\r\n")
 
+            self.comm_progress = 'device_id'
+            self.init_timer.singleShot(100, self.GetPowerInfoSM)
+
+        elif self.comm_progress == 'device_id':
+            self.ser.Write("serial num\r\n")
             
 
     def SerialDataCallback (self, rcv):
@@ -136,6 +141,10 @@ class DiagnosticsDialog(QDialog):
         if rcv.startswith("Software Version:"):
             hs = rcv[17:]
             self.ui.firmwareLabel.setText(hs)
+
+        if rcv.startswith("Device Id:"):
+            hs = rcv[10:]
+            self.ui.deviceLabel.setText(hs)
             
         
 
