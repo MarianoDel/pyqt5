@@ -667,8 +667,7 @@ class Dialog(QDialog):
 
     ## DiagnosticsSreen
     def DiagnosticsScreen (self):
-        print("diag button presed!!!")
-        a = DiagnosticsDialog(self.s, self.t)
+        a = DiagnosticsDialog(self.s, self.t, parent=self)
         a.setModal(True)
         a.exec_()
 

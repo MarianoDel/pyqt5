@@ -22,7 +22,7 @@ class DiagnosticsDialog(QDialog):
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
 
-    def __init__(self, ser_instance, treatment_instance):
+    def __init__(self, ser_instance, treatment_instance, parent=None):
         super(DiagnosticsDialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -34,6 +34,8 @@ class DiagnosticsDialog(QDialog):
         self.ui.rtcButton.clicked.connect(self.RtcScreen)
         self.ui.max_powerButton.clicked.connect(self.PowerScreen)
 
+        # get the parent reference and data
+        self.parent = parent
         self.ser = ser_instance
         self.t = treatment_instance
 
@@ -47,9 +49,17 @@ class DiagnosticsDialog(QDialog):
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
 
+        # progress timer, these ones are qt
+        self.init_timer = QTimer()
+        
+
         # CONNECT SIGNALS
         # connect the timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
+        self.parent.rcv_signal.connect(self.SerialDataCallback)
+
+        self.ui.highVLabel.setText("--")
+        self.ui.lowVLabel.setText("--")
 
         if self.ser.port_open == False:
             self.ui.hardwareLabel.setText("No port  ")
@@ -57,10 +67,8 @@ class DiagnosticsDialog(QDialog):
         else:
             self.ui.hardwareLabel.setText("Waiting...  ")
             self.ui.firmwareLabel.setText("Waiting...  ")
-            self.ser.Write("voltage\n")
-            # ser_instance.Write("get data\n")
             
-        #recupero informacion del sistema
+        # recupero informacion del sistema
         (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
         os_text = "--" + distname + version + "-- "
         self.ui.osLabel.setText(os_text)
@@ -68,6 +76,11 @@ class DiagnosticsDialog(QDialog):
         (system, node, release, version, machine, processor) = platform.uname()
         self.ui.kernelLabel.setText(release)
         self.ui.softLabel.setText(self.t.current_version)
+
+        # recupero informacion de la placa power si el puerto esta OK
+        self.comm_progress = 'clean'        
+        if self.ser.port_open == True:
+            self.GetPowerInfoSM()
 
 
     def UpdateDateTime(self, new_date_time):
@@ -87,7 +100,49 @@ class DiagnosticsDialog(QDialog):
             self.minutes_last = date_now.minute
             self.UpdateDateTime(date_now)
 
+
+    def GetPowerInfoSM (self):
+        if self.comm_progress == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.ser.Write("keepalive,\r\n")
             
+            self.comm_progress = 'voltage'
+            self.init_timer.singleShot(100, self.GetPowerInfoSM)
+
+        elif self.comm_progress == 'voltage':
+            self.ser.Write("voltage\r\n")
+
+            self.comm_progress = 'hardware_and_software'
+            self.init_timer.singleShot(100, self.GetPowerInfoSM)
+
+        elif self.comm_progress == 'hardware_and_software':
+            self.ser.Write("hard_soft\r\n")
+
+            
+
+    def SerialDataCallback (self, rcv):
+        if rcv.startswith("High Supply:"):
+            h_voltage = rcv[12:]
+            self.ui.highVLabel.setText(h_voltage)
+
+        if rcv.startswith("Low Supply:"):
+            l_voltage = rcv[11:]
+            self.ui.lowVLabel.setText(l_voltage)
+
+        if rcv.startswith("Hardware Version:"):
+            hs = rcv[17:]
+            self.ui.hardwareLabel.setText(hs)
+
+        if rcv.startswith("Software Version:"):
+            hs = rcv[17:]
+            self.ui.firmwareLabel.setText(hs)
+            
+        
+
+
+    ###############
+    # Screens     #
+    ###############
     ## RtcScreen
     def RtcScreen (self):
         a = RtcDialog()
