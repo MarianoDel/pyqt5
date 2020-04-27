@@ -234,6 +234,7 @@ class Dialog(QDialog):
                 self.t.SetTreatmentTimer(int(self.t.mem1_treat_time))
                 self.ui.powerLabel.setText(self.t.mem1_power)
                 self.t.SetPower(int(self.t.mem1_power))
+                self.CheckForStart()
 
 
     def Memory1Config (self):
@@ -261,6 +262,7 @@ class Dialog(QDialog):
                 self.t.SetTreatmentTimer(int(self.t.mem2_treat_time))
                 self.ui.powerLabel.setText(self.t.mem2_power)
                 self.t.SetPower(int(self.t.mem2_power))
+                self.CheckForStart()
 
 
     def Memory2Config (self):
@@ -288,6 +290,7 @@ class Dialog(QDialog):
                 self.t.SetTreatmentTimer(int(self.t.mem3_treat_time))
                 self.ui.powerLabel.setText(self.t.mem3_power)
                 self.t.SetPower(int(self.t.mem3_power))
+                self.CheckForStart()
 
 
     def Memory3Config (self):
