@@ -171,15 +171,15 @@ class DiagnosticsDialog(QDialog):
         new_year = a.ui.yearButton.text()
         new_hour = a.ui.hourButton.text()
         new_minute = a.ui.minuteButton.text()
-        myCmd1 = "sudo date -s {0}/{1}/20{2}".format(new_day, new_month, new_year)
+        myCmd1 = "sudo date -s {1}/{0}/20{2}".format(new_day, new_month, new_year)
         myCmd2 = "sudo date -s {0}:{1}:00".format(new_hour, new_minute)
         myCmd3 = "sudo hwclock -w"        #guardo info del date en hwclock
-        if self.t.GetCurrentSystem == 'slackware':
+        if self.t.GetCurrentSystem() == 'slackware':
             print(myCmd1)
             print(myCmd2)
             print(myCmd3)            
 
-        elif self.t.GetCurrentSystem == 'raspbian':
+        elif self.t.GetCurrentSystem() == 'raspbian':
             os.system(myCmd1)
             os.system(myCmd2)            
             os.system(myCmd3)
