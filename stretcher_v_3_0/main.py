@@ -98,7 +98,10 @@ class Dialog(QDialog):
         self.ui.min45Button.clicked.connect(self.TimeSet)
         
         self.ui.startButton.clicked.connect(self.TreatmentScreen)
-        self.ui.diagButton.clicked.connect(self.DiagnosticsScreen)
+        # self.ui.diagButton.clicked.connect(self.DiagnosticsScreen)
+        self.ui.diagButton.pressed.connect(self.DiagsPressed)
+        self.ui.diagButton.released.connect(self.DiagsReleased)
+
 
         ## Init treatment object
         self.t = Treatment()
@@ -141,6 +144,7 @@ class Dialog(QDialog):
         self.mem1ButtonCnt = 0
         self.mem2ButtonCnt = 0
         self.mem3ButtonCnt = 0
+        self.diagButtonCnt = 0
 
         ## PARA SLACKWARE
         if self.t.GetCurrentSystem() == 'slackware':
@@ -216,8 +220,10 @@ class Dialog(QDialog):
     def DwnPowerReleased (self):
         self.powerDwnButtonCnt = 0
 
+        
     def Memory1Pressed (self):
         self.mem1ButtonCnt = 1
+
         
     def Memory1Released (self):
         if (self.mem1ButtonCnt > 0 and
@@ -246,6 +252,7 @@ class Dialog(QDialog):
 
     def Memory2Pressed (self):
         self.mem2ButtonCnt = 1
+
         
     def Memory2Released (self):
         if (self.mem2ButtonCnt > 0 and
@@ -274,6 +281,7 @@ class Dialog(QDialog):
 
     def Memory3Pressed (self):
         self.mem3ButtonCnt = 1
+
         
     def Memory3Released (self):
         if (self.mem3ButtonCnt > 0 and
@@ -298,6 +306,14 @@ class Dialog(QDialog):
             self.MemoryScreen('mem3')
         else:
             self.InsertLocalText("Select all parameters first!")
+
+
+    def DiagsPressed (self):
+        self.diagButtonCnt = 1
+
+        
+    def DiagsReleased (self):
+        self.diagButtonCnt = 0
 
             
     def SignalDisableAll(self):
@@ -525,6 +541,12 @@ class Dialog(QDialog):
             self.Memory3Config()
         elif self.mem3ButtonCnt > 0:
             self.mem3ButtonCnt += 1
+
+        if self.diagButtonCnt > 5:
+            self.diagButtonCnt = 0
+            self.DiagnosticsSreen()
+        elif self.diagButtonCnt > 0:
+            self.diagButtonCnt += 1
 
         date_now = datetime.today()
         if date_now.minute != self.minutes_last:
