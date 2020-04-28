@@ -28,8 +28,8 @@ from dlg_mems_cls import MemoryDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 1
-RUNNING_ON_RASP = 0
+RUNNING_ON_SLACKWARE = 0
+RUNNING_ON_RASP = 1
 ## No calls for debug
 NO_CALL_FIRST_DLG = 0
 
@@ -544,7 +544,7 @@ class Dialog(QDialog):
 
         if self.diagButtonCnt > 5:
             self.diagButtonCnt = 0
-            self.DiagnosticsSreen()
+            self.DiagnosticsScreen()
         elif self.diagButtonCnt > 0:
             self.diagButtonCnt += 1
 
