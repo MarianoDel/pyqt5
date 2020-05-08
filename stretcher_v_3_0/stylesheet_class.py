@@ -43,32 +43,32 @@ class ButtonStyles():
 
         ## Frequency buttons StyleSheet
         self.freq1_enable = "background-image: url(:/frequencies/resources/7_83Hz.png);\
-                             background-color: rgb(240, 231, 240);\
-                             border-radius: 10px;\
-                             border:2px solid rgb(55, 52, 53);"
-
-        self.freq2_enable = "background-image: url(:/frequencies/resources/11_79Hz.png);\
-                             background-color: rgb(230, 217, 231);\
-                             border-radius: 10px;\
-                             border:2px solid rgb(55, 52, 53);"
-
-        self.freq3_enable = "background-image: url(:/frequencies/resources/16_67Hz.png);\
                              background-color: rgb(221, 202, 222);\
                              border-radius: 10px;\
                              border:2px solid rgb(55, 52, 53);"
 
-        self.freq4_enable = "background-image: url(:/frequencies/resources/23_58Hz.png);\
+        self.freq2_enable = "background-image: url(:/frequencies/resources/11_79Hz.png);\
                              background-color: rgb(211, 187, 213);\
                              border-radius: 10px;\
                              border:2px solid rgb(55, 52, 53);"
 
-        self.freq5_enable = "background-image: url(:/frequencies/resources/30_80Hz.png);\
+        self.freq3_enable = "background-image: url(:/frequencies/resources/16_67Hz.png);\
                              background-color: rgb(202, 173, 204);\
                              border-radius: 10px;\
                              border:2px solid rgb(55, 52, 53);"
 
-        self.freq6_enable = "background-image: url(:/frequencies/resources/62_64Hz.png);\
+        self.freq4_enable = "background-image: url(:/frequencies/resources/23_58Hz.png);\
                              background-color: rgb(196, 161, 203);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq5_enable = "background-image: url(:/frequencies/resources/30_80Hz.png);\
+                             background-color: rgb(169, 121, 179);\
+                             border-radius: 10px;\
+                             border:2px solid rgb(55, 52, 53);"
+
+        self.freq6_enable = "background-image: url(:/frequencies/resources/62_64Hz.png);\
+                             background-color: rgb(137, 84, 148);\
                              border-radius: 10px;\
                              border:2px solid rgb(55, 52, 53);"
 
