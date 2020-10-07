@@ -84,7 +84,12 @@ class DiagnosticsDialog(QDialog):
 
 
     def UpdateDateTime(self, new_date_time):
-        date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+        date_str = ""
+        if self.t.GetLocalization() == 'usa':
+            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
+        elif self.t.GetLocalization() == 'arg':
+            date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+
         self.ui.date_timeLabel.setText(date_str)
 
 

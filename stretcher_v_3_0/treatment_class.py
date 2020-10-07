@@ -30,6 +30,9 @@ class Treatment():
         # tipo de OS donde corre
         self.current_system = ''
 
+        # donde se ejecuta el programa - Date & Time -
+        self.localization = ''
+        
         self.ReadConfigFile()
 
 
@@ -38,7 +41,13 @@ class Treatment():
 
     def GetCurrentSystem (self):
         return self.current_system
-        
+
+    def SetLocalization (self, locali):
+        self.localization = locali
+
+    def GetLocalization (self):
+        return self.localization
+    
     def SetCurrentVersion (self, version):
         self.current_version = version
         

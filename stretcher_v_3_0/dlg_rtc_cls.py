@@ -31,7 +31,6 @@ class RtcDialog(QDialog):
         self.ui.yearButton.clicked.connect(self.ChangeFocusYear)
         self.ui.hourButton.clicked.connect(self.ChangeFocusHour)
         self.ui.minuteButton.clicked.connect(self.ChangeFocusMinute)
-        self.new_focus = "DAY"
 
 
     def UpBtn (self, event=None):

@@ -18,13 +18,14 @@ class FirstDialog(QDialog):
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
 
-    def __init__(self, style_obj):
+    def __init__(self, treatment_instance, style_obj):
         super(FirstDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_FirstDialog()
         self.ui.setupUi(self)
 
+        self.t = treatment_instance
         self.style = style_obj
         self.ended_label = False
         # get the close event
@@ -46,7 +47,12 @@ class FirstDialog(QDialog):
 
         
     def UpdateDateTime(self, new_date_time):
-        date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+        date_str = ""
+        if self.t.GetLocalization() == 'usa':
+            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
+        elif self.t.GetLocalization() == 'arg':
+            date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+
         self.ui.date_timeLabel.setText(date_str)
 
 

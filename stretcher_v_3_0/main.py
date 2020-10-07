@@ -30,7 +30,10 @@ from dlg_mems_cls import MemoryDialog
 ## OS where its run
 RUNNING_ON_SLACKWARE = 0
 RUNNING_ON_RASP = 1
-## No calls for debug
+## Date Time as used in
+DATE_TIME_USA = 1
+DATE_TIME_ARG = 0
+## No call the first Dialog - code empty presentation page -
 NO_CALL_FIRST_DLG = 0
 
 ## This Interface Software version
@@ -111,6 +114,11 @@ class Dialog(QDialog):
         elif RUNNING_ON_RASP:
             self.t.SetCurrentSystem('raspbian')
 
+        if DATE_TIME_USA:
+            self.t.SetLocalization('usa')
+        elif DATE_TIME_ARG:
+            self.t.SetLocalization('arg')
+        
         ## Init stylesheet object
         self.ss = ButtonStyles()
         
@@ -181,7 +189,12 @@ class Dialog(QDialog):
 
 
     def UpdateDateTime(self, new_date_time):
-        date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+        date_str = ""
+        if self.t.GetLocalization() == 'usa':
+            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
+        elif self.t.GetLocalization() == 'arg':
+            date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+            
         self.ui.date_timeLabel.setText(date_str)
 
 
@@ -669,7 +682,7 @@ class Dialog(QDialog):
 
     ## Initial Screen
     def FirstDialogScreen (self):
-        a = FirstDialog(self.ss)
+        a = FirstDialog(self.t, self.ss)
         a.setModal(True)
         a.exec_()
 
