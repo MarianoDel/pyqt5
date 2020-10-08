@@ -43,7 +43,8 @@
    https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/
 
 
-** TODO Modificar duration y buzzer
+** DONE Modificar duration y buzzer
+   CLOSED: [2020-10-08 Thu 09:24]
 *** duration debe ir en minutos
     modificar gui
     modificar power
@@ -51,10 +52,12 @@
 *** buzzer
     se tiene que permitir un mensaje de buzzer largo y bips
 
-** TODO Serial Number
+** DONE Serial Number
+   CLOSED: [2020-10-08 Thu 09:24]
    pedir el numero de serie del micro, ver magneto
 
-** TODO Tension de fuentes
+** DONE Tension de fuentes
+   CLOSED: [2020-10-08 Thu 09:24]
    pedir correctamente la tension de las fuentes de placa power
 
 ** TODO View LAN IP
@@ -64,3 +67,7 @@
 
 
 
+
+* Agrego posibilidad de trabajar con DD/MM o MM/DD en RTC
+** DONE Esto lo hago con una variable localization en treatment_class
+   CLOSED: [2020-10-08 Thu 09:26]
