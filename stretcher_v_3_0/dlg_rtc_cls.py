@@ -34,6 +34,11 @@ class RtcDialog(QDialog):
 
 
     def UpBtn (self, event=None):
+        if self.ui.label_2.text() == 'Date DD/MM/YY':
+            print('day is ok')
+        else:
+            print('day inverted')
+            
         day = int(self.ui.dayButton.text())
         month = int(self.ui.monthButton.text())
         year = int(self.ui.yearButton.text())
@@ -152,34 +157,6 @@ class RtcDialog(QDialog):
         # self.ui.yearButton.setText(f"{y:02d}")
         # self.ui.hourButton.setText(f"{h:02d}")
         # self.ui.minuteButton.setText(f"{mm:02d}")
-        
-
-
-
-    #     ### to carry on with date-time
-    #     date_now = datetime.today()
-    #     self.minutes_last = date_now.minute
-    #     self.UpdateDateTime(date_now)
-
-    #     # to start 1 second timer
-    #     self.next_call = time()
-    #     self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
-
-
-    # def UpdateDateTime(self, new_date_time):
-    #     date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
-    #     self.ui.date_timeLabel.setText(date_str)
-
-        
-    # def TimerOneSec(self, lapse):
-    #     self.next_call = self.next_call + 1
-    #     self.t1seg = Timer(self.next_call - time(), self.TimerOneSec, [1]).start()
-
-    #     # do a UI update if its necessary
-    #     date_now = datetime.today()
-    #     if date_now.minute != self.minutes_last:
-    #         self.minutes_last = date_now.minute
-    #         self.UpdateDateTime(date_now)            
 
         
 ### end of file ###
