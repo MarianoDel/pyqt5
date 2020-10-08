@@ -45,21 +45,35 @@ class Communicate(QObject):
     # Screens     #
     ###############
     ## RtcScreen
-def RtcScreen ():
+def RtcScreen (localization):
     a = RtcDialog()
     a.setModal(True)
 
     date_now = datetime.today()
-    a.ui.dayButton.setText(date_now.strftime("%d"))
-    a.ui.monthButton.setText(date_now.strftime("%m"))
+    if localization == 'usa':
+        a.ui.label_2.setText('Date MM/DD/YY')
+        a.ui.monthButton.setText(date_now.strftime("%d"))
+        a.ui.dayButton.setText(date_now.strftime("%m"))
+    elif localization == 'arg':
+        a.ui.label_2.setText('Date DD/MM/YY')
+        a.ui.dayButton.setText(date_now.strftime("%d"))
+        a.ui.monthButton.setText(date_now.strftime("%m"))
+        
     a.ui.yearButton.setText(date_now.strftime("%y"))
-
     a.ui.hourButton.setText(date_now.strftime("%H"))
-    a.ui.minuteButton.setText(date_now.strftime("%M"))            
+    a.ui.minuteButton.setText(date_now.strftime("%M"))
+
+    a.ChangeFocusDay()
 
     a.exec_()
-    new_day = a.ui.dayButton.text()
-    new_month = a.ui.monthButton.text()
+
+    if localization == 'usa':
+        new_month = a.ui.dayButton.text()
+        new_day = a.ui.monthButton.text()
+    elif localization == 'arg':
+        new_day = a.ui.dayButton.text()
+        new_month = a.ui.monthButton.text()
+    
     new_year = a.ui.yearButton.text()
     new_hour = a.ui.hourButton.text()
     new_minute = a.ui.minuteButton.text()
@@ -80,7 +94,7 @@ def RtcScreen ():
 # Main App #
 ############
 app = QApplication(sys.argv)
-RtcScreen()
+RtcScreen('arg')
 sys.exit(app.exec_())
 
 

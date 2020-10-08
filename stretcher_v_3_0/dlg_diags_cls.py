@@ -163,16 +163,30 @@ class DiagnosticsDialog(QDialog):
         a.setModal(True)
 
         date_now = datetime.today()
-        a.ui.dayButton.setText(date_now.strftime("%d"))
-        a.ui.monthButton.setText(date_now.strftime("%m"))
-        a.ui.yearButton.setText(date_now.strftime("%y"))
+        if self.t.GetLocalization() == 'usa':
+            a.ui.label_2.setText('Date MM/DD/YY')
+            a.ui.monthButton.setText(date_now.strftime("%d"))
+            a.ui.dayButton.setText(date_now.strftime("%m"))
+        elif self.t.GetLocalization() == 'arg':
+            a.ui.label_2.setText('Date DD/MM/YY')
+            a.ui.dayButton.setText(date_now.strftime("%d"))
+            a.ui.monthButton.setText(date_now.strftime("%m"))
 
+        a.ui.yearButton.setText(date_now.strftime("%y"))
         a.ui.hourButton.setText(date_now.strftime("%H"))
         a.ui.minuteButton.setText(date_now.strftime("%M"))            
 
+        a.ChangeFocusDay()
+        
         a.exec_()
-        new_day = a.ui.dayButton.text()
-        new_month = a.ui.monthButton.text()
+
+        if self.t.GetLocalization() == 'usa':
+            new_month = a.ui.dayButton.text()
+            new_day = a.ui.monthButton.text()
+        elif self.t.GetLocalization() == 'arg':
+            new_day = a.ui.dayButton.text()
+            new_month = a.ui.monthButton.text()
+        
         new_year = a.ui.yearButton.text()
         new_hour = a.ui.hourButton.text()
         new_minute = a.ui.minuteButton.text()

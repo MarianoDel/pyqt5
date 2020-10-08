@@ -31,16 +31,17 @@ class RtcDialog(QDialog):
         self.ui.yearButton.clicked.connect(self.ChangeFocusYear)
         self.ui.hourButton.clicked.connect(self.ChangeFocusHour)
         self.ui.minuteButton.clicked.connect(self.ChangeFocusMinute)
-
+        self.new_focus = ""
+        
 
     def UpBtn (self, event=None):
         if self.ui.label_2.text() == 'Date DD/MM/YY':
-            print('day is ok')
-        else:
-            print('day inverted')
+            day = int(self.ui.dayButton.text())
+            month = int(self.ui.monthButton.text())
+        elif self.ui.label_2.text() == 'Date MM/DD/YY':
+            month = int(self.ui.dayButton.text())
+            day = int(self.ui.monthButton.text())
             
-        day = int(self.ui.dayButton.text())
-        month = int(self.ui.monthButton.text())
         year = int(self.ui.yearButton.text())
         hour = int(self.ui.hourButton.text())
         minute = int(self.ui.minuteButton.text())
@@ -64,13 +65,21 @@ class RtcDialog(QDialog):
         if self.new_focus == "MINUTE":
             if minute < 59:
                 minute += 1
-                
-        self.UpdateNumbers(day, month, year, hour, minute)
 
+        if self.ui.label_2.text() == 'Date DD/MM/YY':
+            self.UpdateNumbers(day, month, year, hour, minute)
+        elif self.ui.label_2.text() == 'Date MM/DD/YY':
+            self.UpdateNumbers(month, day, year, hour, minute)
+            
         
     def DwnBtn (self, event=None):
-        day = int(self.ui.dayButton.text())
-        month = int(self.ui.monthButton.text())
+        if self.ui.label_2.text() == 'Date DD/MM/YY':
+            day = int(self.ui.dayButton.text())
+            month = int(self.ui.monthButton.text())
+        elif self.ui.label_2.text() == 'Date MM/DD/YY':
+            month = int(self.ui.dayButton.text())
+            day = int(self.ui.monthButton.text())
+
         year = int(self.ui.yearButton.text())
         hour = int(self.ui.hourButton.text())
         minute = int(self.ui.minuteButton.text())
@@ -95,19 +104,32 @@ class RtcDialog(QDialog):
             if minute > 0:
                 minute -= 1
 
-        self.UpdateNumbers(day, month, year, hour, minute)
+        if self.ui.label_2.text() == 'Date DD/MM/YY':
+            self.UpdateNumbers(day, month, year, hour, minute)
+        elif self.ui.label_2.text() == 'Date MM/DD/YY':
+            self.UpdateNumbers(month, day, year, hour, minute)
         
 
     def ChangeFocusDay (self):
         self.ClearFocus()
-        self.new_focus = "DAY"
+
+        if self.ui.label_2.text() == 'Date DD/MM/YY':
+            self.new_focus = "DAY"
+        elif self.ui.label_2.text() == 'Date MM/DD/YY':
+            self.new_focus = "MONTH"
+
         self.ui.dayButton.setStyleSheet("background-color: rgb(170, 170, 255);\
                                          border: 0px;")
 
 
     def ChangeFocusMonth (self):
         self.ClearFocus()
-        self.new_focus = "MONTH"
+
+        if self.ui.label_2.text() == 'Date DD/MM/YY':
+            self.new_focus = "MONTH"
+        elif self.ui.label_2.text() == 'Date MM/DD/YY':
+            self.new_focus = "DAY"
+        
         self.ui.monthButton.setStyleSheet("background-color: rgb(170, 170, 255);\
                                           border: 0px;")
 
