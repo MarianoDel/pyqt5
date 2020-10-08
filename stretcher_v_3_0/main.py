@@ -709,6 +709,12 @@ class Dialog(QDialog):
         a.setModal(True)
         a.exec_()
 
+        # fuerzo un update de fecha y hora cuando vuelvo de diagnostico
+        date_now = datetime.today()
+        self.UpdateDateTime(date_now)            
+            
+        
+
 
     ## MemoryScreen
     def MemoryScreen (self, which_mem):
