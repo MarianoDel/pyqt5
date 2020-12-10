@@ -348,7 +348,7 @@ border: 0px;
 color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>Tap to return to a previus screen</string>
+    <string>Tap to return to a previous screen</string>
    </property>
   </widget>
  </widget>

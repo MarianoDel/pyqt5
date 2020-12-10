@@ -32,8 +32,6 @@
      /sbin/hwclock -s
      exit 0
 
-** FALTA MODIFICAR SPLASH SCREEN REVISAR!!!
-
 * Me parece falta quitar un servicio en el RTC VERIFICAR
 
 * Lo que falta para terminar 
@@ -63,11 +61,8 @@
 ** TODO View LAN IP
    poder configurar o por lo menos conocer la ip del dispositivo
 
-
-
-
-
-
 * Agrego posibilidad de trabajar con DD/MM o MM/DD en RTC
 ** DONE Esto lo hago con una variable localization en treatment_class
    CLOSED: [2020-10-08 Thu 09:26]
+* Agrego dos botones para movimiento stretcher
+** TODO Movimiento automatico up-dwn o manual

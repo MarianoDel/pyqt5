@@ -18,6 +18,7 @@ class Treatment():
         self.ch1 = True
         self.ch2 = True
         self.ch3 = True
+        self.updwn = True
         self.treatment_state = 'STOP'
 
         #contadores internos
@@ -79,7 +80,16 @@ class Treatment():
 
     def GetFrequency(self):
         return self.frequency
-                
+
+    def SetUpDwnStretcher(self, updwn_mode):
+        if updwn_mode:
+            self.updwn = True
+        else:
+            self.updwn = False
+
+    def GetUpDwnStretcher(self):
+        return self.updwn
+    
     def SetTreatmentTimer (self, new_time):
         self.treatment_timer = new_time
 

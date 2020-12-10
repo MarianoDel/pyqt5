@@ -2,6 +2,7 @@
   <qresource prefix="background">
     <file>resources/bkg_solo_logo.png</file>
     <file>resources/Pantalla_session_B.png</file>
+    <file>resources/Background2a.png</file>
     <file>resources/Pantalla_session.png</file>
     <file>resources/Pantalla_00.png</file>
     <file>resources/Background_2.png</file>

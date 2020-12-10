@@ -160,6 +160,6 @@ class Ui_TreatmentDialog(object):
         self.remaining_secsLabel.setText(_translate("TreatmentDialog", "59\'\'"))
         self.remaining_minsLabel.setText(_translate("TreatmentDialog", "115\'"))
         self.minutesLabel.setText(_translate("TreatmentDialog", "120\'"))
-        self.doneButton.setText(_translate("TreatmentDialog", "Tap to return to a previus screen"))
+        self.doneButton.setText(_translate("TreatmentDialog", "Tap to return to a previous screen"))
 
 import stretcher3_res_rc

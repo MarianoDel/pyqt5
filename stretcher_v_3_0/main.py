@@ -28,8 +28,8 @@ from dlg_mems_cls import MemoryDialog
 
 ### GLOBALS FOR CONFIGURATION #########
 ## OS where its run
-RUNNING_ON_SLACKWARE = 0
-RUNNING_ON_RASP = 1
+RUNNING_ON_SLACKWARE = 1
+RUNNING_ON_RASP = 0
 ## Date Time as used in
 DATE_TIME_USA = 1
 DATE_TIME_ARG = 0
@@ -81,6 +81,9 @@ class Dialog(QDialog):
         self.ui.ch2Button.clicked.connect(self.ChannelChange)
         self.ui.ch3Button.clicked.connect(self.ChannelChange)
 
+        self.ui.upDwnAutoButton.clicked.connect(self.UpDwnStretcherChange)
+        self.ui.upDwnButton.clicked.connect(self.UpDwnStretcherChange)
+        
         self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
         self.ui.powerUpButton.released.connect(self.UpPowerReleased)
         self.ui.powerDwnButton.pressed.connect(self.DwnPowerPressed)
@@ -128,6 +131,11 @@ class Dialog(QDialog):
         self.ui.powerLabel.setText(str(self.t.GetPower()))
         self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
 
+        self.t.SetUpDwnStretcher(True)
+        self.ui.upDwnButton.setStyleSheet(self.ss.ch_disable)
+        self.ui.upDwnAutoButton.setStyleSheet(self.ss.ch_enable)
+        
+
         ## to carry on with date-time
         date_now = datetime.today()
         self.minutes_last = date_now.minute
@@ -153,6 +161,7 @@ class Dialog(QDialog):
         self.mem2ButtonCnt = 0
         self.mem3ButtonCnt = 0
         self.diagButtonCnt = 0
+        self.upDwnButtonCnt = 0
 
         ## PARA SLACKWARE
         if self.t.GetCurrentSystem() == 'slackware':
@@ -467,7 +476,41 @@ class Dialog(QDialog):
                 self.t.DisableChannelsInTreatment('ch3')
 
         self.CheckForStart()
+
         
+    def UpDwnStretcherChange (self):
+        sender = self.sender()
+
+        if sender.objectName() == 'upDwnAutoButton':
+            if self.t.GetUpDwnStretcher() == True:
+                self.t.SetUpDwnStretcher(False)
+                self.ui.upDwnButton.setStyleSheet(self.ss.ch_enable)
+                self.ui.upDwnAutoButton.setStyleSheet(self.ss.ch_disable)                
+
+                if self.s.port_open == True:
+                    self.s.Write("stretcher autoup off\r\n")
+                else:
+                    self.InsertLocalText("Serial Port Not Open!")
+
+            else:
+                self.t.SetUpDwnStretcher(True)
+                self.ui.upDwnButton.setStyleSheet(self.ss.ch_disable)
+                self.ui.upDwnAutoButton.setStyleSheet(self.ss.ch_enable)
+
+                if self.s.port_open == True:
+                    self.s.Write("stretcher autoup on\r\n")
+                else:
+                    self.InsertLocalText("Serial Port Not Open!")
+
+        if sender.objectName() == 'upDwnButton':
+            if self.t.GetUpDwnStretcher() == False and \
+               self.upDwnButtonCnt == 0:
+                if self.s.port_open == True:
+                    self.s.Write("stretcher up\r\n")
+                    self.upDwnButtonCnt = 1
+                else:
+                    self.InsertLocalText("Serial Port Not Open!")
+                    
         
     def TimeSet (self):
         sender = self.sender()
@@ -560,6 +603,10 @@ class Dialog(QDialog):
             self.DiagnosticsScreen()
         elif self.diagButtonCnt > 0:
             self.diagButtonCnt += 1
+
+        #button debouncing
+        if self.upDwnButtonCnt:
+            self.upDwnButtonCnt -= 1
 
         date_now = datetime.today()
         if date_now.minute != self.minutes_last:
