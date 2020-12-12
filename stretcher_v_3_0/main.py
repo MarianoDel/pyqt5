@@ -12,21 +12,20 @@ from datetime import datetime
 #para el timer de 1 segundo
 from threading import Timer
 
-#Here import the UIs or the classes that got the UIs
-from ui_stretcher import Ui_Dialog
-from dlg_first_cls import FirstDialog
-from dlg_treat_cls import TreatmentDialog
-from dlg_diags_cls import DiagnosticsDialog
-from dlg_mems_cls import MemoryDialog
-
-
 
 """
-    Pruebas con seniales y eventos custom
-    http://zetcode.com/gui/pyqt5/eventssignals/
+        GUI for Stretcher
+        Select if its running on Slackware or Raspberry
+        Select the type of date-time
+        Select the version of the GUI:
+            - 3.2 have two more buttons for up-dwn auto or manual
+            - 3.1 original
 """
 
 ### GLOBALS FOR CONFIGURATION #########
+## What version of UI we must run
+RUN_VER_3_2 = 0
+RUN_VER_3_1 = 1
 ## OS where its run
 RUNNING_ON_SLACKWARE = 1
 RUNNING_ON_RASP = 0
@@ -36,8 +35,25 @@ DATE_TIME_ARG = 0
 ## No call the first Dialog - code empty presentation page -
 NO_CALL_FIRST_DLG = 0
 
-## This Interface Software version
-CURRENT_VERSION = "Stretcher_ver_3_1"
+
+#Here import the UIs or the classes that got the UIs
+if RUN_VER_3_2:
+    from ui_stretcher32 import Ui_Dialog
+    CURRENT_VERSION = "Stretcher_ver_3_2"
+elif RUN_VER_3_1:
+    from ui_stretcher31 import Ui_Dialog
+    CURRENT_VERSION = "Stretcher_ver_3_1"
+else:
+    print('Please select the UI version to run!!!')
+    CURRENT_VERSION = "Stretcher_unknown"
+    sys.exit()
+    
+from dlg_first_cls import FirstDialog
+from dlg_treat_cls import TreatmentDialog
+from dlg_diags_cls import DiagnosticsDialog
+from dlg_mems_cls import MemoryDialog
+
+
 
 ### CUSTOM SIGNALS ####################
 #clase de la senial
@@ -81,8 +97,9 @@ class Dialog(QDialog):
         self.ui.ch2Button.clicked.connect(self.ChannelChange)
         self.ui.ch3Button.clicked.connect(self.ChannelChange)
 
-        self.ui.upDwnAutoButton.clicked.connect(self.UpDwnStretcherChange)
-        self.ui.upDwnButton.clicked.connect(self.UpDwnStretcherChange)
+        if RUN_VER_3_2:
+            self.ui.upDwnAutoButton.clicked.connect(self.UpDwnStretcherChange)
+            self.ui.upDwnButton.clicked.connect(self.UpDwnStretcherChange)
         
         self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
         self.ui.powerUpButton.released.connect(self.UpPowerReleased)
@@ -131,9 +148,10 @@ class Dialog(QDialog):
         self.ui.powerLabel.setText(str(self.t.GetPower()))
         self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
 
-        self.t.SetUpDwnStretcher(True)
-        self.ui.upDwnButton.setStyleSheet(self.ss.ch_disable)
-        self.ui.upDwnAutoButton.setStyleSheet(self.ss.ch_enable)
+        if RUN_VER_3_2:
+            self.t.SetUpDwnStretcher(True)
+            self.ui.upDwnButton.setStyleSheet(self.ss.ch_disable)
+            self.ui.upDwnAutoButton.setStyleSheet(self.ss.ch_enable)
         
 
         ## to carry on with date-time
