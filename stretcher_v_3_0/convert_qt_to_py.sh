@@ -12,6 +12,7 @@ pyuic5 stretcher_diags_dlg.ui > ui_diagnostics_dlg.py
 pyuic5 stretcher_rtc_dlg.ui > ui_rtc_dlg.py
 pyuic5 stretcher_pwr_ctrl_dlg.ui > ui_pwr_ctrl_dlg.py
 pyuic5 stretcher_memory_dlg.ui > ui_memory_dlg.py
+pyuic5 stretcher_screen_saver_dlg.ui > ui_screen_saver_dlg.py
 
 
 
