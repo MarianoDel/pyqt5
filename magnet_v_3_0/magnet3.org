@@ -1,0 +1,6 @@
+* Programa partiendo de Stretcher Ver 3.1 02-02-2021
+** Para conocer configuracion necesaria en rasp
+   - ver st3.org
+
+** Stretcher tiene ver 3.1 y 3.2
+   - aca (en magnet) dejo solo 3.1
