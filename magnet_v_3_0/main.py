@@ -97,7 +97,7 @@ class Dialog(QDialog):
         self.ui.freq6Button.clicked.connect(self.FrequencyChange)
         
         self.ui.ch1Button.clicked.connect(self.ChannelChange)
-        # self.ui.ch2Button.clicked.connect(self.ChannelChange)
+        self.ui.ch2Button.clicked.connect(self.ChannelChange)
         # self.ui.ch3Button.clicked.connect(self.ChannelChange)
         
         self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
@@ -470,8 +470,12 @@ class Dialog(QDialog):
         sender = self.sender()
 
         if sender.objectName() == 'ch1Button':
-            ant_str = "Tunnel 12 inches,020.00,020.00,004.04,065.00,1\r"
+            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,1\r"
             self.SerialProcess(ant_str)
+            ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
+            self.SerialProcess(ant_str)            
+            ant_str = "estoesTunnel 10 inches,020.00,020.00,004.04,065.00,4\r"
+            self.SerialProcess(ant_str)            
             
             # if self.t.GetChannelInTreatment('ch1') == False:
             #     self.ui.ch1Button.setStyleSheet(self.ss.ch_enable)
@@ -481,12 +485,15 @@ class Dialog(QDialog):
             #     self.t.DisableChannelsInTreatment('ch1')
 
         if sender.objectName() == 'ch2Button':
-            if self.t.GetChannelInTreatment('ch2') == False:
-                self.ui.ch2Button.setStyleSheet(self.ss.ch_enable)
-                self.t.EnableChannelsInTreatment('ch2')
-            else:
-                self.ui.ch2Button.setStyleSheet(self.ss.ch_disable)
-                self.t.DisableChannelsInTreatment('ch2')
+            ant_str = "antenna none\r"
+            self.SerialProcess(ant_str)
+
+            # if self.t.GetChannelInTreatment('ch2') == False:
+            #     self.ui.ch2Button.setStyleSheet(self.ss.ch_enable)
+            #     self.t.EnableChannelsInTreatment('ch2')
+            # else:
+            #     self.ui.ch2Button.setStyleSheet(self.ss.ch_disable)
+            #     self.t.DisableChannelsInTreatment('ch2')
 
         if sender.objectName() == 'ch3Button':
             if self.t.GetChannelInTreatment('ch3') == False:
@@ -690,23 +697,97 @@ class Dialog(QDialog):
         d = dataread.rstrip()
         self.rcv_signal.emit(d)
 
+
+    def AntennaProcessInnerName (self, ant_str):
+        ant_name = ''
+        list_cntr = 0
+        ant_list = ant_str.split(' ')
+        for inner in ant_list:
+            if list_cntr < 3:
+                if len(inner) < 8:
+                    ant_name += inner + '\n'
+                    print (inner)
+                    list_cntr += 1
+
+        if len(ant_name) > 1:
+            ant_name = ant_name[:-1]
+
+        return ant_name
+            
+            
+    def AntennaProcessName (self, channel):
+        ant_name = 'unknow'
+        ant_ch = '1'
         
+        if channel == 'ch1':
+            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch1)
+            ant_ch = '1'
+
+        if channel == 'ch2':
+            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch2)
+            ant_ch = '2'            
+
+        if channel == 'ch3':
+            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch3)
+            ant_ch = '3'            
+
+        if channel == 'ch4':
+            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch4)
+            ant_ch = '4'            
+            
+        if ant_name != 'unknow':
+            ant_str = 'CH' + ant_ch + '\n' + ant_name
+        else:
+            ant_str = 'CH' + ant_ch + '\n' + \
+                      'L: ' + self.antennas_connected.GetLString(channel) + '\n' + \
+                      'R: ' + self.antennas_connected.GetRString(channel) + '\n' + \
+                      'I: ' + self.antennas_connected.GetIString(channel) + '\n'
+
+        return ant_str
+
+    
     def AntennaUpdate (self):
-        print("activar los canales ahora")
+        print("activar o desactivar canales ahora!")
         self.antennatimeout_finish = True
+        
         if self.antennas_connected.GetActive('ch1') == True:
-            print ("ch1 active")
+            self.ui.ch1Button.setStyleSheet(self.ss.ch_enable)
+            ant_str = self.AntennaProcessName('ch1')
+            self.ui.ch1Button.setText(ant_str)
+        else:
+            self.ui.ch1Button.setStyleSheet(self.ss.ch_disable)
+            self.ui.ch1Button.setText("CH1")
+
         if self.antennas_connected.GetActive('ch2') == True:
-            print ("ch2 active")
+            self.ui.ch2Button.setStyleSheet(self.ss.ch_enable)
+            ant_str = self.AntennaProcessName('ch2')
+            self.ui.ch2Button.setText(ant_str)
+        else:
+            self.ui.ch2Button.setStyleSheet(self.ss.ch_disable)
+            self.ui.ch2Button.setText("CH2")
+
         if self.antennas_connected.GetActive('ch3') == True:
-            print ("ch3 active")
+            self.ui.ch3Button.setStyleSheet(self.ss.ch_enable)
+            ant_str = self.AntennaProcessName('ch3')
+            self.ui.ch3Button.setText(ant_str)
+        else:
+            self.ui.ch3Button.setStyleSheet(self.ss.ch_disable)
+            self.ui.ch3Button.setText("CH3")
+
         if self.antennas_connected.GetActive('ch4') == True:
-            print ("ch4 active")
+            self.ui.ch4Button.setStyleSheet(self.ss.ch_enable)
+            ant_str = self.AntennaProcessName('ch4')
+            self.ui.ch4Button.setText(ant_str)
+        else:
+            self.ui.ch4Button.setStyleSheet(self.ss.ch_disable)
+            self.ui.ch4Button.setText("CH4")
+
 
             
     def SerialProcess (self, rcv):
         if rcv.startswith("antenna none"):
-            print ("ninguna antenna conectada!!!")
+            self.antennas_connected.Flush()
+            self.AntennaUpdate()
 
         # check if its antenna connection
         #Tunnel 12 inches,020.00,020.00,004.04,065.00,1
