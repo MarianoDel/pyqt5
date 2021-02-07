@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QIcon
 from time import sleep, time
 from threading import Timer
 from datetime import datetime
@@ -22,7 +22,7 @@ class TreatmentDialog(QDialog):
     one_second_signal = pyqtSignal()
     # progress_signal = pyqtSignal()
 
-    def __init__(self, treat_obj, style_obj, ser_instance, parent=None):
+    def __init__(self, treat_obj, style_obj, ant_obj, ser_instance, parent=None):
         super(TreatmentDialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -33,6 +33,7 @@ class TreatmentDialog(QDialog):
         self.parent = parent
         self.treat = treat_obj
         self.style = style_obj
+        self.ant = ant_obj
         self.s = ser_instance
 
         self.ui.doneButton.setEnabled(False)
@@ -44,7 +45,11 @@ class TreatmentDialog(QDialog):
         self.ui.stop_rsmButton.clicked.connect(self.StopRsmTreatment)
         self.ui.stopButton.clicked.connect(self.StopTreatment)
         self.ui.rsmButton.clicked.connect(self.RsmTreatment)        
-
+        self.ui.ant1Button.clicked.connect(self.ChannelGetTemp)
+        self.ui.ant2Button.clicked.connect(self.ChannelGetTemp)
+        self.ui.ant3Button.clicked.connect(self.ChannelGetTemp)
+        self.ui.ant4Button.clicked.connect(self.ChannelGetTemp)
+        
         ### to carry on with date-time
         date_now = datetime.today()
         self.minutes_last = date_now.minute
@@ -58,6 +63,13 @@ class TreatmentDialog(QDialog):
         # progress states machine -SM-
         self.stop_rsm_state = 'stoping'
         self.init_state = 'start'
+
+        ## setup temperatures
+        self.temp_ch1_str = ''
+        self.temp_ch2_str = ''
+        self.temp_ch3_str = ''
+        self.temp_ch4_str = ''        
+        
 
         # CONNECT SIGNALS
         # connect the timer signal to the Update
@@ -97,6 +109,16 @@ class TreatmentDialog(QDialog):
         self.ui.rsmButton.setEnabled(False)
         self.ui.stop_rsmButton.raise_()
 
+        ## setup antennas icons
+        self.wifi_act_Icon = QIcon('resources/wifi-symbol_act.png')
+        self.wifi_err_Icon = QIcon('resources/wifi-symbol_err.png')
+        self.wifi_disa_Icon = QIcon('resources/wifi-symbol_disa.png')
+        self.wifi_emit_Icon = QIcon('resources/wifi-symbol_emit.png')
+        
+        ## setup antennas
+        self.antenna_emmiting = False
+        self.AntennasUpdate_UI(False)
+            
         ## start the timer
         self.t1sec.timeout.connect(self.TimerOneSec)
         self.t1sec.start(1000)
@@ -104,7 +126,26 @@ class TreatmentDialog(QDialog):
         ## Effectively start treatment
         self.StartTreatment()
 
-        
+
+    def AntennasUpdate_UI (self, emit):
+        if emit == True:
+            current_icon = self.wifi_emit_Icon
+        else:
+            current_icon = self.wifi_act_Icon
+
+        if self.ant.GetActive('ch1') == True:
+            self.ui.ant1Button.setIcon(current_icon)
+
+        if self.ant.GetActive('ch2') == True:
+            self.ui.ant2Button.setIcon(current_icon)
+
+        if self.ant.GetActive('ch3') == True:
+            self.ui.ant3Button.setIcon(current_icon)
+
+        if self.ant.GetActive('ch4') == True:
+            self.ui.ant4Button.setIcon(current_icon)
+
+            
     def UpdateDateTime(self, new_date_time):
         date_str = ""
         if self.treat.GetLocalization() == 'usa':
@@ -342,6 +383,15 @@ class TreatmentDialog(QDialog):
             #todos los segundos actualizo ui
             self.ui.remaining_minsLabel.setText(str(self.treat.remaining_minutes) + "'")
             self.ui.remaining_secsLabel.setText(str(self.treat.remaining_seconds) + "''")
+
+            if self.antenna_emmiting == True:
+                self.antenna_emmiting = False
+                self.AntennasUpdate_UI(False)
+            else:
+                self.antenna_emmiting = True
+                self.AntennasUpdate_UI(True)
+
+
             
         else:
             # termino el tratamiento, hago algo parecido al boton stop
@@ -426,6 +476,7 @@ class TreatmentDialog(QDialog):
             self.ui.progressLabel.setStyleSheet(self.style.label_red)
             self.ui.stopButton.setEnabled(True)
             self.ui.rsmButton.setEnabled(True)
+            self.AntennasUpdate_UI(False)
 
 
     """ posible states from rsmButton resuming, resumed """
@@ -498,8 +549,12 @@ class TreatmentDialog(QDialog):
             self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_rewind)
 
 
-    def SerialDataCallback (self, rcv):
+    def SerialDataCallback (self, rcv):        
         print ("serial data callback!")
+        self.SerialProcessString(rcv)
+                
+
+    def SerialProcessString (self, rcv):
         # self.ui.textEdit.append(rcv)
         # reviso si es un final de tratamiento
         # if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
@@ -513,12 +568,52 @@ class TreatmentDialog(QDialog):
                 self.stop_rsm_state = 'ending'
                 self.progress_timer.singleShot(300, self.ProgressEndSM)
 
+        elif rcv.startswith("temp"):
+            self.ProcessTempString(rcv)
+            
         else:
             # el resto de los mensajes los paso directo a la pantalla
             # self.ui.textEdit.append(rcv)
             self.InsertForeingText(rcv)
-                
+        
+    
+    # temp,055.00,1\r
+    def ProcessTempString(self, temp_str):
+        temp_list = temp_str.split(',')
+        temp_ch = float(temp_list[1])
+        temp_ch_str = str(temp_ch)
 
+        if temp_list[2].startswith('1'):
+            self.temp_ch1_str = temp_ch_str
+
+        if temp_list[2].startswith('2'):
+            self.temp_ch2_str = temp_ch_str
+
+        if temp_list[2].startswith('3'):
+            self.temp_ch3_str = temp_ch_str
+
+        if temp_list[2].startswith('4'):
+            self.temp_ch4_str = temp_ch_str
+            
+            
+    def ChannelGetTemp (self):
+        sender = self.sender()
+
+        if sender.objectName() == 'ant4Button':
+            ant_str = "temp,055.00,1\r"
+            self.SerialProcessString(ant_str)
+            
+        if sender.objectName() == 'ant1Button':
+            self.ui.tempLabel.setText('CH1 Temp: ' + self.temp_ch1_str + 'C')
+
+        if sender.objectName() == 'ant2Button':
+            self.ui.tempLabel.setText('CH2 Temp: ' + self.temp_ch2_str + 'C')
+
+        if sender.objectName() == 'ant3Button':
+            self.ui.tempLabel.setText('CH3 Temp: ' + self.temp_ch3_str + 'C')
+        
+
+    
     def InsertLocalText (self, new_text):
         self.ui.textEdit.setTextColor(QColor(255, 0, 0))
         self.ui.textEdit.append(new_text)

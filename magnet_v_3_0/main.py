@@ -706,7 +706,6 @@ class Dialog(QDialog):
             if list_cntr < 3:
                 if len(inner) < 8:
                     ant_name += inner + '\n'
-                    print (inner)
                     list_cntr += 1
 
         if len(ant_name) > 1:
@@ -891,7 +890,7 @@ class Dialog(QDialog):
             if self.s.port_open == True:
                 self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
             
-                a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
+                a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
                 a.setModal(True)
                 a.exec_()
             else:

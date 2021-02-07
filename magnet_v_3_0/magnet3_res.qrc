@@ -16,6 +16,10 @@
     <file>resources/62_64Hz.png</file>
   </qresource>
   <qresource prefix="buttons">
+    <file>resources/wifi-symbol_act.png</file>
+    <file>resources/wifi-symbol_disa.png</file>
+    <file>resources/wifi-symbol_emit.png</file>
+    <file>resources/wifi-symbol_err.png</file>
     <file>resources/rewind.png</file>
     <file>resources/Rsm.png</file>
     <file>resources/Stop.png</file>
