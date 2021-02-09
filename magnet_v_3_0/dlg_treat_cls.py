@@ -68,7 +68,10 @@ class TreatmentDialog(QDialog):
         self.temp_ch1_str = ''
         self.temp_ch2_str = ''
         self.temp_ch3_str = ''
-        self.temp_ch4_str = ''        
+        self.temp_ch4_str = ''
+
+        self.tempLabelCntr = 0
+        self.ui.tempLabel.setText('')
         
 
         # CONNECT SIGNALS
@@ -391,6 +394,12 @@ class TreatmentDialog(QDialog):
                 self.antenna_emmiting = True
                 self.AntennasUpdate_UI(True)
 
+            if self.tempLabelCntr > 0:
+                self.tempLabelCntr -= 1
+            else:
+                self.ui.tempLabel.setText('')
+            
+
 
             
         else:
@@ -570,6 +579,9 @@ class TreatmentDialog(QDialog):
 
         elif rcv.startswith("temp"):
             self.ProcessTempString(rcv)
+
+        elif rcv.startswith("ERROR"):
+            self.ProcessErrorString(rcv)
             
         else:
             # el resto de los mensajes los paso directo a la pantalla
@@ -594,24 +606,59 @@ class TreatmentDialog(QDialog):
 
         if temp_list[2].startswith('4'):
             self.temp_ch4_str = temp_ch_str
+
+    # ERROR(0x54)\r
+    def ProcessErrorString(self, error_str):
+        error_list = error_str.split('x')
+        error_ch = error_list[1]
+        error_type = error_ch[1]
+        error_channel = error_ch[2]
+        print('Error in ch' + error_channel)
+
+        current_icon = self.wifi_err_Icon
+
+        if error_channel.startswith('1') and self.ant.GetActive('ch1') == True:
+            self.ant.SetActiveStatus('ch1', False)
+            self.ui.ant1Button.setIcon(current_icon)
+
+        if error_channel.startswith('2') and self.ant.GetActive('ch2') == True:
+            self.ant.SetActiveStatus('ch2', False)
+            self.ui.ant2Button.setIcon(current_icon)
+
+        if error_channel.startswith('3') and self.ant.GetActive('ch3') == True:
+            self.ant.SetActiveStatus('ch3', False)
+            self.ui.ant3Button.setIcon(current_icon)
+
+        if error_channel.startswith('4') and self.ant.GetActive('ch4') == True:
+            self.ant.SetActiveStatus('ch4', False)
+            self.ui.ant4Button.setIcon(current_icon)
             
             
     def ChannelGetTemp (self):
         sender = self.sender()
 
-        if sender.objectName() == 'ant4Button':
-            ant_str = "temp,055.00,1\r"
-            self.SerialProcessString(ant_str)
-            
         if sender.objectName() == 'ant1Button':
             self.ui.tempLabel.setText('CH1 Temp: ' + self.temp_ch1_str + 'C')
+            self.tempLabelCntr = 3
 
         if sender.objectName() == 'ant2Button':
             self.ui.tempLabel.setText('CH2 Temp: ' + self.temp_ch2_str + 'C')
+            self.tempLabelCntr = 3            
 
         if sender.objectName() == 'ant3Button':
             self.ui.tempLabel.setText('CH3 Temp: ' + self.temp_ch3_str + 'C')
-        
+            self.tempLabelCntr = 3            
+
+        if sender.objectName() == 'ant4Button':
+            # ant_str = "temp,055.00,1\r"
+            # self.SerialProcessString(ant_str)
+            # ant_str = "ERROR(0x54)\r"
+            # self.SerialProcessString(ant_str)
+            self.ui.tempLabel.setText('CH4 Temp: ' + self.temp_ch4_str + 'C')
+            self.tempLabelCntr = 3            
+            
+            
+            
 
     
     def InsertLocalText (self, new_text):

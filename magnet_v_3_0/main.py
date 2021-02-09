@@ -96,8 +96,8 @@ class Dialog(QDialog):
         self.ui.freq5Button.clicked.connect(self.FrequencyChange)
         self.ui.freq6Button.clicked.connect(self.FrequencyChange)
         
-        self.ui.ch1Button.clicked.connect(self.ChannelChange)
-        self.ui.ch2Button.clicked.connect(self.ChannelChange)
+        # self.ui.ch1Button.clicked.connect(self.ChannelChange)
+        # self.ui.ch2Button.clicked.connect(self.ChannelChange)
         # self.ui.ch3Button.clicked.connect(self.ChannelChange)
         
         self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
@@ -213,6 +213,10 @@ class Dialog(QDialog):
         ### For last call to the first f*** dialog
         if NO_CALL_FIRST_DLG == 0:
             self.FirstDialogScreen()
+
+        ### Ask for know antennas
+        if self.s.port_open == True:
+            self.s.Write("get_antenna,\r\n")
 
 
     def UpdateDateTime(self, new_date_time):

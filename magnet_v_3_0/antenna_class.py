@@ -184,6 +184,19 @@ class AntennaInTreatment():
         if channel == 'ch4':
             return self.antenna_ch4
 
+    def SetActiveStatus (self, channel, status):
+        if channel == 'ch1':
+            self.antenna_ch1 = status
+
+        if channel == 'ch2':
+            self.antenna_ch2 = status
+
+        if channel == 'ch3':
+            self.antenna_ch3 = status
+
+        if channel == 'ch4':
+            self.antenna_ch4 = status
+        
             
     def Flush (self):
         self.antenna_ch1 = False
