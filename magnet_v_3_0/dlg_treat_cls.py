@@ -113,10 +113,11 @@ class TreatmentDialog(QDialog):
         self.ui.stop_rsmButton.raise_()
 
         ## setup antennas icons
-        self.wifi_act_Icon = QIcon('resources/wifi-symbol_act.png')
-        self.wifi_err_Icon = QIcon('resources/wifi-symbol_err.png')
-        self.wifi_disa_Icon = QIcon('resources/wifi-symbol_disa.png')
-        self.wifi_emit_Icon = QIcon('resources/wifi-symbol_emit.png')
+        ## url(:/buttons/resources/Stop.png)
+        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
         
         ## setup antennas
         self.antenna_emmiting = False

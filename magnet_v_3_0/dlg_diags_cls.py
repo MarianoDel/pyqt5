@@ -32,7 +32,7 @@ class DiagnosticsDialog(QDialog):
         # get the close event and connect the buttons        
         self.ui.doneButton.clicked.connect(self.accept)
         self.ui.rtcButton.clicked.connect(self.RtcScreen)
-        self.ui.max_powerButton.clicked.connect(self.PowerScreen)
+        # self.ui.max_powerButton.clicked.connect(self.PowerScreen)
 
         # get the parent reference and data
         self.parent = parent
