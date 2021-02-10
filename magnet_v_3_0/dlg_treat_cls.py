@@ -610,6 +610,9 @@ class TreatmentDialog(QDialog):
     # ERROR(0x54)\r
     def ProcessErrorString(self, error_str):
         error_list = error_str.split('x')
+        if len(error_list) < 2:
+            return
+        
         error_ch = error_list[1]
         error_type = error_ch[1]
         error_channel = error_ch[2]
