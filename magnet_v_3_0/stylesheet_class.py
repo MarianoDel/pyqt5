@@ -103,12 +103,18 @@ class ButtonStyles():
                              border:2px solid rgb(55, 52, 53);"
         
 
+        self.ch_getting = "color: rgb(55, 52, 53);\
+                           background-color: rgb(191, 218, 231);\
+                           border-radius: 10px;\
+                           text-align:top;\
+                           border:2px solid rgb(55, 52, 53);"
+
         self.ch_enable = "color: rgb(55, 52, 53);\
                           background-color: rgb(157, 211, 175);\
                           border-radius: 10px;\
                           text-align:top;\
                           border:2px solid rgb(55, 52, 53);"
-
+        
         self.ch_disable = "color: rgb(55, 52, 53);\
                           background-color: rgb(245, 245, 245);\
                           border-radius: 10px;\

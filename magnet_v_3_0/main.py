@@ -788,6 +788,7 @@ class Dialog(QDialog):
 
             
     def SerialProcess (self, rcv):
+        show_message = True
         if rcv.startswith("antenna none"):
             self.antennas_connected.Flush()
             self.AntennaUpdate()
@@ -811,8 +812,32 @@ class Dialog(QDialog):
                     print("QTimer is active")
 
                 self.antennas_connected.ProcessStringList(rcv_list)
+
+        if rcv.startswith("new antenna ch1"):
+            self.ui.ch1Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch1Button.setText("CH1\ngetting\nparams")
+            show_message = False
+
+        if rcv.startswith("new antenna ch2"):
+            self.ui.ch2Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch2Button.setText("CH2\ngetting\nparams")
+            show_message = False            
+
+        if rcv.startswith("new antenna ch3"):
+            self.ui.ch3Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch3Button.setText("CH3\ngetting\nparams")
+            show_message = False            
+
+        if rcv.startswith("new antenna ch4"):
+            self.ui.ch4Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch4Button.setText("CH4\ngetting\nparams")
+            show_message = False
+
+        if rcv.startswith("temp,"):
+            show_message = False
             
-        self.InsertForeingText(rcv)        
+        if show_message:
+            self.InsertForeingText(rcv)        
 
                 
     def MySignalCallback (self, rcv):
