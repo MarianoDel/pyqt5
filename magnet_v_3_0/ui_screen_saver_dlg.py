@@ -12,8 +12,10 @@ class Ui_ScreenSaverDialog(object):
     def setupUi(self, ScreenSaverDialog):
         ScreenSaverDialog.setObjectName("ScreenSaverDialog")
         ScreenSaverDialog.resize(1280, 800)
+        ScreenSaverDialog.setStyleSheet("")
         self.gifLabel = QtWidgets.QLabel(ScreenSaverDialog)
         self.gifLabel.setGeometry(QtCore.QRect(0, -1, 1280, 800))
+        self.gifLabel.setStyleSheet("background-image: url(:/screen_saver/resources/Rk69.gif);")
         self.gifLabel.setText("")
         self.gifLabel.setPixmap(QtGui.QPixmap(":/screen_saver/Rk69.gif"))
         self.gifLabel.setObjectName("gifLabel")
@@ -30,4 +32,3 @@ class Ui_ScreenSaverDialog(object):
         ScreenSaverDialog.setWindowTitle(_translate("ScreenSaverDialog", "Dialog"))
 
 import magnet3_res_rc
-import stretcher3_res_rc

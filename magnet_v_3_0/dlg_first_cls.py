@@ -7,6 +7,7 @@ from datetime import datetime
 
 #get the UI from here
 from ui_first_dlg import Ui_FirstDialog
+from dlg_screen_saver_cls import ScreenSaverDialog
 
 
 #################################################
@@ -45,6 +46,9 @@ class FirstDialog(QDialog):
         # connect the timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
 
+        # screen saver timer activation
+        self.timer_screensaver = self.t.timeout_screensaver
+
         
     def UpdateDateTime(self, new_date_time):
         date_str = ""
@@ -74,6 +78,29 @@ class FirstDialog(QDialog):
         else:
             self.ended_label = True
             self.ui.doneButton.setStyleSheet(self.style.ended_label_enable)
+
+        # check for screensaver activation
+        if self.timer_screensaver > 0:
+            self.timer_screensaver -= 1
+        else:
+            self.ScreenSaverDialogScreen()
+            
+        
+
+
+    ## ScreenSaver
+    def ScreenSaverDialogScreen (self):
+        a = ScreenSaverDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+
+    def ScreenSaverKick (self):
+        self.timer_screensaver = self.t.timeout_screensaver
+
+
+
 
 
         

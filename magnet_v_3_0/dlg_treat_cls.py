@@ -583,6 +583,9 @@ class TreatmentDialog(QDialog):
 
         elif rcv.startswith("ERROR"):
             self.ProcessErrorString(rcv)
+
+        elif rcv.startswith("new antenna ch"):
+            pass
             
         else:
             # el resto de los mensajes los paso directo a la pantalla

@@ -32,7 +32,7 @@ class ScreenSaverDialog(QDialog):
                                           border: 0px");
 
         self.which_movie = 'RK'
-        self.movie = QMovie('Rk69.gif')
+        self.movie = QMovie(':/screen_saver/resources/Rk69.gif')
         self.ui.gifLabel.setMovie(self.movie)
         self.movie.start()
         
@@ -54,19 +54,19 @@ class ScreenSaverDialog(QDialog):
     def UpdateTenSecs (self):
         # do a UI update if its necessary
         if self.which_movie == 'RK':
-            self.movie = QMovie('UIBJ.gif')
+            self.movie = QMovie(':/screen_saver/resources/UIBJ.gif')
             self.ui.gifLabel.setMovie(self.movie)
             self.movie.start()
 
             self.which_movie = 'UIBJ'
         elif self.which_movie == 'UIBJ':
-            self.movie = QMovie('1LFE.gif')
+            self.movie = QMovie(':/screen_saver/resources/1LFE.gif')
             self.ui.gifLabel.setMovie(self.movie)
             self.movie.start()
 
             self.which_movie = '1LFE'
         elif self.which_movie == '1LFE':
-            self.movie = QMovie('Rk69.gif')
+            self.movie = QMovie(':/screen_saver/resources/Rk69.gif')
             self.ui.gifLabel.setMovie(self.movie)
             self.movie.start()
 
