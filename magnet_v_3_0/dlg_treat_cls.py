@@ -596,22 +596,30 @@ class TreatmentDialog(QDialog):
     # temp,055.00,1\r
     def ProcessTempString(self, temp_str):
         temp_list = temp_str.split(',')
-        temp_ch = float(temp_list[1])
-        temp_ch_str = str(temp_ch)
+        if len(temp_list) < 3:
+            return
 
-        if temp_list[2].startswith('1'):
-            self.temp_ch1_str = temp_ch_str
+        try:
+            temp_ch = float(temp_list[1])
+            temp_ch_str = str(temp_ch)
 
-        if temp_list[2].startswith('2'):
-            self.temp_ch2_str = temp_ch_str
+            if temp_list[2].startswith('1'):
+                self.temp_ch1_str = temp_ch_str
 
-        if temp_list[2].startswith('3'):
-            self.temp_ch3_str = temp_ch_str
+            if temp_list[2].startswith('2'):
+                self.temp_ch2_str = temp_ch_str
 
-        if temp_list[2].startswith('4'):
-            self.temp_ch4_str = temp_ch_str
+            if temp_list[2].startswith('3'):
+                self.temp_ch3_str = temp_ch_str
 
-    # ERROR(0x54)\r
+            if temp_list[2].startswith('4'):
+                self.temp_ch4_str = temp_ch_str
+
+        except:
+            print('Noisy Line for floats values')
+
+
+    # ERROR(0x054)\r
     def ProcessErrorString(self, error_str):
         error_list = error_str.split('x')
         if len(error_list) < 2:

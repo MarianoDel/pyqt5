@@ -92,57 +92,79 @@ class AntennaInTreatment():
 
     ## Internals
     def setL (self, channel, s_l):
-        if channel == 'ch1':
-            self.antenna_ch1_L = float(s_l)
+        try:
+            new_L = float(s_l)
+            if channel == 'ch1':
+                self.antenna_ch1_L = new_L
 
-        if channel == 'ch2':
-            self.antenna_ch2_L = float(s_l)            
+            if channel == 'ch2':
+                self.antenna_ch2_L = new_L
 
-        if channel == 'ch3':
-            self.antenna_ch3_L = float(s_l)            
+            if channel == 'ch3':
+                self.antenna_ch3_L = new_L
 
-        if channel == 'ch4':
-            self.antenna_ch4_L = float(s_l)            
+            if channel == 'ch4':
+                self.antenna_ch4_L = new_L
+                
+        except:
+            print ('Noisy Line on antenna float params!')
+
 
     def setR (self, channel, s_r):
-        if channel == 'ch1':
-            self.antenna_ch1_R = float(s_r)
+        try:
+            new_R = float(s_r)
+            if channel == 'ch1':
+                self.antenna_ch1_R = new_R
 
-        if channel == 'ch2':
-            self.antenna_ch2_R = float(s_r)            
+            if channel == 'ch2':
+                self.antenna_ch2_R = new_R
 
-        if channel == 'ch3':
-            self.antenna_ch3_R = float(s_r)            
+            if channel == 'ch3':
+                self.antenna_ch3_R = new_R
 
-        if channel == 'ch4':
-            self.antenna_ch4_R = float(s_r)            
+            if channel == 'ch4':
+                self.antenna_ch4_R = new_R
+                
+        except:
+            print ('Noisy Line on antenna float params!')
 
     def setI (self, channel, s_i):
-        if channel == 'ch1':
-            self.antenna_ch1_I = float(s_i)
+        try:
+            new_I = float(s_i)
+            if channel == 'ch1':
+                self.antenna_ch1_I = new_I
 
-        if channel == 'ch2':
-            self.antenna_ch2_I = float(s_i)            
+            if channel == 'ch2':
+                self.antenna_ch2_I = new_I
 
-        if channel == 'ch3':
-            self.antenna_ch3_I = float(s_i)            
+            if channel == 'ch3':
+                self.antenna_ch3_I = new_I
 
-        if channel == 'ch4':
-            self.antenna_ch4_I = float(s_i)            
+            if channel == 'ch4':
+                self.antenna_ch4_I = new_I
+                
+        except:
+            print ('Noisy Line on antenna float params!')
 
     def setT (self, channel, s_t):
-        if channel == 'ch1':
-            self.antenna_ch1_T = float(s_t)
+        try:
+            new_T = float(s_t)
+            if channel == 'ch1':
+                self.antenna_ch1_T = new_T
 
-        if channel == 'ch2':
-            self.antenna_ch2_T = float(s_t)            
+            if channel == 'ch2':
+                self.antenna_ch2_T = new_T
 
-        if channel == 'ch3':
-            self.antenna_ch3_T = float(s_t)            
+            if channel == 'ch3':
+                self.antenna_ch3_T = new_T
 
-        if channel == 'ch4':
-            self.antenna_ch4_T = float(s_t)            
+            if channel == 'ch4':
+                self.antenna_ch4_T = new_T
+                
+        except:
+            print ('Noisy Line on antenna float params!')
 
+            
     def setActive (self, channel):
         if channel == 'ch1':
             self.antenna_ch1 = True
