@@ -7,18 +7,27 @@ class Treatment():
 
     def __init__(self):
         ## Parametros por Default
-        self.power = 70
-        self.max_power = 100
+        self.power_red = 70
+        self.power_ired = 70
+        self.max_power_red = 100
+        self.max_power_ired = 100        
         self.min_power = 10
         self.signal = 'None'
-        self.frequency = 'None'
-        self.treatment_timer = 60
-        self.max_treatment_timer = 120
-        self.min_treatment_timer = 1
-        self.ch1 = True
-        self.ch2 = True
-        self.ch3 = True
-        self.updwn = True
+
+        self.treatment_timer = 20
+        # self.max_treatment_timer = 120
+        # self.min_treatment_timer = 1
+
+        self.pulse_duration = 2000
+        self.pannel_a = True
+        self.pannel_b = True
+        self.pannel_c = True
+        self.pannel_d = True
+        self.pannel_e = True
+
+        self.steps_in_treatment = 1
+        self.steps_pause_in_treatment = False
+
         self.treatment_state = 'STOP'
 
         #contadores internos
@@ -65,12 +74,24 @@ class Treatment():
     def GetSignal (self):
         return self.signal
             
-    def SetPower(self, pwr):
-        self.power = pwr
+    def SetPowerRed (self, pwr):
+        self.power_red = pwr
 
-    def GetPower(self):
-        return self.power
+    def GetPowerRed (self):
+        return self.power_red
 
+    def SetPowerIRed (self, pwr):
+        self.power_ired = pwr
+
+    def GetPowerIRed (self):
+        return self.power_ired
+
+    def SetPulseDuration (self, pulse_time):
+        self.pulse_duration = pulse_time
+
+    def GetPulseDuration (self):
+        return self.pulse_duration
+    
     def GetPowerLimit (self, signal):
         if signal == 'triangular':
             return self.triangular_power_limit
@@ -84,15 +105,6 @@ class Treatment():
 
     def GetFrequency(self):
         return self.frequency
-
-    def SetUpDwnStretcher(self, updwn_mode):
-        if updwn_mode:
-            self.updwn = True
-        else:
-            self.updwn = False
-
-    def GetUpDwnStretcher(self):
-        return self.updwn
     
     def SetTreatmentTimer (self, new_time):
         self.treatment_timer = new_time
@@ -100,30 +112,48 @@ class Treatment():
     def GetTreatmentTimer (self):
         return self.treatment_timer
 
-    def EnableChannelsInTreatment (self, ch):
-        if (ch == 'ch1'):
-            self.ch1 = True
-        if (ch == 'ch2'):
-            self.ch2 = True
-        if (ch == 'ch3'):
-            self.ch3 = True
+    def EnablePannelsInTreatment (self, pannel):
+        if (pannel == 'pannel_a'):
+            self.pannel_a = True
+        if (pannel == 'pannel_b'):
+            self.pannel_b = True
+        if (pannel == 'pannel_c'):
+            self.pannel_c = True
+        if (pannel == 'pannel_d'):
+            self.pannel_d = True
+        if (pannel == 'pannel_e'):
+            self.pannel_e = True
 
-    def DisableChannelsInTreatment (self, ch):
-        if (ch == 'ch1'):
-            self.ch1 = False
-        if (ch == 'ch2'):
-            self.ch2 = False
-        if (ch == 'ch3'):
-            self.ch3 = False
+    def DisablePannelsInTreatment (self, pannel):
+        if (pannel == 'pannel_a'):
+            self.pannel_a = False
+        if (pannel == 'pannel_b'):
+            self.pannel_b = False
+        if (pannel == 'pannel_c'):
+            self.pannel_c = False
+        if (pannel == 'pannel_d'):
+            self.pannel_d = False
+        if (pannel == 'pannel_e'):
+            self.pannel_e = False
 
-    def GetChannelInTreatment (self, ch):
-        if (ch == 'ch1'):
-            return self.ch1
-        if (ch == 'ch2'):
-            return self.ch2
-        if (ch == 'ch3'):
-            return self.ch3
-
+    def GetPannelsInTreatment (self, pannel):
+        if (pannel == 'pannel_a'):
+            return self.pannel_a
+        if (pannel == 'pannel_b'):
+            return self.pannel_b
+        if (pannel == 'pannel_c'):
+            return self.pannel_c
+        if (pannel == 'pannel_d'):
+            return self.pannel_d
+        if (pannel == 'pannel_e'):
+            return self.pannel_e
+        
+    def SetSteps (self, how_many):
+        self.steps_in_treatment = how_many
+        
+    def GetSteps (self):
+        return self.steps_in_treatment
+        
     def GetMagnetoFreqSignalPowerString (self):
         """ 
             Devuelve un string con toda la info combinada para el Magneto viejo 

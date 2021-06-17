@@ -15,148 +15,169 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
-background-image: url(:/background/resources/background_magnet_02.png);
+background-image: url(:/background/resources/background_light_02.png);
 }</string>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>54</x>
-     <y>350</y>
-     <width>346</width>
+     <x>40</x>
+     <y>300</y>
+     <width>571</width>
      <height>102</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <property name="spacing">
-     <number>22</number>
+     <number>18</number>
     </property>
     <item>
-     <widget class="QPushButton" name="freq1Button">
+     <widget class="QPushButton" name="pannelAButton">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/7_83Hz.png);
-background-color: rgb(240, 231, 240);
+       <string notr="true">background-color: rgb(225, 237, 247);
+color: rgb(55, 52, 53);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>A</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="freq2Button">
+     <widget class="QPushButton" name="pannelBButton">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/11_79Hz.png);
-background-color: rgb(230, 217, 231);
+       <string notr="true">background-color: rgb(189, 220, 245);
+color: rgb(55, 52, 53);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>B</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="freq3Button">
+     <widget class="QPushButton" name="pannelCButton">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/16_67Hz.png);
-background-color: rgb(221, 202, 222);
+       <string notr="true">background-color: rgb(149, 200, 240);
+color: rgb(55, 52, 53);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>54</x>
-     <y>460</y>
-     <width>346</width>
-     <height>102</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <property name="spacing">
-     <number>22</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="freq4Button">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/23_58Hz.png);
-background-color: rgb(211, 187, 213);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
+       <string>C</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="freq5Button">
+     <widget class="QPushButton" name="pannelDButton">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/30_80Hz.png);
-background-color: rgb(202, 173, 204);
+       <string notr="true">background-color: rgb(107, 178, 237);
+color: rgb(55, 52, 53);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>D</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="freq6Button">
+     <widget class="QPushButton" name="pannelEButton">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/62_64Hz.png);
-background-color: rgb(196, 161, 203);
+       <string notr="true">background-color: rgb(32, 145, 235);
+color: rgb(55, 52, 53);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>E</string>
       </property>
      </widget>
     </item>
@@ -165,10 +186,10 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>646</x>
-     <y>260</y>
-     <width>102</width>
-     <height>224</height>
+     <x>656</x>
+     <y>369</y>
+     <width>236</width>
+     <height>226</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -176,7 +197,7 @@ border:2px solid rgb(55, 52, 53);</string>
      <number>22</number>
     </property>
     <item>
-     <widget class="QPushButton" name="min30Button">
+     <widget class="QPushButton" name="cwaveButton">
       <property name="minimumSize">
        <size>
         <width>100</width>
@@ -184,8 +205,8 @@ border:2px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/30min.png);
-background-color: rgb(221, 235, 242);
+       <string notr="true">background-image: url(:/buttons/resources/Cuadrada.png);
+background-color: rgb(244, 243, 158);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
@@ -195,84 +216,57 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="min45Button">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <property name="spacing">
+       <number>22</number>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/40min.png);
-background-color: rgb(191, 218, 231);
+      <item>
+       <widget class="QPushButton" name="inphaseButton">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>90</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-image: url(:/buttons/resources/Triangular.png);
+background-color: rgb(248, 247, 190);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_4">
-   <property name="geometry">
-    <rect>
-     <x>766</x>
-     <y>260</y>
-     <width>102</width>
-     <height>224</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <property name="spacing">
-     <number>22</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="timeUpButton">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Arriba.png);
-background-color: rgb(138, 186, 210);
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="outphaseButton">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>90</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
+background-color: rgb(240, 238, 126);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="timeDwnButton">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Abajo.png);
-background-color: rgb(242, 248, 250);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="startButton">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>630</y>
+     <x>940</x>
+     <y>645</y>
      <width>300</width>
      <height>120</height>
     </rect>
@@ -296,27 +290,27 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>54</x>
-     <y>150</y>
-     <width>346</width>
+     <x>42</x>
+     <y>135</y>
+     <width>456</width>
      <height>102</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
-     <number>22</number>
+     <number>18</number>
     </property>
     <item>
-     <widget class="QPushButton" name="triangularButton">
+     <widget class="QPushButton" name="min20Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Triangular.png);
-background-color: rgb(248, 247, 190);
+       <string notr="true">background-image: url(:/buttons/resources/20min.png);
+background-color: rgb(247, 246, 225);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
@@ -326,16 +320,16 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="squareButton">
+     <widget class="QPushButton" name="min30Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Cuadrada.png);
-background-color: rgb(244, 243, 158);
+       <string notr="true">background-image: url(:/buttons/resources/30min.png);
+background-color: rgb(247, 246, 202);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
@@ -345,16 +339,35 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="sinusoidalButton">
+     <widget class="QPushButton" name="min45Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
+       <string notr="true">background-image: url(:/buttons/resources/45min.png);
+background-color: rgb(247, 246, 180);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="min60Button">
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/60min.png);
+background-color: rgb(246, 245, 157);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
@@ -368,63 +381,10 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>260</y>
+     <x>935</x>
+     <y>305</y>
      <width>102</width>
-     <height>224</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>22</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="powerUpButton">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Arriba.png);
-background-color: rgb(208, 165, 156);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="powerDwnButton">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Abajo.png);
-background-color: rgb(244, 233, 231);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>938</x>
-     <y>140</y>
-     <width>102</width>
-     <height>346</height>
+     <height>306</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -435,8 +395,8 @@ border:2px solid rgb(55, 52, 53);</string>
      <widget class="QPushButton" name="mem1Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
@@ -465,8 +425,8 @@ border:2px solid rgb(55, 52, 53);</string>
      <widget class="QPushButton" name="mem2Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
@@ -495,8 +455,8 @@ border:2px solid rgb(55, 52, 53);</string>
      <widget class="QPushButton" name="mem3Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
@@ -526,8 +486,8 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>1058</x>
-     <y>160</y>
+     <x>1065</x>
+     <y>305</y>
      <width>171</width>
      <height>305</height>
     </rect>
@@ -721,11 +681,11 @@ border:2px solid rgb(55, 52, 53);</string>
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="minutesLabel">
+  <widget class="QLabel" name="pulseDurationLabel">
    <property name="geometry">
     <rect>
-     <x>640</x>
-     <y>170</y>
+     <x>715</x>
+     <y>595</y>
      <width>111</width>
      <height>61</height>
     </rect>
@@ -748,11 +708,11 @@ border:2px solid rgb(55, 52, 53);</string>
     <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
-  <widget class="QLabel" name="powerLabel">
+  <widget class="QLabel" name="powerRedLabel">
    <property name="geometry">
     <rect>
-     <x>465</x>
-     <y>150</y>
+     <x>120</x>
+     <y>510</y>
      <width>111</width>
      <height>61</height>
     </rect>
@@ -802,23 +762,6 @@ border:2px solid rgb(55, 52, 53);</string>
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>453</x>
-     <y>649</y>
-     <width>791</width>
-     <height>116</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border:2px outset;
-background-color: rgb(246, 255, 254);
-border-radius: 16px;
-color: rgb(0, 0, 127);
-border-color: rgb(55, 52, 53);</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="diagButton">
    <property name="geometry">
     <rect>
@@ -836,177 +779,369 @@ border: 0px</string>
     <string/>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget_5">
+  <widget class="QLabel" name="powerIRedLabel">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>525</y>
-     <width>596</width>
+     <x>120</x>
+     <y>665</y>
+     <width>111</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>48</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>100</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_6">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>135</y>
+     <width>661</width>
      <height>102</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
     <property name="spacing">
-     <number>22</number>
+     <number>18</number>
     </property>
     <item>
-     <widget class="QPushButton" name="ch1Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+     <widget class="QPushButton" name="step1Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
        <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(157, 211, 175);
+       <string notr="true">background-color: rgb(245, 233, 233);
+color: rgb(55, 52, 53);
 border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-text-align:top;
-color: rgb(55, 52, 53);</string>
+border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>CH1</string>
+       <string>1</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="ch2Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+     <widget class="QPushButton" name="step2Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
        <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(157, 211, 175);
+       <string notr="true">background-color: rgb(243, 220, 220);
+color: rgb(55, 52, 53);
 border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-text-align:top;
-color: rgb(55, 52, 53);</string>
+border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>CH2</string>
+       <string>2</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="ch3Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+     <widget class="QPushButton" name="step3Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
        <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
+        <family>Liberation Mono</family>
+        <pointsize>48</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(157, 211, 175);
+       <string notr="true">background-color: rgb(241, 207, 206);
+color: rgb(55, 52, 53);
 border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-text-align:top;
-color: rgb(55, 52, 53);</string>
+border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>CH3</string>
+       <string>3</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="ch4Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+     <widget class="QPushButton" name="step4Button">
       <property name="minimumSize">
        <size>
-        <width>100</width>
-        <height>100</height>
+        <width>90</width>
+        <height>90</height>
        </size>
       </property>
       <property name="font">
        <font>
         <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
+        <pointsize>48</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(157, 211, 175);
+       <string notr="true">background-color: rgb(238, 194, 195);
+color: rgb(55, 52, 53);
 border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-text-align:top;
-color: rgb(55, 52, 53);</string>
+border:2px solid rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>CH4</string>
+       <string>4</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="stepPauseButton">
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Mono</family>
+        <pointsize>28</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(214, 216, 240);
+color: rgb(55, 52, 53);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string>Pause</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="layoutWidget_7">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>20</y>
-     <width>441</width>
-     <height>51</height>
+     <x>270</x>
+     <y>640</y>
+     <width>241</width>
+     <height>102</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>20</pointsize>
-    </font>
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <property name="spacing">
+     <number>22</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="powerDwnIRedButton">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/Abajo.png);
+background-color: rgb(244, 233, 231);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="powerUpIRedButton">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/Arriba.png);
+background-color: rgb(208, 165, 156);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_8">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>490</y>
+     <width>241</width>
+     <height>102</height>
+    </rect>
    </property>
-   <property name="text">
-    <string>Light Treatment ver 1.0</string>
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <property name="spacing">
+     <number>22</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="powerDwnRedButton">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/Abajo.png);
+background-color: rgb(242, 248, 250);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="powerUpRedButton">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/Arriba.png);
+background-color: rgb(138, 186, 210);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_9">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>660</y>
+     <width>241</width>
+     <height>102</height>
+    </rect>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_8">
+    <property name="spacing">
+     <number>22</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="timeDwnButton">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/Abajo.png);
+background-color: rgb(242, 248, 250);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="timeUpButton">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/buttons/resources/Arriba.png);
+background-color: rgb(138, 186, 210);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources>
