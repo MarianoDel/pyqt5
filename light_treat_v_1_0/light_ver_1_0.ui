@@ -187,14 +187,14 @@ border:2px solid rgb(55, 52, 53);</string>
    <property name="geometry">
     <rect>
      <x>656</x>
-     <y>369</y>
+     <y>344</y>
      <width>236</width>
-     <height>226</height>
+     <height>241</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="spacing">
-     <number>22</number>
+     <number>5</number>
     </property>
     <item>
      <widget class="QPushButton" name="cwaveButton">
@@ -205,8 +205,8 @@ border:2px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/Cuadrada.png);
-background-color: rgb(244, 243, 158);
+       <string notr="true">background-image: url(:/buttons/resources/cwave_enable.png);
+background-color: rgb(242, 248, 250);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
       </property>
@@ -218,19 +218,19 @@ border:2px solid rgb(55, 52, 53);</string>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_9">
       <property name="spacing">
-       <number>22</number>
+       <number>5</number>
       </property>
       <item>
        <widget class="QPushButton" name="inphaseButton">
         <property name="minimumSize">
          <size>
-          <width>90</width>
-          <height>90</height>
+          <width>100</width>
+          <height>100</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-image: url(:/buttons/resources/Triangular.png);
-background-color: rgb(248, 247, 190);
+         <string notr="true">background-image: url(:/buttons/resources/inphase_enable.png);
+background-color: rgb(242, 248, 250);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
         </property>
@@ -240,16 +240,29 @@ border:2px solid rgb(55, 52, 53);</string>
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="outphaseButton">
         <property name="minimumSize">
          <size>
-          <width>90</width>
-          <height>90</height>
+          <width>100</width>
+          <height>100</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
+         <string notr="true">background-image: url(:/buttons/resources/outphase_enable.png);
+background-color: rgb(242, 248, 250);
 border-radius: 10px;
 border:2px solid rgb(55, 52, 53);</string>
         </property>
@@ -486,15 +499,15 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>1065</x>
-     <y>305</y>
-     <width>171</width>
-     <height>305</height>
+     <x>1055</x>
+     <y>310</y>
+     <width>181</width>
+     <height>296</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_8">
     <property name="spacing">
-     <number>30</number>
+     <number>28</number>
     </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -684,16 +697,16 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QLabel" name="pulseDurationLabel">
    <property name="geometry">
     <rect>
-     <x>715</x>
-     <y>595</y>
-     <width>111</width>
+     <x>700</x>
+     <y>600</y>
+     <width>136</width>
      <height>61</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>48</pointsize>
+     <pointsize>40</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -702,7 +715,7 @@ border:2px solid rgb(55, 52, 53);</string>
     <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>120</string>
+    <string>2000</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -1104,7 +1117,7 @@ border:2px solid rgb(55, 52, 53);</string>
      <number>22</number>
     </property>
     <item>
-     <widget class="QPushButton" name="timeDwnButton">
+     <widget class="QPushButton" name="pulseDwnButton">
       <property name="minimumSize">
        <size>
         <width>100</width>
@@ -1123,7 +1136,7 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="timeUpButton">
+     <widget class="QPushButton" name="pulseUpButton">
       <property name="minimumSize">
        <size>
         <width>100</width>

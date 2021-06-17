@@ -98,37 +98,39 @@ class Ui_Dialog(object):
         self.pannelEButton.setObjectName("pannelEButton")
         self.horizontalLayout_2.addWidget(self.pannelEButton)
         self.layoutWidget_3 = QtWidgets.QWidget(Dialog)
-        self.layoutWidget_3.setGeometry(QtCore.QRect(656, 369, 236, 226))
+        self.layoutWidget_3.setGeometry(QtCore.QRect(656, 344, 236, 241))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.layoutWidget_3)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(22)
+        self.verticalLayout_2.setSpacing(5)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.cwaveButton = QtWidgets.QPushButton(self.layoutWidget_3)
         self.cwaveButton.setMinimumSize(QtCore.QSize(100, 100))
-        self.cwaveButton.setStyleSheet("background-image: url(:/buttons/resources/Cuadrada.png);\n"
-"background-color: rgb(244, 243, 158);\n"
+        self.cwaveButton.setStyleSheet("background-image: url(:/buttons/resources/cwave_enable.png);\n"
+"background-color: rgb(242, 248, 250);\n"
 "border-radius: 10px;\n"
 "border:2px solid rgb(55, 52, 53);")
         self.cwaveButton.setText("")
         self.cwaveButton.setObjectName("cwaveButton")
         self.verticalLayout_2.addWidget(self.cwaveButton)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_9.setSpacing(22)
+        self.horizontalLayout_9.setSpacing(5)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.inphaseButton = QtWidgets.QPushButton(self.layoutWidget_3)
-        self.inphaseButton.setMinimumSize(QtCore.QSize(90, 90))
-        self.inphaseButton.setStyleSheet("background-image: url(:/buttons/resources/Triangular.png);\n"
-"background-color: rgb(248, 247, 190);\n"
+        self.inphaseButton.setMinimumSize(QtCore.QSize(100, 100))
+        self.inphaseButton.setStyleSheet("background-image: url(:/buttons/resources/inphase_enable.png);\n"
+"background-color: rgb(242, 248, 250);\n"
 "border-radius: 10px;\n"
 "border:2px solid rgb(55, 52, 53);")
         self.inphaseButton.setText("")
         self.inphaseButton.setObjectName("inphaseButton")
         self.horizontalLayout_9.addWidget(self.inphaseButton)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_9.addItem(spacerItem)
         self.outphaseButton = QtWidgets.QPushButton(self.layoutWidget_3)
-        self.outphaseButton.setMinimumSize(QtCore.QSize(90, 90))
-        self.outphaseButton.setStyleSheet("background-image: url(:/buttons/resources/Sinus.png);\n"
-"background-color: rgb(240, 238, 126);\n"
+        self.outphaseButton.setMinimumSize(QtCore.QSize(100, 100))
+        self.outphaseButton.setStyleSheet("background-image: url(:/buttons/resources/outphase_enable.png);\n"
+"background-color: rgb(242, 248, 250);\n"
 "border-radius: 10px;\n"
 "border:2px solid rgb(55, 52, 53);")
         self.outphaseButton.setText("")
@@ -240,11 +242,11 @@ class Ui_Dialog(object):
         self.mem3Button.setObjectName("mem3Button")
         self.verticalLayout_4.addWidget(self.mem3Button)
         self.layoutWidget3 = QtWidgets.QWidget(Dialog)
-        self.layoutWidget3.setGeometry(QtCore.QRect(1065, 305, 171, 305))
+        self.layoutWidget3.setGeometry(QtCore.QRect(1055, 310, 181, 296))
         self.layoutWidget3.setObjectName("layoutWidget3")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.layoutWidget3)
         self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_8.setSpacing(30)
+        self.verticalLayout_8.setSpacing(28)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setSpacing(2)
@@ -349,10 +351,10 @@ class Ui_Dialog(object):
         self.verticalLayout_7.addWidget(self.mem33Label)
         self.verticalLayout_8.addLayout(self.verticalLayout_7)
         self.pulseDurationLabel = QtWidgets.QLabel(Dialog)
-        self.pulseDurationLabel.setGeometry(QtCore.QRect(715, 595, 111, 61))
+        self.pulseDurationLabel.setGeometry(QtCore.QRect(700, 600, 136, 61))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
-        font.setPointSize(48)
+        font.setPointSize(40)
         font.setBold(True)
         font.setWeight(75)
         self.pulseDurationLabel.setFont(font)
@@ -465,8 +467,8 @@ class Ui_Dialog(object):
 "border:2px solid rgb(55, 52, 53);")
         self.step4Button.setObjectName("step4Button")
         self.horizontalLayout_5.addWidget(self.step4Button)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem1)
         self.stepPauseButton = QtWidgets.QPushButton(self.layoutWidget_6)
         self.stepPauseButton.setMinimumSize(QtCore.QSize(180, 90))
         font = QtGui.QFont()
@@ -539,24 +541,24 @@ class Ui_Dialog(object):
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_8.setSpacing(22)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.timeDwnButton = QtWidgets.QPushButton(self.layoutWidget_9)
-        self.timeDwnButton.setMinimumSize(QtCore.QSize(100, 100))
-        self.timeDwnButton.setStyleSheet("background-image: url(:/buttons/resources/Abajo.png);\n"
+        self.pulseDwnButton = QtWidgets.QPushButton(self.layoutWidget_9)
+        self.pulseDwnButton.setMinimumSize(QtCore.QSize(100, 100))
+        self.pulseDwnButton.setStyleSheet("background-image: url(:/buttons/resources/Abajo.png);\n"
 "background-color: rgb(242, 248, 250);\n"
 "border-radius: 10px;\n"
 "border:2px solid rgb(55, 52, 53);")
-        self.timeDwnButton.setText("")
-        self.timeDwnButton.setObjectName("timeDwnButton")
-        self.horizontalLayout_8.addWidget(self.timeDwnButton)
-        self.timeUpButton = QtWidgets.QPushButton(self.layoutWidget_9)
-        self.timeUpButton.setMinimumSize(QtCore.QSize(100, 100))
-        self.timeUpButton.setStyleSheet("background-image: url(:/buttons/resources/Arriba.png);\n"
+        self.pulseDwnButton.setText("")
+        self.pulseDwnButton.setObjectName("pulseDwnButton")
+        self.horizontalLayout_8.addWidget(self.pulseDwnButton)
+        self.pulseUpButton = QtWidgets.QPushButton(self.layoutWidget_9)
+        self.pulseUpButton.setMinimumSize(QtCore.QSize(100, 100))
+        self.pulseUpButton.setStyleSheet("background-image: url(:/buttons/resources/Arriba.png);\n"
 "background-color: rgb(138, 186, 210);\n"
 "border-radius: 10px;\n"
 "border:2px solid rgb(55, 52, 53);")
-        self.timeUpButton.setText("")
-        self.timeUpButton.setObjectName("timeUpButton")
-        self.horizontalLayout_8.addWidget(self.timeUpButton)
+        self.pulseUpButton.setText("")
+        self.pulseUpButton.setObjectName("pulseUpButton")
+        self.horizontalLayout_8.addWidget(self.pulseUpButton)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -581,7 +583,7 @@ class Ui_Dialog(object):
         self.mem31Label.setText(_translate("Dialog", "110min"))
         self.mem32Label.setText(_translate("Dialog", "11.75Hz - 100%"))
         self.mem33Label.setText(_translate("Dialog", "Sinusoidal"))
-        self.pulseDurationLabel.setText(_translate("Dialog", "120"))
+        self.pulseDurationLabel.setText(_translate("Dialog", "2000"))
         self.powerRedLabel.setText(_translate("Dialog", "100"))
         self.date_timeLabel.setText(_translate("Dialog", "19/03/2020 - 17:45"))
         self.powerIRedLabel.setText(_translate("Dialog", "100"))

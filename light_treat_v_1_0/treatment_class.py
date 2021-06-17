@@ -15,10 +15,11 @@ class Treatment():
         self.signal = 'None'
 
         self.treatment_timer = 20
-        # self.max_treatment_timer = 120
-        # self.min_treatment_timer = 1
 
+        self.pulse_max = 2000
+        self.pulse_min = 10
         self.pulse_duration = 2000
+        
         self.pannel_a = True
         self.pannel_b = True
         self.pannel_c = True

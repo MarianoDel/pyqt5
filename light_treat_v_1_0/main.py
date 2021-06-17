@@ -101,10 +101,10 @@ class Dialog(QDialog):
         self.ui.inphaseButton.clicked.connect(self.SignalSet)
         self.ui.outphaseButton.clicked.connect(self.SignalSet)
         ### Pulse Duration Buttons
-        self.ui.timeUpButton.pressed.connect(self.UpTimePressed)
-        self.ui.timeUpButton.released.connect(self.UpTimeReleased)        
-        self.ui.timeDwnButton.pressed.connect(self.DwnTimePressed)
-        self.ui.timeDwnButton.released.connect(self.DwnTimeReleased)
+        self.ui.pulseUpButton.pressed.connect(self.PulseUpPressed)
+        self.ui.pulseUpButton.released.connect(self.PulseUpReleased)        
+        self.ui.pulseDwnButton.pressed.connect(self.PulseDwnPressed)
+        self.ui.pulseDwnButton.released.connect(self.PulseDwnReleased)
         ### Memory Buttons
         self.ui.mem1Button.pressed.connect(self.Memory1Pressed)
         self.ui.mem1Button.released.connect(self.Memory1Released)
@@ -162,8 +162,8 @@ class Dialog(QDialog):
         self.rcv_signal.connect(self.MySignalCallback)
 
         ## counters for buttons with press release functionality
-        self.timeUpButtonCnt = 0
-        self.timeDwnButtonCnt = 0
+        self.pulseUpButtonCnt = 0
+        self.pulseDwnButtonCnt = 0
         self.mem1ButtonCnt = 0
         self.mem2ButtonCnt = 0
         self.mem3ButtonCnt = 0
@@ -218,24 +218,24 @@ class Dialog(QDialog):
         self.ui.date_timeLabel.setText(date_str)
 
 
-    def UpTimePressed (self):
-        self.TimeUp (1)
-        self.timeUpButtonCnt = 1
+    def PulseUpPressed (self):
+        self.PulseUp (1)
+        self.pulseUpButtonCnt = 1
         self.ScreenSaverKick()        
 
         
-    def UpTimeReleased (self):
-        self.timeUpButtonCnt = 0
+    def PulseUpReleased (self):
+        self.pulseUpButtonCnt = 0
 
         
-    def DwnTimePressed (self):
-        self.TimeDwn(1)
-        self.timeDwnButtonCnt = 1
+    def PulseDwnPressed (self):
+        self.PulseDwn(1)
+        self.pulseDwnButtonCnt = 1
         self.ScreenSaverKick()
 
         
-    def DwnTimeReleased (self):
-        self.timeDwnButtonCnt = 0
+    def PulseDwnReleased (self):
+        self.pulseDwnButtonCnt = 0
         
         
     def Memory1Pressed (self):
@@ -352,15 +352,15 @@ class Dialog(QDialog):
         self.SignalDisableAll()
         
         if new_signal == 'cwave':
-            self.ui.triangularButton.setStyleSheet(self.ss.cwave_enable)
+            self.ui.cwaveButton.setStyleSheet(self.ss.cwave_enable)
             self.t.SetSignal('cwave')
 
         elif new_signal == 'inphase':
-            self.ui.squareButton.setStyleSheet(self.ss.inphase_enable)
+            self.ui.inphaseButton.setStyleSheet(self.ss.inphase_enable)
             self.t.SetSignal('inphase')
 
         elif new_signal == 'outphase':
-            self.ui.sinusoidalButton.setStyleSheet(self.ss.outphase_enable)
+            self.ui.outphaseButton.setStyleSheet(self.ss.outphase_enable)
             self.t.SetSignal('outphase')
         
 
@@ -378,142 +378,7 @@ class Dialog(QDialog):
         self.ui.min30Button.setStyleSheet(self.ss.min30_disable)
         self.ui.min45Button.setStyleSheet(self.ss.min45_disable)
         self.ui.min60Button.setStyleSheet(self.ss.min60_disable)
-        
 
-    # def ToggleLed (self):
-    #     LedToggle()
-
-    # def ToggleBuzzer (self):
-    #     BuzzerToggle()
-
-    # def FuncionPrender3 (self):
-    #     if self.s.port_open == True:
-    #         self.InsertLocalText("sending start...")
-    #         self.SendStartSM3 ()
-    #     else:
-    #         self.InsertLocalText("Serial port not ready!!!")
-
-    # def FuncionPrender4 (self):
-    #     if self.s.port_open == True:
-    #         self.InsertLocalText("sending start...")
-    #         self.SendStartSM4 ()
-    #     else:
-    #         self.InsertLocalText("Serial port not ready!!!")
-
-    # def FuncionPrender5 (self):
-    #     if self.s.port_open == True:
-    #         self.InsertLocalText("sending start...")
-    #         self.SendStartSM5 ()
-    #     else:
-    #         self.InsertLocalText("Serial port not ready!!!")
-            
-    # def FuncionApagar (self):
-    #     if self.s.port_open == True:
-    #         self.InsertLocalText("sending stop...")
-    #         self.SendStopSM ()
-    #     else:
-    #         self.InsertLocalText("Serial port not ready!!!")
-            
-
-    # def SendStartSM3 (self):
-    #     self.s.Write("chf signal cwave\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf frequency 1\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf power red 50\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf power ired 50\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf start treatment\r\n")
-
-
-    # def SendStartSM4 (self):
-    #     self.s.Write("chf signal cwave\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf frequency 1\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf power red 100\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf power ired 00\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf start treatment\r\n")
-
-
-    # def SendStartSM5 (self):
-    #     self.s.Write("chf signal cwave\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf frequency 1\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf power red 00\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf power ired 100\r\n")
-    #     sleep(0.1)
-    #     self.s.Write("chf start treatment\r\n")
-        
-
-    # def SendStopSM (self):
-    #     self.s.Write("chf stop treatment\r\n")        
-        
-            
-    # def FrequencyChange (self):
-    #     sender = self.sender()
-
-    #     if sender.objectName() == 'freq1Button':
-    #         self.FrequencyChangeTo('7.83Hz')
-
-    #     if sender.objectName() == 'freq2Button':
-    #         self.FrequencyChangeTo('11.79Hz')
-
-    #     if sender.objectName() == 'freq3Button':
-    #         self.FrequencyChangeTo('16.67Hz')
-
-    #     if sender.objectName() == 'freq4Button':
-    #         self.FrequencyChangeTo('23.58Hz')
-
-    #     if sender.objectName() == 'freq5Button':
-    #         self.FrequencyChangeTo('30.80Hz')
-
-    #     if sender.objectName() == 'freq6Button':
-    #         self.FrequencyChangeTo('62.64Hz')
-
-    #     self.CheckForStart()
-    #     self.ScreenSaverKick()
-        
-
-    # def FrequencyChangeTo (self, new_freq):
-    #     self.FrequencyDisableAll()
-        
-    #     if new_freq == '7.83Hz':
-    #         self.ui.freq1Button.setStyleSheet(self.ss.freq1_enable)
-    #         self.InsertLocalText("7.83Hz selected")
-    #         self.t.SetFrequency('7.83Hz')
-
-    #     if new_freq == '11.79Hz':
-    #         self.ui.freq2Button.setStyleSheet(self.ss.freq2_enable)
-    #         self.InsertLocalText("11.79Hz selected")            
-    #         self.t.SetFrequency('11.79Hz')
-
-    #     if new_freq == '16.67Hz':
-    #         self.ui.freq3Button.setStyleSheet(self.ss.freq3_enable)
-    #         self.InsertLocalText("16.67Hz selected")            
-    #         self.t.SetFrequency('16.67Hz')
-
-    #     if new_freq == '23.58Hz':
-    #         self.ui.freq4Button.setStyleSheet(self.ss.freq4_enable)
-    #         self.InsertLocalText("23.58Hz selected")            
-    #         self.t.SetFrequency('23.58Hz')
-
-    #     if new_freq == '30.80Hz':
-    #         self.ui.freq5Button.setStyleSheet(self.ss.freq5_enable)
-    #         self.InsertLocalText("30.80Hz selected")            
-    #         self.t.SetFrequency('30.80Hz')
-
-    #     if new_freq == '62.64Hz':
-    #         self.ui.freq6Button.setStyleSheet(self.ss.freq6_enable)
-    #         self.InsertLocalText("62.64Hz selected")            
-    #         self.t.SetFrequency('62.64Hz')
-
-            
             
     def PannelsSet (self):
         sender = self.sender()
@@ -600,8 +465,6 @@ class Dialog(QDialog):
                 self.ui.stepPauseButton.setStyleSheet(self.ss.steps_button_disable)
 
         self.ScreenSaverKick()
-
-        
         
         
     def PowerRed (self):
@@ -610,7 +473,9 @@ class Dialog(QDialog):
         max_pwr = self.t.max_power_red
 
         if sender.objectName() == 'powerUpRedButton':
-            if ((last_pwr + 5) <= max_pwr):
+            if last_pwr == 0:
+                last_pwr = 10
+            elif ((last_pwr + 5) <= max_pwr):
                 last_pwr += 5
             else:
                 last_pwr = max_pwr
@@ -623,6 +488,7 @@ class Dialog(QDialog):
 
         self.ui.powerRedLabel.setText(str(last_pwr))
         self.t.SetPowerRed(last_pwr)
+        self.CheckForStart()
         self.ScreenSaverKick()        
 
                 
@@ -632,7 +498,9 @@ class Dialog(QDialog):
         max_pwr = self.t.max_power_ired
 
         if sender.objectName() == 'powerUpIRedButton':
-            if ((last_pwr + 5) <= max_pwr):
+            if last_pwr == 0:
+                last_pwr = 10
+            elif ((last_pwr + 5) <= max_pwr):
                 last_pwr += 5
             else:
                 last_pwr = max_pwr
@@ -645,6 +513,7 @@ class Dialog(QDialog):
 
         self.ui.powerIRedLabel.setText(str(last_pwr))
         self.t.SetPowerIRed(last_pwr)
+        self.CheckForStart()        
         self.ScreenSaverKick()        
                     
         
@@ -673,22 +542,24 @@ class Dialog(QDialog):
 
 
     def CheckForStart (self):
-        if (self.CheckCompleteConf() == True and
-            self.s.port_open == True):
+        # if (self.CheckCompleteConf() == True and
+        #     self.s.port_open == True):
+        if self.CheckCompleteConf() == True:        
             self.ui.startButton.setStyleSheet(self.ss.start_enable)
         else:
             self.ui.startButton.setStyleSheet(self.ss.start_disable)
 
 
     def CheckCompleteConf (self):
-        if (self.t.GetPowerRed() == 0 and
-            self.t.GetSignal() != 'None'):
-           if (self.t.GetPannelsInTreatment('pannel_a') != False or
-               self.t.GetPannelsInTreatment('pannel_b') != False or
-               self.t.GetPannelsInTreatment('pannel_c') != False or
-               self.t.GetPannelsInTreatment('pannel_d') != False or
-               self.t.GetChannelInTreatment('pannel_e') != False):
-                return True
+        if (self.t.GetPowerRed() != 0 or
+            self.t.GetPowerIRed() != 0):
+            if (self.t.GetPannelsInTreatment('pannel_a') != False or
+                self.t.GetPannelsInTreatment('pannel_b') != False or
+                self.t.GetPannelsInTreatment('pannel_c') != False or
+                self.t.GetPannelsInTreatment('pannel_d') != False or
+                self.t.GetPannelsInTreatment('pannel_e') != False):
+                if self.t.GetSignal() != 'None':
+                    return True
 
         return False
 
@@ -697,21 +568,21 @@ class Dialog(QDialog):
         """ paso un segundo, reviso que tengo que hacer """
         # reviso si algun boton sigue presionado
         ## Time Buttons
-        if self.timeUpButtonCnt > 3:
-            self.TimeUp(10)
-        elif self.timeUpButtonCnt > 1:
-            self.TimeUp(5)
-            self.timeUpButtonCnt += 1            
-        elif  self.timeUpButtonCnt == 1:
-            self.timeUpButtonCnt += 1
+        if self.pulseUpButtonCnt > 3:
+            self.PulseUp(200)
+        elif self.pulseUpButtonCnt > 1:
+            self.PulseUp(25)
+            self.pulseUpButtonCnt += 1            
+        elif  self.pulseUpButtonCnt == 1:
+            self.pulseUpButtonCnt += 1
 
-        if self.timeDwnButtonCnt > 3:
-            self.TimeDwn(10)
-        elif self.timeDwnButtonCnt > 1:
-            self.TimeDwn(5)
-            self.timeDwnButtonCnt += 1            
-        elif self.timeDwnButtonCnt == 1:
-            self.timeDwnButtonCnt += 1
+        if self.pulseDwnButtonCnt > 3:
+            self.PulseDwn(200)
+        elif self.pulseDwnButtonCnt > 1:
+            self.PulseDwn(25)
+            self.pulseDwnButtonCnt += 1            
+        elif self.pulseDwnButtonCnt == 1:
+            self.pulseDwnButtonCnt += 1
 
         if self.mem1ButtonCnt > 3:
             self.mem1ButtonCnt = 0
@@ -751,26 +622,26 @@ class Dialog(QDialog):
                 self.ScreenSaverDialogScreen()
                                         
         
-    # def TimeUp (self, new_time):
-    #     last_time = self.t.GetTreatmentTimer()
-    #     max_time = self.t.max_treatment_timer
-    #     if ((last_time + new_time) < max_time):
-    #         last_time += new_time
-    #     else:
-    #         last_time = max_time
-    #     self.ui.minutesLabel.setText(str(last_time))
-    #     self.t.SetTreatmentTimer(last_time)
+    def PulseUp (self, new_pulse):
+        last_pulse = self.t.GetPulseDuration()
+        max_pulse = self.t.pulse_max
+        if ((last_pulse + new_pulse) < max_pulse):
+            last_pulse += new_pulse
+        else:
+            last_pulse = max_pulse
+        self.ui.pulseDurationLabel.setText(str(last_pulse))
+        self.t.SetPulseDuration(last_pulse)
 
         
-    # def TimeDwn (self, new_time):
-    #     last_time = self.t.GetTreatmentTimer()
-    #     min_time = self.t.min_treatment_timer
-    #     if ((last_time - new_time) > min_time):
-    #         last_time -= new_time
-    #     else:
-    #         last_time = min_time
-    #     self.ui.minutesLabel.setText(str(last_time))
-    #     self.t.SetTreatmentTimer(last_time)
+    def PulseDwn (self, new_pulse):
+        last_pulse = self.t.GetPulseDuration()
+        min_pulse = self.t.pulse_min
+        if ((last_pulse - new_pulse) > min_pulse):
+            last_pulse -= new_pulse
+        else:
+            last_pulse = min_pulse
+        self.ui.pulseDurationLabel.setText(str(last_pulse))
+        self.t.SetPulseDuration(last_pulse)
 
         
     def TimerOneSec(self):
@@ -905,12 +776,6 @@ class Dialog(QDialog):
                 self.ScreenSaverKick()
                 self.screensaver_window = True
                 
-            else:
-                self.InsertLocalText("Serial Port Not Open!")
-        else:
-            # self.ui.textEdit.append("Complete all params before start")
-            self.InsertLocalText("Complete all params before start")
-
 
     ## DiagnosticsSreen
     def DiagnosticsScreen (self):

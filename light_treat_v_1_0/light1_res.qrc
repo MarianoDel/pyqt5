@@ -9,14 +9,6 @@
     <file>resources/UIBJ.gif</file>
     <file>resources/Rk69.gif</file>
   </qresource>
-  <qresource prefix="frequencies">
-    <file>resources/7_83Hz.png</file>
-    <file>resources/11_79Hz.png</file>
-    <file>resources/16_67Hz.png</file>
-    <file>resources/23_58Hz.png</file>
-    <file>resources/30_80Hz.png</file>
-    <file>resources/62_64Hz.png</file>
-  </qresource>
   <qresource prefix="buttons">
     <file>resources/20min.png</file>
     <file>resources/45min.png</file>
@@ -33,8 +25,11 @@
     <file>resources/Abajo.png</file>
     <file>resources/Arriba.png</file>
     <file>resources/Play.png</file>
-    <file>resources/Cuadrada.png</file>
-    <file>resources/Sinus.png</file>
-    <file>resources/Triangular.png</file>
+    <file>resources/cwave_disable.png</file>
+    <file>resources/cwave_enable.png</file>
+    <file>resources/inphase_disable.png</file>
+    <file>resources/inphase_enable.png</file>
+    <file>resources/outphase_disable.png</file>
+    <file>resources/outphase_enable.png</file>
   </qresource>
 </RCC>

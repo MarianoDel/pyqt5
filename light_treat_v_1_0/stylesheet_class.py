@@ -9,35 +9,35 @@ class ButtonStyles():
 
     def __init__(self):
         ## Signal buttons StyleSheet
-        self.cwave_disable = "background-image: url(:/buttons/resources/Triangular.png);\
+        self.cwave_disable = "background-image: url(:/buttons/resources/cwave_disable.png);\
                                    background-color: rgb(245, 245, 245);\
                                    border-radius: 10px;\
                                    border:2px solid rgb(55, 52, 53);"
 
 
-        self.inphase_disable = "background-image: url(:/buttons/resources/Cuadrada.png);\
+        self.inphase_disable = "background-image: url(:/buttons/resources/inphase_disable.png);\
                                background-color:  rgb(245, 245, 245);\
                                border-radius: 10px;\
                                border:2px solid rgb(55, 52, 53);"
 
 
-        self.outphase_disable = "background-image: url(:/buttons/resources/Sinus.png);\
+        self.outphase_disable = "background-image: url(:/buttons/resources/outphase_disable.png);\
                                    background-color:  rgb(245, 245, 245);\
                                    border-radius: 10px;\
                                    border:2px solid rgb(55, 52, 53);"
 
-        self.cwave_enable = "background-image: url(:/buttons/resources/Triangular.png);\
-                                  background-color: rgb(248, 247, 190);\
+        self.cwave_enable = "background-image: url(:/buttons/resources/cwave_enable.png);\
+                                  background-color: rgb(242, 248, 250);\
                                   border-radius: 10px;\
                                   border:2px solid rgb(55, 52, 53);"
 
-        self.inphase_enable = "background-image: url(:/buttons/resources/Cuadrada.png);\
-                              background-color:  rgb(244, 243, 158);\
+        self.inphase_enable = "background-image: url(:/buttons/resources/inphase_enable.png);\
+                              background-color:  rgb(242, 248, 250);\
                               border-radius: 10px;\
                               border:2px solid rgb(55, 52, 53);"
 
-        self.outphase_enable = "background-image: url(:/buttons/resources/Sinus.png);\
-                                  background-color: rgb(240, 238, 126);\
+        self.outphase_enable = "background-image: url(:/buttons/resources/outphase_enable.png);\
+                                  background-color: rgb(242, 248, 250);\
                                   border-radius: 10px;\
                                   border:2px solid rgb(55, 52, 53);"
 
