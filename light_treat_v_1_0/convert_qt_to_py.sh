@@ -12,6 +12,7 @@ pyuic5 light_rtc_dlg.ui > ui_rtc_dlg.py
 pyuic5 light_pwr_ctrl_dlg.ui > ui_pwr_ctrl_dlg.py
 pyuic5 light_memory_dlg.ui > ui_memory_dlg.py
 pyuic5 light_screen_saver_dlg.ui > ui_screen_saver_dlg.py
+pyuic5 light_steps_dlg.ui > ui_steps_dlg.py
 
 
 

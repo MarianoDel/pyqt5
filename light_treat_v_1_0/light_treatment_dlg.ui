@@ -18,7 +18,7 @@
 background-image: url(:/background/resources/background_magnet_03.png);
 }</string>
   </property>
-  <widget class="QPushButton" name="freqButton">
+  <widget class="QPushButton" name="stepsButton">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -33,6 +33,14 @@ background-image: url(:/background/resources/background_magnet_03.png);
      <height>100</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>Liberation Mono</family>
+     <pointsize>48</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/frequencies/resources/62_64Hz.png);
 background-color: rgb(196, 161, 203);
@@ -43,12 +51,12 @@ border:2px solid rgb(55, 52, 53);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalButton">
+  <widget class="QPushButton" name="signalLargeButton">
    <property name="geometry">
     <rect>
      <x>100</x>
      <y>120</y>
-     <width>100</width>
+     <width>232</width>
      <height>100</height>
     </rect>
    </property>
@@ -137,12 +145,12 @@ border:2px solid rgb(55, 52, 53);</string>
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="powerLabel">
+  <widget class="QLabel" name="powerRedLabel">
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>440</y>
-     <width>151</width>
+     <y>425</y>
+     <width>296</width>
      <height>51</height>
     </rect>
    </property>
@@ -155,7 +163,7 @@ border:2px solid rgb(55, 52, 53);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(237, 50, 55);</string>
+    <string notr="true">color: rgb(122, 181, 191);</string>
    </property>
    <property name="text">
     <string>100%</string>
@@ -249,7 +257,7 @@ border:2px solid rgb(55, 52, 53);</string>
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>520</y>
+     <y>560</y>
      <width>151</width>
      <height>51</height>
     </rect>
@@ -351,214 +359,56 @@ color: rgb(55, 52, 53);</string>
     <string>Tap to return to a previous screen</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget_6">
+  <widget class="QLabel" name="powerIRedLabel">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>560</y>
-     <width>591</width>
-     <height>76</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_5">
-    <property name="spacing">
-     <number>22</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="ant1Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(230, 245, 253);
-border: 0px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="light1_res.qrc">
-        <normaloff>:/buttons/resources/wifi-symbol_disa.png</normaloff>:/buttons/resources/wifi-symbol_disa.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="ant2Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(230, 245, 253);
-border: 0px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="light1_res.qrc">
-        <normaloff>:/buttons/resources/wifi-symbol_disa.png</normaloff>:/buttons/resources/wifi-symbol_disa.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="ant3Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(230, 245, 253);
-border: 0px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="light1_res.qrc">
-        <normaloff>:/buttons/resources/wifi-symbol_disa.png</normaloff>:/buttons/resources/wifi-symbol_disa.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="ant4Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(230, 245, 253);
-border: 0px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="light1_res.qrc">
-        <normaloff>:/buttons/resources/wifi-symbol_disa.png</normaloff>:/buttons/resources/wifi-symbol_disa.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>100</width>
-        <height>100</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QLabel" name="tempLabel">
-   <property name="geometry">
-    <rect>
-     <x>925</x>
-     <y>500</y>
-     <width>331</width>
-     <height>41</height>
+     <x>90</x>
+     <y>485</y>
+     <width>301</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>24</pointsize>
+     <pointsize>36</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(55, 52, 53);</string>
+    <string notr="true">color: rgb(176, 152, 128);</string>
    </property>
    <property name="text">
-    <string>CH1 Temp: 35.0C</string>
+    <string>100%</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="signalShortButton">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>120</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
+background-color: rgb(240, 238, 126);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

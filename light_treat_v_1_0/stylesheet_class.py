@@ -41,6 +41,10 @@ class ButtonStyles():
                                   border-radius: 10px;\
                                   border:2px solid rgb(55, 52, 53);"
 
+        self.signal_treat_disable = "background-color: rgb(230, 245, 253);\
+                                     border: 0px;"
+
+
         ## Pannels buttons StyleSheet
         self.pannel_a_enable = "background-color: rgb(225, 237, 247);\
                                 color: rgb(55, 52, 53);\

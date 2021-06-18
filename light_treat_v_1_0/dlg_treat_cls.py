@@ -9,6 +9,8 @@ from datetime import datetime
 #get the UI from here
 from ui_treatment_dlg import Ui_TreatmentDialog
 
+from dlg_steps_cls import StepsDialog
+
 
 For_Test_Send_Commands_To_Console = False
 
@@ -20,9 +22,9 @@ class TreatmentDialog(QDialog):
     #SIGNALS
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
-    # progress_signal = pyqtSignal()
+    sync_signal = pyqtSignal()
 
-    def __init__(self, treat_obj, style_obj, ant_obj, ser_instance, parent=None):
+    def __init__(self, treat_obj, style_obj, ser_instance, parent=None):
         super(TreatmentDialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -33,7 +35,6 @@ class TreatmentDialog(QDialog):
         self.parent = parent
         self.treat = treat_obj
         self.style = style_obj
-        self.ant = ant_obj
         self.s = ser_instance
 
         self.ui.doneButton.setEnabled(False)
@@ -45,10 +46,10 @@ class TreatmentDialog(QDialog):
         self.ui.stop_rsmButton.clicked.connect(self.StopRsmTreatment)
         self.ui.stopButton.clicked.connect(self.StopTreatment)
         self.ui.rsmButton.clicked.connect(self.RsmTreatment)        
-        self.ui.ant1Button.clicked.connect(self.ChannelGetTemp)
-        self.ui.ant2Button.clicked.connect(self.ChannelGetTemp)
-        self.ui.ant3Button.clicked.connect(self.ChannelGetTemp)
-        self.ui.ant4Button.clicked.connect(self.ChannelGetTemp)
+        # self.ui.ant1Button.clicked.connect(self.ChannelGetTemp)
+        # self.ui.ant2Button.clicked.connect(self.ChannelGetTemp)
+        # self.ui.ant3Button.clicked.connect(self.ChannelGetTemp)
+        # self.ui.ant4Button.clicked.connect(self.ChannelGetTemp)
         
         ### to carry on with date-time
         date_now = datetime.today()
@@ -59,69 +60,76 @@ class TreatmentDialog(QDialog):
         self.progress_timer = QTimer()
         self.init_timer = QTimer()
         self.t1sec = QTimer()
+        self.sync_timer = QTimer()
 
         # progress states machine -SM-
         self.stop_rsm_state = 'stoping'
         self.init_state = 'start'
-
-        ## setup temperatures
-        self.temp_ch1_str = ''
-        self.temp_ch2_str = ''
-        self.temp_ch3_str = ''
-        self.temp_ch4_str = ''
-
-        self.tempLabelCntr = 0
-        self.ui.tempLabel.setText('')
         
 
         # CONNECT SIGNALS
         # connect the timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
         self.parent.rcv_signal.connect(self.SerialDataCallback)
+        self.sync_signal.connect(self.SendSyncToBoards)
         # self.progress_signal.connect(self.UpdateProgressStopRsmSM)
 
 
         ## Default Screen
         self.ui.progressLabel.setText('Session Starting...')
         self.ui.minutesLabel.setText(str(self.treat.treatment_timer) + "'")
-        self.ui.powerLabel.setText(str(self.treat.power) + "%")
+        self.ui.powerRedLabel.setText("Red: " + str(self.treat.GetPowerRed()) + "%")
+        self.ui.powerIRedLabel.setText("IRed: " + str(self.treat.GetPowerIRed()) + "%")        
 
         current_signal = self.treat.GetSignal()
-        if current_signal == 'triangular':
-            self.ui.signalButton.setStyleSheet(self.style.triangular_enable)
-        elif current_signal == 'square':
-            self.ui.signalButton.setStyleSheet(self.style.square_enable)
-        elif current_signal == 'sinusoidal':
-            self.ui.signalButton.setStyleSheet(self.style.sinusoidal_enable)
+        if current_signal == 'cwave':
+            self.ui.signalLargeButton.setStyleSheet(self.style.cwave_enable)
+            self.ui.signalShortButton.setStyleSheet(self.style.signal_treat_disable)
+            self.ui.signalLargeButton.raise_()
+            
+        elif current_signal == 'inphase':
+            self.ui.signalShortButton.setStyleSheet(self.style.inphase_enable)
+            self.ui.signalLargeButton.setStyleSheet(self.style.signal_treat_disable)
+            self.ui.signalShortButton.raise_()
+            
+        elif current_signal == 'outphase':
+            self.ui.signalShortButton.setStyleSheet(self.style.outphase_enable)
+            self.ui.signalLargeButton.setStyleSheet(self.style.signal_treat_disable)
+            self.ui.signalShortButton.raise_()
 
-        current_frequency = self.treat.GetFrequency()
-        if current_frequency == '7.83Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq1_enable)
-        elif current_frequency == '11.79Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq2_enable)
-        elif current_frequency == '16.67Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq3_enable)
-        elif current_frequency == '23.58Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq4_enable)
-        elif current_frequency == '30.80Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq5_enable)
-        elif current_frequency == '62.64Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq6_enable)
+        steps = self.treat.GetSteps()
+        if steps == 1:
+            self.ui.stepsButton.setStyleSheet(self.style.step1_button_enable)
+            self.ui.stepsButton.setText('1')
+        elif steps == 2:
+            self.ui.stepsButton.setStyleSheet(self.style.step2_button_enable)
+            self.ui.stepsButton.setText('2')            
+        elif steps == 3:
+            self.ui.stepsButton.setStyleSheet(self.style.step3_button_enable)
+            self.ui.stepsButton.setText('3')            
+        elif steps == 4:
+            self.ui.stepsButton.setStyleSheet(self.style.step4_button_enable)
+            self.ui.stepsButton.setText('4')            
 
         self.ui.stopButton.setEnabled(False)
         self.ui.rsmButton.setEnabled(False)
         self.ui.stop_rsmButton.raise_()
 
+        ## for steps calcs
+        self.TreatmentStepsCalc ()
+        
+
+        
         ## setup antennas icons
         ## url(:/buttons/resources/Stop.png)
-        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
-        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
-        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
-        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
+        # self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        # self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        # self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        # self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
         
         ## setup antennas
-        self.antenna_emmiting = False
-        self.AntennasUpdate_UI(False)
+        # self.antenna_emmiting = False
+        # self.AntennasUpdate_UI(False)
             
         ## start the timer
         self.t1sec.timeout.connect(self.TimerOneSec)
@@ -131,23 +139,23 @@ class TreatmentDialog(QDialog):
         self.StartTreatment()
 
 
-    def AntennasUpdate_UI (self, emit):
-        if emit == True:
-            current_icon = self.wifi_emit_Icon
-        else:
-            current_icon = self.wifi_act_Icon
+    # def AntennasUpdate_UI (self, emit):
+    #     if emit == True:
+    #         current_icon = self.wifi_emit_Icon
+    #     else:
+    #         current_icon = self.wifi_act_Icon
 
-        if self.ant.GetActive('ch1') == True:
-            self.ui.ant1Button.setIcon(current_icon)
+    #     if self.ant.GetActive('ch1') == True:
+    #         self.ui.ant1Button.setIcon(current_icon)
 
-        if self.ant.GetActive('ch2') == True:
-            self.ui.ant2Button.setIcon(current_icon)
+    #     if self.ant.GetActive('ch2') == True:
+    #         self.ui.ant2Button.setIcon(current_icon)
 
-        if self.ant.GetActive('ch3') == True:
-            self.ui.ant3Button.setIcon(current_icon)
+    #     if self.ant.GetActive('ch3') == True:
+    #         self.ui.ant3Button.setIcon(current_icon)
 
-        if self.ant.GetActive('ch4') == True:
-            self.ui.ant4Button.setIcon(current_icon)
+    #     if self.ant.GetActive('ch4') == True:
+    #         self.ui.ant4Button.setIcon(current_icon)
 
             
     def UpdateDateTime(self, new_date_time):
@@ -165,6 +173,15 @@ class TreatmentDialog(QDialog):
         self.one_second_signal.emit()
 
 
+    """ Emit a signal to not delay the timer response """
+    def TimerForSync(self):        
+        self.sync_signal.emit()
+
+
+    def SendSyncToBoards (self):
+        self.s.Write('*')
+        
+        
     def UpdateOneSec (self):
         # do a UI update if its necessary
         date_now = datetime.today()
@@ -200,30 +217,174 @@ class TreatmentDialog(QDialog):
         if For_Test_Send_Commands_To_Console == True:
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                print("keepalive,\r\n")
+                print("chf stop treatment\r\n")
             
                 self.init_state = 'signal'
                 self.init_timer.singleShot(100, self.SendStartSM)
 
             elif self.init_state == 'signal':
-                to_send = self.treat.GetMagnetoFreqSignalPowerString()
-                print(to_send + "\r\n")
+                to_send = self.treat.GetSignal()
+                if to_send != 'cwave':
+                    to_send = 'pulsed'
+                    # enable sync here!!!
 
+                to_send = "chf signal " + to_send
                 self.InsertLocalText(to_send)
-                self.init_state = 'duration'
+                print(to_send)
+                
+                self.init_state = 'pulse_duration'
                 self.init_timer.singleShot(100, self.SendStartSM)
 
-            elif self.init_state == 'duration':
-                to_send = self.treat.GetMagnetoDurationString()
-                print(to_send + "\r\n")
+            elif self.init_state == 'pulse_duration':
+                pulse = self.treat.GetPulseDuration()
+                if pulse >= 1000:
+                    to_send = "chf frequency 1\r\n"
+                elif pulse <= 100:
+                    to_send = "chf frequency 10\r\n"
+                else:
+                    to_send = "chf frequency 5\r\n"
+
+                print(to_send)
 
                 self.InsertLocalText(to_send)
-                self.init_state = 'state_of_stage'
+                self.init_state = 'power_red_1'
                 self.init_timer.singleShot(100, self.SendStartSM)
 
-            elif self.init_state == 'state_of_stage':
-                to_send = "state_of_stage,1,1\r\n"
-                print(to_send + "\r\n")
+            elif self.init_state == 'power_red_1':
+                if (self.treat.GetPannelsInTreatment('pannel_a') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch1 power red 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch1 power red " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_ired_1'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_1':
+                if (self.treat.GetPannelsInTreatment('pannel_a') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch1 power ired 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch1 power ired " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_red_2'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_2':
+                if (self.treat.GetPannelsInTreatment('pannel_b') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch2 power red 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch2 power red " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_ired_2'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_2':
+                if (self.treat.GetPannelsInTreatment('pannel_b') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch2 power ired 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch2 power ired " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_red_3'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_3':
+                if (self.treat.GetPannelsInTreatment('pannel_c') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch3 power red 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch3 power red " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_ired_3'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_3':
+                if (self.treat.GetPannelsInTreatment('pannel_c') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch3 power ired 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch3 power ired " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_red_4'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_4':
+                if (self.treat.GetPannelsInTreatment('pannel_d') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch4 power red 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch4 power red " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_ired_4'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_4':
+                if (self.treat.GetPannelsInTreatment('pannel_d') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch4 power ired 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch4 power ired " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_red_5'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_5':
+                if (self.treat.GetPannelsInTreatment('pannel_e') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch5 power red 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch5 power red " + str(power_r) + "\r\n"
+
+                print(to_send)
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power_ired_5'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_5':
+                if (self.treat.GetPannelsInTreatment('pannel_e') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch5 power ired 00\r\n"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch5 power ired " + str(power_r) + "\r\n"
+
+                print(to_send)
 
                 self.InsertLocalText(to_send)
                 self.init_state = 'start'
@@ -231,68 +392,230 @@ class TreatmentDialog(QDialog):
                 
             elif self.init_state == 'start':
                 self.InsertLocalText("Starting Treatment...")
-                print("start,\r\n")
+                print("chf start treatment\r\n")
 
         else:
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                self.s.Write("keepalive,\r\n")
+                self.s.Write("chf stop treatment\r\n")
             
                 self.init_state = 'signal'
                 self.init_timer.singleShot(100, self.SendStartSM)
 
             elif self.init_state == 'signal':
-                to_send = self.treat.GetMagnetoFreqSignalPowerString()
-                self.s.Write(to_send + "\r\n")
+                to_send = self.treat.GetSignal()
+                if to_send != 'cwave':
+                    to_send = 'pulsed'
+                    # enable sync here!!!
 
-                self.InsertLocalText(to_send)
-                self.init_state = 'duration'
+                to_send = "chf signal " + to_send
+                self.InsertLocalText(to_send)                
+                self.s.Write(to_send + "\r\n")
+                
+                self.init_state = 'pulse_duration'
                 self.init_timer.singleShot(100, self.SendStartSM)
 
-            elif self.init_state == 'duration':
-                to_send = self.treat.GetMagnetoDurationString()
+            elif self.init_state == 'pulse_duration':
+                pulse = self.treat.GetPulseDuration()
+                if pulse >= 1000:
+                    to_send = "chf frequency 1\r\n"
+                elif pulse <= 100:
+                    to_send = "chf frequency 10\r\n"
+                else:
+                    to_send = "chf frequency 5\r\n"
+
+                self.InsertLocalText(to_send)                    
                 self.s.Write(to_send + "\r\n")
 
-                self.InsertLocalText(to_send)
-                self.init_state = 'state_of_stage'
+                self.init_state = 'power_red_1'
                 self.init_timer.singleShot(100, self.SendStartSM)
 
-            elif self.init_state == 'state_of_stage':
-                to_send = "state_of_stage,1,1"
-                self.s.Write(to_send + "\r\n")
+            elif self.init_state == 'power_red_1':
+                if (self.treat.GetPannelsInTreatment('pannel_a') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch1 power red 00"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch1 power red " + str(power_r)
 
                 self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_ired_1'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_1':
+                if (self.treat.GetPannelsInTreatment('pannel_a') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch1 power ired 00"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch1 power ired " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_red_2'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_2':
+                if (self.treat.GetPannelsInTreatment('pannel_b') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch2 power red 00"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch2 power red " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_ired_2'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_2':
+                if (self.treat.GetPannelsInTreatment('pannel_b') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch2 power ired 00"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch2 power ired " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_red_3'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_3':
+                if (self.treat.GetPannelsInTreatment('pannel_c') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch3 power red 00"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch3 power red " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_ired_3'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_3':
+                if (self.treat.GetPannelsInTreatment('pannel_c') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch3 power ired 00"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch3 power ired " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_red_4'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_4':
+                if (self.treat.GetPannelsInTreatment('pannel_d') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch4 power red 00"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch4 power red " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_ired_4'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_4':
+                if (self.treat.GetPannelsInTreatment('pannel_d') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch4 power ired 00"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch4 power ired " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_red_5'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_red_5':
+                if (self.treat.GetPannelsInTreatment('pannel_e') != True or
+                    self.treat.GetPowerRed() == 0):
+                    to_send = "ch5 power red 00"
+                else:
+                    power_r = self.treat.GetPowerRed()
+                    to_send = "ch5 power red " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
+                self.init_state = 'power_ired_5'
+                self.init_timer.singleShot(100, self.SendStartSM)
+
+            elif self.init_state == 'power_ired_5':
+                if (self.treat.GetPannelsInTreatment('pannel_e') != True or
+                    self.treat.GetPowerIRed() == 0):
+                    to_send = "ch5 power ired 00"
+                else:
+                    power_r = self.treat.GetPowerIRed()
+                    to_send = "ch5 power ired " + str(power_r)
+
+                self.InsertLocalText(to_send)
+                self.s.Write(to_send + "\r\n")
+
                 self.init_state = 'start'
                 self.init_timer.singleShot(100, self.SendStartSM)
                 
             elif self.init_state == 'start':
                 self.InsertLocalText("Starting Treatment...")
-                self.s.Write("start,\r\n")
-            
+                self.s.Write("chf start treatment\r\n")
+                self.parent.SendBuzzerCmd(1)
 
+                """ start a sync timer if signal is not a cwave """
+                if self.treat.GetSignal() != 'cwave':
+                    ## start the timer
+                    self.sync_timer.timeout.connect(self.TimerForSync)
+                    
+                    pulse = self.treat.GetPulseDuration()
+                    if pulse >= 1000:
+                        self.sync_timer.start(5000)
+                        # to_send = "chf frequency 1\r\n"
+                    elif pulse <= 100:
+                        self.sync_timer.start(500)
+                        # to_send = "chf frequency 10\r\n"
+                    else:
+                        self.sync_timer.start(1000)
+                        # to_send = "chf frequency 5\r\n"
+                    
+
+                
     def SendPauseSM (self):
         if For_Test_Send_Commands_To_Console == True:        
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                print("keepalive,\r\n")
+                print("chf stop treatment\r\n")
             
                 self.init_state = 'pause'
                 self.init_timer.singleShot(100, self.SendPauseSM)
 
             elif self.init_state == 'pause':
-                print("pause,1\r\n")                
+                print("chf stop treatment\r\n")                
                 self.InsertLocalText("Pausing Treatment...")
 
         else:
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                self.s.Write("keepalive,\r\n")
+                self.s.Write("chf stop treatment\r\n")
             
                 self.init_state = 'pause'
                 self.init_timer.singleShot(100, self.SendPauseSM)
 
             elif self.init_state == 'pause':
-                self.s.Write("pause,1\r\n")                
+                self.s.Write("chf stop treatment\r\n")                
                 self.InsertLocalText("Pausing Treatment...")
             
 
@@ -301,25 +624,25 @@ class TreatmentDialog(QDialog):
         if For_Test_Send_Commands_To_Console == True:        
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                print("keepalive,\r\n")
+                print("chf stop treatment\r\n")
             
                 self.init_state = 'resume'
                 self.init_timer.singleShot(100, self.SendResumeSM)
 
             elif self.init_state == 'resume':
-                print("pause,0\r\n")                
+                print("chf start treatment\r\n")                
                 self.InsertLocalText("Resuming Treatment...")
 
         else:
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                self.s.Write("keepalive,\r\n")
+                self.s.Write("chf stop treatment\r\n")
             
                 self.init_state = 'resume'
                 self.init_timer.singleShot(100, self.SendResumeSM)
 
             elif self.init_state == 'resume':
-                self.s.Write("pause,0\r\n")                
+                self.s.Write("chf start treatment\r\n")                
                 self.InsertLocalText("Resuming Treatment...")
                 
             
@@ -327,13 +650,13 @@ class TreatmentDialog(QDialog):
         if For_Test_Send_Commands_To_Console == True:                
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                print("keepalive,\r\n")
+                print("chf stop treatment\r\n")
             
                 self.init_state = 'stop'
                 self.init_timer.singleShot(100, self.SendStopSM)
 
             elif self.init_state == 'stop':
-                print("stop,\r\n")                
+                print("chf stop treatment\r\n")                
                 self.InsertLocalText("STOP Treatment")
 
                 self.init_state = 'stop_bips'
@@ -345,32 +668,33 @@ class TreatmentDialog(QDialog):
         else:
             if self.init_state == 'clean':
                 # limpio el puerto y luego la configuracion
-                self.s.Write("keepalive,\r\n")
+                self.s.Write("chf stop treatment\r\n")
             
                 self.init_state = 'stop'
                 self.init_timer.singleShot(100, self.SendStopSM)
 
             elif self.init_state == 'stop':
-                self.s.Write("stop,\r\n")                
+                self.s.Write("chf stop treatment\r\n")                
                 self.InsertLocalText("STOP Treatment")
 
                 self.init_state = 'stop_bips'
                 self.init_timer.singleShot(100, self.SendStopSM)
             
             elif self.init_state == 'stop_bips':
-                self.s.Write("buzzer short 3,\r\n")
+                pass
+                # self.s.Write("buzzer short 3,\r\n")
 
 
     def SendStopNoBuzzerSM (self):
         if self.init_state == 'clean':
             # limpio el puerto y luego la configuracion
-            self.s.Write("keepalive,\r\n")
+            self.s.Write("chf stop treatment\r\n")
             
             self.init_state = 'stop'
             self.init_timer.singleShot(100, self.SendStopSM)
 
         elif self.init_state == 'stop':
-            self.s.Write("stop,\r\n")                
+            self.s.Write("chf stop treatment\r\n")                
             self.InsertLocalText("STOP Treatment")
 
             
@@ -388,21 +712,17 @@ class TreatmentDialog(QDialog):
             self.ui.remaining_minsLabel.setText(str(self.treat.remaining_minutes) + "'")
             self.ui.remaining_secsLabel.setText(str(self.treat.remaining_seconds) + "''")
 
-            if self.antenna_emmiting == True:
-                self.antenna_emmiting = False
-                self.AntennasUpdate_UI(False)
-            else:
-                self.antenna_emmiting = True
-                self.AntennasUpdate_UI(True)
-
-            if self.tempLabelCntr > 0:
-                self.tempLabelCntr -= 1
-            else:
-                self.ui.tempLabel.setText('')
-            
-
-
-            
+            ## reviso si necesito activar steps
+            if self.TreatmentStepsCheck(self.treat.remaining_minutes) == True:
+                if self.treat.steps_pause_in_treatment == True:
+                    self.treat.treatment_state = 'PAUSE'
+                    self.init_state = 'clean'
+                    self.SendPauseSM()
+                    self.StepsDialogScreen()
+                else:
+                    ## only beeps
+                    self.parent.SendBuzzerCmd(1)
+                    
         else:
             # termino el tratamiento, hago algo parecido al boton stop
             self.treat.treatment_state = 'STOP'
@@ -486,7 +806,7 @@ class TreatmentDialog(QDialog):
             self.ui.progressLabel.setStyleSheet(self.style.label_red)
             self.ui.stopButton.setEnabled(True)
             self.ui.rsmButton.setEnabled(True)
-            self.AntennasUpdate_UI(False)
+            # self.AntennasUpdate_UI(False)
 
 
     """ posible states from rsmButton resuming, resumed """
@@ -559,8 +879,65 @@ class TreatmentDialog(QDialog):
             self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_rewind)
 
 
+
+    #############################
+    # Treatment Steps Functions #
+    #############################
+    def TreatmentStepsCalc (self):
+        steps = self.treat.steps_in_treatment
+        time = self.treat.GetTreatmentTimer()
+
+        self.step_remaining_m1 = 0
+        self.step_remaining_m2 = 0
+        self.step_remaining_m3 = 0
+        self.step_remaining_stage = 1
+
+        if steps == 4:
+            time_lapse = time / steps
+            time_m = int(time_lapse)
+            self.step_remaining_m1 = time - time_m - 1
+            self.step_remaining_m2 = time - 2 * time_m - 1
+            self.step_remaining_m3 = time - 3 * time_m - 1
+
+        elif steps == 3:
+            time_lapse = time / steps
+            time_m = int(time_lapse)
+            self.step_remaining_m1 = time - time_m - 1
+            self.step_remaining_m2 = time - 2 * time_m - 1
+
+        elif steps == 2:
+            time_lapse = time / steps
+            time_m = int(time_lapse)
+            self.step_remaining_m1 = time - time_m - 1
+
+        else:
+            self.step_remaining_stage = 0
+
+
+    def TreatmentStepsCheck (self, current_minutes):
+        if self.step_remaining_stage > 0:
+            if (self.step_remaining_stage == 1 and
+                current_minutes == self.step_remaining_m1):
+                self.step_remaining_stage += 1
+                return True
+
+            elif (self.step_remaining_stage == 2 and
+                  current_minutes == self.step_remaining_m2):
+                self.step_remaining_stage += 1
+                return True
+
+            elif (self.step_remaining_stage == 3 and
+                  current_minutes == self.step_remaining_m3):
+                self.step_remaining_stage += 1
+                return True
+            
+        
+            
+    ###################################
+    # Serial Communications Functions #
+    ###################################
     def SerialDataCallback (self, rcv):        
-        print ("serial data callback!")
+        # print ("serial data callback!")
         self.SerialProcessString(rcv)
                 
 
@@ -568,113 +945,26 @@ class TreatmentDialog(QDialog):
         # self.ui.textEdit.append(rcv)
         # reviso si es un final de tratamiento
         # if rcv.startswith("treat end,") or rcv.startswith("treat err,"):
-        if rcv.startswith("STOP") or rcv.startswith("finish,"):
-        
-            if self.treat.treatment_state == 'START':
-                # termino el tratamiento, hago algo parecido al boton stop
-                self.treat.treatment_state = 'STOP'
-                self.InsertLocalText("Ended or Stopped Treatment")
-                self.ui.progressLabel.setStyleSheet(self.style.label_red)
-                self.stop_rsm_state = 'ending'
-                self.progress_timer.singleShot(300, self.ProgressEndSM)
-
-        elif rcv.startswith("temp"):
-            self.ProcessTempString(rcv)
-
-        elif rcv.startswith("ERROR"):
-            self.ProcessErrorString(rcv)
-
-        elif rcv.startswith("new antenna ch"):
+        if (rcv.startswith("chf") or
+            rcv.startswith("ch1") or
+            rcv.startswith("ch2") or
+            rcv.startswith("ch3") or
+            rcv.startswith("ch4") or
+            rcv.startswith("ch5") or
+            rcv.startswith('*')):
             pass
-            
+
+        # elif rcv.startswith("temp"):
+        #     self.ProcessTempString(rcv)
+
+        # elif rcv.startswith("ERROR"):
+        #     self.ProcessErrorString(rcv)
+
         else:
             # el resto de los mensajes los paso directo a la pantalla
-            # self.ui.textEdit.append(rcv)
             self.InsertForeingText(rcv)
         
     
-    # temp,055.00,1\r
-    def ProcessTempString(self, temp_str):
-        temp_list = temp_str.split(',')
-        if len(temp_list) < 3:
-            return
-
-        try:
-            temp_ch = float(temp_list[1])
-            temp_ch_str = str(temp_ch)
-
-            if temp_list[2].startswith('1'):
-                self.temp_ch1_str = temp_ch_str
-
-            if temp_list[2].startswith('2'):
-                self.temp_ch2_str = temp_ch_str
-
-            if temp_list[2].startswith('3'):
-                self.temp_ch3_str = temp_ch_str
-
-            if temp_list[2].startswith('4'):
-                self.temp_ch4_str = temp_ch_str
-
-        except:
-            print('Noisy Line for floats values')
-
-
-    # ERROR(0x054)\r
-    def ProcessErrorString(self, error_str):
-        error_list = error_str.split('x')
-        if len(error_list) < 2:
-            return
-        
-        error_ch = error_list[1]
-        error_type = error_ch[1]
-        error_channel = error_ch[2]
-        print('Error in ch' + error_channel)
-
-        current_icon = self.wifi_err_Icon
-
-        if error_channel.startswith('1') and self.ant.GetActive('ch1') == True:
-            self.ant.SetActiveStatus('ch1', False)
-            self.ui.ant1Button.setIcon(current_icon)
-
-        if error_channel.startswith('2') and self.ant.GetActive('ch2') == True:
-            self.ant.SetActiveStatus('ch2', False)
-            self.ui.ant2Button.setIcon(current_icon)
-
-        if error_channel.startswith('3') and self.ant.GetActive('ch3') == True:
-            self.ant.SetActiveStatus('ch3', False)
-            self.ui.ant3Button.setIcon(current_icon)
-
-        if error_channel.startswith('4') and self.ant.GetActive('ch4') == True:
-            self.ant.SetActiveStatus('ch4', False)
-            self.ui.ant4Button.setIcon(current_icon)
-            
-            
-    def ChannelGetTemp (self):
-        sender = self.sender()
-
-        if sender.objectName() == 'ant1Button':
-            self.ui.tempLabel.setText('CH1 Temp: ' + self.temp_ch1_str + 'C')
-            self.tempLabelCntr = 3
-
-        if sender.objectName() == 'ant2Button':
-            self.ui.tempLabel.setText('CH2 Temp: ' + self.temp_ch2_str + 'C')
-            self.tempLabelCntr = 3            
-
-        if sender.objectName() == 'ant3Button':
-            self.ui.tempLabel.setText('CH3 Temp: ' + self.temp_ch3_str + 'C')
-            self.tempLabelCntr = 3            
-
-        if sender.objectName() == 'ant4Button':
-            # ant_str = "temp,055.00,1\r"
-            # self.SerialProcessString(ant_str)
-            # ant_str = "ERROR(0x54)\r"
-            # self.SerialProcessString(ant_str)
-            self.ui.tempLabel.setText('CH4 Temp: ' + self.temp_ch4_str + 'C')
-            self.tempLabelCntr = 3            
-            
-            
-            
-
     
     def InsertLocalText (self, new_text):
         self.ui.textEdit.setTextColor(QColor(255, 0, 0))
@@ -689,6 +979,22 @@ class TreatmentDialog(QDialog):
     def FinishThisDialog (self):
         # self.t1seg.cancel()
         self.accept()
+
+
+    ####################################
+    # Different Screens Calls are here #
+    ####################################
+    ## Steps Screen
+    def StepsDialogScreen (self):
+        ## llamo con referencia al main
+        a = StepsDialog(self.parent)        
+        a.setModal(True)
+        a.exec_()
+
+        ## continue with treatment
+        self.treat.treatment_state = 'START'
+        self.init_state = 'clean'
+        self.SendResumeSM()
 
         
 ### end of file ###

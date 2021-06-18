@@ -41,6 +41,8 @@ from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
 from dlg_screen_saver_cls import ScreenSaverDialog
 
+## only for tests
+# from dlg_steps_cls import StepsDialog
 
 ## init of gpios and steady state
 from gpios_qt import *
@@ -186,6 +188,9 @@ class Dialog(QDialog):
         #     self.s.Write("keepalive,\r\n")
 
 
+        ## create buzzer timer
+        self.buzzer_timer = QTimer()
+        
         ## activate the 1 second timer it is repetitive
         self.t1seg = QTimer()
         self.t1seg.timeout.connect(self.TimerOneSec)
@@ -206,6 +211,17 @@ class Dialog(QDialog):
         if NO_CALL_FIRST_DLG == 0:
             self.FirstDialogScreen()
 
+        self.SendBuzzerCmd(1)
+
+
+    def SendBuzzerCmd (self, how_many):
+        BuzzerOn()
+        self.buzzer_timer.singleShot(100, self.BuzzerStop)
+
+    def BuzzerStop (self):
+        BuzzerOff()
+        
+        
 
 
     def UpdateDateTime(self, new_date_time):
@@ -542,9 +558,9 @@ class Dialog(QDialog):
 
 
     def CheckForStart (self):
-        # if (self.CheckCompleteConf() == True and
-        #     self.s.port_open == True):
-        if self.CheckCompleteConf() == True:        
+        if (self.CheckCompleteConf() == True and
+            self.s.port_open == True):
+        # if self.CheckCompleteConf() == True:        
             self.ui.startButton.setStyleSheet(self.ss.start_enable)
         else:
             self.ui.startButton.setStyleSheet(self.ss.start_disable)
@@ -765,16 +781,27 @@ class Dialog(QDialog):
     ## Treatment Screen
     def TreatmentScreen (self):
         if self.CheckCompleteConf() == True:
-            if self.s.port_open == True:
-                self.screensaver_window = False
+            self.screensaver_window = False
                 
-                self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
-                a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
-                a.setModal(True)
-                a.exec_()
+            self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
+            a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
+            a.setModal(True)
+            a.exec_()
 
-                self.ScreenSaverKick()
-                self.screensaver_window = True
+            self.ScreenSaverKick()
+            # self.screensaver_window = True
+
+            ## esta es posta, la de arriba para tests
+            # if self.s.port_open == True:
+            #     self.screensaver_window = False
+                
+            #     self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
+            #     a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
+            #     a.setModal(True)
+            #     a.exec_()
+
+            #     self.ScreenSaverKick()
+            #     self.screensaver_window = True
                 
 
     ## DiagnosticsSreen
@@ -829,6 +856,13 @@ class Dialog(QDialog):
         self.timer_screensaver = self.t.timeout_screensaver
             
 
+    ## Steps Screen
+    # def StepsDialogScreen (self):
+    #     # a = StepsDialog(self.parent)
+    #     a = StepsDialog(self)
+    #     a.setModal(True)
+    #     a.exec_()
+        
         
 
 ### End of Dialog ###
