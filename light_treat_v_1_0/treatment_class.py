@@ -179,20 +179,29 @@ class Treatment():
         self.tempcoef080 = float(t080)
         self.tempamb = float(ta)
 
-        self.mem1_frequency = config.get('mem1', 'frequency', fallback = 'None')
         self.mem1_signal = config.get('mem1', 'signal', fallback = 'None')
         self.mem1_treat_time = config.get('mem1', 'time', fallback = 'None')
-        self.mem1_power = config.get('mem1', 'power', fallback = 'None')
+        self.mem1_power_red = config.get('mem1', 'power_red', fallback = 'None')
+        self.mem1_power_ired = config.get('mem1', 'power_ired', fallback = 'None')
+        self.mem1_pannels = config.get('mem1', 'pannels', fallback = 'None')
+        self.mem1_steps = config.get('mem1', 'steps', fallback = 'None')
+        self.mem1_pulse_duration = config.get('mem1', 'pulse_duration', fallback = 'None')
 
-        self.mem2_frequency = config.get('mem2', 'frequency', fallback = 'None')
         self.mem2_signal = config.get('mem2', 'signal', fallback = 'None')
         self.mem2_treat_time = config.get('mem2', 'time', fallback = 'None')
-        self.mem2_power = config.get('mem2', 'power', fallback = 'None')
+        self.mem2_power_red = config.get('mem2', 'power_red', fallback = 'None')
+        self.mem2_power_ired = config.get('mem2', 'power_ired', fallback = 'None')
+        self.mem2_pannels = config.get('mem2', 'pannels', fallback = 'None')        
+        self.mem2_steps = config.get('mem2', 'steps', fallback = 'None')
+        self.mem2_pulse_duration = config.get('mem2', 'pulse_duration', fallback = 'None')
 
-        self.mem3_frequency = config.get('mem3', 'frequency', fallback = 'None')
         self.mem3_signal = config.get('mem3', 'signal', fallback = 'None')
         self.mem3_treat_time = config.get('mem3', 'time', fallback = 'None')
-        self.mem3_power = config.get('mem3', 'power', fallback = 'None')
+        self.mem3_power_red = config.get('mem3', 'power_red', fallback = 'None')
+        self.mem3_power_ired = config.get('mem3', 'power_ired', fallback = 'None')
+        self.mem3_pannels = config.get('mem3', 'pannels', fallback = 'None')        
+        self.mem3_steps = config.get('mem3', 'steps', fallback = 'None')
+        self.mem3_pulse_duration = config.get('mem3', 'pulse_duration', fallback = 'None')
         
 
     def SaveConfigFile (self):
@@ -212,22 +221,31 @@ class Treatment():
         config.set('static_params', 'tempamb', str(self.tempamb))
 
         config.add_section('mem1')
-        config.set('mem1', 'frequency', self.mem1_frequency)
         config.set('mem1', 'signal', self.mem1_signal)
         config.set('mem1', 'time', self.mem1_treat_time)
-        config.set('mem1', 'power', self.mem1_power)
+        config.set('mem1', 'power_red', self.mem1_power_red)
+        config.set('mem1', 'power_ired', self.mem1_power_ired)
+        config.set('mem1', 'pannels', self.mem1_pannels)
+        config.set('mem1', 'steps', self.mem1_steps)
+        config.set('mem1', 'pulse_duration', self.mem1_pulse_duration)        
 
         config.add_section('mem2')
-        config.set('mem2', 'frequency', self.mem2_frequency)
         config.set('mem2', 'signal', self.mem2_signal)
         config.set('mem2', 'time', self.mem2_treat_time)
-        config.set('mem2', 'power', self.mem2_power)
+        config.set('mem2', 'power_red', self.mem2_power_red)
+        config.set('mem2', 'power_ired', self.mem2_power_ired)
+        config.set('mem2', 'pannels', self.mem2_pannels)
+        config.set('mem2', 'steps', self.mem2_steps)
+        config.set('mem2', 'pulse_duration', self.mem2_pulse_duration)        
 
         config.add_section('mem3')
-        config.set('mem3', 'frequency', self.mem3_frequency)
         config.set('mem3', 'signal', self.mem3_signal)
         config.set('mem3', 'time', self.mem3_treat_time)
-        config.set('mem3', 'power', self.mem3_power)
+        config.set('mem3', 'power_red', self.mem3_power_red)
+        config.set('mem3', 'power_ired', self.mem3_power_ired)
+        config.set('mem3', 'pannels', self.mem3_pannels)
+        config.set('mem3', 'steps', self.mem3_steps)
+        config.set('mem3', 'pulse_duration', self.mem3_pulse_duration)        
         
         # Writing our configuration file to 'example.cfg'
         with open('config.txt', 'w') as configfile:
@@ -236,43 +254,87 @@ class Treatment():
 
     def MoveCurrentConfToMem (self, which_mem):
         if which_mem == 'mem1':
-            self.mem1_frequency = self.frequency
             self.mem1_signal = self.signal
             self.mem1_treat_time = str(self.treatment_timer)
-            self.mem1_power = str(self.power)
+            self.mem1_power_red = str(self.power_red)
+            self.mem1_power_ired = str(self.power_ired)
+            self.mem1_pannels = self.Parse_Pannels()
+            self.mem1_steps = self.Parse_Steps()
+            self.mem1_pulse_duration = str(self.pulse_duration)
 
         if which_mem == 'mem2':
-            self.mem2_frequency = self.frequency
             self.mem2_signal = self.signal
             self.mem2_treat_time = str(self.treatment_timer)
-            self.mem2_power = str(self.power)
+            self.mem2_power_red = str(self.power_red)
+            self.mem2_power_ired = str(self.power_ired)            
+            self.mem2_pannels = self.Parse_Pannels()
+            self.mem2_steps = self.Parse_Steps()
+            self.mem2_pulse_duration = str(self.pulse_duration)
 
         if which_mem == 'mem3':
-            self.mem3_frequency = self.frequency
             self.mem3_signal = self.signal
             self.mem3_treat_time = str(self.treatment_timer)
-            self.mem3_power = str(self.power)
+            self.mem3_power_red = str(self.power_red)
+            self.mem3_power_ired = str(self.power_ired)            
+            self.mem3_pannels = self.Parse_Pannels()
+            self.mem3_steps = self.Parse_Steps()
+            self.mem3_pulse_duration = str(self.pulse_duration)
 
 
     def EmptyMem (self, which_mem):
         if which_mem == 'mem1':
-            self.mem1_frequency = 'None'
             self.mem1_signal = 'None'
             self.mem1_treat_time = 'None'
-            self.mem1_power = 'None'
+            self.mem1_power_red = 'None'
+            self.mem1_power_ired = 'None'
+            self.mem1_pannels = 'None'
+            self.mem1_steps = 'None'
+            self.mem1_pulse_duration = 'None'
 
         if which_mem == 'mem2':
-            self.mem2_frequency = 'None'
             self.mem2_signal = 'None'
             self.mem2_treat_time = 'None'
-            self.mem2_power = 'None'
+            self.mem2_power_red = 'None'
+            self.mem2_power_ired = 'None'            
+            self.mem2_pannels = 'None'
+            self.mem2_steps = 'None'
+            self.mem2_pulse_duration = 'None'
 
         if which_mem == 'mem3':
-            self.mem3_frequency = 'None'
             self.mem3_signal = 'None'
             self.mem3_treat_time = 'None'
-            self.mem3_power = 'None'
+            self.mem3_power_red = 'None'
+            self.mem3_power_ired = 'None'            
+            self.mem3_pannels = 'None'
+            self.mem3_steps = 'None'
+            self.mem3_pulse_duration = 'None'
             
 
+    def Parse_Pannels (self):
+        pannels_str = ''
+        if self.GetPannelsInTreatment('pannel_a') == True:
+            pannels_str += 'A'
+        if self.GetPannelsInTreatment('pannel_b') == True:
+            pannels_str += 'B'
+        if self.GetPannelsInTreatment('pannel_c') == True:
+            pannels_str += 'C'
+        if self.GetPannelsInTreatment('pannel_d') == True:
+            pannels_str += 'D'
+        if self.GetPannelsInTreatment('pannel_e') == True:
+            pannels_str += 'E'
+
+        return pannels_str
+
+
+    def Parse_Steps (self):
+        steps_str = str(self.steps_in_treatment)
+        if self.steps_pause_in_treatment == True:
+            steps_str += 'P'
+
+        return steps_str
+
+        
+        
+            
 
 ### end of file ###

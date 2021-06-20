@@ -12,20 +12,29 @@ tempcoef080 = 0.2627
 tempamb = 25.0
 
 [mem1]
-frequency = None
-signal = None
-time = None
-power = None
+signal = outphase
+time = 20
+power_red = 70
+power_ired = 70
+pannels = ABCDE
+steps = 4P
+pulse_duration = 1973
 
 [mem2]
-frequency = 23.58Hz
-signal = sinusoidal
+signal = outphase
 time = 60
-power = 70
+power_red = 70
+power_ired = 70
+pannels = ACE
+steps = 2
+pulse_duration = 2000
 
 [mem3]
-frequency = 7.83Hz
-signal = triangular
-time = 60
-power = 70
+signal = cwave
+time = 45
+power_red = 0
+power_ired = 10
+pannels = BD
+steps = 1
+pulse_duration = 2000
 

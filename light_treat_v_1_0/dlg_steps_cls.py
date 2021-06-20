@@ -30,7 +30,6 @@ class StepsDialog(QDialog):
 
         # Setup signals
         self.ui.doneButton.clicked.connect(self.accept)
-        self.ui.buzzButton.clicked.connect(self.Buzzer)
 
         # self.ui.doneButton.setStyleSheet("background-color: rgba(255, 255, 255, 0); \
         #                                   border: 0px");
@@ -44,6 +43,8 @@ class StepsDialog(QDialog):
         # connect the timer signal to the Update
         self.ten_seconds_signal.connect(self.UpdateTenSecs)
 
+        self.parent.SendBuzzerCmd(2)
+
 
         """ QTimer callback emit a signal to not upset the timer interval """
     def TimerTenSecs(self):
@@ -51,12 +52,10 @@ class StepsDialog(QDialog):
 
 
     def UpdateTenSecs (self):
-        # self.parent
-        pass
+        self.parent.SendBuzzerCmd(2)
 
 
-    def Buzzer (self):
-        self.parent.SendBuzzerCmd(1)
+
 
         
 

@@ -499,9 +499,9 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>1055</x>
+     <x>1050</x>
      <y>310</y>
-     <width>181</width>
+     <width>191</width>
      <height>296</height>
     </rect>
    </property>
@@ -796,7 +796,7 @@ border: 0px</string>
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>665</y>
+     <y>660</y>
      <width>111</width>
      <height>61</height>
     </rect>
@@ -1106,9 +1106,9 @@ border:2px solid rgb(55, 52, 53);</string>
   <widget class="QWidget" name="layoutWidget_9">
    <property name="geometry">
     <rect>
-     <x>650</x>
+     <x>655</x>
      <y>660</y>
-     <width>241</width>
+     <width>236</width>
      <height>102</height>
     </rect>
    </property>

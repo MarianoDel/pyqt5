@@ -13,7 +13,7 @@ class Ui_StepsDialog(object):
         StepsDialog.setObjectName("StepsDialog")
         StepsDialog.resize(656, 474)
         self.doneButton = QtWidgets.QPushButton(StepsDialog)
-        self.doneButton.setGeometry(QtCore.QRect(175, 150, 311, 191))
+        self.doneButton.setGeometry(QtCore.QRect(20, 220, 611, 191))
         font = QtGui.QFont()
         font.setFamily("Liberation Mono")
         font.setPointSize(48)
@@ -21,9 +21,16 @@ class Ui_StepsDialog(object):
         font.setWeight(75)
         self.doneButton.setFont(font)
         self.doneButton.setObjectName("doneButton")
-        self.buzzButton = QtWidgets.QPushButton(StepsDialog)
-        self.buzzButton.setGeometry(QtCore.QRect(50, 65, 156, 56))
-        self.buzzButton.setObjectName("buzzButton")
+        self.label = QtWidgets.QLabel(StepsDialog)
+        self.label.setGeometry(QtCore.QRect(30, 70, 591, 126))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Mono")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
 
         self.retranslateUi(StepsDialog)
         QtCore.QMetaObject.connectSlotsByName(StepsDialog)
@@ -31,7 +38,8 @@ class Ui_StepsDialog(object):
     def retranslateUi(self, StepsDialog):
         _translate = QtCore.QCoreApplication.translate
         StepsDialog.setWindowTitle(_translate("StepsDialog", "Dialog"))
-        self.doneButton.setText(_translate("StepsDialog", "Done!"))
-        self.buzzButton.setText(_translate("StepsDialog", "Buzzer"))
+        self.doneButton.setText(_translate("StepsDialog", "Tap To Continue!"))
+        self.label.setText(_translate("StepsDialog", "Rotate the working\n"
+"area and"))
 
 import light1_res_rc

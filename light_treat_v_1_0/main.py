@@ -188,9 +188,6 @@ class Dialog(QDialog):
         #     self.s.Write("keepalive,\r\n")
 
 
-        ## create buzzer timer
-        self.buzzer_timer = QTimer()
-        
         ## activate the 1 second timer it is repetitive
         self.t1seg = QTimer()
         self.t1seg.timeout.connect(self.TimerOneSec)
@@ -211,16 +208,43 @@ class Dialog(QDialog):
         if NO_CALL_FIRST_DLG == 0:
             self.FirstDialogScreen()
 
+        #######################
+        # Buzzer Init Things. #
+        #######################
+        ## create buzzer timer
+        self.buzzer_timer = QTimer()
+        self.buzzer_state = 'init'
+        self.buzzer_how_many = 0
+        self.buzzer_on_time = 100
+        self.buzzer_off_time = 200
+
         self.SendBuzzerCmd(1)
 
 
-    def SendBuzzerCmd (self, how_many):
-        BuzzerOn()
-        self.buzzer_timer.singleShot(100, self.BuzzerStop)
+    ####################
+    # Buzzer Functions #
+    ####################
+    def SendBuzzerCmd (self, how_many, on_time=100, off_time=200):
+        self.buzzer_how_many = how_many
+        self.buzzer_on_time = on_time
+        self.buzzer_off_time = off_time
+        self.buzzer_state = 'init'
+        self.BuzzerSM()
 
-    def BuzzerStop (self):
-        BuzzerOff()
         
+    def BuzzerSM (self):
+        if self.buzzer_state == 'init':
+            if self.buzzer_how_many > 0:
+                BuzzerOn()
+                self.buzzer_how_many -= 1
+                self.buzzer_state = 'check_stop'
+                self.buzzer_timer.singleShot(self.buzzer_on_time, self.BuzzerSM)
+
+        elif self.buzzer_state == 'check_stop':
+            BuzzerOff()
+            self.buzzer_state = 'init'
+            self.buzzer_timer.singleShot(self.buzzer_off_time, self.BuzzerSM)
+            
         
 
 
@@ -265,16 +289,50 @@ class Dialog(QDialog):
             self.mem1ButtonCnt = 0
             
             #get memory values
-            if self.t.mem1_treat_time == 'None':
-                self.InsertLocalText("Not much to do with memory1!")
-            else:
-                self.SignalChangeTo(self.t.mem1_signal)
-                self.FrequencyChangeTo(self.t.mem1_frequency)
-                self.ui.minutesLabel.setText(self.t.mem1_treat_time)
-                self.t.SetTreatmentTimer(int(self.t.mem1_treat_time))
-                self.ui.powerLabel.setText(self.t.mem1_power)
-                self.t.SetPower(int(self.t.mem1_power))
-                self.CheckForStart()
+            ## signal
+            self.SignalChangeTo(self.t.mem1_signal)
+            ## steps and pause
+            steps_str = self.t.mem1_steps
+            self.StepsChangeTo(int(steps_str[0]))
+            if len(steps_str) > 1 and steps_str[1] == 'P':
+                self.t.steps_pause_in_treatment = True
+                self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
+
+            ## treatment time
+            self.TimeChangeTo(int(self.t.mem1_treat_time))
+            ## power red
+            self.ui.powerRedLabel.setText(self.t.mem1_power_red)
+            self.t.SetPowerRed(int(self.t.mem1_power_red))
+            ## power ired
+            self.ui.powerIRedLabel.setText(self.t.mem1_power_ired)
+            self.t.SetPowerIRed(int(self.t.mem1_power_ired))
+            ## pulse duration
+            self.ui.pulseDurationLabel.setText(self.t.mem1_pulse_duration)
+            self.t.SetPulseDuration(int(self.t.mem1_pulse_duration))
+            ## pannels for treatment
+            self.PannelsDisableAll()
+            pannels_str = self.t.mem1_pannels            
+            for index, pannel in enumerate(pannels_str):
+                if pannel == 'A':
+                    self.ui.pannelAButton.setStyleSheet(self.ss.pannel_a_enable)
+                    self.t.EnablePannelsInTreatment('pannel_a')
+                elif pannel == 'B':
+                    self.ui.pannelBButton.setStyleSheet(self.ss.pannel_b_enable)
+                    self.t.EnablePannelsInTreatment('pannel_b')
+                elif pannel == 'C':
+                    self.ui.pannelCButton.setStyleSheet(self.ss.pannel_c_enable)
+                    self.t.EnablePannelsInTreatment('pannel_c')
+                elif pannel == 'D':
+                    self.ui.pannelDButton.setStyleSheet(self.ss.pannel_d_enable)
+                    self.t.EnablePannelsInTreatment('pannel_d')
+                elif pannel == 'E':
+                    self.ui.pannelEButton.setStyleSheet(self.ss.pannel_e_enable)
+                    self.t.EnablePannelsInTreatment('pannel_e')
+                
+                    
+
+            
+            self.CheckForStart()
 
 
     def Memory1Config (self):
@@ -295,8 +353,6 @@ class Dialog(QDialog):
             #get memory values
             if self.t.mem2_treat_time != 'None':
                 self.SignalChangeTo(self.t.mem2_signal)
-                self.FrequencyChangeTo(self.t.mem2_frequency)
-                self.ui.minutesLabel.setText(self.t.mem2_treat_time)
                 self.t.SetTreatmentTimer(int(self.t.mem2_treat_time))
                 self.ui.powerLabel.setText(self.t.mem2_power)
                 self.t.SetPower(int(self.t.mem2_power))
@@ -442,33 +498,61 @@ class Dialog(QDialog):
         self.CheckForStart()
         self.ScreenSaverKick()        
 
+
+    def PannelsDisableAll (self):
+        self.ui.pannelAButton.setStyleSheet(self.ss.pannels_disable)
+        self.t.DisablePannelsInTreatment('pannel_a')
+
+        self.ui.pannelBButton.setStyleSheet(self.ss.pannels_disable)
+        self.t.DisablePannelsInTreatment('pannel_b')
+
+        self.ui.pannelCButton.setStyleSheet(self.ss.pannels_disable)
+        self.t.DisablePannelsInTreatment('pannel_c')
+
+        self.ui.pannelDButton.setStyleSheet(self.ss.pannels_disable)
+        self.t.DisablePannelsInTreatment('pannel_d')
+
+        self.ui.pannelEButton.setStyleSheet(self.ss.pannels_disable)
+        self.t.DisablePannelsInTreatment('pannel_e')
+        
         
     def StepsSet (self):
         sender = self.sender()
 
+        if sender.objectName() == 'step1Button':
+            self.StepsChangeTo(1)
+
+        if sender.objectName() == 'step2Button':
+            self.StepsChangeTo(2)            
+
+        if sender.objectName() == 'step3Button':
+            self.StepsChangeTo(3)            
+
+        if sender.objectName() == 'step4Button':
+            self.StepsChangeTo(4)            
+
+        self.CheckForStart()
+        self.ScreenSaverKick()
+
+
+    def StepsChangeTo (self, new_steps):
         self.StepsDisableAll()
 
-        if sender.objectName() == 'step1Button':
+        if new_steps == 1:
             self.ui.step1Button.setStyleSheet(self.ss.step1_button_enable)
             self.t.SetSteps(1)
 
-        if sender.objectName() == 'step2Button':
+        elif new_steps == 2:
             self.ui.step2Button.setStyleSheet(self.ss.step2_button_enable)
             self.t.SetSteps(2)
 
-        if sender.objectName() == 'step3Button':
+        elif new_steps == 3:
             self.ui.step3Button.setStyleSheet(self.ss.step3_button_enable)
             self.t.SetSteps(3)
 
-        if sender.objectName() == 'step4Button':
+        elif new_steps == 4:
             self.ui.step4Button.setStyleSheet(self.ss.step4_button_enable)
             self.t.SetSteps(4)
-
-        if sender.objectName() == 'stepPauseButton':
-            pass
-                
-        self.CheckForStart()
-        self.ScreenSaverKick()
 
         
     def StepsPauseSet (self):
@@ -536,25 +620,40 @@ class Dialog(QDialog):
     def TimeSet (self):
         sender = self.sender()
 
-        self.TimeDisableAll()
-        
         if sender.objectName() == 'min20Button':
+            self.TimeChangeTo(20)
+
+        elif sender.objectName() == 'min30Button':
+            self.TimeChangeTo(30)
+
+        elif sender.objectName() == 'min45Button':
+            self.TimeChangeTo(45)
+            
+        elif sender.objectName() == 'min60Button':
+            self.TimeChangeTo(60)
+
+        self.ScreenSaverKick()
+
+
+    def TimeChangeTo (self, new_time):
+        self.TimeDisableAll()
+
+        if new_time == 20:
             self.t.SetTreatmentTimer(20)
             self.ui.min20Button.setStyleSheet(self.ss.min20_enable)
 
-        elif sender.objectName() == 'min30Button':
+        elif new_time == 30:
             self.t.SetTreatmentTimer(30)
             self.ui.min30Button.setStyleSheet(self.ss.min30_enable)
 
-        elif sender.objectName() == 'min45Button':
+        elif new_time == 45:
             self.t.SetTreatmentTimer(45)
             self.ui.min45Button.setStyleSheet(self.ss.min45_enable)            
             
-        elif sender.objectName() == 'min60Button':
+        elif new_time == 60:
             self.t.SetTreatmentTimer(60)
             self.ui.min60Button.setStyleSheet(self.ss.min60_enable)            
-
-        self.ScreenSaverKick()
+        
 
 
     def CheckForStart (self):
@@ -729,8 +828,10 @@ class Dialog(QDialog):
 
     def UpdateMemLabels (self):
         if self.t.mem1_treat_time != 'None':
-            self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min')
-            self.ui.mem12Label.setText(self.t.mem1_frequency + ' - ' + self.t.mem1_power + '%')
+            self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min - ' + self.t.mem1_steps)
+            pannels_power_str = self.t.mem1_pannels + ' - '
+            pannels_power_str += self.t.mem1_power_red + '/' + self.t.mem1_power_ired + '%'
+            self.ui.mem12Label.setText(pannels_power_str)
             self.ui.mem13Label.setText((self.t.mem1_signal).capitalize())
         else:
             self.ui.mem11Label.setText('Empty')
@@ -738,8 +839,10 @@ class Dialog(QDialog):
             self.ui.mem13Label.setText('')
         
         if self.t.mem2_treat_time != 'None':
-            self.ui.mem21Label.setText(self.t.mem2_treat_time + 'min')
-            self.ui.mem22Label.setText(self.t.mem2_frequency + ' - ' + self.t.mem2_power + '%')
+            self.ui.mem21Label.setText(self.t.mem2_treat_time + 'min - ' + self.t.mem2_steps)
+            pannels_power_str = self.t.mem2_pannels + ' - '
+            pannels_power_str += self.t.mem2_power_red + '/' + self.t.mem2_power_ired + '%'
+            self.ui.mem22Label.setText(pannels_power_str)
             self.ui.mem23Label.setText((self.t.mem2_signal).capitalize())
         else:
             self.ui.mem21Label.setText('Empty')
@@ -747,8 +850,10 @@ class Dialog(QDialog):
             self.ui.mem23Label.setText('')
 
         if self.t.mem3_treat_time != 'None':
-            self.ui.mem31Label.setText(self.t.mem3_treat_time + 'min')
-            self.ui.mem32Label.setText(self.t.mem3_frequency + ' - ' + self.t.mem3_power + '%')
+            self.ui.mem31Label.setText(self.t.mem3_treat_time + 'min - ' + self.t.Parse_Steps())
+            pannels_power_str = self.t.mem3_pannels + ' - '
+            pannels_power_str += self.t.mem3_power_red + '/' + self.t.mem3_power_ired + '%'
+            self.ui.mem32Label.setText(pannels_power_str)
             self.ui.mem33Label.setText((self.t.mem3_signal).capitalize())
         else:
             self.ui.mem31Label.setText('Empty')
