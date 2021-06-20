@@ -202,7 +202,7 @@ class Dialog(QDialog):
         self.one_second_signal.connect(self.UpdateOneSec)
 
         ## read and update memory buttons
-        self.UpdateMemLabels()
+        self.MemoryUpdateLabels()
 
         ### For last call to the first f*** dialog
         if NO_CALL_FIRST_DLG == 0:
@@ -257,31 +257,14 @@ class Dialog(QDialog):
             
         self.ui.date_timeLabel.setText(date_str)
 
+        
 
-    def PulseUpPressed (self):
-        self.PulseUp (1)
-        self.pulseUpButtonCnt = 1
-        self.ScreenSaverKick()        
-
-        
-    def PulseUpReleased (self):
-        self.pulseUpButtonCnt = 0
-
-        
-    def PulseDwnPressed (self):
-        self.PulseDwn(1)
-        self.pulseDwnButtonCnt = 1
-        self.ScreenSaverKick()
-
-        
-    def PulseDwnReleased (self):
-        self.pulseDwnButtonCnt = 0
-        
-        
+    ############################
+    # Memory Related Functions #
+    ############################
     def Memory1Pressed (self):
         self.mem1ButtonCnt = 1
         self.ScreenSaverKick()
-
         
     def Memory1Released (self):
         if (self.mem1ButtonCnt > 0 and
@@ -311,10 +294,9 @@ class Dialog(QDialog):
                 self.ui.pulseDurationLabel.setText(self.t.mem1_pulse_duration)
                 self.t.SetPulseDuration(int(self.t.mem1_pulse_duration))
                 ## pannels for treatment
-                self.PannelsFromMem(self.t.mem1_pannels)
+                self.MemoryUpdatePannelsFromString (self.t.mem1_pannels)
                 self.CheckForStart()
 
-            
     def Memory1Config (self):
         if self.CheckCompleteConf() == True:
             self.MemoryScreen('mem1')
@@ -323,7 +305,6 @@ class Dialog(QDialog):
     def Memory2Pressed (self):
         self.mem2ButtonCnt = 1
         self.ScreenSaverKick()
-
         
     def Memory2Released (self):
         if (self.mem2ButtonCnt > 0 and
@@ -353,9 +334,8 @@ class Dialog(QDialog):
                 self.ui.pulseDurationLabel.setText(self.t.mem2_pulse_duration)
                 self.t.SetPulseDuration(int(self.t.mem2_pulse_duration))
                 ## pannels for treatment
-                self.PannelsFromMem(self.t.mem2_pannels)
+                self.MemoryUpdatePannelsFromString (self.t.mem2_pannels)
                 self.CheckForStart()
-
 
     def Memory2Config (self):
         if self.CheckCompleteConf() == True:
@@ -365,7 +345,6 @@ class Dialog(QDialog):
     def Memory3Pressed (self):
         self.mem3ButtonCnt = 1
         self.ScreenSaverKick()
-
         
     def Memory3Released (self):
         if (self.mem3ButtonCnt > 0 and
@@ -395,16 +374,15 @@ class Dialog(QDialog):
                 self.ui.pulseDurationLabel.setText(self.t.mem3_pulse_duration)
                 self.t.SetPulseDuration(int(self.t.mem3_pulse_duration))
                 ## pannels for treatment
-                self.PannelsFromMem(self.t.mem3_pannels)
+                self.MemoryUpdatePannelsFromString (self.t.mem3_pannels)
                 self.CheckForStart()
-
 
     def Memory3Config (self):
         if self.CheckCompleteConf() == True:
             self.MemoryScreen('mem3')
 
 
-    def PannelsFromMem(self, new_mem_pannels):
+    def MemoryUpdatePannelsFromString (self, new_mem_pannels):
         self.PannelsDisableAll()
         for pannel in new_mem_pannels:
             if pannel == 'A':
@@ -423,7 +401,42 @@ class Dialog(QDialog):
                 self.ui.pannelEButton.setStyleSheet(self.ss.pannel_e_enable)
                 self.t.EnablePannelsInTreatment('pannel_e')
 
-                
+    def MemoryUpdateLabels (self):
+        if self.t.mem1_treat_time != 'None':
+            self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min - ' + self.t.mem1_steps)
+            pannels_power_str = self.t.mem1_pannels + ' - '
+            pannels_power_str += self.t.mem1_power_red + '/' + self.t.mem1_power_ired + '%'
+            self.ui.mem12Label.setText(pannels_power_str)
+            self.ui.mem13Label.setText((self.t.mem1_signal).capitalize())
+        else:
+            self.ui.mem11Label.setText('Empty')
+            self.ui.mem12Label.setText('')
+            self.ui.mem13Label.setText('')
+        
+        if self.t.mem2_treat_time != 'None':
+            self.ui.mem21Label.setText(self.t.mem2_treat_time + 'min - ' + self.t.mem2_steps)
+            pannels_power_str = self.t.mem2_pannels + ' - '
+            pannels_power_str += self.t.mem2_power_red + '/' + self.t.mem2_power_ired + '%'
+            self.ui.mem22Label.setText(pannels_power_str)
+            self.ui.mem23Label.setText((self.t.mem2_signal).capitalize())
+        else:
+            self.ui.mem21Label.setText('Empty')
+            self.ui.mem22Label.setText('')
+            self.ui.mem23Label.setText('')
+
+        if self.t.mem3_treat_time != 'None':
+            self.ui.mem31Label.setText(self.t.mem3_treat_time + 'min - ' + self.t.Parse_Steps())
+            pannels_power_str = self.t.mem3_pannels + ' - '
+            pannels_power_str += self.t.mem3_power_red + '/' + self.t.mem3_power_ired + '%'
+            self.ui.mem32Label.setText(pannels_power_str)
+            self.ui.mem33Label.setText((self.t.mem3_signal).capitalize())
+        else:
+            self.ui.mem31Label.setText('Empty')
+            self.ui.mem32Label.setText('')
+            self.ui.mem33Label.setText('')
+
+
+            
     def DiagsPressed (self):
         self.diagButtonCnt = 1
 
@@ -431,12 +444,14 @@ class Dialog(QDialog):
     def DiagsReleased (self):
         self.diagButtonCnt = 0
 
-            
+        
+    #############################
+    # Signals Related Functions #
+    #############################
     def SignalDisableAll(self):
         self.ui.cwaveButton.setStyleSheet(self.ss.cwave_disable)
         self.ui.inphaseButton.setStyleSheet(self.ss.inphase_disable)
         self.ui.outphaseButton.setStyleSheet(self.ss.outphase_disable)
-                       
 
     def SignalSet (self):
         sender = self.sender()
@@ -452,7 +467,6 @@ class Dialog(QDialog):
 
         self.CheckForStart()
         self.ScreenSaverKick()
-
         
     def SignalChangeTo (self, new_signal):
         self.SignalDisableAll()
@@ -470,6 +484,9 @@ class Dialog(QDialog):
             self.t.SetSignal('outphase')
         
 
+    ###########################
+    # Steps Related Functions #
+    ###########################
     def StepsDisableAll(self):
         self.ui.step1Button.setStyleSheet(self.ss.steps_button_disable)
         self.ui.step2Button.setStyleSheet(self.ss.steps_button_disable)
@@ -478,14 +495,58 @@ class Dialog(QDialog):
         self.ui.stepPauseButton.setStyleSheet(self.ss.steps_button_disable)
         self.t.steps_pause_in_treatment = False
 
-        
-    def TimeDisableAll(self):
-        self.ui.min20Button.setStyleSheet(self.ss.min20_disable)
-        self.ui.min30Button.setStyleSheet(self.ss.min30_disable)
-        self.ui.min45Button.setStyleSheet(self.ss.min45_disable)
-        self.ui.min60Button.setStyleSheet(self.ss.min60_disable)
+    def StepsSet (self):
+        sender = self.sender()
 
-            
+        if sender.objectName() == 'step1Button':
+            self.StepsChangeTo(1)
+
+        if sender.objectName() == 'step2Button':
+            self.StepsChangeTo(2)            
+
+        if sender.objectName() == 'step3Button':
+            self.StepsChangeTo(3)            
+
+        if sender.objectName() == 'step4Button':
+            self.StepsChangeTo(4)            
+
+        self.CheckForStart()
+        self.ScreenSaverKick()
+
+    def StepsChangeTo (self, new_steps):
+        self.StepsDisableAll()
+
+        if new_steps == 1:
+            self.ui.step1Button.setStyleSheet(self.ss.step1_button_enable)
+            self.t.SetSteps(1)
+
+        elif new_steps == 2:
+            self.ui.step2Button.setStyleSheet(self.ss.step2_button_enable)
+            self.t.SetSteps(2)
+
+        elif new_steps == 3:
+            self.ui.step3Button.setStyleSheet(self.ss.step3_button_enable)
+            self.t.SetSteps(3)
+
+        elif new_steps == 4:
+            self.ui.step4Button.setStyleSheet(self.ss.step4_button_enable)
+            self.t.SetSteps(4)
+        
+    def StepsPauseSet (self):
+        if self.t.GetSteps() > 1:
+            if self.t.steps_pause_in_treatment == False:
+                self.t.steps_pause_in_treatment = True
+                self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
+            else:
+                self.t.steps_pause_in_treatment = False
+                self.ui.stepPauseButton.setStyleSheet(self.ss.steps_button_disable)
+
+        self.ScreenSaverKick()
+
+
+    #############################
+    # Pannels Related Functions #
+    #############################
     def PannelsSet (self):
         sender = self.sender()
 
@@ -532,7 +593,6 @@ class Dialog(QDialog):
         self.CheckForStart()
         self.ScreenSaverKick()        
 
-
     def PannelsDisableAll (self):
         self.ui.pannelAButton.setStyleSheet(self.ss.pannels_disable)
         self.t.DisablePannelsInTreatment('pannel_a')
@@ -548,59 +608,57 @@ class Dialog(QDialog):
 
         self.ui.pannelEButton.setStyleSheet(self.ss.pannels_disable)
         self.t.DisablePannelsInTreatment('pannel_e')
-        
-        
-    def StepsSet (self):
+
+
+    ####################################
+    # Treatment Time Related Functions #
+    ####################################
+    def TimeDisableAll(self):
+        self.ui.min20Button.setStyleSheet(self.ss.min20_disable)
+        self.ui.min30Button.setStyleSheet(self.ss.min30_disable)
+        self.ui.min45Button.setStyleSheet(self.ss.min45_disable)
+        self.ui.min60Button.setStyleSheet(self.ss.min60_disable)
+
+    def TimeSet (self):
         sender = self.sender()
 
-        if sender.objectName() == 'step1Button':
-            self.StepsChangeTo(1)
+        if sender.objectName() == 'min20Button':
+            self.TimeChangeTo(20)
 
-        if sender.objectName() == 'step2Button':
-            self.StepsChangeTo(2)            
+        elif sender.objectName() == 'min30Button':
+            self.TimeChangeTo(30)
 
-        if sender.objectName() == 'step3Button':
-            self.StepsChangeTo(3)            
-
-        if sender.objectName() == 'step4Button':
-            self.StepsChangeTo(4)            
-
-        self.CheckForStart()
-        self.ScreenSaverKick()
-
-
-    def StepsChangeTo (self, new_steps):
-        self.StepsDisableAll()
-
-        if new_steps == 1:
-            self.ui.step1Button.setStyleSheet(self.ss.step1_button_enable)
-            self.t.SetSteps(1)
-
-        elif new_steps == 2:
-            self.ui.step2Button.setStyleSheet(self.ss.step2_button_enable)
-            self.t.SetSteps(2)
-
-        elif new_steps == 3:
-            self.ui.step3Button.setStyleSheet(self.ss.step3_button_enable)
-            self.t.SetSteps(3)
-
-        elif new_steps == 4:
-            self.ui.step4Button.setStyleSheet(self.ss.step4_button_enable)
-            self.t.SetSteps(4)
-
-        
-    def StepsPauseSet (self):
-        if self.t.GetSteps() > 1:
-            if self.t.steps_pause_in_treatment == False:
-                self.t.steps_pause_in_treatment = True
-                self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
-            else:
-                self.t.steps_pause_in_treatment = False
-                self.ui.stepPauseButton.setStyleSheet(self.ss.steps_button_disable)
+        elif sender.objectName() == 'min45Button':
+            self.TimeChangeTo(45)
+            
+        elif sender.objectName() == 'min60Button':
+            self.TimeChangeTo(60)
 
         self.ScreenSaverKick()
+
+    def TimeChangeTo (self, new_time):
+        self.TimeDisableAll()
+
+        if new_time == 20:
+            self.t.SetTreatmentTimer(20)
+            self.ui.min20Button.setStyleSheet(self.ss.min20_enable)
+
+        elif new_time == 30:
+            self.t.SetTreatmentTimer(30)
+            self.ui.min30Button.setStyleSheet(self.ss.min30_enable)
+
+        elif new_time == 45:
+            self.t.SetTreatmentTimer(45)
+            self.ui.min45Button.setStyleSheet(self.ss.min45_enable)            
+            
+        elif new_time == 60:
+            self.t.SetTreatmentTimer(60)
+            self.ui.min60Button.setStyleSheet(self.ss.min60_enable)            
+            
         
-        
+    ###########################
+    # Power Related Functions #
+    ###########################
     def PowerRed (self):
         sender = self.sender()
         last_pwr = self.t.GetPowerRed()
@@ -624,7 +682,6 @@ class Dialog(QDialog):
         self.t.SetPowerRed(last_pwr)
         self.CheckForStart()
         self.ScreenSaverKick()        
-
                 
     def PowerIRed (self):
         sender = self.sender()
@@ -651,44 +708,48 @@ class Dialog(QDialog):
         self.ScreenSaverKick()        
                     
         
-    def TimeSet (self):
-        sender = self.sender()
-
-        if sender.objectName() == 'min20Button':
-            self.TimeChangeTo(20)
-
-        elif sender.objectName() == 'min30Button':
-            self.TimeChangeTo(30)
-
-        elif sender.objectName() == 'min45Button':
-            self.TimeChangeTo(45)
-            
-        elif sender.objectName() == 'min60Button':
-            self.TimeChangeTo(60)
-
+    ####################################
+    # Pulse Duration Related Functions #
+    ####################################
+    def PulseUpPressed (self):
+        self.PulseUp (1)
+        self.pulseUpButtonCnt = 1
+        self.ScreenSaverKick()        
+        
+    def PulseUpReleased (self):
+        self.pulseUpButtonCnt = 0
+        
+    def PulseDwnPressed (self):
+        self.PulseDwn(1)
+        self.pulseDwnButtonCnt = 1
         self.ScreenSaverKick()
+        
+    def PulseDwnReleased (self):
+        self.pulseDwnButtonCnt = 0
 
+    def PulseUp (self, new_pulse):
+        last_pulse = self.t.GetPulseDuration()
+        max_pulse = self.t.pulse_max
+        if ((last_pulse + new_pulse) < max_pulse):
+            last_pulse += new_pulse
+        else:
+            last_pulse = max_pulse
+        self.ui.pulseDurationLabel.setText(str(last_pulse))
+        self.t.SetPulseDuration(last_pulse)
+        
+    def PulseDwn (self, new_pulse):
+        last_pulse = self.t.GetPulseDuration()
+        min_pulse = self.t.pulse_min
+        if ((last_pulse - new_pulse) > min_pulse):
+            last_pulse -= new_pulse
+        else:
+            last_pulse = min_pulse
+        self.ui.pulseDurationLabel.setText(str(last_pulse))
+        self.t.SetPulseDuration(last_pulse)
 
-    def TimeChangeTo (self, new_time):
-        self.TimeDisableAll()
-
-        if new_time == 20:
-            self.t.SetTreatmentTimer(20)
-            self.ui.min20Button.setStyleSheet(self.ss.min20_enable)
-
-        elif new_time == 30:
-            self.t.SetTreatmentTimer(30)
-            self.ui.min30Button.setStyleSheet(self.ss.min30_enable)
-
-        elif new_time == 45:
-            self.t.SetTreatmentTimer(45)
-            self.ui.min45Button.setStyleSheet(self.ss.min45_enable)            
-            
-        elif new_time == 60:
-            self.t.SetTreatmentTimer(60)
-            self.ui.min60Button.setStyleSheet(self.ss.min60_enable)            
         
 
+        
 
     def CheckForStart (self):
         if (self.CheckCompleteConf() == True and
@@ -771,128 +832,26 @@ class Dialog(QDialog):
                 self.ScreenSaverDialogScreen()
                                         
         
-    def PulseUp (self, new_pulse):
-        last_pulse = self.t.GetPulseDuration()
-        max_pulse = self.t.pulse_max
-        if ((last_pulse + new_pulse) < max_pulse):
-            last_pulse += new_pulse
-        else:
-            last_pulse = max_pulse
-        self.ui.pulseDurationLabel.setText(str(last_pulse))
-        self.t.SetPulseDuration(last_pulse)
-
-        
-    def PulseDwn (self, new_pulse):
-        last_pulse = self.t.GetPulseDuration()
-        min_pulse = self.t.pulse_min
-        if ((last_pulse - new_pulse) > min_pulse):
-            last_pulse -= new_pulse
-        else:
-            last_pulse = min_pulse
-        self.ui.pulseDurationLabel.setText(str(last_pulse))
-        self.t.SetPulseDuration(last_pulse)
 
         
     def TimerOneSec(self):
         self.one_second_signal.emit()        
 
-        
+
+    #################################
+    # Serial Port Related Functions #
+    #################################
     def MyObjCallback (self, dataread):
         d = dataread.rstrip()
         self.rcv_signal.emit(d)
 
-            
-    def SerialProcess (self, rcv):
-        pass
-        # show_message = True
-        # if rcv.startswith("antenna none"):
-        #     self.antennas_connected.Flush()
-        #     self.AntennaUpdate()
-
-        # check if its antenna connection
-        #Tunnel 12 inches,020.00,020.00,004.04,065.00,1
-        #ch2,020.00,020.00,004.04,065.00,2
-        #Tunnel 10 inches,020.00,020.00,004.04,065.00,4
-
-        # rcv_list = rcv.split(',')
-        # if len(rcv_list) == 6:
-        #     print("antenna string getted")
-
-        #     rcv_channel = rcv_list[5].rsplit('\r')
-        #     if rcv_channel[0] >= '1' and rcv_channel[0] <= '4':
-        #         if self.antennatimeout_finish == True:
-        #             self.antennatimeout_finish = False
-        #             self.antennatimeout.singleShot(500, self.AntennaUpdate)
-        #             self.antennas_connected.Flush()
-        #         else:
-        #             print("QTimer is active")
-
-        #         self.antennas_connected.ProcessStringList(rcv_list)
-
-        # if rcv.startswith("new antenna ch1"):
-        #     self.ui.ch1Button.setStyleSheet(self.ss.ch_getting)
-        #     self.ui.ch1Button.setText("CH1\ngetting\nparams")
-        #     show_message = False
-
-        # if rcv.startswith("new antenna ch2"):
-        #     self.ui.ch2Button.setStyleSheet(self.ss.ch_getting)
-        #     self.ui.ch2Button.setText("CH2\ngetting\nparams")
-        #     show_message = False            
-
-        # if rcv.startswith("new antenna ch3"):
-        #     self.ui.ch3Button.setStyleSheet(self.ss.ch_getting)
-        #     self.ui.ch3Button.setText("CH3\ngetting\nparams")
-        #     show_message = False            
-
-        # if rcv.startswith("new antenna ch4"):
-        #     self.ui.ch4Button.setStyleSheet(self.ss.ch_getting)
-        #     self.ui.ch4Button.setText("CH4\ngetting\nparams")
-        #     show_message = False
-
-        # if rcv.startswith("temp,"):
-        #     show_message = False
-            
-        # if show_message:
-        #     self.InsertForeingText(rcv)        
-
-                
     def MySignalCallback (self, rcv):
         self.SerialProcess (rcv)
                         
+    def SerialProcess (self, rcv):
+        pass
+                
 
-    def UpdateMemLabels (self):
-        if self.t.mem1_treat_time != 'None':
-            self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min - ' + self.t.mem1_steps)
-            pannels_power_str = self.t.mem1_pannels + ' - '
-            pannels_power_str += self.t.mem1_power_red + '/' + self.t.mem1_power_ired + '%'
-            self.ui.mem12Label.setText(pannels_power_str)
-            self.ui.mem13Label.setText((self.t.mem1_signal).capitalize())
-        else:
-            self.ui.mem11Label.setText('Empty')
-            self.ui.mem12Label.setText('')
-            self.ui.mem13Label.setText('')
-        
-        if self.t.mem2_treat_time != 'None':
-            self.ui.mem21Label.setText(self.t.mem2_treat_time + 'min - ' + self.t.mem2_steps)
-            pannels_power_str = self.t.mem2_pannels + ' - '
-            pannels_power_str += self.t.mem2_power_red + '/' + self.t.mem2_power_ired + '%'
-            self.ui.mem22Label.setText(pannels_power_str)
-            self.ui.mem23Label.setText((self.t.mem2_signal).capitalize())
-        else:
-            self.ui.mem21Label.setText('Empty')
-            self.ui.mem22Label.setText('')
-            self.ui.mem23Label.setText('')
-
-        if self.t.mem3_treat_time != 'None':
-            self.ui.mem31Label.setText(self.t.mem3_treat_time + 'min - ' + self.t.Parse_Steps())
-            pannels_power_str = self.t.mem3_pannels + ' - '
-            pannels_power_str += self.t.mem3_power_red + '/' + self.t.mem3_power_ired + '%'
-            self.ui.mem32Label.setText(pannels_power_str)
-            self.ui.mem33Label.setText((self.t.mem3_signal).capitalize())
-        else:
-            self.ui.mem31Label.setText('Empty')
-            self.ui.mem32Label.setText('')
-            self.ui.mem33Label.setText('')
             
             
     #capturo el cierre
