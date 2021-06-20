@@ -287,54 +287,34 @@ class Dialog(QDialog):
         if (self.mem1ButtonCnt > 0 and
             self.mem1ButtonCnt < 3):
             self.mem1ButtonCnt = 0
-            
+
             #get memory values
-            ## signal
-            self.SignalChangeTo(self.t.mem1_signal)
-            ## steps and pause
-            steps_str = self.t.mem1_steps
-            self.StepsChangeTo(int(steps_str[0]))
-            if len(steps_str) > 1 and steps_str[1] == 'P':
-                self.t.steps_pause_in_treatment = True
-                self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
+            if self.t.mem1_treat_time != 'None':
+                ## signal
+                self.SignalChangeTo(self.t.mem1_signal)
+                ## steps and pause
+                steps_str = self.t.mem1_steps
+                self.StepsChangeTo(int(steps_str[0]))
+                if len(steps_str) > 1 and steps_str[1] == 'P':
+                    self.t.steps_pause_in_treatment = True
+                    self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
 
-            ## treatment time
-            self.TimeChangeTo(int(self.t.mem1_treat_time))
-            ## power red
-            self.ui.powerRedLabel.setText(self.t.mem1_power_red)
-            self.t.SetPowerRed(int(self.t.mem1_power_red))
-            ## power ired
-            self.ui.powerIRedLabel.setText(self.t.mem1_power_ired)
-            self.t.SetPowerIRed(int(self.t.mem1_power_ired))
-            ## pulse duration
-            self.ui.pulseDurationLabel.setText(self.t.mem1_pulse_duration)
-            self.t.SetPulseDuration(int(self.t.mem1_pulse_duration))
-            ## pannels for treatment
-            self.PannelsDisableAll()
-            pannels_str = self.t.mem1_pannels            
-            for index, pannel in enumerate(pannels_str):
-                if pannel == 'A':
-                    self.ui.pannelAButton.setStyleSheet(self.ss.pannel_a_enable)
-                    self.t.EnablePannelsInTreatment('pannel_a')
-                elif pannel == 'B':
-                    self.ui.pannelBButton.setStyleSheet(self.ss.pannel_b_enable)
-                    self.t.EnablePannelsInTreatment('pannel_b')
-                elif pannel == 'C':
-                    self.ui.pannelCButton.setStyleSheet(self.ss.pannel_c_enable)
-                    self.t.EnablePannelsInTreatment('pannel_c')
-                elif pannel == 'D':
-                    self.ui.pannelDButton.setStyleSheet(self.ss.pannel_d_enable)
-                    self.t.EnablePannelsInTreatment('pannel_d')
-                elif pannel == 'E':
-                    self.ui.pannelEButton.setStyleSheet(self.ss.pannel_e_enable)
-                    self.t.EnablePannelsInTreatment('pannel_e')
-                
-                    
+                ## treatment time
+                self.TimeChangeTo(int(self.t.mem1_treat_time))
+                ## power red
+                self.ui.powerRedLabel.setText(self.t.mem1_power_red)
+                self.t.SetPowerRed(int(self.t.mem1_power_red))
+                ## power ired
+                self.ui.powerIRedLabel.setText(self.t.mem1_power_ired)
+                self.t.SetPowerIRed(int(self.t.mem1_power_ired))
+                ## pulse duration
+                self.ui.pulseDurationLabel.setText(self.t.mem1_pulse_duration)
+                self.t.SetPulseDuration(int(self.t.mem1_pulse_duration))
+                ## pannels for treatment
+                self.PannelsFromMem(self.t.mem1_pannels)
+                self.CheckForStart()
 
             
-            self.CheckForStart()
-
-
     def Memory1Config (self):
         if self.CheckCompleteConf() == True:
             self.MemoryScreen('mem1')
@@ -349,13 +329,31 @@ class Dialog(QDialog):
         if (self.mem2ButtonCnt > 0 and
             self.mem2ButtonCnt < 3):
             self.mem2ButtonCnt = 0
-            
+
             #get memory values
             if self.t.mem2_treat_time != 'None':
+                ## signal
                 self.SignalChangeTo(self.t.mem2_signal)
-                self.t.SetTreatmentTimer(int(self.t.mem2_treat_time))
-                self.ui.powerLabel.setText(self.t.mem2_power)
-                self.t.SetPower(int(self.t.mem2_power))
+                ## steps and pause
+                steps_str = self.t.mem2_steps
+                self.StepsChangeTo(int(steps_str[0]))
+                if len(steps_str) > 1 and steps_str[1] == 'P':
+                    self.t.steps_pause_in_treatment = True
+                    self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
+
+                ## treatment time
+                self.TimeChangeTo(int(self.t.mem2_treat_time))
+                ## power red
+                self.ui.powerRedLabel.setText(self.t.mem2_power_red)
+                self.t.SetPowerRed(int(self.t.mem2_power_red))
+                ## power ired
+                self.ui.powerIRedLabel.setText(self.t.mem2_power_ired)
+                self.t.SetPowerIRed(int(self.t.mem2_power_ired))
+                ## pulse duration
+                self.ui.pulseDurationLabel.setText(self.t.mem2_pulse_duration)
+                self.t.SetPulseDuration(int(self.t.mem2_pulse_duration))
+                ## pannels for treatment
+                self.PannelsFromMem(self.t.mem2_pannels)
                 self.CheckForStart()
 
 
@@ -376,12 +374,28 @@ class Dialog(QDialog):
             
             #get memory values
             if self.t.mem3_treat_time != 'None':
+                ## signal
                 self.SignalChangeTo(self.t.mem3_signal)
-                self.FrequencyChangeTo(self.t.mem3_frequency)
-                self.ui.minutesLabel.setText(self.t.mem3_treat_time)
-                self.t.SetTreatmentTimer(int(self.t.mem3_treat_time))
-                self.ui.powerLabel.setText(self.t.mem3_power)
-                self.t.SetPower(int(self.t.mem3_power))
+                ## steps and pause
+                steps_str = self.t.mem3_steps
+                self.StepsChangeTo(int(steps_str[0]))
+                if len(steps_str) > 1 and steps_str[1] == 'P':
+                    self.t.steps_pause_in_treatment = True
+                    self.ui.stepPauseButton.setStyleSheet(self.ss.step_pause_button_enable)
+
+                ## treatment time
+                self.TimeChangeTo(int(self.t.mem3_treat_time))
+                ## power red
+                self.ui.powerRedLabel.setText(self.t.mem3_power_red)
+                self.t.SetPowerRed(int(self.t.mem3_power_red))
+                ## power ired
+                self.ui.powerIRedLabel.setText(self.t.mem3_power_ired)
+                self.t.SetPowerIRed(int(self.t.mem3_power_ired))
+                ## pulse duration
+                self.ui.pulseDurationLabel.setText(self.t.mem3_pulse_duration)
+                self.t.SetPulseDuration(int(self.t.mem3_pulse_duration))
+                ## pannels for treatment
+                self.PannelsFromMem(self.t.mem3_pannels)
                 self.CheckForStart()
 
 
@@ -390,6 +404,26 @@ class Dialog(QDialog):
             self.MemoryScreen('mem3')
 
 
+    def PannelsFromMem(self, new_mem_pannels):
+        self.PannelsDisableAll()
+        for pannel in new_mem_pannels:
+            if pannel == 'A':
+                self.ui.pannelAButton.setStyleSheet(self.ss.pannel_a_enable)
+                self.t.EnablePannelsInTreatment('pannel_a')
+            elif pannel == 'B':
+                self.ui.pannelBButton.setStyleSheet(self.ss.pannel_b_enable)
+                self.t.EnablePannelsInTreatment('pannel_b')
+            elif pannel == 'C':
+                self.ui.pannelCButton.setStyleSheet(self.ss.pannel_c_enable)
+                self.t.EnablePannelsInTreatment('pannel_c')
+            elif pannel == 'D':
+                self.ui.pannelDButton.setStyleSheet(self.ss.pannel_d_enable)
+                self.t.EnablePannelsInTreatment('pannel_d')
+            elif pannel == 'E':
+                self.ui.pannelEButton.setStyleSheet(self.ss.pannel_e_enable)
+                self.t.EnablePannelsInTreatment('pannel_e')
+
+                
     def DiagsPressed (self):
         self.diagButtonCnt = 1
 
