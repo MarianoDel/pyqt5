@@ -147,8 +147,8 @@ class Dialog(QDialog):
         self.t.SetTreatmentTimer(20)
         self.ui.min20Button.setStyleSheet(self.ss.min20_enable)
 
-        self.ui.powerRedLabel.setText(str(self.t.GetPowerRed()))
-        self.ui.powerIRedLabel.setText(str(self.t.GetPowerIRed()))
+        self.ui.powerRedLabel.setText(str(self.t.GetPowerRed()) + '%')
+        self.ui.powerIRedLabel.setText(str(self.t.GetPowerIRed()) + '%')
         self.ui.pulseDurationLabel.setText(str(self.t.GetPulseDuration()))
 
         ## to carry on with date-time
@@ -678,7 +678,7 @@ class Dialog(QDialog):
             else:
                 last_pwr = 0
 
-        self.ui.powerRedLabel.setText(str(last_pwr))
+        self.ui.powerRedLabel.setText(str(last_pwr) + '%')
         self.t.SetPowerRed(last_pwr)
         self.CheckForStart()
         self.ScreenSaverKick()        
@@ -702,7 +702,7 @@ class Dialog(QDialog):
             else:
                 last_pwr = 0
 
-        self.ui.powerIRedLabel.setText(str(last_pwr))
+        self.ui.powerIRedLabel.setText(str(last_pwr) + '%')
         self.t.SetPowerIRed(last_pwr)
         self.CheckForStart()        
         self.ScreenSaverKick()        
