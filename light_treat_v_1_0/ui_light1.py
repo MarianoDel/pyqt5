@@ -583,7 +583,7 @@ class Ui_Dialog(object):
         self.mem31Label.setText(_translate("Dialog", "110min"))
         self.mem32Label.setText(_translate("Dialog", "11.75Hz - 100%"))
         self.mem33Label.setText(_translate("Dialog", "Sinusoidal"))
-        self.pulseDurationLabel.setText(_translate("Dialog", "2000"))
+        self.pulseDurationLabel.setText(_translate("Dialog", "1000"))
         self.powerRedLabel.setText(_translate("Dialog", "100%"))
         self.date_timeLabel.setText(_translate("Dialog", "19/03/2020 - 17:45"))
         self.powerIRedLabel.setText(_translate("Dialog", "100%"))

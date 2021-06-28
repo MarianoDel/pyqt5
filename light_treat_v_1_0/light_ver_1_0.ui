@@ -715,7 +715,7 @@ border:2px solid rgb(55, 52, 53);</string>
     <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>2000</string>
+    <string>1000</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignHCenter|Qt::AlignTop</set>

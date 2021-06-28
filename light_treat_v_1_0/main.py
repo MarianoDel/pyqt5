@@ -102,11 +102,14 @@ class Dialog(QDialog):
         self.ui.cwaveButton.clicked.connect(self.SignalSet)
         self.ui.inphaseButton.clicked.connect(self.SignalSet)
         self.ui.outphaseButton.clicked.connect(self.SignalSet)
-        ### Pulse Duration Buttons
-        self.ui.pulseUpButton.pressed.connect(self.PulseUpPressed)
-        self.ui.pulseUpButton.released.connect(self.PulseUpReleased)        
-        self.ui.pulseDwnButton.pressed.connect(self.PulseDwnPressed)
-        self.ui.pulseDwnButton.released.connect(self.PulseDwnReleased)
+        ### Pulse Duration Buttons operation with pressed
+        # self.ui.pulseUpButton.pressed.connect(self.PulseUpPressed)
+        # self.ui.pulseUpButton.released.connect(self.PulseUpReleased)        
+        # self.ui.pulseDwnButton.pressed.connect(self.PulseDwnPressed)
+        # self.ui.pulseDwnButton.released.connect(self.PulseDwnReleased)
+        ### Pulse Duration Buttons operation with clicked
+        self.ui.pulseUpButton.clicked.connect(self.PulsePressed)
+        self.ui.pulseDwnButton.clicked.connect(self.PulsePressed)
         ### Memory Buttons
         self.ui.mem1Button.pressed.connect(self.Memory1Pressed)
         self.ui.mem1Button.released.connect(self.Memory1Released)
@@ -711,42 +714,63 @@ class Dialog(QDialog):
     ####################################
     # Pulse Duration Related Functions #
     ####################################
-    def PulseUpPressed (self):
-        self.PulseUp (1)
-        self.pulseUpButtonCnt = 1
-        self.ScreenSaverKick()        
+    ### Operation with pressed
+    # def PulseUpPressed (self):
+    #     self.PulseUp (1)
+    #     self.pulseUpButtonCnt = 1
+    #     self.ScreenSaverKick()        
         
-    def PulseUpReleased (self):
-        self.pulseUpButtonCnt = 0
+    # def PulseUpReleased (self):
+    #     self.pulseUpButtonCnt = 0
         
-    def PulseDwnPressed (self):
-        self.PulseDwn(1)
-        self.pulseDwnButtonCnt = 1
-        self.ScreenSaverKick()
+    # def PulseDwnPressed (self):
+    #     self.PulseDwn(1)
+    #     self.pulseDwnButtonCnt = 1
+    #     self.ScreenSaverKick()
         
-    def PulseDwnReleased (self):
-        self.pulseDwnButtonCnt = 0
+    # def PulseDwnReleased (self):
+    #     self.pulseDwnButtonCnt = 0
 
-    def PulseUp (self, new_pulse):
+    # def PulseUp (self, new_pulse):
+    #     last_pulse = self.t.GetPulseDuration()
+    #     max_pulse = self.t.pulse_max
+    #     if ((last_pulse + new_pulse) < max_pulse):
+    #         last_pulse += new_pulse
+    #     else:
+    #         last_pulse = max_pulse
+    #     self.ui.pulseDurationLabel.setText(str(last_pulse))
+    #     self.t.SetPulseDuration(last_pulse)
+        
+    # def PulseDwn (self, new_pulse):
+    #     last_pulse = self.t.GetPulseDuration()
+    #     min_pulse = self.t.pulse_min
+    #     if ((last_pulse - new_pulse) > min_pulse):
+    #         last_pulse -= new_pulse
+    #     else:
+    #         last_pulse = min_pulse
+    #     self.ui.pulseDurationLabel.setText(str(last_pulse))
+    #     self.t.SetPulseDuration(last_pulse)
+    ### Operation with clicked
+    def PulsePressed (self):
+        sender = self.sender()
         last_pulse = self.t.GetPulseDuration()
         max_pulse = self.t.pulse_max
-        if ((last_pulse + new_pulse) < max_pulse):
-            last_pulse += new_pulse
-        else:
-            last_pulse = max_pulse
-        self.ui.pulseDurationLabel.setText(str(last_pulse))
-        self.t.SetPulseDuration(last_pulse)
-        
-    def PulseDwn (self, new_pulse):
-        last_pulse = self.t.GetPulseDuration()
-        min_pulse = self.t.pulse_min
-        if ((last_pulse - new_pulse) > min_pulse):
-            last_pulse -= new_pulse
-        else:
-            last_pulse = min_pulse
-        self.ui.pulseDurationLabel.setText(str(last_pulse))
-        self.t.SetPulseDuration(last_pulse)
+        min_pulse = self.t.pulse_min        
 
+        if sender.objectName() == 'pulseUpButton':
+            if last_pulse < max_pulse:
+                last_pulse += 100
+            else:
+                last_pulse = max_pulse
+
+        if sender.objectName() == 'pulseDwnButton':                
+            if (last_pulse > min_pulse):
+                last_pulse -= 100
+            else:
+                last_pulse = min_pulse
+        
+        self.ui.pulseDurationLabel.setText(str(last_pulse))
+        self.t.SetPulseDuration(last_pulse)
         
 
         

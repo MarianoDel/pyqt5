@@ -16,9 +16,9 @@ class Treatment():
 
         self.treatment_timer = 20
 
-        self.pulse_max = 2000
-        self.pulse_min = 10
-        self.pulse_duration = 2000
+        self.pulse_max = 1000
+        self.pulse_min = 100
+        self.pulse_duration = 1000
         
         self.pannel_a = True
         self.pannel_b = True

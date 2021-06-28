@@ -237,12 +237,9 @@ class TreatmentDialog(QDialog):
 
             elif self.init_state == 'pulse_duration':
                 pulse = self.treat.GetPulseDuration()
-                if pulse >= 1000:
-                    to_send = "chf frequency 1\r\n"
-                elif pulse <= 100:
-                    to_send = "chf frequency 10\r\n"
-                else:
-                    to_send = "chf frequency 5\r\n"
+                freq = 1000 / pulse
+                freq = int(freq)
+                to_send = "chf frequency " + str(freq) + "\r\n"
 
                 print(to_send)
 
@@ -417,14 +414,11 @@ class TreatmentDialog(QDialog):
 
             elif self.init_state == 'pulse_duration':
                 pulse = self.treat.GetPulseDuration()
-                if pulse >= 1000:
-                    to_send = "chf frequency 1\r\n"
-                elif pulse <= 100:
-                    to_send = "chf frequency 10\r\n"
-                else:
-                    to_send = "chf frequency 5\r\n"
+                freq = 1000 / pulse
+                freq = int(freq)
+                to_send = "chf frequency " + str(freq)
 
-                self.InsertLocalText(to_send)                    
+                self.InsertLocalText(to_send)
                 self.s.Write(to_send + "\r\n")
 
                 self.init_state = 'power_red_1'
@@ -581,15 +575,7 @@ class TreatmentDialog(QDialog):
                     self.sync_timer.timeout.connect(self.TimerForSync)
                     
                     pulse = self.treat.GetPulseDuration()
-                    if pulse >= 1000:
-                        self.sync_timer.start(5000)
-                        # to_send = "chf frequency 1\r\n"
-                    elif pulse <= 100:
-                        self.sync_timer.start(500)
-                        # to_send = "chf frequency 10\r\n"
-                    else:
-                        self.sync_timer.start(1000)
-                        # to_send = "chf frequency 5\r\n"
+                    self.sync_timer.start(5 * pulse)
                     
 
                 
