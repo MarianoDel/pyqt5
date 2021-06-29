@@ -288,13 +288,13 @@ class Dialog(QDialog):
                 ## treatment time
                 self.TimeChangeTo(int(self.t.mem1_treat_time))
                 ## power red
-                self.ui.powerRedLabel.setText(self.t.mem1_power_red)
+                self.ui.powerRedLabel.setText(str(self.t.mem1_power_red) + '%')
                 self.t.SetPowerRed(int(self.t.mem1_power_red))
                 ## power ired
-                self.ui.powerIRedLabel.setText(self.t.mem1_power_ired)
+                self.ui.powerIRedLabel.setText(str(self.t.mem1_power_ired) + '%')
                 self.t.SetPowerIRed(int(self.t.mem1_power_ired))
                 ## pulse duration
-                self.ui.pulseDurationLabel.setText(self.t.mem1_pulse_duration)
+                self.ui.pulseDurationLabel.setText(str(self.t.mem1_pulse_duration))
                 self.t.SetPulseDuration(int(self.t.mem1_pulse_duration))
                 ## pannels for treatment
                 self.MemoryUpdatePannelsFromString (self.t.mem1_pannels)
@@ -328,13 +328,13 @@ class Dialog(QDialog):
                 ## treatment time
                 self.TimeChangeTo(int(self.t.mem2_treat_time))
                 ## power red
-                self.ui.powerRedLabel.setText(self.t.mem2_power_red)
+                self.ui.powerRedLabel.setText(str(self.t.mem2_power_red) + '%')
                 self.t.SetPowerRed(int(self.t.mem2_power_red))
                 ## power ired
-                self.ui.powerIRedLabel.setText(self.t.mem2_power_ired)
+                self.ui.powerIRedLabel.setText(str(self.t.mem2_power_ired) + '%')
                 self.t.SetPowerIRed(int(self.t.mem2_power_ired))
                 ## pulse duration
-                self.ui.pulseDurationLabel.setText(self.t.mem2_pulse_duration)
+                self.ui.pulseDurationLabel.setText(str(self.t.mem2_pulse_duration))
                 self.t.SetPulseDuration(int(self.t.mem2_pulse_duration))
                 ## pannels for treatment
                 self.MemoryUpdatePannelsFromString (self.t.mem2_pannels)
@@ -368,13 +368,13 @@ class Dialog(QDialog):
                 ## treatment time
                 self.TimeChangeTo(int(self.t.mem3_treat_time))
                 ## power red
-                self.ui.powerRedLabel.setText(self.t.mem3_power_red)
+                self.ui.powerRedLabel.setText(str(self.t.mem3_power_red) + '%')
                 self.t.SetPowerRed(int(self.t.mem3_power_red))
                 ## power ired
-                self.ui.powerIRedLabel.setText(self.t.mem3_power_ired)
+                self.ui.powerIRedLabel.setTextstr(str(self.t.mem3_power_ired) + '%')
                 self.t.SetPowerIRed(int(self.t.mem3_power_ired))
                 ## pulse duration
-                self.ui.pulseDurationLabel.setText(self.t.mem3_pulse_duration)
+                self.ui.pulseDurationLabel.setText(str(self.t.mem3_pulse_duration))
                 self.t.SetPulseDuration(int(self.t.mem3_pulse_duration))
                 ## pannels for treatment
                 self.MemoryUpdatePannelsFromString (self.t.mem3_pannels)
