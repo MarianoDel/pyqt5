@@ -21,20 +21,20 @@ steps = 4P
 pulse_duration = 1973
 
 [mem2]
-signal = outphase
-time = 60
-power_red = 70
-power_ired = 70
-pannels = ACE
-steps = 2
-pulse_duration = 2000
+signal = None
+time = None
+power_red = None
+power_ired = None
+pannels = None
+steps = None
+pulse_duration = None
 
 [mem3]
 signal = cwave
-time = 45
-power_red = 0
-power_ired = 10
-pannels = BD
+time = 20
+power_red = 70
+power_ired = 70
+pannels = ABCDE
 steps = 1
-pulse_duration = 2000
+pulse_duration = 1000
 

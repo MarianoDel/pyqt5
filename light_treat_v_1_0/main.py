@@ -954,12 +954,12 @@ class Dialog(QDialog):
         if a.action == 'save':
             self.t.MoveCurrentConfToMem(which_mem)
             self.t.SaveConfigFile()
-            self.UpdateMemLabels()
+            self.MemoryUpdateLabels()
         
         if a.action == 'empty':
             self.t.EmptyMem(which_mem)
             self.t.SaveConfigFile()
-            self.UpdateMemLabels()
+            self.MemoryUpdateLabels()            
 
         self.ScreenSaverKick()
         self.screensaver_window = True
