@@ -771,8 +771,7 @@ class Dialog(QDialog):
         
         self.ui.pulseDurationLabel.setText(str(last_pulse))
         self.t.SetPulseDuration(last_pulse)
-        
-
+        self.ScreenSaverKick()
         
 
     def CheckForStart (self):
