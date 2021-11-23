@@ -56,6 +56,7 @@ from dlg_treat_cls import TreatmentDialog
 from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
 from dlg_screen_saver_cls import ScreenSaverDialog
+from wifi_enable_cls import WiFiDialog
 
 
 ### CUSTOM SIGNALS ####################
@@ -124,6 +125,8 @@ class Dialog(QDialog):
         self.ui.diagButton.pressed.connect(self.DiagsPressed)
         self.ui.diagButton.released.connect(self.DiagsReleased)
 
+        # connect wifi button
+        self.ui.wifiButton.clicked.connect(self.WifiScreen)
 
         ## Init treatment object
         self.t = Treatment()
@@ -946,8 +949,6 @@ class Dialog(QDialog):
         self.UpdateDateTime(date_now)            
             
         
-
-
     ## MemoryScreen
     def MemoryScreen (self, which_mem):
         self.screensaver_window = False
@@ -969,7 +970,6 @@ class Dialog(QDialog):
         self.ScreenSaverKick()
         self.screensaver_window = True
         
-
             
     ## ScreenSaver
     def ScreenSaverDialogScreen (self):
@@ -983,6 +983,15 @@ class Dialog(QDialog):
         self.timer_screensaver = self.t.timeout_screensaver
             
 
+    ## wifi screen
+    def WifiScreen (self):
+        self.screensaver_window = False
+        a = WiFiDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
         
 
 ### End of Dialog ###
@@ -995,6 +1004,7 @@ w = Dialog()
 #http://doc.qt.io/qt-5/qt.html#WindowType-enum
 w.setWindowFlags(Qt.CustomizeWindowHint)
 # w.setWindowFlags(Qt.FramelessWindowHint)
+print('Starting magnet app...')
 w.show()
 sys.exit(app.exec_())
 

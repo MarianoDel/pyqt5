@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FirstDialog</class>
- <widget class="QDialog" name="FirstDialog">
+ <class>WiFiDialog</class>
+ <widget class="QDialog" name="WiFiDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,296 +14,8 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog {
-background-image: url(:/background/resources/Pantalla_00.png);
-}</string>
+   <string notr="true"/>
   </property>
-  <widget class="QPushButton" name="signalShortButton_3">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_4">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>q</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_7">
-   <property name="geometry">
-    <rect>
-     <x>165</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_11">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_15">
-   <property name="geometry">
-    <rect>
-     <x>395</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_19">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_23">
-   <property name="geometry">
-    <rect>
-     <x>625</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_27">
-   <property name="geometry">
-    <rect>
-     <x>740</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_29">
-   <property name="geometry">
-    <rect>
-     <x>855</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_35">
-   <property name="geometry">
-    <rect>
-     <x>970</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_37">
-   <property name="geometry">
-    <rect>
-     <x>1085</x>
-     <y>690</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/buttons/resources/Sinus.png);
-background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -328,7 +40,7 @@ border:2px solid rgb(55, 52, 53);</string>
        <string notr="true">color: rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>Current Config:</string>
+       <string>Wireless Config:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -336,11 +48,11 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="minutesLabel_2">
+     <widget class="QLabel" name="wirelessLabel1">
       <property name="font">
        <font>
         <family>Liberation Sans</family>
-        <pointsize>36</pointsize>
+        <pointsize>28</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -357,11 +69,11 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="minutesLabel_3">
+     <widget class="QLabel" name="wirelessLabel2">
       <property name="font">
        <font>
         <family>Liberation Sans</family>
-        <pointsize>36</pointsize>
+        <pointsize>28</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -370,7 +82,7 @@ border:2px solid rgb(55, 52, 53);</string>
        <string notr="true">color: rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>IP:</string>
+       <string>Ip:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -378,11 +90,11 @@ border:2px solid rgb(55, 52, 53);</string>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="minutesLabel_4">
+     <widget class="QLabel" name="wirelessLabel3">
       <property name="font">
        <font>
         <family>Liberation Sans</family>
-        <pointsize>36</pointsize>
+        <pointsize>28</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -391,7 +103,7 @@ border:2px solid rgb(55, 52, 53);</string>
        <string notr="true">color: rgb(55, 52, 53);</string>
       </property>
       <property name="text">
-       <string>GW:</string>
+       <string>Gw:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -400,236 +112,206 @@ border:2px solid rgb(55, 52, 53);</string>
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_8">
+  <widget class="QLineEdit" name="ssidEdit">
    <property name="geometry">
     <rect>
-     <x>165</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>200</y>
+     <width>591</width>
+     <height>76</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
+     <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>w</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_12">
+  <widget class="QLineEdit" name="passEdit">
    <property name="geometry">
     <rect>
-     <x>395</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>340</y>
+     <width>591</width>
+     <height>76</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
+     <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>r</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_16">
+  <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>40</y>
+     <width>591</width>
+     <height>76</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
+     <pointsize>26</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
-   <property name="text">
-    <string>e</string>
+   <property name="currentText">
+    <string/>
+   </property>
+   <property name="currentIndex">
+    <number>-1</number>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_20">
-   <property name="geometry">
-    <rect>
-     <x>740</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>u</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_24">
-   <property name="geometry">
-    <rect>
-     <x>625</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>y</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_25">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>t</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_41">
+  <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
      <x>855</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
+     <y>350</y>
+     <width>416</width>
+     <height>316</height>
     </rect>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="minutesLabel_5">
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>36</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string>Wired Config:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="wiredLabel1">
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>28</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string>Net:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="wiredLabel2">
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>28</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string>Ip:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="wiredLabel3">
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>28</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string>Gw:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="minutesLabel_9">
+   <property name="geometry">
+    <rect>
+     <x>1005</x>
+     <y>685</y>
+     <width>191</width>
+     <height>74</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>24</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Recheck in:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="recheckLabel">
+   <property name="geometry">
+    <rect>
+     <x>1205</x>
+     <y>685</y>
+     <width>66</width>
+     <height>74</height>
+    </rect>
    </property>
    <property name="font">
     <font>
@@ -639,103 +321,28 @@ color: rgb(55, 52, 53);</string>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>i</string>
+    <string>5</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_42">
+  <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
     <rect>
-     <x>970</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>o</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_43">
-   <property name="geometry">
-    <rect>
-     <x>1085</x>
-     <y>360</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>p</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_18">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
+     <x>25</x>
      <y>470</y>
-     <width>100</width>
+     <width>200</width>
      <height>100</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>100</width>
+     <width>200</width>
      <height>100</height>
     </size>
    </property>
@@ -747,9 +354,6 @@ color: rgb(55, 52, 53);</string>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(240, 238, 126);
 border-radius: 10px;
@@ -757,21 +361,21 @@ border:2px solid rgb(55, 52, 53);
 color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>d</string>
+    <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_10">
+  <widget class="QPushButton" name="saveButton">
    <property name="geometry">
     <rect>
-     <x>165</x>
+     <x>315</x>
      <y>470</y>
-     <width>100</width>
+     <width>300</width>
      <height>100</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>100</width>
+     <width>300</width>
      <height>100</height>
     </size>
    </property>
@@ -783,9 +387,6 @@ color: rgb(55, 52, 53);</string>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(240, 238, 126);
 border-radius: 10px;
@@ -793,21 +394,21 @@ border:2px solid rgb(55, 52, 53);
 color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>s</string>
+    <string>Save &amp;&amp; Exit</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_28">
+  <widget class="QPushButton" name="scanButton">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>470</y>
-     <width>100</width>
+     <x>635</x>
+     <y>30</y>
+     <width>200</width>
      <height>100</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>100</width>
+     <width>200</width>
      <height>100</height>
     </size>
    </property>
@@ -819,9 +420,6 @@ color: rgb(55, 52, 53);</string>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(240, 238, 126);
 border-radius: 10px;
@@ -829,624 +427,129 @@ border:2px solid rgb(55, 52, 53);
 color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>g</string>
+    <string>Scan</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_6">
+  <widget class="QLabel" name="wirelessLabel2_2">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>140</y>
+     <width>121</width>
+     <height>56</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
+     <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>a</string>
+    <string>SSID:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_14">
+  <widget class="QLabel" name="wirelessLabel2_3">
    <property name="geometry">
     <rect>
-     <x>395</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>280</y>
+     <width>201</width>
+     <height>56</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
+     <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>f</string>
+    <string>Password:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_30">
+  <widget class="QPushButton" name="passButton">
    <property name="geometry">
     <rect>
-     <x>625</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>341</y>
+     <width>591</width>
+     <height>76</height>
     </rect>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">background-color: rgba(196, 255, 157, 0);
+border: 0px
+</string>
    </property>
    <property name="text">
-    <string>h</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_44">
+  <widget class="QPushButton" name="ssidButton">
    <property name="geometry">
     <rect>
-     <x>1085</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>200</y>
+     <width>591</width>
+     <height>76</height>
     </rect>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">background-color: rgba(196, 255, 157, 0);
+border: 0px
+</string>
    </property>
    <property name="text">
-    <string>;</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="signalShortButton_45">
+  <widget class="QLabel" name="waitLabel">
    <property name="geometry">
     <rect>
-     <x>855</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
+     <x>25</x>
+     <y>605</y>
+     <width>586</width>
+     <height>56</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
    </property>
    <property name="font">
     <font>
      <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
+     <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
+    <string notr="true">color: rgb(55, 52, 53);</string>
    </property>
    <property name="text">
-    <string>k</string>
+    <string/>
    </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_22">
-   <property name="geometry">
-    <rect>
-     <x>740</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>j</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_46">
-   <property name="geometry">
-    <rect>
-     <x>970</x>
-     <y>470</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>l</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_17">
-   <property name="geometry">
-    <rect>
-     <x>395</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>v</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_31">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>b</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_33">
-   <property name="geometry">
-    <rect>
-     <x>625</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>n</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_21">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>c</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_9">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>z</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_13">
-   <property name="geometry">
-    <rect>
-     <x>165</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>x</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_47">
-   <property name="geometry">
-    <rect>
-     <x>970</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>.</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_48">
-   <property name="geometry">
-    <rect>
-     <x>1085</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>/</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_49">
-   <property name="geometry">
-    <rect>
-     <x>855</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>,</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signalShortButton_26">
-   <property name="geometry">
-    <rect>
-     <x>740</x>
-     <y>580</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>36</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 238, 126);
-border-radius: 10px;
-border:2px solid rgb(55, 52, 53);
-color: rgb(55, 52, 53);</string>
-   </property>
-   <property name="text">
-    <string>m</string>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
  </widget>
  <resources>
-  <include location="../stretcher_v_3_0/stretcher3_res.qrc"/>
+  <include location="wifi_res.qrc"/>
  </resources>
  <connections/>
 </ui>

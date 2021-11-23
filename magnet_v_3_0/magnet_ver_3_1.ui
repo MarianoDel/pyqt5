@@ -987,6 +987,54 @@ color: rgb(55, 52, 53);</string>
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="wifiButton">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>15</y>
+     <width>104</width>
+     <height>74</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>50</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230, 245, 253);
+border: 0px;
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="magnet3_res.qrc">
+     <normaloff>:/buttons/resources/wifi-symbol_disa.png</normaloff>:/buttons/resources/wifi-symbol_disa.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>100</width>
+     <height>100</height>
+    </size>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="magnet3_res.qrc"/>
