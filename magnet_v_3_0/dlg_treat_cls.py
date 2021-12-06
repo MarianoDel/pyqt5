@@ -629,7 +629,7 @@ class TreatmentDialog(QDialog):
         error_type = error_ch[1]
         error_channel = error_ch[2]
         print('Error in ch' + error_channel)
-        self.InsertForeingText(rcv)
+        self.InsertForeingText(error_str)
 
         current_icon = self.wifi_err_Icon
 
