@@ -142,6 +142,9 @@ class WiFiDialog(QDialog):
     def ScanNetworks (self):
         self.ui.comboBox.clear()
         output = ""
+        self.ui.scanButton.setText('Scanning')
+        self.ui.scanButton.setStyleSheet(self.button_disable)
+        self.ui.scanButton.setEnabled(False)
         try:
             output = subprocess.check_output(['python3','scan_wifi.py'])
         except subprocess.CalledProcessError as err:
@@ -151,6 +154,10 @@ class WiFiDialog(QDialog):
         output_str = output.decode('utf-8')
         lines = output_str.split('\n')
         self.ui.comboBox.addItems(lines)
+        self.ui.scanButton.setText('Scan')
+        self.ui.scanButton.setStyleSheet(self.button_enable)
+        self.ui.scanButton.setEnabled(True)
+        
 
                     
     def selectionchange(self):
