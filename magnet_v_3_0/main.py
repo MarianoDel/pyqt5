@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QIcon
 from serialcomm import SerialComm
 from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
@@ -57,6 +57,9 @@ from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
 from dlg_screen_saver_cls import ScreenSaverDialog
 from wifi_enable_cls import WiFiDialog
+
+#get the code for manager
+from wifi_thread_manager import WiFiThreadManager
 
 
 ### CUSTOM SIGNALS ####################
@@ -197,6 +200,18 @@ class Dialog(QDialog):
             self.s.Write("keepalive,\r\n")
 
 
+        ## setup antennas icons
+        ## url(:/buttons/resources/Stop.png)
+        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
+
+        # start manager background process
+        self.wifi_manager_cnt = 2
+        self.MyThread = WiFiThreadManager()
+        self.MyThread.start()
+            
         ## activate the 1 second timer it is repetitive
         self.t1seg = QTimer()
         self.t1seg.timeout.connect(self.TimerOneSec)
@@ -641,6 +656,13 @@ class Dialog(QDialog):
             else:
                 self.ScreenSaverDialogScreen()
 
+        # check for wifi manager
+        if self.wifi_manager_cnt == 0:
+            self.wifi_manager_cnt = 2
+            self.UpdateTwoSec()
+        else:
+            self.wifi_manager_cnt -= 1
+                            
             
                             
     def PwrUp (self, new_pwr):
@@ -889,6 +911,19 @@ class Dialog(QDialog):
             self.ui.mem32Label.setText('')
             self.ui.mem33Label.setText('')
             
+
+    def UpdateTwoSec (self):
+        new_status = self.MyThread.GetStatus()
+
+        if new_status == 'NO CONN':
+            self.ui.wifiButton.setIcon(self.wifi_disa_Icon)
+        elif new_status == 'IP':
+            self.ui.wifiButton.setIcon(self.wifi_err_Icon)
+        elif new_status == 'PING':
+            self.ui.wifiButton.setIcon(self.wifi_act_Icon)
+        elif new_status == 'TUNNEL':
+            self.ui.wifiButton.setIcon(self.wifi_emit_Icon)
+
             
     #capturo el cierre
     def closeEvent (self, event):
