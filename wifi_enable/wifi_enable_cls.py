@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer, QEventLoop
+from PyQt5.QtGui import QFont
 from time import time
 from threading import Timer
 import os
@@ -143,8 +144,15 @@ class WiFiDialog(QDialog):
         self.ui.comboBox.clear()
         output = ""
         self.ui.scanButton.setText('Scanning')
+         # changing font and size of text
+        self.ui.scanButton.setFont(QFont('Liberation Sans', 28))
         self.ui.scanButton.setStyleSheet(self.button_disable)
         self.ui.scanButton.setEnabled(False)
+        # delay
+        loop = QEventLoop()
+        QTimer.singleShot(200, loop.quit)
+        loop.exec_()
+        # end delay
         try:
             output = subprocess.check_output(['python3','scan_wifi.py'])
         except subprocess.CalledProcessError as err:
@@ -155,6 +163,7 @@ class WiFiDialog(QDialog):
         lines = output_str.split('\n')
         self.ui.comboBox.addItems(lines)
         self.ui.scanButton.setText('Scan')
+        self.ui.scanButton.setFont(QFont("Liberation Sans", 36, weight=QFont.Bold))
         self.ui.scanButton.setStyleSheet(self.button_enable)
         self.ui.scanButton.setEnabled(True)
         
@@ -190,6 +199,12 @@ class WiFiDialog(QDialog):
             self.ui.cancelButton.setEnabled(False)
             self.ui.saveButton.setEnabled(False)
             self.ui.scanButton.setEnabled(False)
+            # delay
+            loop = QEventLoop()
+            QTimer.singleShot(200, loop.quit)
+            loop.exec_()
+            # end delay
+
             self.update_exit = True        
             self.update_exit_cnt = 15
 
