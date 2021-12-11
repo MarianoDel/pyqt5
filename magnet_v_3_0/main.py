@@ -430,7 +430,6 @@ class Dialog(QDialog):
             self.t.SetSignal('sinusoidal')
         
 
-
     def FrequencyDisableAll(self):
         self.ui.freq1Button.setStyleSheet(self.ss.freq1_disable)
         self.ui.freq2Button.setStyleSheet(self.ss.freq2_disable)
@@ -500,7 +499,6 @@ class Dialog(QDialog):
             self.t.SetFrequency('62.64Hz')
 
             
-            
     def ChannelChange (self):
         sender = self.sender()
 
@@ -540,9 +538,6 @@ class Dialog(QDialog):
 
         self.CheckForStart()
         self.ScreenSaverKick()        
-
-        
-        
                     
         
     def TimeSet (self):
@@ -662,7 +657,6 @@ class Dialog(QDialog):
             self.UpdateTwoSec()
         else:
             self.wifi_manager_cnt -= 1
-                            
             
                             
     def PwrUp (self, new_pwr):
@@ -804,7 +798,6 @@ class Dialog(QDialog):
             self.ui.ch4Button.setText("CH4")
 
 
-            
     def SerialProcess (self, rcv):
         show_message = True
         if rcv.startswith("antenna none"):

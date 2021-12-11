@@ -48,10 +48,11 @@ else:
     CURRENT_VERSION = "Stretcher_unknown"
     sys.exit()
     
-from dlg_first_cls import FirstDialog
 from dlg_treat_cls import TreatmentDialog
 from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
+from first_dialog_cls import FirstDialog
+from screen_saver_cls import ScreenSaverDialog
 
 
 
@@ -60,7 +61,6 @@ from dlg_mems_cls import MemoryDialog
 class Communicate(QObject):
     closeApp = pyqtSignal()
 
-    # receivedData = pyqtSignal()
     
 
 ##############################
@@ -203,6 +203,10 @@ class Dialog(QDialog):
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
 
+        # screen saver timer activation
+        self.timer_screensaver = self.t.timeout_screensaver
+        self.screensaver_window = True
+
         #SIGNALS
         # conecto senial del timer a la funcion de Update
         self.one_second_signal.connect(self.UpdateOneSec)
@@ -228,6 +232,7 @@ class Dialog(QDialog):
     def UpTimePressed (self):
         self.TimeUp (1)
         self.timeUpButtonCnt = 1
+        self.ScreenSaverKick()
 
         
     def UpTimeReleased (self):
@@ -237,6 +242,7 @@ class Dialog(QDialog):
     def DwnTimePressed (self):
         self.TimeDwn(1)
         self.timeDwnButtonCnt = 1
+        self.ScreenSaverKick()
 
         
     def DwnTimeReleased (self):
@@ -246,6 +252,7 @@ class Dialog(QDialog):
     def UpPowerPressed (self):
         self.PwrUp (1)
         self.powerUpButtonCnt = 1
+        self.ScreenSaverKick()
 
         
     def UpPowerReleased (self):
@@ -255,6 +262,7 @@ class Dialog(QDialog):
     def DwnPowerPressed (self):
         self.PwrDwn(1)
         self.powerDwnButtonCnt = 1
+        self.ScreenSaverKick()
 
         
     def DwnPowerReleased (self):
@@ -263,6 +271,7 @@ class Dialog(QDialog):
         
     def Memory1Pressed (self):
         self.mem1ButtonCnt = 1
+        self.ScreenSaverKick()
 
         
     def Memory1Released (self):
@@ -292,7 +301,8 @@ class Dialog(QDialog):
 
     def Memory2Pressed (self):
         self.mem2ButtonCnt = 1
-
+        self.ScreenSaverKick()
+        
         
     def Memory2Released (self):
         if (self.mem2ButtonCnt > 0 and
@@ -321,6 +331,7 @@ class Dialog(QDialog):
 
     def Memory3Pressed (self):
         self.mem3ButtonCnt = 1
+        self.ScreenSaverKick()
 
         
     def Memory3Released (self):
@@ -375,6 +386,7 @@ class Dialog(QDialog):
             self.SignalChangeTo('sinusoidal')
 
         self.CheckForStart()
+        self.ScreenSaverKick()
 
         
     def SignalChangeTo (self, new_signal):
@@ -395,7 +407,6 @@ class Dialog(QDialog):
             self.ui.textEdit.append("sinusoidal signal selected")            
             self.t.SetSignal('sinusoidal')
         
-
 
     def FrequencyDisableAll(self):
         self.ui.freq1Button.setStyleSheet(self.ss.freq1_disable)
@@ -429,6 +440,7 @@ class Dialog(QDialog):
             self.FrequencyChangeTo('62.64Hz')
 
         self.CheckForStart()
+        self.ScreenSaverKick()
 
 
     def FrequencyChangeTo (self, new_freq):
@@ -465,7 +477,6 @@ class Dialog(QDialog):
             self.t.SetFrequency('62.64Hz')
 
             
-            
     def ChannelChange (self):
         sender = self.sender()
 
@@ -494,6 +505,7 @@ class Dialog(QDialog):
                 self.t.DisableChannelsInTreatment('ch3')
 
         self.CheckForStart()
+        self.ScreenSaverKick()
 
         
     def UpDwnStretcherChange (self):
@@ -528,6 +540,8 @@ class Dialog(QDialog):
                     self.upDwnButtonCnt = 1
                 else:
                     self.InsertLocalText("Serial Port Not Open!")
+
+        self.ScreenSaverKick()
                     
         
     def TimeSet (self):
@@ -540,6 +554,8 @@ class Dialog(QDialog):
         elif sender.objectName() == 'min45Button':
             self.ui.minutesLabel.setText('45')
             self.t.SetTreatmentTimer(45)
+
+        self.ScreenSaverKick()        
 
 
     def CheckForStart (self):
@@ -630,7 +646,14 @@ class Dialog(QDialog):
         if date_now.minute != self.minutes_last:
             # print(date_now)
             self.minutes_last = date_now.minute
-            self.UpdateDateTime(date_now)            
+            self.UpdateDateTime(date_now)
+
+        # check for screensaver activation
+        if self.screensaver_window == True:
+            if self.timer_screensaver > 0:
+                self.timer_screensaver -= 1
+            else:
+                self.ScreenSaverDialogScreen()
             
                             
     def PwrUp (self, new_pwr):
@@ -747,9 +770,13 @@ class Dialog(QDialog):
 
     ## Initial Screen
     def FirstDialogScreen (self):
-        a = FirstDialog(self.t, self.ss)
+        self.screensaver_window = False
+        a = FirstDialog('stretcher', self.t.GetLocalization(), self.t.timeout_screensaver)
         a.setModal(True)
         a.exec_()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
 
         
     ## Treatment Screen
@@ -770,19 +797,22 @@ class Dialog(QDialog):
 
     ## DiagnosticsSreen
     def DiagnosticsScreen (self):
+        self.screensaver_window = False
         a = DiagnosticsDialog(self.s, self.t, parent=self)
         a.setModal(True)
         a.exec_()
 
+        self.ScreenSaverKick()
+        self.screensaver_window = True
         # fuerzo un update de fecha y hora cuando vuelvo de diagnostico
         date_now = datetime.today()
         self.UpdateDateTime(date_now)            
-            
-        
 
 
     ## MemoryScreen
     def MemoryScreen (self, which_mem):
+        self.screensaver_window = False
+
         a = MemoryDialog(self.ss, which_mem)
         a.setModal(True)
         a.exec_()
@@ -797,7 +827,20 @@ class Dialog(QDialog):
             self.t.SaveConfigFile()
             self.UpdateMemLabels()            
 
-            
+        self.ScreenSaverKick()
+        self.screensaver_window = True
+
+        
+    ## ScreenSaver
+    def ScreenSaverDialogScreen (self):
+        a = ScreenSaverDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+
+    def ScreenSaverKick (self):
+        self.timer_screensaver = self.t.timeout_screensaver
 
         
 

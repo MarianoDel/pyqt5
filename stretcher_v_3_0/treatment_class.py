@@ -33,6 +33,10 @@ class Treatment():
 
         # donde se ejecuta el programa - Date & Time -
         self.localization = ''
+
+        # how much wait before launch the screensaver
+        # self.timeout_screensaver = 60 * 10
+        self.timeout_screensaver = 30      
         
         self.ReadConfigFile()
 
