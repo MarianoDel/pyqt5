@@ -2,7 +2,6 @@
   <qresource prefix="background">
     <file>resources/background_magnet_03.png</file>
     <file>resources/background_magnet_02.png</file>
-    <file>resources/background_magnet_01.png</file>
   </qresource>
   <qresource prefix="frequencies">
     <file>resources/7_83Hz.png</file>

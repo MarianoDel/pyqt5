@@ -51,10 +51,10 @@ from ui_magnet31 import Ui_Dialog
 CURRENT_VERSION = "Magnet_ver_3_1"
 
     
-from dlg_first_cls import FirstDialog
 from dlg_treat_cls import TreatmentDialog
 from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
+from first_dialog_cls import FirstDialog
 from screen_saver_cls import ScreenSaverDialog
 from wifi_enable_cls import WiFiDialog
 
@@ -940,7 +940,7 @@ class Dialog(QDialog):
     ## Initial Screen
     def FirstDialogScreen (self):
         self.screensaver_window = False
-        a = FirstDialog(self.t, self.ss)
+        a = FirstDialog('magnet', self.t.GetLocalization(), self.t.timeout_screensaver)
         a.setModal(True)
         a.exec_()
 

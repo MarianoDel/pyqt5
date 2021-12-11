@@ -158,13 +158,13 @@ class ButtonStyles():
         #                            border: 0px;\
         #                            color: rgb(255, 255, 255);"
 
-        self.ended_label_enable = "background-color: rgb(230, 245, 253);\
-                                  border: 0px;\
-                                  color: rgb(55, 52, 53);"
+        # self.ended_label_enable = "background-color: rgb(230, 245, 253);\
+        #                           border: 0px;\
+        #                           color: rgb(55, 52, 53);"
 
-        self.ended_label_disable = "background-color: rgb(230, 245, 253);\
-                                   border: 0px;\
-                                   color: rgb(230, 245, 253);"
+        # self.ended_label_disable = "background-color: rgb(230, 245, 253);\
+        #                            border: 0px;\
+        #                            color: rgb(230, 245, 253);"
 
         self.mem1_button_enable = "color: rgb(55, 52, 53);\
                                    background-color: rgb(255, 244, 230);\
