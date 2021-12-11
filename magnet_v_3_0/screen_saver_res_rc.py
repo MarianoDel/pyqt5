@@ -1,0 +1,1 @@
+../screen_saver/screen_saver_res_rc.py

@@ -7,7 +7,7 @@ from datetime import datetime
 
 #get the UI from here
 from ui_first_dlg import Ui_FirstDialog
-from dlg_screen_saver_cls import ScreenSaverDialog
+from screen_saver_cls import ScreenSaverDialog
 
 
 #################################################

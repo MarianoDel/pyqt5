@@ -4,11 +4,6 @@
     <file>resources/background_magnet_02.png</file>
     <file>resources/background_magnet_01.png</file>
   </qresource>
-  <qresource prefix="screen_saver">
-    <file>resources/1LFE.gif</file>
-    <file>resources/UIBJ.gif</file>
-    <file>resources/Rk69.gif</file>
-  </qresource>
   <qresource prefix="frequencies">
     <file>resources/7_83Hz.png</file>
     <file>resources/11_79Hz.png</file>

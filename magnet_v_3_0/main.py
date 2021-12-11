@@ -55,7 +55,7 @@ from dlg_first_cls import FirstDialog
 from dlg_treat_cls import TreatmentDialog
 from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
-from dlg_screen_saver_cls import ScreenSaverDialog
+from screen_saver_cls import ScreenSaverDialog
 from wifi_enable_cls import WiFiDialog
 
 #get the code for manager
