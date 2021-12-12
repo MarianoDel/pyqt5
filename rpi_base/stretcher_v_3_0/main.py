@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QIcon
 from serialcomm import SerialComm
 from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
@@ -53,7 +53,10 @@ from dlg_diags_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
 from first_dialog_cls import FirstDialog
 from screen_saver_cls import ScreenSaverDialog
+from wifi_enable_cls import WiFiDialog
 
+#get the code for manager
+from wifi_thread_manager import WiFiThreadManager
 
 
 ### CUSTOM SIGNALS ####################
@@ -125,6 +128,8 @@ class Dialog(QDialog):
         self.ui.diagButton.pressed.connect(self.DiagsPressed)
         self.ui.diagButton.released.connect(self.DiagsReleased)
 
+        # connect wifi button
+        self.ui.wifiButton.clicked.connect(self.WifiScreen)
 
         ## Init treatment object
         self.t = Treatment()
@@ -194,9 +199,21 @@ class Dialog(QDialog):
             #TODO: agregar un timer que vaya buscando el puerto!!!
         else:
             self.InsertLocalText("Serial port open OK!")
-            self.InsertLocalText("Comm with Power:")
+            self.InsertLocalTextNoNewLine("\nComm with Power: ")
             self.s.Write("keepalive,\r\n")
 
+
+        ## setup antennas icons
+        ## url(:/buttons/resources/Stop.png)
+        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
+
+        # start manager background process
+        self.wifi_manager_cnt = 2
+        self.MyThread = WiFiThreadManager()
+        self.MyThread.start()
 
         ## activate the 1 second timer it is repetitive
         self.t1seg = QTimer()
@@ -206,8 +223,8 @@ class Dialog(QDialog):
         # screen saver timer activation
         self.timer_screensaver = self.t.timeout_screensaver
         self.screensaver_window = True
-
-        #SIGNALS
+            
+        #SIGNALS CONNECTION
         # conecto senial del timer a la funcion de Update
         self.one_second_signal.connect(self.UpdateOneSec)
 
@@ -394,17 +411,17 @@ class Dialog(QDialog):
         
         if new_signal == 'triangular':
             self.ui.triangularButton.setStyleSheet(self.ss.triangular_enable)
-            self.ui.textEdit.append("tringular signal selected")
+            self.InsertLocalText("tringular signal selected")
             self.t.SetSignal('triangular')
 
         elif new_signal == 'square':
             self.ui.squareButton.setStyleSheet(self.ss.square_enable)
-            self.ui.textEdit.append("square signal selected")            
+            self.InsertLocalText("square signal selected")            
             self.t.SetSignal('square')
 
         elif new_signal == 'sinusoidal':
             self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_enable)
-            self.ui.textEdit.append("sinusoidal signal selected")            
+            self.InsertLocalText("sinusoidal signal selected")            
             self.t.SetSignal('sinusoidal')
         
 
@@ -448,32 +465,32 @@ class Dialog(QDialog):
         
         if new_freq == '7.83Hz':
             self.ui.freq1Button.setStyleSheet(self.ss.freq1_enable)
-            self.ui.textEdit.append("7.83Hz selected")
+            self.InsertLocalText("7.83Hz selected")
             self.t.SetFrequency('7.83Hz')
 
         if new_freq == '11.79Hz':
             self.ui.freq2Button.setStyleSheet(self.ss.freq2_enable)
-            self.ui.textEdit.append("11.79Hz selected")            
+            self.InsertLocalText("11.79Hz selected")            
             self.t.SetFrequency('11.79Hz')
 
         if new_freq == '16.67Hz':
             self.ui.freq3Button.setStyleSheet(self.ss.freq3_enable)
-            self.ui.textEdit.append("16.67Hz selected")            
+            self.InsertLocalText("16.67Hz selected")            
             self.t.SetFrequency('16.67Hz')
 
         if new_freq == '23.58Hz':
             self.ui.freq4Button.setStyleSheet(self.ss.freq4_enable)
-            self.ui.textEdit.append("23.58Hz selected")            
+            self.InsertLocalText("23.58Hz selected")            
             self.t.SetFrequency('23.58Hz')
 
         if new_freq == '30.80Hz':
             self.ui.freq5Button.setStyleSheet(self.ss.freq5_enable)
-            self.ui.textEdit.append("30.80Hz selected")            
+            self.InsertLocalText("30.80Hz selected")            
             self.t.SetFrequency('30.80Hz')
 
         if new_freq == '62.64Hz':
             self.ui.freq6Button.setStyleSheet(self.ss.freq6_enable)
-            self.ui.textEdit.append("62.64Hz selected")            
+            self.InsertLocalText("62.64Hz selected")            
             self.t.SetFrequency('62.64Hz')
 
             
@@ -654,6 +671,13 @@ class Dialog(QDialog):
                 self.timer_screensaver -= 1
             else:
                 self.ScreenSaverDialogScreen()
+
+        # check for wifi manager
+        if self.wifi_manager_cnt == 0:
+            self.wifi_manager_cnt = 2
+            self.UpdateTwoSec()
+        else:
+            self.wifi_manager_cnt -= 1
             
                             
     def PwrUp (self, new_pwr):
@@ -707,7 +731,6 @@ class Dialog(QDialog):
 
         
     def MyObjCallback (self, dataread):
-        print ("callback called!")
         d = dataread.rstrip()
         self.rcv_signal.emit(d)
 
@@ -722,9 +745,20 @@ class Dialog(QDialog):
         self.ui.textEdit.append(new_text)
 
         
+    def InsertLocalTextNoNewLine (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(255, 0, 0))
+        # new_text = new_text.rsplit('\r\n')
+        self.ui.textEdit.insertPlainText(new_text)
+        
+        
     def InsertForeingText (self, new_text):
         self.ui.textEdit.setTextColor(QColor(0, 255, 0))
         self.ui.textEdit.append(new_text)
+
+        
+    def InsertForeingTextNoNewLine (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(0, 255, 0))
+        self.ui.textEdit.insertPlainText(new_text)
         
 
     def UpdateMemLabels (self):
@@ -755,6 +789,19 @@ class Dialog(QDialog):
             self.ui.mem32Label.setText('')
             self.ui.mem33Label.setText('')
             
+
+    def UpdateTwoSec (self):
+        new_status = self.MyThread.GetStatus()
+
+        if new_status == 'NO CONN':
+            self.ui.wifiButton.setIcon(self.wifi_disa_Icon)
+        elif new_status == 'IP':
+            self.ui.wifiButton.setIcon(self.wifi_err_Icon)
+        elif new_status == 'PING':
+            self.ui.wifiButton.setIcon(self.wifi_act_Icon)
+        elif new_status == 'TUNNEL':
+            self.ui.wifiButton.setIcon(self.wifi_emit_Icon)
+
             
     #capturo el cierre
     def closeEvent (self, event):
@@ -783,11 +830,17 @@ class Dialog(QDialog):
     def TreatmentScreen (self):
         if self.CheckCompleteConf() == True:
             if self.s.port_open == True:
+                self.screensaver_window = False
+                
                 self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
             
                 a = TreatmentDialog(self.t, self.ss, self.s, parent=self)
                 a.setModal(True)
                 a.exec_()
+
+                self.ScreenSaverKick()
+                self.screensaver_window = True
+                
             else:
                 self.InsertLocalText("Serial Port Not Open!")
         else:
@@ -798,6 +851,7 @@ class Dialog(QDialog):
     ## DiagnosticsSreen
     def DiagnosticsScreen (self):
         self.screensaver_window = False
+        
         a = DiagnosticsDialog(self.s, self.t, parent=self)
         a.setModal(True)
         a.exec_()
@@ -842,6 +896,15 @@ class Dialog(QDialog):
     def ScreenSaverKick (self):
         self.timer_screensaver = self.t.timeout_screensaver
 
+    ## wifi screen
+    def WifiScreen (self):
+        self.screensaver_window = False
+        a = WiFiDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
         
 
 ### End of Dialog ###
@@ -854,6 +917,7 @@ w = Dialog()
 #http://doc.qt.io/qt-5/qt.html#WindowType-enum
 w.setWindowFlags(Qt.CustomizeWindowHint)
 # w.setWindowFlags(Qt.FramelessWindowHint)
+print('Starting stretcher app...')
 w.show()
 sys.exit(app.exec_())
 

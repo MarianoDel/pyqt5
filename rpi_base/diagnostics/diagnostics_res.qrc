@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="buttons">
+    <file>resources/Abajo.png</file>
+    <file>resources/Arriba.png</file>
+  </qresource>
+  <qresource prefix="background">
+    <file>resources/bkg_solo_logo.png</file>
+  </qresource>
+</RCC>

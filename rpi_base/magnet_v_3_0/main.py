@@ -67,7 +67,6 @@ from wifi_thread_manager import WiFiThreadManager
 class Communicate(QObject):
     closeApp = pyqtSignal()
 
-    # receivedData = pyqtSignal()
     
 
 ##############################

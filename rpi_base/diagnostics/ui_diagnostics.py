@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'magnet_diags_dlg.ui'
+# Form implementation generated from reading ui file 'diagnostics.ui'
 #
 # Created by: PyQt5 UI code generator 5.10
 #
@@ -247,4 +247,4 @@ class Ui_DiagnosticsDialog(object):
         self.deviceLabel.setText(_translate("DiagnosticsDialog", "1.1"))
         self.label_9.setText(_translate("DiagnosticsDialog", "Device Id:"))
 
-import magnet3_res_rc
+import diagnostics_res_rc

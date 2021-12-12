@@ -581,7 +581,7 @@ background-image: url(:/background/resources/bkg_solo_logo.png);
   </widget>
  </widget>
  <resources>
-  <include location="magnet3_res.qrc"/>
+  <include location="diagnostics_res.qrc"/>
  </resources>
  <connections/>
 </ui>

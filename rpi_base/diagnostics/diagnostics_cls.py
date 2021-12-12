@@ -8,9 +8,9 @@ import os
 
 
 #get the UI from here
-from ui_diagnostics_dlg import Ui_DiagnosticsDialog
-from dlg_rtc_cls import RtcDialog
-from dlg_pwr_ctrl_cls import PowerControlDialog
+from ui_diagnostics import Ui_DiagnosticsDialog
+from rtc_dialog_cls import RtcDialog
+# from dlg_pwr_ctrl_cls import PowerControlDialog
 
 
 #####################################################################
@@ -22,13 +22,15 @@ class DiagnosticsDialog(QDialog):
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
 
-    def __init__(self, ser_instance, treatment_instance, parent=None):
+    def __init__(self, program_type, localization, ser_instance, parent=None):
         super(DiagnosticsDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_DiagnosticsDialog()
         self.ui.setupUi(self)
 
+        self.localization = localization
+        
         # get the close event and connect the buttons        
         self.ui.doneButton.clicked.connect(self.accept)
         self.ui.rtcButton.clicked.connect(self.RtcScreen)
@@ -37,7 +39,6 @@ class DiagnosticsDialog(QDialog):
         # get the parent reference and data
         self.parent = parent
         self.ser = ser_instance
-        self.t = treatment_instance
 
         ### to carry on with date-time
         date_now = datetime.today()
@@ -75,7 +76,7 @@ class DiagnosticsDialog(QDialog):
 
         (system, node, release, version, machine, processor) = platform.uname()
         self.ui.kernelLabel.setText(release)
-        self.ui.softLabel.setText(self.t.current_version)
+        self.ui.softLabel.setText(program_type)
 
         # recupero informacion de la placa power si el puerto esta OK
         self.comm_progress = 'clean'        
@@ -85,9 +86,9 @@ class DiagnosticsDialog(QDialog):
 
     def UpdateDateTime(self, new_date_time):
         date_str = ""
-        if self.t.GetLocalization() == 'usa':
+        if self.localization == 'usa':
             date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
-        elif self.t.GetLocalization() == 'arg':
+        else:
             date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
 
         self.ui.date_timeLabel.setText(date_str)

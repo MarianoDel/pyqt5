@@ -199,7 +199,7 @@ border: 0px</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="magnet3_res.qrc">
+           <iconset resource="diagnostics_res.qrc">
             <normaloff>:/buttons/resources/Arriba.png</normaloff>:/buttons/resources/Arriba.png</iconset>
           </property>
           <property name="iconSize">
@@ -225,7 +225,7 @@ border: 0px</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="magnet3_res.qrc">
+           <iconset resource="diagnostics_res.qrc">
             <normaloff>:/buttons/resources/Abajo.png</normaloff>:/buttons/resources/Abajo.png</iconset>
           </property>
           <property name="iconSize">
@@ -266,7 +266,7 @@ border: 0px</string>
   </widget>
  </widget>
  <resources>
-  <include location="magnet3_res.qrc"/>
+  <include location="diagnostics_res.qrc"/>
  </resources>
  <connections/>
 </ui>

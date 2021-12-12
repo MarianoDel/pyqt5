@@ -1,25 +1,39 @@
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
-from time import time
-from threading import Timer
 from datetime import datetime
 
 
 #get the UI from here
-from ui_rtc_dlg import Ui_RtcDialog
+from ui_rtc import Ui_RtcDialog
 
 
 ##################################################
 # RtcDialog Class - to set the RTC on the system #
 ##################################################
 class RtcDialog(QDialog):
-    def __init__(self):
+    def __init__(self, localization, datetime_now):
         super(RtcDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_RtcDialog()
         self.ui.setupUi(self)
 
+        # set localization, default is usa
+        self.localization = localization        
+        if self.localization == 'arg':
+            self.ui.label_2.setText('Date DD/MM/YY')
+            self.ui.dayButton.setText(datetime_now.strftime("%d"))
+            self.ui.monthButton.setText(datetime_now.strftime("%m"))
+        else:
+            self.ui.label_2.setText('Date MM/DD/YY')
+            self.ui.monthButton.setText(datetime_now.strftime("%d"))
+            self.ui.dayButton.setText(datetime_now.strftime("%m"))
+
+        # populate date-time
+        self.ui.yearButton.setText(datetime_now.strftime("%y"))
+        self.ui.hourButton.setText(datetime_now.strftime("%H"))
+        self.ui.minuteButton.setText(datetime_now.strftime("%M"))
+        
+        
         # get the close event
         self.ui.doneButton.clicked.connect(self.accept)
 
