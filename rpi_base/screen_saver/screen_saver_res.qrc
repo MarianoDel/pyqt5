@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="screen_saver">
+    <file>resources/1LFE.gif</file>
+    <file>resources/Rk69.gif</file>
+    <file>resources/UIBJ.gif</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+* Programa partiendo de Stretcher Ver 3.1 02-02-2021
+** Para conocer configuracion necesaria en rasp
+   - ver st3.org
+
+** Stretcher tiene ver 3.1 y 3.2
+   - aca (en magnet) dejo solo 3.1
+* 22-11-2021 agrego conexion a wifi
+** pongo boton en la ui que me permite abrir la interfase de config

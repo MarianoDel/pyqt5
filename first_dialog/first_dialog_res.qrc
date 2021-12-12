@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="background">
-    <file>resources/background_stretcher_01.png</file>
-    <file>resources/background_magnet_01.png</file>
-  </qresource>
-</RCC>

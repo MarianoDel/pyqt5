@@ -1,0 +1,37 @@
+<RCC>
+  <qresource prefix="background">
+    <file>resources/bkg_solo_logo.png</file>
+    <file>resources/Pantalla_session_B.png</file>
+    <file>resources/Background2a.png</file>
+    <file>resources/Pantalla_session.png</file>
+    <file>resources/Background_2.png</file>
+    <file>resources/Background_3.png</file>
+    <file>resources/Background.png</file>
+  </qresource>
+  <qresource prefix="frequencies">
+    <file>resources/7_83Hz.png</file>
+    <file>resources/11_79Hz.png</file>
+    <file>resources/16_67Hz.png</file>
+    <file>resources/23_58Hz.png</file>
+    <file>resources/30_80Hz.png</file>
+    <file>resources/62_64Hz.png</file>
+  </qresource>
+  <qresource prefix="buttons">
+    <file>resources/wifi-symbol_act.png</file>
+    <file>resources/wifi-symbol_disa.png</file>
+    <file>resources/wifi-symbol_emit.png</file>
+    <file>resources/wifi-symbol_err.png</file>
+    <file>resources/rewind.png</file>
+    <file>resources/Rsm.png</file>
+    <file>resources/Stop.png</file>
+    <file>resources/Stop-Pause.png</file>
+    <file>resources/30min.png</file>
+    <file>resources/40min.png</file>
+    <file>resources/Abajo.png</file>
+    <file>resources/Arriba.png</file>
+    <file>resources/Play.png</file>
+    <file>resources/Cuadrada.png</file>
+    <file>resources/Sinus.png</file>
+    <file>resources/Triangular.png</file>
+  </qresource>
+</RCC>

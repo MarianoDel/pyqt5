@@ -1,1 +1,0 @@
-../first_dialog/first_dialog_cls.py
