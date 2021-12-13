@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, pyqtSignal, QObject
 
 
 #get the UI from here
-from ui_pwr_ctrl_dlg import Ui_PowerControlDialog
+from ui_power_control import Ui_PowerControlDialog
 
 
 ##############################################################

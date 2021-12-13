@@ -56,8 +56,8 @@ class Treatment():
     def SetCurrentVersion (self, version):
         self.current_version = version
         
-    def SetCurrentVersion (self, version):
-        self.current_version = version
+    def GetCurrentVersion (self):
+        return self.current_version
 
     def SetSignal (self, snl):
         self.signal = snl
@@ -222,6 +222,10 @@ class Treatment():
         self.mem3_signal = config.get('mem3', 'signal', fallback = 'None')
         self.mem3_treat_time = config.get('mem3', 'time', fallback = 'None')
         self.mem3_power = config.get('mem3', 'power', fallback = 'None')
+
+        self.localization = config.get('static_config', 'localization', fallback='usa')
+
+        
         
 
     def SaveConfigFile (self):
@@ -257,6 +261,9 @@ class Treatment():
         config.set('mem3', 'signal', self.mem3_signal)
         config.set('mem3', 'time', self.mem3_treat_time)
         config.set('mem3', 'power', self.mem3_power)
+
+        config.add_section('static_config')
+        config.set('static_config', 'localization', self.localization)
         
         # Writing our configuration file to 'example.cfg'
         with open('config.txt', 'w') as configfile:

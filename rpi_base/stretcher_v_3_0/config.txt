@@ -1,7 +1,7 @@
 [power_limits]
-triangular = 89
-square = 79
-sinusoidal = 69
+triangular = 80
+square = 80
+sinusoidal = 80
 
 [static_params]
 peak_current = 3.6

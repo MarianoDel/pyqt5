@@ -314,4 +314,4 @@ class Ui_PowerControlDialog(object):
         self.label_10.setText(_translate("PowerControlDialog", "0.65mm"))
         self.label_8.setText(_translate("PowerControlDialog", "Temp @ 30min [ºC]"))
 
-import magnet3_res_rc
+import diagnostics_res_rc

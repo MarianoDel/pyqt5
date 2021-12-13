@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="buttons">
+    <file>resources/Cuadrada.png</file>
+    <file>resources/Sinus.png</file>
+    <file>resources/Triangular.png</file>
     <file>resources/Abajo.png</file>
     <file>resources/Arriba.png</file>
   </qresource>

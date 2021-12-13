@@ -9,8 +9,8 @@ import os
 
 #get the UI from here
 from ui_diagnostics import Ui_DiagnosticsDialog
-from rtc_dialog_cls import RtcDialog
-# from dlg_pwr_ctrl_cls import PowerControlDialog
+from rtc_cls import RtcDialog
+from power_control_cls import PowerControlDialog
 
 
 #####################################################################
@@ -22,23 +22,29 @@ class DiagnosticsDialog(QDialog):
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
 
-    def __init__(self, program_type, localization, ser_instance, parent=None):
+    def __init__(self, ser_instance, treatment, parent=None):
         super(DiagnosticsDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_DiagnosticsDialog()
         self.ui.setupUi(self)
 
-        self.localization = localization
-        
         # get the close event and connect the buttons        
-        self.ui.doneButton.clicked.connect(self.accept)
+        self.ui.doneButton.clicked.connect(self.FinishThisDialog)
         self.ui.rtcButton.clicked.connect(self.RtcScreen)
-        # self.ui.max_powerButton.clicked.connect(self.PowerScreen)
+        self.ui.localizationButton.clicked.connect(self.ChangeLocalization)
+        self.ui.max_powerButton.clicked.connect(self.PowerScreen)
 
         # get the parent reference and data
         self.parent = parent
         self.ser = ser_instance
+        self.t = treatment
+        self.localization = self.t.GetLocalization()
+
+        if self.localization == 'usa':
+            self.ui.localizationButton.setText('Localization\nUSA')
+        else:
+            self.ui.localizationButton.setText('Localization\nARG')        
 
         ### to carry on with date-time
         date_now = datetime.today()
@@ -52,7 +58,6 @@ class DiagnosticsDialog(QDialog):
 
         # progress timer, these ones are qt
         self.init_timer = QTimer()
-        
 
         # CONNECT SIGNALS
         # connect the timer signal to the Update
@@ -73,10 +78,11 @@ class DiagnosticsDialog(QDialog):
         (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
         os_text = "--" + distname + version + "-- "
         self.ui.osLabel.setText(os_text)
+        self.distname = distname
 
         (system, node, release, version, machine, processor) = platform.uname()
         self.ui.kernelLabel.setText(release)
-        self.ui.softLabel.setText(program_type)
+        self.ui.softLabel.setText(self.t.GetCurrentVersion())
 
         # recupero informacion de la placa power si el puerto esta OK
         self.comm_progress = 'clean'        
@@ -152,7 +158,26 @@ class DiagnosticsDialog(QDialog):
             hs = rcv[10:]
             self.ui.deviceLabel.setText(hs)
             
+
+    def ChangeLocalization (self):
+        local_str = self.ui.localizationButton.text()
+        if 'USA' in local_str:
+            self.ui.localizationButton.setText('Localization\nARG')
+            self.localization = 'arg'
+            self.t.SetLocalization('arg')
+        else:
+            self.ui.localizationButton.setText('Localization\nUSA')
+            self.localization = 'usa'
+            self.t.SetLocalization('usa')
+
+        date_now = datetime.today()
+        self.UpdateDateTime(date_now)
+
         
+    def FinishThisDialog (self):
+        # to save localization
+        self.t.SaveConfigFile()
+        self.accept()
 
 
     ###############
@@ -160,46 +185,31 @@ class DiagnosticsDialog(QDialog):
     ###############
     ## RtcScreen
     def RtcScreen (self):
-        a = RtcDialog()
-        a.setModal(True)
-
         date_now = datetime.today()
-        if self.t.GetLocalization() == 'usa':
-            a.ui.label_2.setText('Date MM/DD/YY')
-            a.ui.monthButton.setText(date_now.strftime("%d"))
-            a.ui.dayButton.setText(date_now.strftime("%m"))
-        elif self.t.GetLocalization() == 'arg':
-            a.ui.label_2.setText('Date DD/MM/YY')
-            a.ui.dayButton.setText(date_now.strftime("%d"))
-            a.ui.monthButton.setText(date_now.strftime("%m"))
-
-        a.ui.yearButton.setText(date_now.strftime("%y"))
-        a.ui.hourButton.setText(date_now.strftime("%H"))
-        a.ui.minuteButton.setText(date_now.strftime("%M"))            
-
-        a.ChangeFocusDay()
-        
+        a = RtcDialog(self.localization, date_now)
+        a.setModal(True)
         a.exec_()
 
-        if self.t.GetLocalization() == 'usa':
+        if self.localization == 'usa':
             new_month = a.ui.dayButton.text()
             new_day = a.ui.monthButton.text()
-        elif self.t.GetLocalization() == 'arg':
+        elif self.localization == 'arg':
             new_day = a.ui.dayButton.text()
             new_month = a.ui.monthButton.text()
-        
+    
         new_year = a.ui.yearButton.text()
         new_hour = a.ui.hourButton.text()
         new_minute = a.ui.minuteButton.text()
         myCmd1 = "sudo date -s {1}/{0}/20{2}".format(new_day, new_month, new_year)
         myCmd2 = "sudo date -s {0}:{1}:00".format(new_hour, new_minute)
         myCmd3 = "sudo hwclock -w"        #guardo info del date en hwclock
-        if self.t.GetCurrentSystem() == 'slackware':
+        
+        if self.distname == 'Slackware ':
             print(myCmd1)
             print(myCmd2)
             print(myCmd3)            
 
-        elif self.t.GetCurrentSystem() == 'raspbian':
+        elif self.distname == 'debian':
             os.system(myCmd1)
             os.system(myCmd2)            
             os.system(myCmd3)
@@ -208,7 +218,6 @@ class DiagnosticsDialog(QDialog):
         date_now = datetime.today()
         self.minutes_last = date_now.minute
         self.UpdateDateTime(date_now)
-
 
 
     ## PowerScreen

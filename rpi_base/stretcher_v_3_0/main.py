@@ -29,9 +29,6 @@ RUN_VER_3_1 = 1
 ## OS where its run
 RUNNING_ON_SLACKWARE = 1
 RUNNING_ON_RASP = 0
-## Date Time as used in
-DATE_TIME_USA = 1
-DATE_TIME_ARG = 0
 ## No call the first Dialog - code empty presentation page -
 NO_CALL_FIRST_DLG = 0
 
@@ -49,7 +46,7 @@ else:
     sys.exit()
     
 from dlg_treat_cls import TreatmentDialog
-from dlg_diags_cls import DiagnosticsDialog
+from diagnostics_cls import DiagnosticsDialog
 from dlg_mems_cls import MemoryDialog
 from first_dialog_cls import FirstDialog
 from screen_saver_cls import ScreenSaverDialog
@@ -138,11 +135,6 @@ class Dialog(QDialog):
             self.t.SetCurrentSystem('slackware')
         elif RUNNING_ON_RASP:
             self.t.SetCurrentSystem('raspbian')
-
-        if DATE_TIME_USA:
-            self.t.SetLocalization('usa')
-        elif DATE_TIME_ARG:
-            self.t.SetLocalization('arg')
         
         ## Init stylesheet object
         self.ss = ButtonStyles()

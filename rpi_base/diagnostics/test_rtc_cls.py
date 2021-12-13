@@ -9,7 +9,7 @@ from datetime import datetime
 """
 
 #Here import the UIs or classes that got the UIs
-from rtc_dialog_cls import RtcDialog
+from rtc_cls import RtcDialog
 
 ####################
 # Function Screens #
