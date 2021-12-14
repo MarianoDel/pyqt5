@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 
 
 #get the UI from here
-from ui_wifi_keyboard_dlg import Ui_KeyboardDialog
+from wifi_keyboard_ui import Ui_KeyboardDialog
 
 
 ########################

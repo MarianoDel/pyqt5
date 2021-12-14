@@ -8,8 +8,9 @@ import subprocess
 import platform
 
 
-#get the UI from here
-from ui_wifi_dlg import Ui_WiFiDialog
+# get the UIs from here
+from wifi_enable_ui import Ui_WiFiDialog
+# get Dialog classes from here
 from wifi_keyboard_cls import KeyboardDialog
 
 

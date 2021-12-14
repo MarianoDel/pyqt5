@@ -4,7 +4,7 @@ from PyQt5.QtGui import QColor, QIcon
 
 
 #get the UI from here
-from ui_wifi_test_thread_dlg import Ui_WifiTestDialog
+from wifi_test_thread_dlg_ui import Ui_WifiTestDialog
 
 #get the code for manager
 from wifi_thread_manager import WiFiThreadManager

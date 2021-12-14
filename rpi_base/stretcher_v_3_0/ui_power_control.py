@@ -1,1 +1,0 @@
-../diagnostics/ui_power_control.py

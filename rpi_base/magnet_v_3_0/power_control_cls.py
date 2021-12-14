@@ -1,0 +1,1 @@
+../diagnostics/power_control_cls.py

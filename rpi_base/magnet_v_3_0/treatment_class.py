@@ -56,8 +56,8 @@ class Treatment():
     def SetCurrentVersion (self, version):
         self.current_version = version
         
-    def SetCurrentVersion (self, version):
-        self.current_version = version
+    def GetCurrentVersion (self):
+        return self.current_version
 
     def SetSignal (self, snl):
         self.signal = snl

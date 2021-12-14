@@ -1,1 +1,0 @@
-../first_dialog/ui_first_dialog.py

@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QApplication, QDialog
 from datetime import datetime
 
 
-#get the UI from here
-from ui_rtc import Ui_RtcDialog
+# get the UI from here
+from rtc_ui import Ui_RtcDialog
 
 
 ##################################################

@@ -5,8 +5,9 @@ from threading import Timer
 from datetime import datetime
 
 
-#get the UI from here
-from ui_first_dialog import Ui_FirstDialog
+# get the UI from here
+from first_dialog_ui import Ui_FirstDialog
+# get Dialog classes from here
 from screen_saver_cls import ScreenSaverDialog
 
 # background setting on ui

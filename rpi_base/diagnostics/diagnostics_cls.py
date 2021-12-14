@@ -7,8 +7,9 @@ import platform
 import os
 
 
-#get the UI from here
-from ui_diagnostics import Ui_DiagnosticsDialog
+# get the UI from here
+from diagnostics_ui import Ui_DiagnosticsDialog
+# get Dialog classes from here
 from rtc_cls import RtcDialog
 from power_control_cls import PowerControlDialog
 
@@ -41,10 +42,11 @@ class DiagnosticsDialog(QDialog):
         self.t = treatment
         self.localization = self.t.GetLocalization()
 
-        if self.localization == 'usa':
-            self.ui.localizationButton.setText('Localization\nUSA')
+        # usa its default
+        if self.localization == 'arg':
+            self.ui.localizationButton.setText('Localization\nARG')
         else:
-            self.ui.localizationButton.setText('Localization\nARG')        
+            self.ui.localizationButton.setText('Localization\nUSA')
 
         ### to carry on with date-time
         date_now = datetime.today()
@@ -92,10 +94,11 @@ class DiagnosticsDialog(QDialog):
 
     def UpdateDateTime(self, new_date_time):
         date_str = ""
-        if self.localization == 'usa':
-            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
-        else:
+        # usa its default
+        if self.localization == 'arg':
             date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+        else:
+            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
 
         self.ui.date_timeLabel.setText(date_str)
 
@@ -190,13 +193,14 @@ class DiagnosticsDialog(QDialog):
         a.setModal(True)
         a.exec_()
 
-        if self.localization == 'usa':
-            new_month = a.ui.dayButton.text()
-            new_day = a.ui.monthButton.text()
-        elif self.localization == 'arg':
+        # default its usa
+        if self.localization == 'arg':
             new_day = a.ui.dayButton.text()
             new_month = a.ui.monthButton.text()
-    
+        else: 
+            new_month = a.ui.dayButton.text()
+            new_day = a.ui.monthButton.text()
+   
         new_year = a.ui.yearButton.text()
         new_hour = a.ui.hourButton.text()
         new_minute = a.ui.minuteButton.text()

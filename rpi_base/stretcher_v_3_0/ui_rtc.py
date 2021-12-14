@@ -1,1 +1,0 @@
-../diagnostics/ui_rtc.py
