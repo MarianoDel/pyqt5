@@ -29,3 +29,6 @@ signal = triangular
 time = 60
 power = 70
 
+[static_config]
+localization = usa
+
