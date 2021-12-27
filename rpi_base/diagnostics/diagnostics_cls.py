@@ -13,6 +13,7 @@ from diagnostics_ui import Ui_DiagnosticsDialog
 from rtc_cls import RtcDialog
 from power_control_cls import PowerControlDialog
 from display_mode_cls import DisplayModeDialog
+from lan_settings_cls import LanDialog
 
 
 #####################################################################
@@ -37,6 +38,7 @@ class DiagnosticsDialog(QDialog):
         self.ui.localizationButton.clicked.connect(self.ChangeLocalization)
         self.ui.max_powerButton.clicked.connect(self.PowerScreen)
         self.ui.display_modeButton.clicked.connect(self.Display_ModeScreen)
+        self.ui.lanButton.clicked.connect(self.LanScreen)
 
         # get the parent reference and data
         self.parent = parent
@@ -236,6 +238,13 @@ class DiagnosticsDialog(QDialog):
     ## Display_ModeScreen
     def Display_ModeScreen (self):
         a = DisplayModeDialog (self.t)
+        a.setModal(True)
+        a.exec_()
+
+        
+    ## LanScreen
+    def LanScreen (self):
+        a = LanDialog ()
         a.setModal(True)
         a.exec_()
         

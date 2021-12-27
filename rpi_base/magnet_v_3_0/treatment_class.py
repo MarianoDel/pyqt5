@@ -130,9 +130,12 @@ class Treatment():
             "signal,%03d,%03d,0%x%x%d,%04d,%04d,%04d,%04d,%04d,%04d,1\r\n"
             example. signal,100,100,0000,0003,0003,0003,0006,0000,0000,1
         """
-        treat = "signal,{:03d},{:03d},0000,".format(self.power,self.power)
+        treat = "signal,"
 
         if self.signal == 'triangular':
+            new_power = int(self.triangular_power_limit * self.power / 100)
+            treat += "{:03d},{:03d},0000,".format(new_power, new_power)
+
             # rising edge, maintenance, falling edge, stop time 
             if self.frequency == '7.83Hz':
                 treat += '0061,0001,0001,0064,0000,0000,1'
@@ -148,6 +151,9 @@ class Treatment():
                 treat += '0006,0001,0001,0008,0000,0000,1'
 
         if self.signal == 'sinusoidal':
+            new_power = int(self.sinusoidal_power_limit * self.power / 100)
+            treat += "{:03d},{:03d},0000,".format(new_power, new_power)
+
             # rising edge, maintenance, falling edge, stop time 
             if self.frequency == '7.83Hz':
                 treat += '0021,0021,0021,0064,0000,0000,1'
@@ -163,6 +169,9 @@ class Treatment():
                 treat += '0003,0002,0003,0008,0000,0000,1'
 
         if self.signal == 'square':
+            new_power = int(self.square_power_limit * self.power / 100)
+            treat += "{:03d},{:03d},0000,".format(new_power, new_power)
+
             # rising edge, maintenance, falling edge, stop time 
             if self.frequency == '7.83Hz':
                 treat += '0001,0061,0001,0064,0000,0000,1'
@@ -222,6 +231,10 @@ class Treatment():
         self.mem3_signal = config.get('mem3', 'signal', fallback = 'None')
         self.mem3_treat_time = config.get('mem3', 'time', fallback = 'None')
         self.mem3_power = config.get('mem3', 'power', fallback = 'None')
+
+        self.localization = config.get('static_config', 'localization', fallback='usa')
+
+        
         
 
     def SaveConfigFile (self):
@@ -257,6 +270,9 @@ class Treatment():
         config.set('mem3', 'signal', self.mem3_signal)
         config.set('mem3', 'time', self.mem3_treat_time)
         config.set('mem3', 'power', self.mem3_power)
+
+        config.add_section('static_config')
+        config.set('static_config', 'localization', self.localization)
         
         # Writing our configuration file to 'example.cfg'
         with open('config.txt', 'w') as configfile:

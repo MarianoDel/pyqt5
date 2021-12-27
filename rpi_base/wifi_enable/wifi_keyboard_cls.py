@@ -222,7 +222,7 @@ class KeyboardDialog(QDialog):
         self.ui.Button_24.setText(':')
         self.ui.Button_25.setText(';')
         self.ui.Button_26.setText('!')
-        self.ui.Button_27.setText('?')
+        self.ui.Button_27.setText('.')
 
 
     def ToOtherSymbols (self):
@@ -247,7 +247,7 @@ class KeyboardDialog(QDialog):
         self.ui.Button_19.setText('{')
         self.ui.Button_20.setText('}')
         self.ui.Button_21.setText('\\')
-        self.ui.Button_22.setText('')
+        self.ui.Button_22.setText('?')
         self.ui.Button_23.setText('')
         self.ui.Button_24.setText('')
         self.ui.Button_25.setText('')

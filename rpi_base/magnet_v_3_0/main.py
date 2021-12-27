@@ -96,9 +96,11 @@ class Dialog(QDialog):
         self.ui.freq5Button.clicked.connect(self.FrequencyChange)
         self.ui.freq6Button.clicked.connect(self.FrequencyChange)
         
-        # self.ui.ch1Button.clicked.connect(self.ChannelChange)
-        # self.ui.ch2Button.clicked.connect(self.ChannelChange)
-        # self.ui.ch3Button.clicked.connect(self.ChannelChange)
+        self.ui.ch1Button.clicked.connect(self.AntennaNameChange)
+        # self.ui.ch2Button.clicked.connect(self.ChannelChange)    #for tests
+        self.ui.ch2Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch3Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch4Button.clicked.connect(self.AntennaNameChange)
         
         self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
         self.ui.powerUpButton.released.connect(self.UpPowerReleased)
@@ -493,43 +495,97 @@ class Dialog(QDialog):
     def ChannelChange (self):
         sender = self.sender()
 
-        if sender.objectName() == 'ch1Button':
+        if sender.objectName() == 'ch2Button':
+            # test ch1 with name
             ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,1\r"
             self.SerialProcess(ant_str)
-            ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
-            self.SerialProcess(ant_str)            
+            # test ch1 no name
+            # ant_str = "ch1,020.00,020.00,004.04,065.00,1\r"
+            # self.SerialProcess(ant_str)
+            # test ch2 with name
+            # ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,2\r"
+            # self.SerialProcess(ant_str)
+            # test ch2 no name
+            # ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
+            # self.SerialProcess(ant_str)
+            # test ch3 with name
+            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,3\r"
+            self.SerialProcess(ant_str)
+            # test ch3 no name
+            # ant_str = "ch3,020.00,020.00,004.04,065.00,3\r"
+            # self.SerialProcess(ant_str)
+            # test ch4 with name
             ant_str = "estoesTunnel 10 inches,020.00,020.00,004.04,065.00,4\r"
             self.SerialProcess(ant_str)            
             
-            # if self.t.GetChannelInTreatment('ch1') == False:
-            #     self.ui.ch1Button.setStyleSheet(self.ss.ch_enable)
-            #     self.t.EnableChannelsInTreatment('ch1')
-            # else:
-            #     self.ui.ch1Button.setStyleSheet(self.ss.ch_disable)
-            #     self.t.DisableChannelsInTreatment('ch1')
-
-        if sender.objectName() == 'ch2Button':
+        if sender.objectName() == 'ch3Button':
             ant_str = "antenna none\r"
             self.SerialProcess(ant_str)
 
-            # if self.t.GetChannelInTreatment('ch2') == False:
-            #     self.ui.ch2Button.setStyleSheet(self.ss.ch_enable)
-            #     self.t.EnableChannelsInTreatment('ch2')
-            # else:
-            #     self.ui.ch2Button.setStyleSheet(self.ss.ch_disable)
-            #     self.t.DisableChannelsInTreatment('ch2')
-
-        if sender.objectName() == 'ch3Button':
-            if self.t.GetChannelInTreatment('ch3') == False:
-                self.ui.ch3Button.setStyleSheet(self.ss.ch_enable)
-                self.t.EnableChannelsInTreatment('ch3')
-            else:
-                self.ui.ch3Button.setStyleSheet(self.ss.ch_disable)
-                self.t.DisableChannelsInTreatment('ch3')
+        if sender.objectName() == 'ch4Button':
+            pass
 
         self.CheckForStart()
         self.ScreenSaverKick()        
-                    
+
+
+    def AntennaNameChange (self):
+        sender = self.sender()
+        
+        if sender.objectName() == 'ch1Button':
+            if self.antennas_connected.GetActive('ch1') == True and \
+               self.antennas_connected.name_ch1 != 'unknow':
+                if 'L: ' in self.ui.ch1Button.text():
+                    ant_str = self.AntennaProcessName('ch1')
+                else:
+                    ant_str = 'CH1\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch1') + '\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch1') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch1') + '\n'
+
+                self.ui.ch1Button.setText(ant_str)
+
+        if sender.objectName() == 'ch2Button':
+            if self.antennas_connected.GetActive('ch2') == True and \
+               self.antennas_connected.name_ch2 != 'unknow':
+                if 'L: ' in self.ui.ch2Button.text():
+                    ant_str = self.AntennaProcessName('ch2')
+                else:
+                    ant_str = 'CH2\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch2') + '\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch2') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch2') + '\n'
+
+                self.ui.ch2Button.setText(ant_str)
+
+        if sender.objectName() == 'ch3Button':
+            if self.antennas_connected.GetActive('ch3') == True and \
+               self.antennas_connected.name_ch3 != 'unknow':
+                if 'L: ' in self.ui.ch3Button.text():
+                    ant_str = self.AntennaProcessName('ch3')
+                else:
+                    ant_str = 'CH3\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch3') + '\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch3') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch3') + '\n'
+
+                self.ui.ch3Button.setText(ant_str)
+
+        if sender.objectName() == 'ch4Button':
+            if self.antennas_connected.GetActive('ch4') == True and \
+               self.antennas_connected.name_ch4 != 'unknow':
+                if 'L: ' in self.ui.ch4Button.text():
+                    ant_str = self.AntennaProcessName('ch4')
+                else:
+                    ant_str = 'CH4\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch4') + '\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch4') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch4') + '\n'
+
+                self.ui.ch4Button.setText(ant_str)
+        
+        self.ScreenSaverKick()
+        
         
     def TimeSet (self):
         sender = self.sender()
