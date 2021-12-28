@@ -134,6 +134,9 @@ class Treatment():
 
         if self.signal == 'triangular':
             new_power = int(self.triangular_power_limit * self.power / 100)
+            if new_power < 10:
+                new_power = 10
+                
             treat += "{:03d},{:03d},0000,".format(new_power, new_power)
 
             # rising edge, maintenance, falling edge, stop time 
@@ -152,6 +155,9 @@ class Treatment():
 
         if self.signal == 'sinusoidal':
             new_power = int(self.sinusoidal_power_limit * self.power / 100)
+            if new_power < 10:
+                new_power = 10
+                
             treat += "{:03d},{:03d},0000,".format(new_power, new_power)
 
             # rising edge, maintenance, falling edge, stop time 
@@ -170,6 +176,9 @@ class Treatment():
 
         if self.signal == 'square':
             new_power = int(self.square_power_limit * self.power / 100)
+            if new_power < 10:
+                new_power = 10
+                
             treat += "{:03d},{:03d},0000,".format(new_power, new_power)
 
             # rising edge, maintenance, falling edge, stop time 
