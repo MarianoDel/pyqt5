@@ -36,7 +36,7 @@ class Treatment():
 
         # how much wait before launch the screensaver
         # self.timeout_screensaver = 60 * 10
-        self.timeout_screensaver = 30      
+        self.timeout_screensaver = 60 * 5
         
         self.ReadConfigFile()
 

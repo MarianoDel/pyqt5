@@ -33,5 +33,8 @@ for line in lines:
         essid_list.append(essid[1])
 
 for i in range(len(essid_list)):
-    print(essid_list[i] + ' signal:' + rssi_list[i])
+    try:
+        print(essid_list[i] + ' signal:' + rssi_list[i])
+    except:
+        pass
 
