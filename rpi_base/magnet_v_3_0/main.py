@@ -539,8 +539,8 @@ class Dialog(QDialog):
                     ant_str = self.AntennaProcessName('ch1')
                 else:
                     ant_str = 'CH1\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch1') + '\n' + \
                               'R: ' + self.antennas_connected.GetRString('ch1') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch1') + '\n' + \
                               'I: ' + self.antennas_connected.GetIString('ch1') + '\n'
 
                 self.ui.ch1Button.setText(ant_str)
@@ -552,8 +552,8 @@ class Dialog(QDialog):
                     ant_str = self.AntennaProcessName('ch2')
                 else:
                     ant_str = 'CH2\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch2') + '\n' + \
                               'R: ' + self.antennas_connected.GetRString('ch2') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch2') + '\n' + \
                               'I: ' + self.antennas_connected.GetIString('ch2') + '\n'
 
                 self.ui.ch2Button.setText(ant_str)
@@ -565,8 +565,8 @@ class Dialog(QDialog):
                     ant_str = self.AntennaProcessName('ch3')
                 else:
                     ant_str = 'CH3\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch3') + '\n' + \
                               'R: ' + self.antennas_connected.GetRString('ch3') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch3') + '\n' + \
                               'I: ' + self.antennas_connected.GetIString('ch3') + '\n'
 
                 self.ui.ch3Button.setText(ant_str)
@@ -578,8 +578,8 @@ class Dialog(QDialog):
                     ant_str = self.AntennaProcessName('ch4')
                 else:
                     ant_str = 'CH4\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch4') + '\n' + \
                               'R: ' + self.antennas_connected.GetRString('ch4') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch4') + '\n' + \
                               'I: ' + self.antennas_connected.GetIString('ch4') + '\n'
 
                 self.ui.ch4Button.setText(ant_str)
@@ -801,8 +801,8 @@ class Dialog(QDialog):
             ant_str = 'CH' + ant_ch + '\n' + ant_name
         else:
             ant_str = 'CH' + ant_ch + '\n' + \
-                      'L: ' + self.antennas_connected.GetLString(channel) + '\n' + \
                       'R: ' + self.antennas_connected.GetRString(channel) + '\n' + \
+                      'L: ' + self.antennas_connected.GetLString(channel) + '\n' + \
                       'I: ' + self.antennas_connected.GetIString(channel) + '\n'
 
         return ant_str

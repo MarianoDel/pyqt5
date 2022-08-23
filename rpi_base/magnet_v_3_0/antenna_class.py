@@ -258,8 +258,8 @@ class AntennaInTreatment():
             print ("antenna name: " + slist[0])
             self.SetName(channel, slist[0])
 
-        self.setL(channel, slist[1])
-        self.setR(channel, slist[2])
+        self.setR(channel, slist[1])
+        self.setL(channel, slist[2])
         self.setI(channel, slist[3])
         self.setT(channel, slist[4])
         self.setActive(channel)
