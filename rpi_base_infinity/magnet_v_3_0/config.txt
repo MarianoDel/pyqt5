@@ -1,0 +1,31 @@
+[power_limits]
+triangular = 89
+square = 79
+sinusoidal = 69
+
+[static_params]
+peak_current = 3.6
+resistance065 = 47.0
+resistance080 = 23.5
+tempcoef065 = 0.2627
+tempcoef080 = 0.2627
+tempamb = 25.0
+
+[mem1]
+frequency = None
+signal = None
+time = None
+power = None
+
+[mem2]
+frequency = 23.58Hz
+signal = sinusoidal
+time = 60
+power = 70
+
+[mem3]
+frequency = 7.83Hz
+signal = triangular
+time = 60
+power = 70
+

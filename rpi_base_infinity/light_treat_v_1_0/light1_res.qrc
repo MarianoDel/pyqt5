@@ -1,0 +1,35 @@
+<RCC>
+  <qresource prefix="background">
+    <file>resources/background_light_02.png</file>
+    <file>resources/background_magnet_03.png</file>
+    <file>resources/background_magnet_01.png</file>
+  </qresource>
+  <qresource prefix="screen_saver">
+    <file>resources/1LFE.gif</file>
+    <file>resources/UIBJ.gif</file>
+    <file>resources/Rk69.gif</file>
+  </qresource>
+  <qresource prefix="buttons">
+    <file>resources/20min.png</file>
+    <file>resources/45min.png</file>
+    <file>resources/60min.png</file>
+    <file>resources/wifi-symbol_act.png</file>
+    <file>resources/wifi-symbol_disa.png</file>
+    <file>resources/wifi-symbol_emit.png</file>
+    <file>resources/wifi-symbol_err.png</file>
+    <file>resources/rewind.png</file>
+    <file>resources/Rsm.png</file>
+    <file>resources/Stop.png</file>
+    <file>resources/Stop-Pause.png</file>
+    <file>resources/30min.png</file>
+    <file>resources/Abajo.png</file>
+    <file>resources/Arriba.png</file>
+    <file>resources/Play.png</file>
+    <file>resources/cwave_disable.png</file>
+    <file>resources/cwave_enable.png</file>
+    <file>resources/inphase_disable.png</file>
+    <file>resources/inphase_enable.png</file>
+    <file>resources/outphase_disable.png</file>
+    <file>resources/outphase_enable.png</file>
+  </qresource>
+</RCC>

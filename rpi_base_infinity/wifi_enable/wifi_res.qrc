@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="symbols">
+    <file>resources/backspace.png</file>
+    <file>resources/enter.png</file>
+    <file>resources/shift_long.png</file>
+    <file>resources/shift.png</file>
+    <file>resources/wifi-symbol_act.png</file>
+    <file>resources/wifi-symbol_disa.png</file>
+    <file>resources/wifi-symbol_emit.png</file>
+    <file>resources/wifi-symbol_err.png</file>
+  </qresource>
+</RCC>

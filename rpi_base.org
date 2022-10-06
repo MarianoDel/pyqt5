@@ -1,0 +1,26 @@
+* Archivos y Directorios que se necesitan en Rpi
+** Replicar lo siguiente dentro de Rpi
+   - para utilizar magneto y stretcher
+
+** home/pi
+
+** Directorios
+   - diagnostics
+   - first_dialog
+   - light_treat_v_1_0
+   - magnet_v_3_0
+   - screen_saver
+   - stretcher_v_3_0
+   - wifi_enable
+
+** Archivos
+   - config.txt
+
+** links a archivos en directorios
+   - change_display_operation_mode.py
+   - change_lan_settings.py
+   - reconfigure.py
+   - scan_interface.py
+   - scan_pitunnel.py
+   - scan_wifi.py
+   - ssid_change_only_one.py
