@@ -1,0 +1,1 @@
+../diagnostics/lan_settings_ui.py

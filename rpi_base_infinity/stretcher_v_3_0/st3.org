@@ -33,7 +33,6 @@
      exit 0
 
 * Me parece falta quitar un servicio en el RTC VERIFICAR
-
 * Lo que falta para terminar 
 ** TODO Logging
    https://docs.python.org/3/howto/logging.html

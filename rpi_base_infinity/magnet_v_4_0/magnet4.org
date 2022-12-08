@@ -1,0 +1,4 @@
+* New Magnet Program for Infinity ver 4.0 08-12-2022
+** Uses the magnet 3.0 program as base
+** Change from one treatment stage to three
+** The screens for select the kind of treatment are new
