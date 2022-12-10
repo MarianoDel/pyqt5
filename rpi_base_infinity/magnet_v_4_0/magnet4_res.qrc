@@ -1,19 +1,50 @@
 <RCC>
   <qresource prefix="background">
+    <file>resources/bkg_stage_full_buttons.png</file>
     <file>resources/bkg_stage_no_buttons.png</file>
     <file>resources/bkg_stage_with_buttons.png</file>
     <file>resources/background_magnet_infinity_02.png</file>
     <file>resources/background_magnet_infinity_01.png</file>
   </qresource>
+  <qresource prefix="stage_buttons">
+    <file>resources/stage1_enable.png</file>
+    <file>resources/stage2_enable.png</file>
+    <file>resources/stage3_enable.png</file>
+    <file>resources/stage1_disable.png</file>
+    <file>resources/stage2_disable.png</file>
+    <file>resources/stage3_disable.png</file>
+  </qresource>
   <qresource prefix="frequencies">
-    <file>resources/7_83Hz.png</file>
-    <file>resources/11_79Hz.png</file>
-    <file>resources/16_67Hz.png</file>
-    <file>resources/23_58Hz.png</file>
-    <file>resources/30_80Hz.png</file>
-    <file>resources/62_64Hz.png</file>
+    <file>resources/0_98Hz_75_75.png</file>
+    <file>resources/1_96Hz_75_75.png</file>
+    <file>resources/3_92Hz_75_75.png</file>
+    <file>resources/7_83Hz_75_75.png</file>
+    <file>resources/11_79Hz_75_75.png</file>
+    <file>resources/16_67Hz_75_75.png</file>
+    <file>resources/23_58Hz_75_75.png</file>
+    <file>resources/30_80Hz_75_75.png</file>
+    <file>resources/62_64Hz_75_75.png</file>
+    <file>resources/86_22Hz_75_75.png</file>
+    <file>resources/23_58Hz_90_90.png</file>
+    <file>resources/30_80Hz_90_90.png</file>
+    <file>resources/62_64Hz_90_90.png</file>
+    <file>resources/86_22Hz_90_90.png</file>
+    <file>resources/7_83Hz_90_90.png</file>
+    <file>resources/11_79Hz_90_90.png</file>
+    <file>resources/16_67Hz_90_90.png</file>
+    <file>resources/3_92Hz_90_90.png</file>
+    <file>resources/0_98Hz_90_90.png</file>
+    <file>resources/1_96Hz_90_90.png</file>
   </qresource>
   <qresource prefix="buttons">
+    <file>resources/square_75_75.png</file>
+    <file>resources/sinus_75_75.png</file>
+    <file>resources/triangular_75_75.png</file>
+    <file>resources/sinus_90_90.png</file>
+    <file>resources/square_90_90.png</file>
+    <file>resources/triangular_90_90.png</file>
+    <file>resources/abajo_90_90.png</file>
+    <file>resources/arriba_90_90.png</file>
     <file>resources/wifi-symbol_act.png</file>
     <file>resources/wifi-symbol_disa.png</file>
     <file>resources/wifi-symbol_emit.png</file>

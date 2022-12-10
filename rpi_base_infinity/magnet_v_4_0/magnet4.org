@@ -2,3 +2,11 @@
 ** Uses the magnet 3.0 program as base
 ** Change from one treatment stage to three
 ** The screens for select the kind of treatment are new
+
+* Graphics parts
+** Freq buttons Text
+*** for the numbers URW Gothic L Semi Bold 58px
+*** for the freq URW Gothic L Book Obliq 22px
+*** draw at 100 x 100 px and scaled to 90 by 90 px
+
+    
