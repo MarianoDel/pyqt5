@@ -173,6 +173,66 @@ class ButtonStyles():
                                    border-radius: 10px;\
                                    border:2px solid rgb(55, 52, 53);"
         
+
+        self.stage1_button_enable = "background-image: url(:/stage_buttons/resources/stage1_enable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(254, 254, 254);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.stage1_button_select = "background-image: url(:/stage_buttons/resources/stage1_enable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(235, 217, 195);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+        
+        self.stage1_button_disable = "background-image: url(:/stage_buttons/resources/stage1_disable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.stage2_button_enable = "background-image: url(:/stage_buttons/resources/stage2_enable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(254, 254, 254);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.stage2_button_select = "background-image: url(:/stage_buttons/resources/stage2_enable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(235, 217, 195);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+        
+        self.stage2_button_disable = "background-image: url(:/stage_buttons/resources/stage2_disable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.stage3_button_enable = "background-image: url(:/stage_buttons/resources/stage3_enable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(254, 254, 254);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.stage3_button_select = "background-image: url(:/stage_buttons/resources/stage3_enable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(235, 217, 195);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+        
+        self.stage3_button_disable = "background-image: url(:/stage_buttons/resources/stage3_disable.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
         
         
 ### end of file ###
