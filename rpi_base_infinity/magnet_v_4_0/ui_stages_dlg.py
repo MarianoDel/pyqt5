@@ -29,7 +29,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.freq1Button.sizePolicy().hasHeightForWidth())
         self.freq1Button.setSizePolicy(sizePolicy)
         self.freq1Button.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq1Button.setStyleSheet("background-image: url(:/frequencies/resources/0_98Hz_90_90.png);\n"
+        self.freq1Button.setStyleSheet("background-image: url(:/frequencies/resources/freq1_90_90.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(230, 231, 232);\n"
@@ -45,7 +45,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.freq2Button.sizePolicy().hasHeightForWidth())
         self.freq2Button.setSizePolicy(sizePolicy)
         self.freq2Button.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq2Button.setStyleSheet("background-image: url(:/frequencies/resources/1_96Hz_90_90.png);\n"
+        self.freq2Button.setStyleSheet("background-image: url(:/frequencies/resources/freq2_90_90.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(230, 231, 232);\n"
@@ -61,7 +61,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.freq3Button.sizePolicy().hasHeightForWidth())
         self.freq3Button.setSizePolicy(sizePolicy)
         self.freq3Button.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq3Button.setStyleSheet("background-image: url(:/frequencies/resources/3_92Hz_90_90.png);\n"
+        self.freq3Button.setStyleSheet("background-image: url(:/frequencies/resources/freq3_90_90.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(230, 231, 232);\n"
@@ -77,7 +77,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.freq4Button.sizePolicy().hasHeightForWidth())
         self.freq4Button.setSizePolicy(sizePolicy)
         self.freq4Button.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq4Button.setStyleSheet("background-image: url(:/frequencies/resources/7_83Hz_90_90.png);\n"
+        self.freq4Button.setStyleSheet("background-image: url(:/frequencies/resources/freq4_90_90.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(230, 231, 232);\n"
@@ -93,7 +93,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.freq5Button.sizePolicy().hasHeightForWidth())
         self.freq5Button.setSizePolicy(sizePolicy)
         self.freq5Button.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq5Button.setStyleSheet("background-image: url(:/frequencies/resources/11_79Hz_90_90.png);\n"
+        self.freq5Button.setStyleSheet("background-image: url(:/frequencies/resources/freq5_90_90.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(230, 231, 232);\n"
@@ -109,70 +109,6 @@ class Ui_StagesDialog(object):
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_3.setSpacing(5)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.freq1Button_2 = QtWidgets.QPushButton(self.layoutWidget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.freq1Button_2.sizePolicy().hasHeightForWidth())
-        self.freq1Button_2.setSizePolicy(sizePolicy)
-        self.freq1Button_2.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq1Button_2.setStyleSheet("background-image: url(:/frequencies/resources/16_67Hz_90_90.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(230, 231, 232);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.freq1Button_2.setText("")
-        self.freq1Button_2.setObjectName("freq1Button_2")
-        self.horizontalLayout_3.addWidget(self.freq1Button_2)
-        self.freq1Button_3 = QtWidgets.QPushButton(self.layoutWidget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.freq1Button_3.sizePolicy().hasHeightForWidth())
-        self.freq1Button_3.setSizePolicy(sizePolicy)
-        self.freq1Button_3.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq1Button_3.setStyleSheet("background-image: url(:/frequencies/resources/23_58Hz_90_90.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(230, 231, 232);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.freq1Button_3.setText("")
-        self.freq1Button_3.setObjectName("freq1Button_3")
-        self.horizontalLayout_3.addWidget(self.freq1Button_3)
-        self.freq1Button_4 = QtWidgets.QPushButton(self.layoutWidget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.freq1Button_4.sizePolicy().hasHeightForWidth())
-        self.freq1Button_4.setSizePolicy(sizePolicy)
-        self.freq1Button_4.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq1Button_4.setStyleSheet("background-image: url(:/frequencies/resources/30_80Hz_90_90.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(230, 231, 232);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.freq1Button_4.setText("")
-        self.freq1Button_4.setObjectName("freq1Button_4")
-        self.horizontalLayout_3.addWidget(self.freq1Button_4)
-        self.freq1Button_5 = QtWidgets.QPushButton(self.layoutWidget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.freq1Button_5.sizePolicy().hasHeightForWidth())
-        self.freq1Button_5.setSizePolicy(sizePolicy)
-        self.freq1Button_5.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq1Button_5.setStyleSheet("background-image: url(:/frequencies/resources/62_64Hz_90_90.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(230, 231, 232);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.freq1Button_5.setText("")
-        self.freq1Button_5.setObjectName("freq1Button_5")
-        self.horizontalLayout_3.addWidget(self.freq1Button_5)
         self.freq6Button = QtWidgets.QPushButton(self.layoutWidget_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -180,7 +116,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.freq6Button.sizePolicy().hasHeightForWidth())
         self.freq6Button.setSizePolicy(sizePolicy)
         self.freq6Button.setMinimumSize(QtCore.QSize(90, 90))
-        self.freq6Button.setStyleSheet("background-image: url(:/frequencies/resources/86_22Hz_90_90.png);\n"
+        self.freq6Button.setStyleSheet("background-image: url(:/frequencies/resources/freq6_90_90.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(230, 231, 232);\n"
@@ -189,6 +125,70 @@ class Ui_StagesDialog(object):
         self.freq6Button.setText("")
         self.freq6Button.setObjectName("freq6Button")
         self.horizontalLayout_3.addWidget(self.freq6Button)
+        self.freq7Button = QtWidgets.QPushButton(self.layoutWidget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.freq7Button.sizePolicy().hasHeightForWidth())
+        self.freq7Button.setSizePolicy(sizePolicy)
+        self.freq7Button.setMinimumSize(QtCore.QSize(90, 90))
+        self.freq7Button.setStyleSheet("background-image: url(:/frequencies/resources/freq7_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.freq7Button.setText("")
+        self.freq7Button.setObjectName("freq7Button")
+        self.horizontalLayout_3.addWidget(self.freq7Button)
+        self.freq8Button = QtWidgets.QPushButton(self.layoutWidget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.freq8Button.sizePolicy().hasHeightForWidth())
+        self.freq8Button.setSizePolicy(sizePolicy)
+        self.freq8Button.setMinimumSize(QtCore.QSize(90, 90))
+        self.freq8Button.setStyleSheet("background-image: url(:/frequencies/resources/freq8_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.freq8Button.setText("")
+        self.freq8Button.setObjectName("freq8Button")
+        self.horizontalLayout_3.addWidget(self.freq8Button)
+        self.freq9Button = QtWidgets.QPushButton(self.layoutWidget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.freq9Button.sizePolicy().hasHeightForWidth())
+        self.freq9Button.setSizePolicy(sizePolicy)
+        self.freq9Button.setMinimumSize(QtCore.QSize(90, 90))
+        self.freq9Button.setStyleSheet("background-image: url(:/frequencies/resources/freq9_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.freq9Button.setText("")
+        self.freq9Button.setObjectName("freq9Button")
+        self.horizontalLayout_3.addWidget(self.freq9Button)
+        self.freq10Button = QtWidgets.QPushButton(self.layoutWidget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.freq10Button.sizePolicy().hasHeightForWidth())
+        self.freq10Button.setSizePolicy(sizePolicy)
+        self.freq10Button.setMinimumSize(QtCore.QSize(90, 90))
+        self.freq10Button.setStyleSheet("background-image: url(:/frequencies/resources/freq10_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.freq10Button.setText("")
+        self.freq10Button.setObjectName("freq10Button")
+        self.horizontalLayout_3.addWidget(self.freq10Button)
         self.layoutWidget1 = QtWidgets.QWidget(StagesDialog)
         self.layoutWidget1.setGeometry(QtCore.QRect(880, 361, 341, 106))
         self.layoutWidget1.setObjectName("layoutWidget1")
@@ -549,84 +549,6 @@ class Ui_StagesDialog(object):
         self.stage3MinutesLabel.setStyleSheet("color: rgb(62, 64, 149);")
         self.stage3MinutesLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.stage3MinutesLabel.setObjectName("stage3MinutesLabel")
-        self.layoutWidget_9 = QtWidgets.QWidget(StagesDialog)
-        self.layoutWidget_9.setGeometry(QtCore.QRect(255, 380, 191, 91))
-        self.layoutWidget_9.setObjectName("layoutWidget_9")
-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.layoutWidget_9)
-        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_8.setSpacing(4)
-        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.stage2SignalButton = QtWidgets.QPushButton(self.layoutWidget_9)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.stage2SignalButton.sizePolicy().hasHeightForWidth())
-        self.stage2SignalButton.setSizePolicy(sizePolicy)
-        self.stage2SignalButton.setMinimumSize(QtCore.QSize(75, 75))
-        self.stage2SignalButton.setStyleSheet("background-image: url(:/buttons/resources/square_75_75.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(237, 211, 152);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.stage2SignalButton.setText("")
-        self.stage2SignalButton.setObjectName("stage2SignalButton")
-        self.horizontalLayout_8.addWidget(self.stage2SignalButton)
-        self.stage2FreqButton = QtWidgets.QPushButton(self.layoutWidget_9)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.stage2FreqButton.sizePolicy().hasHeightForWidth())
-        self.stage2FreqButton.setSizePolicy(sizePolicy)
-        self.stage2FreqButton.setMinimumSize(QtCore.QSize(75, 75))
-        self.stage2FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/62_64Hz_75_75.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(220, 188, 203);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.stage2FreqButton.setText("")
-        self.stage2FreqButton.setObjectName("stage2FreqButton")
-        self.horizontalLayout_8.addWidget(self.stage2FreqButton)
-        self.layoutWidget_10 = QtWidgets.QWidget(StagesDialog)
-        self.layoutWidget_10.setGeometry(QtCore.QRect(485, 380, 191, 91))
-        self.layoutWidget_10.setObjectName("layoutWidget_10")
-        self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.layoutWidget_10)
-        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_9.setSpacing(4)
-        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.stage3SignalButton = QtWidgets.QPushButton(self.layoutWidget_10)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.stage3SignalButton.sizePolicy().hasHeightForWidth())
-        self.stage3SignalButton.setSizePolicy(sizePolicy)
-        self.stage3SignalButton.setMinimumSize(QtCore.QSize(75, 75))
-        self.stage3SignalButton.setStyleSheet("background-image: url(:/buttons/resources/sinus_75_75.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(237, 211, 152);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.stage3SignalButton.setText("")
-        self.stage3SignalButton.setObjectName("stage3SignalButton")
-        self.horizontalLayout_9.addWidget(self.stage3SignalButton)
-        self.stage3FreqButton = QtWidgets.QPushButton(self.layoutWidget_10)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.stage3FreqButton.sizePolicy().hasHeightForWidth())
-        self.stage3FreqButton.setSizePolicy(sizePolicy)
-        self.stage3FreqButton.setMinimumSize(QtCore.QSize(75, 75))
-        self.stage3FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/86_22Hz_75_75.png);\n"
-"background-repeat:no-repeat;\n"
-"background-position: center center;\n"
-"background-color: rgb(220, 188, 203);\n"
-"border-radius: 20px;\n"
-"border:3px solid rgb(55, 52, 53);")
-        self.stage3FreqButton.setText("")
-        self.stage3FreqButton.setObjectName("stage3FreqButton")
-        self.horizontalLayout_9.addWidget(self.stage3FreqButton)
         self.stage1Label = QtWidgets.QLabel(StagesDialog)
         self.stage1Label.setGeometry(QtCore.QRect(25, 205, 201, 271))
         self.stage1Label.setStyleSheet("background-image: url(:/stage_buttons/resources/stage1_enable.png);\n"
@@ -681,7 +603,7 @@ class Ui_StagesDialog(object):
         sizePolicy.setHeightForWidth(self.stage1FreqButton.sizePolicy().hasHeightForWidth())
         self.stage1FreqButton.setSizePolicy(sizePolicy)
         self.stage1FreqButton.setMinimumSize(QtCore.QSize(75, 75))
-        self.stage1FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/0_98Hz_75_75.png);\n"
+        self.stage1FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/freq1_75_75.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position: center center;\n"
 "background-color: rgb(220, 188, 203);\n"
@@ -689,6 +611,70 @@ class Ui_StagesDialog(object):
 "border:3px solid rgb(55, 52, 53);")
         self.stage1FreqButton.setText("")
         self.stage1FreqButton.setObjectName("stage1FreqButton")
+        self.stage2FreqButton = QtWidgets.QPushButton(StagesDialog)
+        self.stage2FreqButton.setGeometry(QtCore.QRect(360, 385, 75, 75))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage2FreqButton.sizePolicy().hasHeightForWidth())
+        self.stage2FreqButton.setSizePolicy(sizePolicy)
+        self.stage2FreqButton.setMinimumSize(QtCore.QSize(75, 75))
+        self.stage2FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/freq9_75_75.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(220, 188, 203);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage2FreqButton.setText("")
+        self.stage2FreqButton.setObjectName("stage2FreqButton")
+        self.stage2SignalButton = QtWidgets.QPushButton(StagesDialog)
+        self.stage2SignalButton.setGeometry(QtCore.QRect(270, 385, 75, 75))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage2SignalButton.sizePolicy().hasHeightForWidth())
+        self.stage2SignalButton.setSizePolicy(sizePolicy)
+        self.stage2SignalButton.setMinimumSize(QtCore.QSize(75, 75))
+        self.stage2SignalButton.setStyleSheet("background-image: url(:/buttons/resources/square_75_75.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(237, 211, 152);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage2SignalButton.setText("")
+        self.stage2SignalButton.setObjectName("stage2SignalButton")
+        self.stage3FreqButton = QtWidgets.QPushButton(StagesDialog)
+        self.stage3FreqButton.setGeometry(QtCore.QRect(590, 385, 75, 75))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage3FreqButton.sizePolicy().hasHeightForWidth())
+        self.stage3FreqButton.setSizePolicy(sizePolicy)
+        self.stage3FreqButton.setMinimumSize(QtCore.QSize(75, 75))
+        self.stage3FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/freq10_75_75.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(220, 188, 203);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage3FreqButton.setText("")
+        self.stage3FreqButton.setObjectName("stage3FreqButton")
+        self.stage3SignalButton = QtWidgets.QPushButton(StagesDialog)
+        self.stage3SignalButton.setGeometry(QtCore.QRect(500, 385, 75, 75))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage3SignalButton.sizePolicy().hasHeightForWidth())
+        self.stage3SignalButton.setSizePolicy(sizePolicy)
+        self.stage3SignalButton.setMinimumSize(QtCore.QSize(75, 75))
+        self.stage3SignalButton.setStyleSheet("background-image: url(:/buttons/resources/sinus_75_75.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(237, 211, 152);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage3SignalButton.setText("")
+        self.stage3SignalButton.setObjectName("stage3SignalButton")
 
         self.retranslateUi(StagesDialog)
         QtCore.QMetaObject.connectSlotsByName(StagesDialog)

@@ -46,7 +46,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/0_98Hz_90_90.png);
+       <string notr="true">background-image: url(:/frequencies/resources/freq1_90_90.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(230, 231, 232);
@@ -73,7 +73,7 @@ border:3px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/1_96Hz_90_90.png);
+       <string notr="true">background-image: url(:/frequencies/resources/freq2_90_90.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(230, 231, 232);
@@ -100,7 +100,7 @@ border:3px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/3_92Hz_90_90.png);
+       <string notr="true">background-image: url(:/frequencies/resources/freq3_90_90.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(230, 231, 232);
@@ -127,7 +127,7 @@ border:3px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/7_83Hz_90_90.png);
+       <string notr="true">background-image: url(:/frequencies/resources/freq4_90_90.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(230, 231, 232);
@@ -154,7 +154,7 @@ border:3px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/11_79Hz_90_90.png);
+       <string notr="true">background-image: url(:/frequencies/resources/freq5_90_90.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(230, 231, 232);
@@ -182,114 +182,6 @@ border:3px solid rgb(55, 52, 53);</string>
      <number>5</number>
     </property>
     <item>
-     <widget class="QPushButton" name="freq1Button_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>90</width>
-        <height>90</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/16_67Hz_90_90.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(230, 231, 232);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="freq1Button_3">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>90</width>
-        <height>90</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/23_58Hz_90_90.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(230, 231, 232);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="freq1Button_4">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>90</width>
-        <height>90</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/30_80Hz_90_90.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(230, 231, 232);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="freq1Button_5">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>90</width>
-        <height>90</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/62_64Hz_90_90.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(230, 231, 232);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QPushButton" name="freq6Button">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -304,7 +196,115 @@ border:3px solid rgb(55, 52, 53);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/86_22Hz_90_90.png);
+       <string notr="true">background-image: url(:/frequencies/resources/freq6_90_90.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(230, 231, 232);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="freq7Button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/frequencies/resources/freq7_90_90.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(230, 231, 232);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="freq8Button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/frequencies/resources/freq8_90_90.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(230, 231, 232);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="freq9Button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/frequencies/resources/freq9_90_90.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(230, 231, 232);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="freq10Button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>90</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/frequencies/resources/freq10_90_90.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(230, 231, 232);
@@ -1074,144 +1074,6 @@ border: 0px;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget_9">
-   <property name="geometry">
-    <rect>
-     <x>255</x>
-     <y>380</y>
-     <width>191</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_8">
-    <property name="spacing">
-     <number>4</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="stage2SignalButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>75</width>
-        <height>75</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/square_75_75.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(237, 211, 152);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="stage2FreqButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>75</width>
-        <height>75</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/62_64Hz_75_75.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(220, 188, 203);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_10">
-   <property name="geometry">
-    <rect>
-     <x>485</x>
-     <y>380</y>
-     <width>191</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_9">
-    <property name="spacing">
-     <number>4</number>
-    </property>
-    <item>
-     <widget class="QPushButton" name="stage3SignalButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>75</width>
-        <height>75</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/buttons/resources/sinus_75_75.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(237, 211, 152);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="stage3FreqButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>75</width>
-        <height>75</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/frequencies/resources/86_22Hz_75_75.png);
-background-repeat:no-repeat;
-background-position: center center;
-background-color: rgb(220, 188, 203);
-border-radius: 20px;
-border:3px solid rgb(55, 52, 53);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QLabel" name="stage1Label">
    <property name="geometry">
     <rect>
@@ -1330,10 +1192,142 @@ border:3px solid rgb(55, 52, 53);</string>
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/frequencies/resources/0_98Hz_75_75.png);
+    <string notr="true">background-image: url(:/frequencies/resources/freq1_75_75.png);
 background-repeat:no-repeat;
 background-position: center center;
 background-color: rgb(220, 188, 203);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stage2FreqButton">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>385</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>75</width>
+     <height>75</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/frequencies/resources/freq9_75_75.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(220, 188, 203);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stage2SignalButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>385</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>75</width>
+     <height>75</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/buttons/resources/square_75_75.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(237, 211, 152);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stage3FreqButton">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>385</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>75</width>
+     <height>75</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/frequencies/resources/freq10_75_75.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(220, 188, 203);
+border-radius: 20px;
+border:3px solid rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stage3SignalButton">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>385</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>75</width>
+     <height>75</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/buttons/resources/sinus_75_75.png);
+background-repeat:no-repeat;
+background-position: center center;
+background-color: rgb(237, 211, 152);
 border-radius: 20px;
 border:3px solid rgb(55, 52, 53);</string>
    </property>

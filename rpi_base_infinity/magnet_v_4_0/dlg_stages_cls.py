@@ -12,7 +12,7 @@ from ui_stages_dlg import Ui_StagesDialog
 class StagesDialog (QDialog):
 
 
-    def __init__(self, st_lst, style_obj):
+    def __init__(self, st_lst, style_obj, caller_stage='stage1'):
         super(StagesDialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -28,8 +28,9 @@ class StagesDialog (QDialog):
         self.stage3_info = st_lst[2]
 
         self.action = 'accept'
+        self.stage_selected = caller_stage
         
-        # get the close event and connect the buttons        
+        # get the close event and connect the buttons
         self.ui.clearButton.clicked.connect(self.ClearStage)
         self.ui.backButton.clicked.connect(self.BackStage)
         self.ui.acceptButton.clicked.connect(self.accept)
@@ -38,18 +39,58 @@ class StagesDialog (QDialog):
         self.ui.stage2Button.clicked.connect(self.SelectStageButton2)
         self.ui.stage3Button.clicked.connect(self.SelectStageButton3)
 
-        # check which was selected, or select the first one
-        self.Stage1GroupChange('enable')
-        self.Stage2GroupChange('enable')
-        self.Stage3GroupChange('select')
+        self.ui.freq1Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq2Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq3Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq4Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq5Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq6Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq7Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq8Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq9Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq10Button.clicked.connect(self.FrequencyChange)        
 
-        self.ui.stage1SignalButton.raise_()
-        self.ui.stage1FreqButton.raise_()
+        self.ui.triangularButton.clicked.connect(self.SignalChange)
+        self.ui.squareButton.clicked.connect(self.SignalChange)
+        self.ui.sinusoidalButton.clicked.connect(self.SignalChange)
+
+        self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
+        self.ui.powerUpButton.released.connect(self.UpPowerReleased)
+        self.ui.powerDwnButton.pressed.connect(self.DwnPowerPressed)
+        self.ui.powerDwnButton.released.connect(self.DwnPowerReleased)
+        self.ui.timeUpButton.pressed.connect(self.UpTimePressed)
+        self.ui.timeUpButton.released.connect(self.UpTimeReleased)        
+        self.ui.timeDwnButton.pressed.connect(self.DwnTimePressed)
+        self.ui.timeDwnButton.released.connect(self.DwnTimeReleased)
         
+        # check enables or disables
+        if self.stage1_info.GetStageStatus() == 'enable':
+            self.Stage1GroupChange('enable')
+        else:
+            self.Stage1GroupChange('disable')
+            
+        if self.stage2_info.GetStageStatus() == 'enable':
+            self.Stage2GroupChange('enable')
+        else:
+            self.Stage2GroupChange('disable')
+        
+        if self.stage3_info.GetStageStatus() == 'enable':
+            self.Stage3GroupChange('enable')
+        else:
+            self.Stage3GroupChange('disable')
 
+        
+        # check which was selected, or select the first one
+        if self.stage_selected == 'stage1':
+            self.Stage1GroupChange('select')
+        elif self.stage_selected == 'stage2':
+            self.Stage2GroupChange('select')
+        else:
+            self.Stage3GroupChange('select')
         
 
     def SelectStageButton1 (self):
+        self.stage_selected = 'stage1'
         self.Stage1GroupChange('select')
 
         if self.stage2_info.status == 'enable':
@@ -58,9 +99,8 @@ class StagesDialog (QDialog):
         if self.stage3_info.status == 'enable':
             self.Stage3GroupChange('enable')
 
-        print('stage1 button!')
-
     def SelectStageButton2 (self):
+        self.stage_selected = 'stage2'
         self.Stage2GroupChange('select')
 
         if self.stage1_info.status == 'enable':
@@ -72,6 +112,7 @@ class StagesDialog (QDialog):
         print('stage2 button!')
 
     def SelectStageButton3 (self):
+        self.stage_selected = 'stage3'
         self.Stage3GroupChange('select')
 
         if self.stage1_info.status == 'enable':
@@ -87,15 +128,22 @@ class StagesDialog (QDialog):
         raise_inners = False
         
         if change_to == 'enable':
+            self.ui.stage1MinutesLabel.setText(str(self.stage1_info.timer)+"'")
+            self.ui.stage1PowerLabel.setText(str(self.stage1_info.power)+"%")
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_enable)
             raise_inners = True
 
         if change_to == 'select':
+            self.ui.stage1MinutesLabel.setText(str(self.stage1_info.timer)+"'")
+            self.ui.stage1PowerLabel.setText(str(self.stage1_info.power)+"%")
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_select)
             raise_inners = True            
 
         if change_to == 'disable':
+            self.ui.stage1MinutesLabel.setText('')
+            self.ui.stage1PowerLabel.setText('')            
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_disable)
+            self.ui.stage1Label.raise_()
             
         if raise_inners:
             # fix all picture, raise all small pics over background label,
@@ -112,15 +160,22 @@ class StagesDialog (QDialog):
         raise_inners = False
         
         if change_to == 'enable':
+            self.ui.stage2MinutesLabel.setText(str(self.stage2_info.timer)+"'")
+            self.ui.stage2PowerLabel.setText(str(self.stage2_info.power)+"%")
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_enable)
             raise_inners = True
 
         if change_to == 'select':
+            self.ui.stage2MinutesLabel.setText(str(self.stage2_info.timer)+"'")
+            self.ui.stage2PowerLabel.setText(str(self.stage2_info.power)+"%")
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_select)
             raise_inners = True            
 
         if change_to == 'disable':
+            self.ui.stage2MinutesLabel.setText('')
+            self.ui.stage2PowerLabel.setText('')            
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_disable)
+            self.ui.stage2Label.raise_()
             
         if raise_inners:
             # fix all picture, raise all small pics over background label,
@@ -137,15 +192,22 @@ class StagesDialog (QDialog):
         raise_inners = False
         
         if change_to == 'enable':
+            self.ui.stage3MinutesLabel.setText(str(self.stage3_info.timer)+"'")
+            self.ui.stage3PowerLabel.setText(str(self.stage3_info.power)+"%")
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_enable)
             raise_inners = True
 
         if change_to == 'select':
+            self.ui.stage3MinutesLabel.setText(str(self.stage3_info.timer)+"'")
+            self.ui.stage3PowerLabel.setText(str(self.stage3_info.power)+"%")
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_select)
             raise_inners = True            
 
         if change_to == 'disable':
+            self.ui.stage3MinutesLabel.setText('')
+            self.ui.stage3PowerLabel.setText('')            
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_disable)
+            self.ui.stage3Label.raise_()
             
         if raise_inners:
             # fix all picture, raise all small pics over background label,
@@ -156,11 +218,285 @@ class StagesDialog (QDialog):
 
         # then raise transparent button
         self.ui.stage3Button.raise_()
+
         
+    def SignalDisableAll(self):
+        self.ui.triangularButton.setStyleSheet(self.style.triangular_90_disable)
+        self.ui.squareButton.setStyleSheet(self.style.square_90_disable)
+        self.ui.sinusoidalButton.setStyleSheet(self.style.sinusoidal_90_disable)
+
+
+    def SignalChange (self):
+        sender = self.sender()
+
+        if sender.objectName() == 'triangularButton':
+            self.SignalChangeTo('triangular')
+
+        elif sender.objectName() == 'squareButton':
+            self.SignalChangeTo('square')
+
+        elif sender.objectName() == 'sinusoidalButton':
+            self.SignalChangeTo('sinusoidal')
+
+        self.ScreenSaverKick()
+
+        
+    def SignalChangeTo (self, new_signal):
+        self.SignalDisableAll()
+        
+        if new_signal == 'triangular':
+            self.ui.triangularButton.setStyleSheet(self.style.triangular_90_enable)
+
+            if self.stage_selected == 'stage1':
+                self.ui.stage1SignalButton.setStyleSheet(self.style.triangular_75_enable)
+                self.stage1_info.SetStageSignal('triangular')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2SignalButton.setStyleSheet(self.style.triangular_75_enable)
+                self.stage2_info.SetStageSignal('triangular')
+            else:
+                self.ui.stage3SignalButton.setStyleSheet(self.style.triangular_75_enable)
+                self.stage3_info.SetStageSignal('triangular')
+
+        elif new_signal == 'square':
+            self.ui.squareButton.setStyleSheet(self.style.square_90_enable)
+
+            if self.stage_selected == 'stage1':
+                self.ui.stage1SignalButton.setStyleSheet(self.style.square_75_enable)
+                self.stage1_info.SetStageSignal('square')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2SignalButton.setStyleSheet(self.style.square_75_enable)
+                self.stage2_info.SetStageSignal('square')
+            else:
+                self.ui.stage3SignalButton.setStyleSheet(self.style.square_75_enable)
+                self.stage3_info.SetStageSignal('square')            
+
+        elif new_signal == 'sinusoidal':
+            self.ui.sinusoidalButton.setStyleSheet(self.style.sinusoidal_90_enable)
+
+            if self.stage_selected == 'stage1':
+                self.ui.stage1SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+                self.stage1_info.SetStageSignal('sinusoidal')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+                self.stage2_info.SetStageSignal('sinusoidal')
+            else:
+                self.ui.stage3SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+                self.stage3_info.SetStageSignal('sinusoidal')
+        
+
+    def FrequencyDisableAll(self):
+        self.ui.freq1Button.setStyleSheet(self.style.freq1_90_disable)
+        self.ui.freq2Button.setStyleSheet(self.style.freq2_90_disable)
+        self.ui.freq3Button.setStyleSheet(self.style.freq3_90_disable)
+        self.ui.freq4Button.setStyleSheet(self.style.freq4_90_disable)
+        self.ui.freq5Button.setStyleSheet(self.style.freq5_90_disable)
+        self.ui.freq6Button.setStyleSheet(self.style.freq6_90_disable)
+        self.ui.freq7Button.setStyleSheet(self.style.freq7_90_disable)
+        self.ui.freq8Button.setStyleSheet(self.style.freq8_90_disable)
+        self.ui.freq9Button.setStyleSheet(self.style.freq9_90_disable)
+        self.ui.freq10Button.setStyleSheet(self.style.freq10_90_disable)        
+
+
+    def FrequencyChange (self):
+        sender = self.sender()
+
+        if sender.objectName() == 'freq1Button':
+            self.FrequencyChangeTo('freq1')
+
+        if sender.objectName() == 'freq2Button':
+            self.FrequencyChangeTo('freq2')
+
+        if sender.objectName() == 'freq3Button':
+            self.FrequencyChangeTo('freq3')
+
+        if sender.objectName() == 'freq4Button':
+            self.FrequencyChangeTo('freq4')
+
+        if sender.objectName() == 'freq5Button':
+            self.FrequencyChangeTo('freq5')
+
+        if sender.objectName() == 'freq6Button':
+            self.FrequencyChangeTo('freq6')
+
+        if sender.objectName() == 'freq7Button':
+            self.FrequencyChangeTo('freq7')
+
+        if sender.objectName() == 'freq8Button':
+            self.FrequencyChangeTo('freq8')
+
+        if sender.objectName() == 'freq9Button':
+            self.FrequencyChangeTo('freq9')
+
+        if sender.objectName() == 'freq10Button':
+            self.FrequencyChangeTo('freq10')
             
+        self.ScreenSaverKick()
+
+
+    def FrequencyChangeTo (self, new_freq):
+        self.FrequencyDisableAll()
+        
+        if new_freq == 'freq1':
+            self.ui.freq1Button.setStyleSheet(self.style.freq1_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq1_75_enable)
+                self.stage1_info.SetStageFrequency('0.98Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq1_75_enable)
+                self.stage2_info.SetStageFrequency('0.98Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq1_75_enable)
+                self.stage3_info.SetStageFrequency('0.98Hz')
+
+        if new_freq == 'freq2':
+            self.ui.freq2Button.setStyleSheet(self.style.freq2_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq2_75_enable)
+                self.stage1_info.SetStageFrequency('1.96Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq2_75_enable)
+                self.stage2_info.SetStageFrequency('1.96Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq2_75_enable)
+                self.stage3_info.SetStageFrequency('1.96Hz')
+
+        if new_freq == 'freq3':
+            self.ui.freq3Button.setStyleSheet(self.style.freq3_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq3_75_enable)
+                self.stage1_info.SetStageFrequency('3.92Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq3_75_enable)
+                self.stage2_info.SetStageFrequency('3.92Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq3_75_enable)
+                self.stage3_info.SetStageFrequency('3.92Hz')
+
+        if new_freq == 'freq4':
+            self.ui.freq4Button.setStyleSheet(self.style.freq4_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq4_75_enable)
+                self.stage1_info.SetStageFrequency('7.83Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq4_75_enable)
+                self.stage2_info.SetStageFrequency('7.83Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq4_75_enable)
+                self.stage3_info.SetStageFrequency('7.83Hz')
+
+        if new_freq == 'freq5':
+            self.ui.freq5Button.setStyleSheet(self.style.freq5_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq5_75_enable)
+                self.stage1_info.SetStageFrequency('11.79Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq5_75_enable)
+                self.stage2_info.SetStageFrequency('11.79Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq5_75_enable)
+                self.stage3_info.SetStageFrequency('11.79Hz')
+
+        if new_freq == 'freq6':
+            self.ui.freq6Button.setStyleSheet(self.style.freq6_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq6_75_enable)
+                self.stage1_info.SetStageFrequency('16.67Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq6_75_enable)
+                self.stage2_info.SetStageFrequency('16.67Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq6_75_enable)
+                self.stage3_info.SetStageFrequency('16.67Hz')
+
+        if new_freq == 'freq7':
+            self.ui.freq7Button.setStyleSheet(self.style.freq7_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq7_75_enable)
+                self.stage1_info.SetStageFrequency('23.58Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq7_75_enable)
+                self.stage2_info.SetStageFrequency('23.58Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq7_75_enable)
+                self.stage3_info.SetStageFrequency('23.58Hz')
+
+        if new_freq == 'freq8':
+            self.ui.freq8Button.setStyleSheet(self.style.freq8_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq8_75_enable)
+                self.stage1_info.SetStageFrequency('30.80Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq8_75_enable)
+                self.stage2_info.SetStageFrequency('30.80Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq8_75_enable)
+                self.stage3_info.SetStageFrequency('30.80Hz')
+
+        if new_freq == 'freq9':
+            self.ui.freq9Button.setStyleSheet(self.style.freq9_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq9_75_enable)
+                self.stage1_info.SetStageFrequency('62.64Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq9_75_enable)
+                self.stage2_info.SetStageFrequency('62.64Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq9_75_enable)
+                self.stage3_info.SetStageFrequency('62.64Hz')
+
+        if new_freq == 'freq10':
+            self.ui.freq10Button.setStyleSheet(self.style.freq10_90_enable)
+            if self.stage_selected == 'stage1':
+                self.ui.stage1FreqButton.setStyleSheet(self.style.freq10_75_enable)
+                self.stage1_info.SetStageFrequency('86.22Hz')
+            elif self.stage_selected == 'stage2':
+                self.ui.stage2FreqButton.setStyleSheet(self.style.freq10_75_enable)
+                self.stage2_info.SetStageFrequency('86.22Hz')
+            else:
+                self.ui.stage3FreqButton.setStyleSheet(self.style.freq10_75_enable)
+                self.stage3_info.SetStageFrequency('86.22Hz')
+            
+
+    def UpPowerPressed (self):
+        pass
+
+    def UpPowerReleased (self):
+        pass
+
+    def DwnPowerPressed (self):
+        pass
+
+    def DwnPowerReleased (self):
+        pass
+
+    def UpTimePressed (self):
+        pass
+
+    def UpTimeReleased (self):
+        pass
+
+    def DwnTimePressed (self):
+        pass
+
+    def DwnTimeReleased (self):
+        pass
+    
+    
+
+    def ScreenSaverKick (self):
+        pass
+
+    
     def ClearStage (self):
-        print('clearing selected stage')
-        self.SelectStageButton2()
+        if self.stage_selected == 'stage1':
+            self.stage1_info.SetStageStatus('disable')
+            self.Stage1GroupChange('disable')
+        elif self.stage_selected == 'stage2':
+            self.stage2_info.SetStageStatus('disable')
+            self.Stage2GroupChange('disable')
+        else:
+            self.stage3_info.SetStageStatus('disable')
+            self.Stage3GroupChange('disable')
 
 
     def BackStage (self):

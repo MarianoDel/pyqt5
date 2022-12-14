@@ -15,26 +15,26 @@
     <file>resources/stage3_disable.png</file>
   </qresource>
   <qresource prefix="frequencies">
-    <file>resources/0_98Hz_75_75.png</file>
-    <file>resources/1_96Hz_75_75.png</file>
-    <file>resources/3_92Hz_75_75.png</file>
-    <file>resources/7_83Hz_75_75.png</file>
-    <file>resources/11_79Hz_75_75.png</file>
-    <file>resources/16_67Hz_75_75.png</file>
-    <file>resources/23_58Hz_75_75.png</file>
-    <file>resources/30_80Hz_75_75.png</file>
-    <file>resources/62_64Hz_75_75.png</file>
-    <file>resources/86_22Hz_75_75.png</file>
-    <file>resources/23_58Hz_90_90.png</file>
-    <file>resources/30_80Hz_90_90.png</file>
-    <file>resources/62_64Hz_90_90.png</file>
-    <file>resources/86_22Hz_90_90.png</file>
-    <file>resources/7_83Hz_90_90.png</file>
-    <file>resources/11_79Hz_90_90.png</file>
-    <file>resources/16_67Hz_90_90.png</file>
-    <file>resources/3_92Hz_90_90.png</file>
-    <file>resources/0_98Hz_90_90.png</file>
-    <file>resources/1_96Hz_90_90.png</file>
+    <file>resources/freq1_75_75.png</file>
+    <file>resources/freq1_90_90.png</file>
+    <file>resources/freq2_75_75.png</file>
+    <file>resources/freq2_90_90.png</file>
+    <file>resources/freq3_75_75.png</file>
+    <file>resources/freq3_90_90.png</file>
+    <file>resources/freq4_75_75.png</file>
+    <file>resources/freq4_90_90.png</file>
+    <file>resources/freq5_75_75.png</file>
+    <file>resources/freq5_90_90.png</file>
+    <file>resources/freq6_75_75.png</file>
+    <file>resources/freq6_90_90.png</file>
+    <file>resources/freq7_75_75.png</file>
+    <file>resources/freq7_90_90.png</file>
+    <file>resources/freq8_75_75.png</file>
+    <file>resources/freq8_90_90.png</file>
+    <file>resources/freq9_75_75.png</file>
+    <file>resources/freq9_90_90.png</file>
+    <file>resources/freq10_75_75.png</file>
+    <file>resources/freq10_90_90.png</file>
   </qresource>
   <qresource prefix="buttons">
     <file>resources/square_75_75.png</file>

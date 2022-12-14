@@ -43,9 +43,23 @@ def TestScreen ():
     stage2 = Stages()
     stage3 = Stages()
 
+    stage1.SetStageTimer(45)
+    stage1.SetStagePower(85)
+    stage1.SetStageSignal('triangular')
+    stage1.SetStageFrequency('freq1')
     stage1.SetStageStatus('enable')
+
+    stage2.SetStageTimer(60)
+    stage2.SetStagePower(100)
+    stage2.SetStageSignal('square')
+    stage2.SetStageFrequency('freq9')
     stage2.SetStageStatus('enable')
-    stage3.SetStageStatus('enable')
+
+    stage3.SetStageTimer(0)
+    stage3.SetStagePower(0)
+    stage3.SetStageSignal('none')
+    stage3.SetStageFrequency('none')
+    stage3.SetStageStatus('disable')
     
     stages_list = [stage1, stage2, stage3]
     style_obj = ButtonStyles()

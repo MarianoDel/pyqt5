@@ -101,8 +101,294 @@ class ButtonStyles():
                              background-color: rgb(245, 245, 245);\
                              border-radius: 10px;\
                              border:2px solid rgb(55, 52, 53);"
-        
 
+        # New Signals icons 90 x 90 px
+        self.triangular_90_disable = "background-image: url(:/buttons/resources/triangular_90_90.png);\
+                                      background-repeat:no-repeat;\
+                                      background-position: center center;\
+                                      background-color: rgb(230, 231, 232);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);"
+
+        self.square_90_disable = "background-image: url(:/buttons/resources/square_90_90.png);\
+                                  background-repeat:no-repeat;\
+                                  background-position: center center;\
+                                  background-color: rgb(230, 231, 232);\
+                                  border-radius: 20px;\
+                                  border:3px solid rgb(55, 52, 53);"
+
+
+        self.sinusoidal_90_disable = "background-image: url(:/buttons/resources/sinus_90_90.png);\
+                                      background-repeat:no-repeat;\
+                                      background-position: center center;\
+                                      background-color: rgb(230, 231, 232);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);"
+
+        self.triangular_90_enable = "background-image: url(:/buttons/resources/triangular_90_90.png);\
+                                      background-repeat:no-repeat;\
+                                      background-position: center center;\
+                                      background-color: rgb(237, 211, 152);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);"
+
+        self.square_90_enable = "background-image: url(:/buttons/resources/square_90_90.png);\
+                                  background-repeat:no-repeat;\
+                                  background-position: center center;\
+                                  background-color: rgb(237, 211, 152);\
+                                  border-radius: 20px;\
+                                  border:3px solid rgb(55, 52, 53);"
+
+
+        self.sinusoidal_90_enable = "background-image: url(:/buttons/resources/sinus_90_90.png);\
+                                      background-repeat:no-repeat;\
+                                      background-position: center center;\
+                                      background-color: rgb(237, 211, 152);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);"
+
+        # End of New Signals icons 90 x 90 px
+
+        # New Signals icons 75 x 75 px
+        self.sinusoidal_75_enable = "background-image: url(:/buttons/resources/sinus_75_75.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(237, 211, 152);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.triangular_75_enable = "background-image: url(:/buttons/resources/triangular_75_75.png);\
+                                     background-repeat:no-repeat;\
+                                     background-position: center center;\
+                                     background-color: rgb(237, 211, 152);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);"
+
+        self.square_75_enable = "background-image: url(:/buttons/resources/square_75_75.png);\
+                                 background-repeat:no-repeat;\
+                                 background-position: center center;\
+                                 background-color: rgb(237, 211, 152);\
+                                 border-radius: 20px;\
+                                 border:3px solid rgb(55, 52, 53);"
+
+        # End of New Signals icons 75 x 75 px        
+        
+        # New Freq icons 90 x 90 px
+        self.freq1_90_enable = "background-image: url(:/frequencies/resources/freq1_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq2_90_enable = "background-image: url(:/frequencies/resources/freq2_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq3_90_enable = "background-image: url(:/frequencies/resources/freq3_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq4_90_enable = "background-image: url(:/frequencies/resources/freq4_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq5_90_enable = "background-image: url(:/frequencies/resources/freq5_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq6_90_enable = "background-image: url(:/frequencies/resources/freq6_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq7_90_enable = "background-image: url(:/frequencies/resources/freq7_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq8_90_enable = "background-image: url(:/frequencies/resources/freq8_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq9_90_enable = "background-image: url(:/frequencies/resources/freq9_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq10_90_enable = "background-image: url(:/frequencies/resources/freq10_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq1_90_disable = "background-image: url(:/frequencies/resources/freq1_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq2_90_disable = "background-image: url(:/frequencies/resources/freq2_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq3_90_disable = "background-image: url(:/frequencies/resources/freq3_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq4_90_disable = "background-image: url(:/frequencies/resources/freq4_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq5_90_disable = "background-image: url(:/frequencies/resources/freq5_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq6_90_disable = "background-image: url(:/frequencies/resources/freq6_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq7_90_disable = "background-image: url(:/frequencies/resources/freq7_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq8_90_disable = "background-image: url(:/frequencies/resources/freq8_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq9_90_disable = "background-image: url(:/frequencies/resources/freq9_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq10_90_disable = "background-image: url(:/frequencies/resources/freq10_90_90.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(230, 231, 232);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+        
+        # End of New Freq icons 90 x 90 px
+
+        # New Freq icons 75 x 75 px
+        self.freq1_75_enable = "background-image: url(:/frequencies/resources/freq1_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq2_75_enable = "background-image: url(:/frequencies/resources/freq2_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq3_75_enable = "background-image: url(:/frequencies/resources/freq3_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq4_75_enable = "background-image: url(:/frequencies/resources/freq4_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq5_75_enable = "background-image: url(:/frequencies/resources/freq5_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq6_75_enable = "background-image: url(:/frequencies/resources/freq6_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq7_75_enable = "background-image: url(:/frequencies/resources/freq7_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq8_75_enable = "background-image: url(:/frequencies/resources/freq8_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq9_75_enable = "background-image: url(:/frequencies/resources/freq9_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        self.freq10_75_enable = "background-image: url(:/frequencies/resources/freq10_75_75.png);\
+                                background-repeat:no-repeat;\
+                                background-position: center center;\
+                                background-color: rgb(220, 188, 203);\
+                                border-radius: 20px;\
+                                border:3px solid rgb(55, 52, 53);"
+
+        # End of New Freq icons 75 x 75 px
+        
         self.ch_getting = "color: rgb(55, 52, 53);\
                            background-color: rgb(191, 218, 231);\
                            border-radius: 10px;\
