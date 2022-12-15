@@ -9,4 +9,17 @@
 *** for the freq URW Gothic L Book Obliq 22px
 *** draw at 100 x 100 px and scaled to 90 by 90 px
 
+
+* Stages Dialog
+** cosas que faltan resolver
+   - se puede hacer clear en los tres stages?
+     o como minimo el stage1 esta siempre?
+
+   - cuando hago clear hacer un blur pero de 1' y 10%
+     en vez de 0' y 0% (que son valores que no puedo tener)
+
+** cosas que me faltan programar
+   - el tiempo total
+   - cuando elijo un stage cambiar la freq y la senial (seleccion inversa)
+
     

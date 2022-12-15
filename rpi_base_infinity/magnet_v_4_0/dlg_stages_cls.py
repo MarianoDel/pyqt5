@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QDialog
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal, QTimer
 
 
 #get the UI from here
@@ -11,6 +11,8 @@ from ui_stages_dlg import Ui_StagesDialog
 ##################################################
 class StagesDialog (QDialog):
 
+    #SIGNALS
+    one_second_signal = pyqtSignal()
 
     def __init__(self, st_lst, style_obj, caller_stage='stage1'):
         super(StagesDialog, self).__init__()
@@ -29,6 +31,11 @@ class StagesDialog (QDialog):
 
         self.action = 'accept'
         self.stage_selected = caller_stage
+
+        self.powerUpButtonCnt = 0
+        self.powerDwnButtonCnt = 0
+        self.timeUpButtonCnt = 0
+        self.timeDwnButtonCnt = 0
         
         # get the close event and connect the buttons
         self.ui.clearButton.clicked.connect(self.ClearStage)
@@ -87,8 +94,74 @@ class StagesDialog (QDialog):
             self.Stage2GroupChange('select')
         else:
             self.Stage3GroupChange('select')
+
+
+        ## activate the 1 second timer it is repetitive
+        self.t1seg = QTimer()
+        self.t1seg.timeout.connect(self.TimerOneSec)
+        self.t1seg.start(1000)
+
+        # screen saver timer activation
+        # self.timer_screensaver = self.t.timeout_screensaver
+        # self.screensaver_window = True
+            
+        #SIGNALS CONNECTION
+        # connect through a signal the timer to the update event function
+        self.one_second_signal.connect(self.UpdateOneSec)
+            
+
+    # one second update signal
+    def TimerOneSec(self):
+        self.one_second_signal.emit()
         
 
+    # one second update event function
+    def UpdateOneSec (self):
+        """ paso un segundo, reviso que tengo que hacer """
+        # reviso si algun boton sigue presionado
+        ## Power Buttons
+        if self.powerUpButtonCnt > 3:
+            self.PwrUp(10)
+        elif self.powerUpButtonCnt > 1:
+            self.PwrUp(5)
+            self.powerUpButtonCnt += 1
+        elif self.powerUpButtonCnt == 1:
+            self.powerUpButtonCnt += 1
+
+        if self.powerDwnButtonCnt > 3:
+            self.PwrDwn(10)
+        elif self.powerDwnButtonCnt > 1:
+            self.PwrDwn(5)
+            self.powerDwnButtonCnt += 1
+        elif self.powerDwnButtonCnt == 1:
+            self.powerDwnButtonCnt += 1
+
+        ## Time Buttons
+        if self.timeUpButtonCnt > 3:
+            self.TimeUp(10)
+        elif self.timeUpButtonCnt > 1:
+            self.TimeUp(5)
+            self.timeUpButtonCnt += 1            
+        elif  self.timeUpButtonCnt == 1:
+            self.timeUpButtonCnt += 1
+
+        if self.timeDwnButtonCnt > 3:
+            self.TimeDwn(10)
+        elif self.timeDwnButtonCnt > 1:
+            self.TimeDwn(5)
+            self.timeDwnButtonCnt += 1            
+        elif self.timeDwnButtonCnt == 1:
+            self.timeDwnButtonCnt += 1
+
+        # check for screensaver activation
+        # if self.screensaver_window == True:
+        #     if self.timer_screensaver > 0:
+        #         self.timer_screensaver -= 1
+        #     else:
+        #         self.ScreenSaverDialogScreen()
+
+
+    
     def SelectStageButton1 (self):
         self.stage_selected = 'stage1'
         self.Stage1GroupChange('select')
@@ -98,6 +171,12 @@ class StagesDialog (QDialog):
 
         if self.stage3_info.status == 'enable':
             self.Stage3GroupChange('enable')
+
+        pwr_saved = self.StagesGetSelectedPower()
+        time_saved = self.StagesGetSelectedTime()
+        self.ui.powerLabel.setText(str(pwr_saved))
+        self.ui.minutesLabel.setText(str(time_saved))        
+            
 
     def SelectStageButton2 (self):
         self.stage_selected = 'stage2'
@@ -109,8 +188,12 @@ class StagesDialog (QDialog):
         if self.stage3_info.status == 'enable':
             self.Stage3GroupChange('enable')
 
-        print('stage2 button!')
+        pwr_saved = self.StagesGetSelectedPower()
+        time_saved = self.StagesGetSelectedTime()        
+        self.ui.powerLabel.setText(str(pwr_saved))
+        self.ui.minutesLabel.setText(str(time_saved))        
 
+        
     def SelectStageButton3 (self):
         self.stage_selected = 'stage3'
         self.Stage3GroupChange('select')
@@ -121,7 +204,10 @@ class StagesDialog (QDialog):
         if self.stage2_info.status == 'enable':
             self.Stage2GroupChange('enable')
 
-        print('stage3 button!')
+        pwr_saved = self.StagesGetSelectedPower()
+        time_saved = self.StagesGetSelectedTime()        
+        self.ui.powerLabel.setText(str(pwr_saved))
+        self.ui.minutesLabel.setText(str(time_saved))        
 
             
     def Stage1GroupChange (self, change_to):
@@ -458,31 +544,140 @@ class StagesDialog (QDialog):
             
 
     def UpPowerPressed (self):
-        pass
+        self.PwrUp (1)
+        self.powerUpButtonCnt = 1
+        # self.ScreenSaverKick()
 
     def UpPowerReleased (self):
-        pass
+        self.powerUpButtonCnt = 0
 
     def DwnPowerPressed (self):
-        pass
+        self.PwrDwn(1)
+        self.powerDwnButtonCnt = 1
+        # self.ScreenSaverKick()        
 
     def DwnPowerReleased (self):
-        pass
+        self.powerDwnButtonCnt = 0        
 
     def UpTimePressed (self):
-        pass
+        self.TimeUp (1)
+        self.timeUpButtonCnt = 1
+        # self.ScreenSaverKick()        
 
     def UpTimeReleased (self):
-        pass
+        self.timeUpButtonCnt = 0        
 
     def DwnTimePressed (self):
-        pass
+        self.TimeDwn(1)
+        self.timeDwnButtonCnt = 1
+        # self.ScreenSaverKick()
 
     def DwnTimeReleased (self):
-        pass
-    
+        self.timeDwnButtonCnt = 0
     
 
+    def PwrUp (self, new_pwr):
+        last_pwr = int(self.ui.powerLabel.text())
+        if (last_pwr + new_pwr) < 100:
+            last_pwr += new_pwr
+        else:
+            last_pwr = 100
+
+        self.ui.powerLabel.setText(str(last_pwr))
+        self.StagesUpdateSelectedPower(last_pwr)
+
+        
+    def PwrDwn (self, new_pwr):
+        last_pwr = int(self.ui.powerLabel.text())
+        if (last_pwr - new_pwr) > 10:
+            last_pwr -= new_pwr
+        else:
+            last_pwr = 10
+
+        self.ui.powerLabel.setText(str(last_pwr))
+        self.StagesUpdateSelectedPower(last_pwr)        
+
+        
+    def TimeUp (self, new_time):
+        last_time = int(self.ui.minutesLabel.text())
+        if ((last_time + new_time) < 120):
+            last_time += new_time
+        else:
+            last_time = 120
+            
+        self.ui.minutesLabel.setText(str(last_time))
+        self.StagesUpdateSelectedTime(last_time)
+
+        
+    def TimeDwn (self, new_time):
+        last_time = int(self.ui.minutesLabel.text())
+        if ((last_time - new_time) > 1):
+            last_time -= new_time
+        else:
+            last_time = 1
+            
+        self.ui.minutesLabel.setText(str(last_time))
+        self.StagesUpdateSelectedTime(last_time)        
+    
+
+    def StagesUpdateSelectedPower (self, new_pwr):
+        if self.stage_selected == 'stage1':
+            self.ui.stage1PowerLabel.setText(str(new_pwr)+'%')
+            self.stage1_info.SetStagePower(new_pwr)
+        elif self.stage_selected == 'stage2':
+            self.ui.stage2PowerLabel.setText(str(new_pwr)+'%')
+            self.stage2_info.SetStagePower(new_pwr)
+        else:
+            self.ui.stage3PowerLabel.setText(str(new_pwr)+'%')
+            self.stage3_info.SetStagePower(new_pwr)
+
+            
+    def StagesUpdateSelectedTime (self, new_time):
+        if self.stage_selected == 'stage1':
+            self.ui.stage1MinutesLabel.setText(str(new_time)+"'")
+            self.stage1_info.SetStageTimer(new_time)
+        elif self.stage_selected == 'stage2':
+            self.ui.stage2MinutesLabel.setText(str(new_time)+"'")
+            self.stage2_info.SetStageTimer(new_time)
+        else:
+            self.ui.stage3MinutesLabel.setText(str(new_time)+"'")
+            self.stage3_info.SetStageTimer(new_time)
+
+            
+    def StagesGetSelectedPower (self):
+        if self.stage_selected == 'stage1':
+            pwr_str = self.ui.stage1PowerLabel.text()
+            pwr_str = pwr_str[:-1]
+            pwr_save = int(pwr_str)
+        elif self.stage_selected == 'stage2':
+            pwr_str = self.ui.stage2PowerLabel.text()
+            pwr_str = pwr_str[:-1]
+            pwr_save = int(pwr_str)
+        else:
+            pwr_str = self.ui.stage3PowerLabel.text()
+            pwr_str = pwr_str[:-1]
+            pwr_save = int(pwr_str)
+
+        return pwr_save
+
+            
+    def StagesGetSelectedTime (self):
+        if self.stage_selected == 'stage1':
+            time_str = self.ui.stage1MinutesLabel.text()
+            time_str = time_str[:-1]
+            time_save = int(time_str)
+        elif self.stage_selected == 'stage2':
+            time_str = self.ui.stage2MinutesLabel.text()
+            time_str = time_str[:-1]
+            time_save = int(time_str)
+        else:
+            time_str = self.ui.stage3MinutesLabel.text()
+            time_str = time_str[:-1]
+            time_save = int(time_str)
+
+        return time_save
+            
+            
     def ScreenSaverKick (self):
         pass
 
