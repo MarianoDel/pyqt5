@@ -23,6 +23,7 @@
    - [X] el tiempo total
    - [X] cuando elijo un stage cambiar la freq y la senial (seleccion inversa)
    - [ ] el screen saver
+   - [ ] disable buttons shadow on stages
 
 
     

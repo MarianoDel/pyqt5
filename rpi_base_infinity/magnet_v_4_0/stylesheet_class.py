@@ -458,7 +458,21 @@ class ButtonStyles():
                                    background-color: rgb(255, 221, 179);\
                                    border-radius: 10px;\
                                    border:2px solid rgb(55, 52, 53);"
+
+        self.mem_90_button_enable = "background-color: rgb(221, 234, 224);\
+                                     border-radius: 20px;\
+                                     border:3px solid rgb(55, 52, 53);\
+                                     color: rgb(55, 52, 53);"
+
+        self.mem_90_button_disable = "background-color: rgb(245, 245, 245);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(230, 231, 232);\
+                                      color: rgb(230,231,232);"
+
         
+        #########################
+        # Stages Buttons Inners #
+        #########################
 
         self.stage1_button_enable = "background-image: url(:/stage_buttons/resources/stage1_enable.png);\
                                      background-repeat:no-repeat;\

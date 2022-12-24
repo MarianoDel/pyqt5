@@ -45,7 +45,7 @@ border:3px solid rgb(55, 52, 53);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="powerLabel">
+  <widget class="QLabel" name="totalMinutesLabel">
    <property name="geometry">
     <rect>
      <x>340</x>
@@ -919,7 +919,7 @@ border:3px solid rgb(55, 52, 53);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="freq1Button">
+  <widget class="QPushButton" name="membButton">
    <property name="geometry">
     <rect>
      <x>735</x>
@@ -961,7 +961,7 @@ color: rgb(230,231,232);</string>
     <string>B</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="freq1Button_2">
+  <widget class="QPushButton" name="memaButton">
    <property name="geometry">
     <rect>
      <x>735</x>
@@ -1003,7 +1003,7 @@ color: rgb(55, 52, 53);</string>
     <string>A</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="freq1Button_3">
+  <widget class="QPushButton" name="memcButton">
    <property name="geometry">
     <rect>
      <x>735</x>
@@ -1045,7 +1045,7 @@ color: rgb(230,231,232);</string>
     <string>C</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="freq1Button_4">
+  <widget class="QPushButton" name="memdButton">
    <property name="geometry">
     <rect>
      <x>735</x>
@@ -1106,7 +1106,7 @@ color: rgb(230,231,232);</string>
        <number>2</number>
       </property>
       <item>
-       <widget class="QLabel" name="mem12Label_5">
+       <widget class="QLabel" name="memaDescLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1136,7 +1136,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_9">
+       <widget class="QLabel" name="memaOneLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1166,7 +1166,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem11Label_5">
+       <widget class="QLabel" name="memaTwoLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1196,7 +1196,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_10">
+       <widget class="QLabel" name="memaThreeLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1233,7 +1233,7 @@ color: rgb(230,231,232);</string>
        <number>2</number>
       </property>
       <item>
-       <widget class="QLabel" name="mem12Label_6">
+       <widget class="QLabel" name="membDescLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1263,7 +1263,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_11">
+       <widget class="QLabel" name="membOneLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1293,7 +1293,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem11Label_6">
+       <widget class="QLabel" name="membTwoLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1323,7 +1323,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_12">
+       <widget class="QLabel" name="membThreeLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1360,7 +1360,7 @@ color: rgb(230,231,232);</string>
        <number>2</number>
       </property>
       <item>
-       <widget class="QLabel" name="mem12Label_8">
+       <widget class="QLabel" name="memcDescLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1390,7 +1390,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_15">
+       <widget class="QLabel" name="memcOneLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1420,7 +1420,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem11Label_8">
+       <widget class="QLabel" name="memcTwoLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1450,7 +1450,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_16">
+       <widget class="QLabel" name="memcThreeLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1487,7 +1487,7 @@ color: rgb(230,231,232);</string>
        <number>2</number>
       </property>
       <item>
-       <widget class="QLabel" name="mem12Label_7">
+       <widget class="QLabel" name="memdDescLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1517,7 +1517,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_13">
+       <widget class="QLabel" name="memdOneLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1547,7 +1547,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem11Label_7">
+       <widget class="QLabel" name="memdTwoLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1577,7 +1577,7 @@ color: rgb(230,231,232);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mem13Label_14">
+       <widget class="QLabel" name="memdThreeLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
