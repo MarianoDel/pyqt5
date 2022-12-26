@@ -7,14 +7,16 @@ class Treatment():
 
     def __init__(self):
         ## Parametros por Default
-        self.power = 70
+        self.stage1_info = self.StageData()
+        self.stage2_info = self.StageData()
+        self.stage3_info = self.StageData()
+        
+
         self.max_power = 100
         self.min_power = 10
-        self.signal = 'None'
-        self.frequency = 'None'
-        self.treatment_timer = 60
         self.max_treatment_timer = 120
         self.min_treatment_timer = 1
+
         self.ch1 = True
         self.ch2 = True
         self.ch3 = True
@@ -26,7 +28,7 @@ class Treatment():
         self.remaining_seconds = 0
 
         # version actual de soft
-        self.current_version = 'Stretcher_ver_1_0'
+        self.current_version = 'Magnet_ver_4_0'
 
         # tipo de OS donde corre
         self.current_system = ''

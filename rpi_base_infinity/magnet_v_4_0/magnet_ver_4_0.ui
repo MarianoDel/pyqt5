@@ -341,7 +341,7 @@ border:2px solid rgb(55, 52, 53);</string>
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="ch4Button_2">
+  <widget class="QPushButton" name="memManagerButton">
    <property name="geometry">
     <rect>
      <x>965</x>
