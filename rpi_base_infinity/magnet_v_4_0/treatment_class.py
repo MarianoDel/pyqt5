@@ -7,11 +7,34 @@ class Treatment():
 
     def __init__(self):
         ## Parametros por Default
-        self.stage1_info = self.StageData()
-        self.stage2_info = self.StageData()
-        self.stage3_info = self.StageData()
-        
+        self.stage1_info = 'None'
+        self.stage2_info = 'None'
+        self.stage3_info = 'None'
 
+        self.mema_status = 'enable'
+        self.mema_description = 'Arm and Leg Inflammatory'
+        self.mema_first_str = "15' S 35% 7.83Hz"
+        self.mema_second_str = ''
+        self.mema_third_str = ''
+
+        self.memb_status = 'enable'
+        self.memb_description = 'Arm and Leg Inflammatory'
+        self.memb_first_str = "15' S 35% 7.83Hz"
+        self.memb_second_str = "15' R 85% 7.83Hz"
+        self.memb_third_str = "15' T 95% 7.83Hz"
+
+        self.memc_status = 'disable'
+        self.memc_description = 'Arm and Leg Inflammatory'
+        self.memc_first_str = "15' S 35% 7.83Hz"
+        self.memc_second_str = ''
+        self.memc_third_str = ''
+
+        self.memd_status = 'disable'
+        self.memd_description = 'Arm and Leg Inflammatory'
+        self.memd_first_str = "15' S 35% 7.83Hz"
+        self.memd_second_str = ''
+        self.memd_third_str = ''
+        
         self.max_power = 100
         self.min_power = 10
         self.max_treatment_timer = 120
@@ -330,5 +353,7 @@ class Treatment():
             self.mem3_power = 'None'
             
 
+    # def StageInfoToString (self, stage_obj):
+    #     stage_obj.
 
 ### end of file ###
