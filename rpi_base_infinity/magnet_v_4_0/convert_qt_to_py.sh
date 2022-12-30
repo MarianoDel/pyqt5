@@ -8,6 +8,7 @@ pyuic5 magnet_ver_4_0.ui > ui_magnet40.py
 pyuic5 magnet_treatment_dlg.ui > ui_treatment_dlg.py
 pyuic5 magnet_memory_dlg.ui > ui_memory_dlg.py
 pyuic5 magnet_stages_dlg.ui > ui_stages_dlg.py
+pyuic5 magnet_mem_manager_dlg.ui > ui_mem_manager_dlg.py
 
 ## for Magnet_ver_3_1
 # cp main.py main31.py
