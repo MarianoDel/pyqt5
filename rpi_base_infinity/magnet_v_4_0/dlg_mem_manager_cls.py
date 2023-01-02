@@ -15,13 +15,19 @@ class MemManagerDialog (QDialog):
     one_second_signal = pyqtSignal()
 
     # def __init__(self, st_lst, style_obj, caller_stage='stage1'):
-    def __init__(self):        
+    def __init__(self, mem_dict):
         super(QDialog, self).__init__()
 
         # Set up the user interface from Designer.
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
+        # backup received data
+        self.mem_dict = mem_dict
+
+        self.action = 'back'
+
+        # styles
         self.selected_blue = ''
         self.selected_cyan = ''
 
@@ -30,29 +36,43 @@ class MemManagerDialog (QDialog):
         self.label_cyan = "color: rgb(55, 52, 53);\
                            background-color: rgb(178, 232, 247);"
         self.label_orig = "color: rgb(55, 52, 53);"
+
+        self.label_disable = "color: rgb(230, 231, 232);"        
+
+        self.mem_button_enable = "background-color: rgb(221, 234, 224);\
+                                  border-radius: 20px;\
+                                  border:3px solid rgb(55, 52, 53);\
+                                  color: rgb(55, 52, 53);"
+
+        self.mem_button_disable = "background-color: rgb(245, 245, 245);\
+                                   border-radius: 20px;\
+                                   border:3px solid rgb(230, 231, 232);\
+                                   color: rgb(230,231,232);"
         
-        # backup received info
-    #     self.st_lst = st_lst
-    #     self.style = style_obj
+        self.action_button_disable = "background-color: rgb(245, 245, 245);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(230, 231, 232);\
+                                      color: rgb(230,231,232);"
 
-    
-    #     self.stage1_info = st_lst[0]
-    #     self.stage2_info = st_lst[1]
-    #     self.stage3_info = st_lst[2]
+        self.action1_button_enable = "background-color: rgb(232, 175, 181);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);\
+                                      color: rgb(55, 52, 53);"
 
-    #     self.action = 'accept'
-    #     self.stage_selected = caller_stage
+        self.action2_button_enable = "background-color: rgb(233, 245, 235);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);\
+                                      color: rgb(55, 52, 53);"
 
-    #     self.powerUpButtonCnt = 0
-    #     self.powerDwnButtonCnt = 0
-    #     self.timeUpButtonCnt = 0
-    #     self.timeDwnButtonCnt = 0
-        
-        # get the close event and connect the buttons
-    #     self.ui.clearButton.clicked.connect(self.ClearStage)
-    #     self.ui.backButton.clicked.connect(self.BackStage)
-    #     self.ui.acceptButton.clicked.connect(self.accept)
+        self.action3_button_enable = "background-color: rgb(191, 211, 199);\
+                                      border-radius: 20px;\
+                                      border:3px solid rgb(55, 52, 53);\
+                                      color: rgb(55, 52, 53);"
 
+        self.ui.action1Button.setText('None')
+        self.ui.action1Button.setStyleSheet(self.action_button_disable)
+
+        # connect up buttons
         self.ui.memaButton.clicked.connect(self.SelectButton_mema)
         self.ui.membButton.clicked.connect(self.SelectButton_memb)
         self.ui.memcButton.clicked.connect(self.SelectButton_memc)
@@ -74,123 +94,58 @@ class MemManagerDialog (QDialog):
         self.ui.mem19Button.clicked.connect(self.SelectButton_mem19)
         self.ui.mem20Button.clicked.connect(self.SelectButton_mem20)
 
-        #     self.ui.stage2Button.clicked.connect(self.SelectStageButton2)
-    #     self.ui.stage3Button.clicked.connect(self.SelectStageButton3)
-
-    #     self.ui.freq1Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq2Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq3Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq4Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq5Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq6Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq7Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq8Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq9Button.clicked.connect(self.FrequencyChange)
-    #     self.ui.freq10Button.clicked.connect(self.FrequencyChange)        
-
-    #     self.ui.triangularButton.clicked.connect(self.SignalChange)
-    #     self.ui.squareButton.clicked.connect(self.SignalChange)
-    #     self.ui.sinusoidalButton.clicked.connect(self.SignalChange)
-
-    #     self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
-    #     self.ui.powerUpButton.released.connect(self.UpPowerReleased)
-    #     self.ui.powerDwnButton.pressed.connect(self.DwnPowerPressed)
-    #     self.ui.powerDwnButton.released.connect(self.DwnPowerReleased)
-    #     self.ui.timeUpButton.pressed.connect(self.UpTimePressed)
-    #     self.ui.timeUpButton.released.connect(self.UpTimeReleased)        
-    #     self.ui.timeDwnButton.pressed.connect(self.DwnTimePressed)
-    #     self.ui.timeDwnButton.released.connect(self.DwnTimeReleased)
-        
-    #     # check enables or disables
-    #     if self.stage1_info.GetStageStatus() == 'enable':
-    #         self.Stage1GroupChange('enable')
-    #     else:
-    #         self.Stage1GroupChange('disable')
-            
-    #     if self.stage2_info.GetStageStatus() == 'enable':
-    #         self.Stage2GroupChange('enable')
-    #     else:
-    #         self.Stage2GroupChange('disable')
-        
-    #     if self.stage3_info.GetStageStatus() == 'enable':
-    #         self.Stage3GroupChange('enable')
-    #     else:
-    #         self.Stage3GroupChange('disable')
-
-        
-    #     # check which was selected, or select the first one
-    #     if self.stage_selected == 'stage1':
-    #         self.Stage1GroupChange('select')
-    #     elif self.stage_selected == 'stage2':
-    #         self.Stage2GroupChange('select')
-    #     else:
-    #         self.Stage3GroupChange('select')
-
-
-    #     ## activate the 1 second timer it is repetitive
-    #     self.t1seg = QTimer()
-    #     self.t1seg.timeout.connect(self.TimerOneSec)
-    #     self.t1seg.start(1000)
-
-    #     # screen saver timer activation
-    #     # self.timer_screensaver = self.t.timeout_screensaver
-    #     # self.screensaver_window = True
-            
-    #     #SIGNALS CONNECTION
-    #     # connect through a signal the timer to the update event function
-    #     self.one_second_signal.connect(self.UpdateOneSec)
-            
-
-    # # one second update signal
-    # def TimerOneSec(self):
-    #     self.one_second_signal.emit()
+        self.ui.action1Button.clicked.connect(self.Action1Button)
+        self.ui.action2Button.clicked.connect(self.Action2Button)
+        self.ui.action3Button.clicked.connect(self.Action3Button)
         
 
-    # # one second update event function
-    # def UpdateOneSec (self):
-    #     """ paso un segundo, reviso que tengo que hacer """
-    #     # reviso si algun boton sigue presionado
-    #     ## Power Buttons
-    #     if self.powerUpButtonCnt > 3:
-    #         self.PwrUp(10)
-    #     elif self.powerUpButtonCnt > 1:
-    #         self.PwrUp(5)
-    #         self.powerUpButtonCnt += 1
-    #     elif self.powerUpButtonCnt == 1:
-    #         self.powerUpButtonCnt += 1
+        self.ui_label_dict = {
+            "mema" : [self.ui.memaDescLabel, self.ui.memaOneLabel, self.ui.memaTwoLabel, self.ui.memaThreeLabel],
+            "memb" : [self.ui.membDescLabel, self.ui.membOneLabel, self.ui.membTwoLabel, self.ui.membThreeLabel],
+            "memc" : [self.ui.memcDescLabel, self.ui.memcOneLabel, self.ui.memcTwoLabel, self.ui.memcThreeLabel],
+            "memd" : [self.ui.memdDescLabel, self.ui.memdOneLabel, self.ui.memdTwoLabel, self.ui.memdThreeLabel],
+            "mem5" : [self.ui.mem5DescLabel, self.ui.mem5OneLabel, self.ui.mem5TwoLabel, self.ui.mem5ThreeLabel],
+            "mem6" : [self.ui.mem6DescLabel, self.ui.mem6OneLabel, self.ui.mem6TwoLabel, self.ui.mem6ThreeLabel],
+            "mem7" : [self.ui.mem7DescLabel, self.ui.mem7OneLabel, self.ui.mem7TwoLabel, self.ui.mem7ThreeLabel],
+            "mem8" : [self.ui.mem8DescLabel, self.ui.mem8OneLabel, self.ui.mem8TwoLabel, self.ui.mem8ThreeLabel],
+            "mem9" : [self.ui.mem9DescLabel, self.ui.mem9OneLabel, self.ui.mem9TwoLabel, self.ui.mem9ThreeLabel],
+            "mem10" : [self.ui.mem10DescLabel, self.ui.mem10OneLabel, self.ui.mem10TwoLabel, self.ui.mem10ThreeLabel],
+            "mem11" : [self.ui.mem11DescLabel, self.ui.mem11OneLabel, self.ui.mem11TwoLabel, self.ui.mem11ThreeLabel],
+            "mem12" : [self.ui.mem12DescLabel, self.ui.mem12OneLabel, self.ui.mem12TwoLabel, self.ui.mem12ThreeLabel],
+            "mem13" : [self.ui.mem13DescLabel, self.ui.mem13OneLabel, self.ui.mem13TwoLabel, self.ui.mem13ThreeLabel],
+            "mem14" : [self.ui.mem14DescLabel, self.ui.mem14OneLabel, self.ui.mem14TwoLabel, self.ui.mem14ThreeLabel],
+            "mem15" : [self.ui.mem15DescLabel, self.ui.mem15OneLabel, self.ui.mem15TwoLabel, self.ui.mem15ThreeLabel],
+            "mem16" : [self.ui.mem16DescLabel, self.ui.mem16OneLabel, self.ui.mem16TwoLabel, self.ui.mem16ThreeLabel],
+            "mem17" : [self.ui.mem17DescLabel, self.ui.mem17OneLabel, self.ui.mem17TwoLabel, self.ui.mem17ThreeLabel],
+            "mem18" : [self.ui.mem18DescLabel, self.ui.mem18OneLabel, self.ui.mem18TwoLabel, self.ui.mem18ThreeLabel],
+            "mem19" : [self.ui.mem19DescLabel, self.ui.mem19OneLabel, self.ui.mem19TwoLabel, self.ui.mem19ThreeLabel],
+            "mem20" : [self.ui.mem20DescLabel, self.ui.mem20OneLabel, self.ui.mem20TwoLabel, self.ui.mem20ThreeLabel]
+            }
 
-    #     if self.powerDwnButtonCnt > 3:
-    #         self.PwrDwn(10)
-    #     elif self.powerDwnButtonCnt > 1:
-    #         self.PwrDwn(5)
-    #         self.powerDwnButtonCnt += 1
-    #     elif self.powerDwnButtonCnt == 1:
-    #         self.powerDwnButtonCnt += 1
-
-    #     ## Time Buttons
-    #     if self.timeUpButtonCnt > 3:
-    #         self.TimeUp(10)
-    #     elif self.timeUpButtonCnt > 1:
-    #         self.TimeUp(5)
-    #         self.timeUpButtonCnt += 1            
-    #     elif  self.timeUpButtonCnt == 1:
-    #         self.timeUpButtonCnt += 1
-
-    #     if self.timeDwnButtonCnt > 3:
-    #         self.TimeDwn(10)
-    #     elif self.timeDwnButtonCnt > 1:
-    #         self.TimeDwn(5)
-    #         self.timeDwnButtonCnt += 1            
-    #     elif self.timeDwnButtonCnt == 1:
-    #         self.timeDwnButtonCnt += 1
-
-    #     # check for screensaver activation
-    #     # if self.screensaver_window == True:
-    #     #     if self.timer_screensaver > 0:
-    #     #         self.timer_screensaver -= 1
-    #     #     else:
-    #     #         self.ScreenSaverDialogScreen()
-
+        self.ui_button_dict = {
+            "mema" : self.ui.memaButton,
+            "memb" : self.ui.membButton,
+            "memc" : self.ui.memcButton,
+            "memd" : self.ui.memdButton,
+            "mem5" : self.ui.mem5Button,
+            "mem6" : self.ui.mem6Button,
+            "mem7" : self.ui.mem7Button,
+            "mem8" : self.ui.mem8Button,
+            "mem9" : self.ui.mem9Button,
+            "mem10" : self.ui.mem10Button,
+            "mem11" : self.ui.mem11Button,
+            "mem12" : self.ui.mem12Button,
+            "mem13" : self.ui.mem13Button,
+            "mem14" : self.ui.mem14Button,
+            "mem15" : self.ui.mem15Button,
+            "mem16" : self.ui.mem16Button,
+            "mem17" : self.ui.mem17Button,
+            "mem18" : self.ui.mem18Button,
+            "mem19" : self.ui.mem19Button,
+            "mem20" : self.ui.mem20Button
+            }
+        
+        self.PopullateFromDict (self.mem_dict)
 
     
     def SelectButton_mema (self):
@@ -210,6 +165,7 @@ class MemManagerDialog (QDialog):
             self.ui.memaOneLabel.setStyleSheet(self.label_orig)
             self.ui.memaTwoLabel.setStyleSheet(self.label_orig)
             self.ui.memaThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -232,7 +188,9 @@ class MemManagerDialog (QDialog):
             self.ui.memaTwoLabel.setStyleSheet(self.label_cyan)
             self.ui.memaThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_memb (self):
         # first check if we are previusly selected
         unselect = False
@@ -250,6 +208,7 @@ class MemManagerDialog (QDialog):
             self.ui.membOneLabel.setStyleSheet(self.label_orig)
             self.ui.membTwoLabel.setStyleSheet(self.label_orig)
             self.ui.membThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -272,7 +231,9 @@ class MemManagerDialog (QDialog):
             self.ui.membTwoLabel.setStyleSheet(self.label_cyan)
             self.ui.membThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_memc (self):
         # first check if we are previusly selected
         unselect = False
@@ -290,6 +251,7 @@ class MemManagerDialog (QDialog):
             self.ui.memcOneLabel.setStyleSheet(self.label_orig)
             self.ui.memcTwoLabel.setStyleSheet(self.label_orig)
             self.ui.memcThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -312,7 +274,9 @@ class MemManagerDialog (QDialog):
             self.ui.memcTwoLabel.setStyleSheet(self.label_cyan)
             self.ui.memcThreeLabel.setStyleSheet(self.label_cyan)
         
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_memd (self):
         # first check if we are previusly selected
         unselect = False
@@ -330,6 +294,7 @@ class MemManagerDialog (QDialog):
             self.ui.memdOneLabel.setStyleSheet(self.label_orig)
             self.ui.memdTwoLabel.setStyleSheet(self.label_orig)
             self.ui.memdThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -352,7 +317,9 @@ class MemManagerDialog (QDialog):
             self.ui.memdTwoLabel.setStyleSheet(self.label_cyan)
             self.ui.memdThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem5 (self):
         # first check if we are previusly selected
         unselect = False
@@ -370,6 +337,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem5OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem5TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem5ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -392,7 +360,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem5TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem5ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem6 (self):
         # first check if we are previusly selected
         unselect = False
@@ -410,6 +380,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem6OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem6TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem6ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -432,7 +403,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem6TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem6ThreeLabel.setStyleSheet(self.label_cyan)
             
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem7 (self):
         # first check if we are previusly selected
         unselect = False
@@ -450,6 +423,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem7OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem7TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem7ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -472,7 +446,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem7TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem7ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem8 (self):
         # first check if we are previusly selected
         unselect = False
@@ -490,6 +466,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem8OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem8TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem8ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -512,7 +489,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem8TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem8ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem9 (self):
         # first check if we are previusly selected
         unselect = False
@@ -530,6 +509,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem9OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem9TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem9ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -552,7 +532,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem9TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem9ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem10 (self):
         # first check if we are previusly selected
         unselect = False
@@ -570,6 +552,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem10OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem10TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem10ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -592,7 +575,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem10TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem10ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem11 (self):
         # first check if we are previusly selected
         unselect = False
@@ -610,6 +595,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem11OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem11TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem11ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -632,7 +618,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem11TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem11ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem12 (self):
         # first check if we are previusly selected
         unselect = False
@@ -650,6 +638,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem12OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem12TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem12ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -672,7 +661,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem12TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem12ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem13 (self):
         # first check if we are previusly selected
         unselect = False
@@ -690,6 +681,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem13OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem13TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem13ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -712,7 +704,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem13TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem13ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem14 (self):
         # first check if we are previusly selected
         unselect = False
@@ -730,6 +724,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem14OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem14TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem14ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -752,7 +747,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem14TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem14ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem15 (self):
         # first check if we are previusly selected
         unselect = False
@@ -770,6 +767,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem15OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem15TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem15ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -792,7 +790,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem15TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem15ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem16 (self):
         # first check if we are previusly selected
         unselect = False
@@ -810,6 +810,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem16OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem16TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem16ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -832,7 +833,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem16TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem16ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem17 (self):
         # first check if we are previusly selected
         unselect = False
@@ -850,6 +853,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem17OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem17TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem17ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -872,7 +876,9 @@ class MemManagerDialog (QDialog):
             self.ui.mem17TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem17ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
 
+        
     def SelectButton_mem18 (self):
         # first check if we are previusly selected
         unselect = False
@@ -890,6 +896,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem18OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem18TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem18ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -912,6 +919,8 @@ class MemManagerDialog (QDialog):
             self.ui.mem18TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem18ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
+        
 
     def SelectButton_mem19 (self):
         # first check if we are previusly selected
@@ -930,6 +939,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem19OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem19TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem19ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -952,6 +962,8 @@ class MemManagerDialog (QDialog):
             self.ui.mem19TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem19ThreeLabel.setStyleSheet(self.label_cyan)
 
+        self.CheckForActionsButtons()
+
 
     def SelectButton_mem20 (self):
         # first check if we are previusly selected
@@ -970,6 +982,7 @@ class MemManagerDialog (QDialog):
             self.ui.mem20OneLabel.setStyleSheet(self.label_orig)
             self.ui.mem20TwoLabel.setStyleSheet(self.label_orig)
             self.ui.mem20ThreeLabel.setStyleSheet(self.label_orig)
+            self.CheckForActionsButtons()
             return
 
         # check two selections
@@ -992,597 +1005,134 @@ class MemManagerDialog (QDialog):
             self.ui.mem20TwoLabel.setStyleSheet(self.label_cyan)
             self.ui.mem20ThreeLabel.setStyleSheet(self.label_cyan)
 
-            
-    # def SelectStageButton2 (self):
-    #     self.stage_selected = 'stage2'
-    #     self.stage2_info.status = 'enable'
-    #     self.Stage2GroupChange('select')
+        self.CheckForActionsButtons()
+
+
+    def CheckForActionsButtons (self):
+        if self.selected_blue !=  '' and self.selected_cyan != '':
+            # copy blue over cyan or swap
+            self.ui.helpLabel.setText('Copy blue over cyan or swap blue and cyan')
+            self.ui.action1Button.setText('Copy blue\non cyan')
+            self.ui.action2Button.setText('Swap blue\nand cyan')
+        elif self.selected_blue != '':
+            # clear mem or wait to select cyan
+            self.ui.helpLabel.setText('Clear memory slot or pick another')
+            self.ui.action1Button.setText('Clear\nmemory')
+            self.ui.action2Button.setText('Back')
+            self.ui.action1Button.setStyleSheet(self.action1_button_enable)
+        elif self.selected_cyan != '':
+            # clear mem or wait to select blue again
+            self.ui.helpLabel.setText('Clear memory slot or pick another')
+            self.ui.action1Button.setText('Clear\nmemory')
+            self.ui.action2Button.setText('Back')
+            self.ui.action1Button.setStyleSheet(self.action1_button_enable)
+        else:
+            self.ui.helpLabel.setText('Pick a memory slot')
+            self.ui.action1Button.setText('None')
+            self.ui.action2Button.setText('Back')
+            self.ui.action3Button.setText('Save!')
+            self.ui.action1Button.setStyleSheet(self.action_button_disable)
+
+
+    def PopullateFromDict (self, m_dict):
+        for x in m_dict:
+            mem_lst = m_dict[x]
+            ui_label_lst = self.ui_label_dict[x]
+            ui_button = self.ui_button_dict[x]
+
+            ui_label_lst[0].setText(mem_lst[0])
+            ui_label_lst[1].setText('1 - ' + mem_lst[1])
+            ui_label_lst[2].setText('2 - ' + mem_lst[2])
+            ui_label_lst[3].setText('3 - ' + mem_lst[3])
+                
+            if mem_lst[1] == '' and mem_lst[2] == '' and mem_lst[3] == '':
+                ui_label_lst[0].setStyleSheet(self.label_disable)
+                ui_label_lst[1].setStyleSheet(self.label_disable)
+                ui_label_lst[2].setStyleSheet(self.label_disable)
+                ui_label_lst[3].setStyleSheet(self.label_disable)
+                ui_button.setStyleSheet(self.mem_button_disable)
+            else:
+                ui_label_lst[0].setStyleSheet(self.label_orig)
+                ui_label_lst[1].setStyleSheet(self.label_orig)
+                ui_label_lst[2].setStyleSheet(self.label_orig)
+                ui_label_lst[3].setStyleSheet(self.label_orig)
+                ui_button.setStyleSheet(self.mem_button_enable)
+                
+
+    def Action1Button (self):
+        if self.ui.action1Button.text() == 'None':
+            return
+
+        elif self.ui.action1Button.text() == 'Clear\nmemory':
+            if self.selected_blue != '':
+                print("clearing mem blue")
+                button_sel = self.selected_blue.split('B')
+                button_sel = button_sel[0]
+
+                self.mem_dict[button_sel] = ['','','','']
+                self.PopullateFromDict(self.mem_dict)
+                self.selected_blue = ''
+                
+            elif self.selected_cyan != '':
+                print("clearing mem cyan")
+                button_sel = self.selected_cyan.split('B')
+                button_sel = button_sel[0]                
+
+                self.mem_dict[button_sel] = ['','','','']
+                self.PopullateFromDict(self.mem_dict)
+                self.selected_cyan = ''
+                
+            else:
+                print("error no blue or cyan selected!!!!!")
+
+        elif self.ui.action1Button.text() == 'Copy blue\non cyan':
+            if self.selected_blue != '' and self.selected_cyan != '':
+                print("copy blue on cyan")
+                button_blue = self.selected_blue.split('B')
+                button_cyan = self.selected_cyan.split('B')
+                button_blue = button_blue[0]
+                button_cyan = button_cyan[0]
+
+                self.mem_dict[button_cyan] = self.mem_dict[button_blue]
+                self.PopullateFromDict(self.mem_dict)
+                self.selected_blue = ''
+                self.selected_cyan = ''                
+            else:
+                print("error no blue and cyan to copy!!!!!")
+
+
+    def Action2Button (self):
+        if self.ui.action2Button.text() == 'None':
+            return
+
+        elif self.ui.action2Button.text() == 'Back':
+            print("go back to main")            
+            self.accept()
+
+        elif self.ui.action2Button.text() == 'Swap blue\nand cyan':
+            if self.selected_blue != '' and self.selected_cyan != '':
+                print("swap blue on cyan")
+                button_blue = self.selected_blue.split('B')
+                button_cyan = self.selected_cyan.split('B')
+                button_blue = button_blue[0]
+                button_cyan = button_cyan[0]
+
+                mem_lst = self.mem_dict[button_cyan]
+                self.mem_dict[button_cyan] = self.mem_dict[button_blue]
+                self.mem_dict[button_blue] = mem_lst
+                
+                self.PopullateFromDict(self.mem_dict)
+                self.selected_blue = ''
+                self.selected_cyan = ''                
+            else:
+                print("error no blue and cyan to swap!!!!!")
+
+                
+    def Action3Button (self):
+        self.action = 'accept'
+        self.accept()
+                
 
-    #     if self.stage1_info.status == 'enable':
-    #         self.Stage1GroupChange('enable')
-
-    #     if self.stage3_info.status == 'enable':
-    #         self.Stage3GroupChange('enable')
-
-    #     pwr_saved = self.StagesGetSelectedPower()
-    #     if pwr_saved < 10:
-    #         pwr_saved = 10
-    #         self.StagesUpdateSelectedPower(pwr_saved)
-            
-    #     time_saved = self.StagesGetSelectedTime()        
-    #     if time_saved < 1:
-    #         time_saved = 1
-    #         self.StagesUpdateSelectedTime(time_saved)
-
-    #     self.ui.powerLabel.setText(str(pwr_saved))
-    #     self.ui.minutesLabel.setText(str(time_saved))        
-    #     self.FrequencyChangeTo(self.stage2_info.GetStageFrequency())
-    #     self.SignalChangeTo(self.stage2_info.GetStageSignal())
-    #     self.UpdateTotalTime()
-
-        
-    # def SelectStageButton3 (self):
-    #     self.stage_selected = 'stage3'
-    #     self.stage3_info.status = 'enable'
-    #     self.Stage3GroupChange('select')
-
-    #     if self.stage1_info.status == 'enable':
-    #         self.Stage1GroupChange('enable')
-
-    #     if self.stage2_info.status == 'enable':
-    #         self.Stage2GroupChange('enable')
-
-    #     pwr_saved = self.StagesGetSelectedPower()
-    #     if pwr_saved < 10:
-    #         pwr_saved = 10
-    #         self.StagesUpdateSelectedPower(pwr_saved)
-            
-    #     time_saved = self.StagesGetSelectedTime()
-    #     if time_saved < 1:
-    #         time_saved = 1
-    #         self.StagesUpdateSelectedTime(time_saved)
-            
-    #     self.ui.powerLabel.setText(str(pwr_saved))
-    #     self.ui.minutesLabel.setText(str(time_saved))
-    #     self.FrequencyChangeTo(self.stage3_info.GetStageFrequency())
-    #     self.SignalChangeTo(self.stage3_info.GetStageSignal())
-    #     self.UpdateTotalTime()
-
-            
-    # def Stage1GroupChange (self, change_to):
-    #     raise_inners = False
-        
-    #     if change_to == 'enable':
-    #         self.ui.stage1MinutesLabel.setText(str(self.stage1_info.timer)+"'")
-    #         self.ui.stage1PowerLabel.setText(str(self.stage1_info.power)+"%")
-    #         self.ui.stage1Label.setStyleSheet(self.style.stage1_button_enable)
-    #         raise_inners = True
-
-    #     if change_to == 'select':
-    #         self.ui.stage1MinutesLabel.setText(str(self.stage1_info.timer)+"'")
-    #         self.ui.stage1PowerLabel.setText(str(self.stage1_info.power)+"%")
-    #         self.ui.stage1Label.setStyleSheet(self.style.stage1_button_select)
-    #         raise_inners = True            
-
-    #     if change_to == 'disable':
-    #         self.ui.stage1MinutesLabel.setText('')
-    #         self.ui.stage1PowerLabel.setText('')            
-    #         self.ui.stage1Label.setStyleSheet(self.style.stage1_button_disable)
-    #         self.ui.stage1Label.raise_()
-            
-    #     if raise_inners:
-    #         # fix all picture, raise all small pics over background label,
-    #         self.ui.stage1MinutesLabel.raise_()
-    #         self.ui.stage1PowerLabel.raise_()
-    #         self.ui.stage1SignalButton.raise_()
-    #         self.ui.stage1FreqButton.raise_()
-
-    #     # then raise transparent button
-    #     self.ui.stage1Button.raise_()
-
-        
-    # def Stage2GroupChange (self, change_to):
-    #     raise_inners = False
-        
-    #     if change_to == 'enable':
-    #         self.ui.stage2MinutesLabel.setText(str(self.stage2_info.timer)+"'")
-    #         self.ui.stage2PowerLabel.setText(str(self.stage2_info.power)+"%")
-    #         self.ui.stage2Label.setStyleSheet(self.style.stage2_button_enable)
-    #         raise_inners = True
-
-    #     if change_to == 'select':
-    #         self.ui.stage2MinutesLabel.setText(str(self.stage2_info.timer)+"'")
-    #         self.ui.stage2PowerLabel.setText(str(self.stage2_info.power)+"%")
-    #         self.ui.stage2Label.setStyleSheet(self.style.stage2_button_select)
-    #         raise_inners = True            
-
-    #     if change_to == 'disable':
-    #         self.ui.stage2MinutesLabel.setText('')
-    #         self.ui.stage2PowerLabel.setText('')            
-    #         self.ui.stage2Label.setStyleSheet(self.style.stage2_button_disable)
-    #         self.ui.stage2Label.raise_()
-            
-    #     if raise_inners:
-    #         # fix all picture, raise all small pics over background label,
-    #         self.ui.stage2MinutesLabel.raise_()
-    #         self.ui.stage2PowerLabel.raise_()
-    #         self.ui.stage2SignalButton.raise_()
-    #         self.ui.stage2FreqButton.raise_()
-
-    #     # then raise transparent button
-    #     self.ui.stage2Button.raise_()
-
-
-    # def Stage3GroupChange (self, change_to):
-    #     raise_inners = False
-        
-    #     if change_to == 'enable':
-    #         self.ui.stage3MinutesLabel.setText(str(self.stage3_info.timer)+"'")
-    #         self.ui.stage3PowerLabel.setText(str(self.stage3_info.power)+"%")
-    #         self.ui.stage3Label.setStyleSheet(self.style.stage3_button_enable)
-    #         raise_inners = True
-
-    #     if change_to == 'select':
-    #         self.ui.stage3MinutesLabel.setText(str(self.stage3_info.timer)+"'")
-    #         self.ui.stage3PowerLabel.setText(str(self.stage3_info.power)+"%")
-    #         self.ui.stage3Label.setStyleSheet(self.style.stage3_button_select)
-    #         raise_inners = True            
-
-    #     if change_to == 'disable':
-    #         self.ui.stage3MinutesLabel.setText('')
-    #         self.ui.stage3PowerLabel.setText('')            
-    #         self.ui.stage3Label.setStyleSheet(self.style.stage3_button_disable)
-    #         self.ui.stage3Label.raise_()
-            
-    #     if raise_inners:
-    #         # fix all picture, raise all small pics over background label,
-    #         self.ui.stage3MinutesLabel.raise_()
-    #         self.ui.stage3PowerLabel.raise_()
-    #         self.ui.stage3SignalButton.raise_()
-    #         self.ui.stage3FreqButton.raise_()
-
-    #     # then raise transparent button
-    #     self.ui.stage3Button.raise_()
-
-        
-    # def SignalDisableAll(self):
-    #     self.ui.triangularButton.setStyleSheet(self.style.triangular_90_disable)
-    #     self.ui.squareButton.setStyleSheet(self.style.square_90_disable)
-    #     self.ui.sinusoidalButton.setStyleSheet(self.style.sinusoidal_90_disable)
-
-
-    # def SignalChange (self):
-    #     sender = self.sender()
-
-    #     if sender.objectName() == 'triangularButton':
-    #         self.SignalChangeTo('triangular')
-
-    #     elif sender.objectName() == 'squareButton':
-    #         self.SignalChangeTo('square')
-
-    #     elif sender.objectName() == 'sinusoidalButton':
-    #         self.SignalChangeTo('sinusoidal')
-
-    #     self.ScreenSaverKick()
-
-        
-    # def SignalChangeTo (self, new_signal):
-    #     self.SignalDisableAll()
-        
-    #     if new_signal == 'triangular':
-    #         self.ui.triangularButton.setStyleSheet(self.style.triangular_90_enable)
-
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1SignalButton.setStyleSheet(self.style.triangular_75_enable)
-    #             self.stage1_info.SetStageSignal('triangular')
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2SignalButton.setStyleSheet(self.style.triangular_75_enable)
-    #             self.stage2_info.SetStageSignal('triangular')
-    #         else:
-    #             self.ui.stage3SignalButton.setStyleSheet(self.style.triangular_75_enable)
-    #             self.stage3_info.SetStageSignal('triangular')
-
-    #     elif new_signal == 'square':
-    #         self.ui.squareButton.setStyleSheet(self.style.square_90_enable)
-
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1SignalButton.setStyleSheet(self.style.square_75_enable)
-    #             self.stage1_info.SetStageSignal('square')
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2SignalButton.setStyleSheet(self.style.square_75_enable)
-    #             self.stage2_info.SetStageSignal('square')
-    #         else:
-    #             self.ui.stage3SignalButton.setStyleSheet(self.style.square_75_enable)
-    #             self.stage3_info.SetStageSignal('square')            
-
-    #     elif new_signal == 'sinusoidal':
-    #         self.ui.sinusoidalButton.setStyleSheet(self.style.sinusoidal_90_enable)
-
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
-    #             self.stage1_info.SetStageSignal('sinusoidal')
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
-    #             self.stage2_info.SetStageSignal('sinusoidal')
-    #         else:
-    #             self.ui.stage3SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
-    #             self.stage3_info.SetStageSignal('sinusoidal')
-        
-
-    # def FrequencyDisableAll(self):
-    #     self.ui.freq1Button.setStyleSheet(self.style.freq1_90_disable)
-    #     self.ui.freq2Button.setStyleSheet(self.style.freq2_90_disable)
-    #     self.ui.freq3Button.setStyleSheet(self.style.freq3_90_disable)
-    #     self.ui.freq4Button.setStyleSheet(self.style.freq4_90_disable)
-    #     self.ui.freq5Button.setStyleSheet(self.style.freq5_90_disable)
-    #     self.ui.freq6Button.setStyleSheet(self.style.freq6_90_disable)
-    #     self.ui.freq7Button.setStyleSheet(self.style.freq7_90_disable)
-    #     self.ui.freq8Button.setStyleSheet(self.style.freq8_90_disable)
-    #     self.ui.freq9Button.setStyleSheet(self.style.freq9_90_disable)
-    #     self.ui.freq10Button.setStyleSheet(self.style.freq10_90_disable)        
-
-
-    # def FrequencyChange (self):
-    #     sender = self.sender()
-
-    #     if sender.objectName() == 'freq1Button':
-    #         self.FrequencyChangeTo('freq1')
-
-    #     if sender.objectName() == 'freq2Button':
-    #         self.FrequencyChangeTo('freq2')
-
-    #     if sender.objectName() == 'freq3Button':
-    #         self.FrequencyChangeTo('freq3')
-
-    #     if sender.objectName() == 'freq4Button':
-    #         self.FrequencyChangeTo('freq4')
-
-    #     if sender.objectName() == 'freq5Button':
-    #         self.FrequencyChangeTo('freq5')
-
-    #     if sender.objectName() == 'freq6Button':
-    #         self.FrequencyChangeTo('freq6')
-
-    #     if sender.objectName() == 'freq7Button':
-    #         self.FrequencyChangeTo('freq7')
-
-    #     if sender.objectName() == 'freq8Button':
-    #         self.FrequencyChangeTo('freq8')
-
-    #     if sender.objectName() == 'freq9Button':
-    #         self.FrequencyChangeTo('freq9')
-
-    #     if sender.objectName() == 'freq10Button':
-    #         self.FrequencyChangeTo('freq10')
-            
-    #     self.ScreenSaverKick()
-
-
-    # def FrequencyChangeTo (self, new_freq):
-    #     self.FrequencyDisableAll()
-        
-    #     if new_freq == 'freq1':
-    #         self.ui.freq1Button.setStyleSheet(self.style.freq1_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq1_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq1_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq1_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq2':
-    #         self.ui.freq2Button.setStyleSheet(self.style.freq2_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq2_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq2_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq2_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq3':
-    #         self.ui.freq3Button.setStyleSheet(self.style.freq3_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq3_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq3_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq3_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq4':
-    #         self.ui.freq4Button.setStyleSheet(self.style.freq4_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq4_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq4_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq4_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq5':
-    #         self.ui.freq5Button.setStyleSheet(self.style.freq5_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq5_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq5_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq5_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq6':
-    #         self.ui.freq6Button.setStyleSheet(self.style.freq6_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq6_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq6_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq6_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq7':
-    #         self.ui.freq7Button.setStyleSheet(self.style.freq7_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq7_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq7_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq7_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq8':
-    #         self.ui.freq8Button.setStyleSheet(self.style.freq8_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq8_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq8_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq8_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq9':
-    #         self.ui.freq9Button.setStyleSheet(self.style.freq9_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq9_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq9_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq9_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-
-    #     if new_freq == 'freq10':
-    #         self.ui.freq10Button.setStyleSheet(self.style.freq10_90_enable)
-    #         if self.stage_selected == 'stage1':
-    #             self.ui.stage1FreqButton.setStyleSheet(self.style.freq10_75_enable)
-    #             self.stage1_info.SetStageFrequency(new_freq)
-    #         elif self.stage_selected == 'stage2':
-    #             self.ui.stage2FreqButton.setStyleSheet(self.style.freq10_75_enable)
-    #             self.stage2_info.SetStageFrequency(new_freq)
-    #         else:
-    #             self.ui.stage3FreqButton.setStyleSheet(self.style.freq10_75_enable)
-    #             self.stage3_info.SetStageFrequency(new_freq)
-            
-
-    # def UpPowerPressed (self):
-    #     self.PwrUp (1)
-    #     self.powerUpButtonCnt = 1
-    #     # self.ScreenSaverKick()
-
-    # def UpPowerReleased (self):
-    #     self.powerUpButtonCnt = 0
-
-    # def DwnPowerPressed (self):
-    #     self.PwrDwn(1)
-    #     self.powerDwnButtonCnt = 1
-    #     # self.ScreenSaverKick()        
-
-    # def DwnPowerReleased (self):
-    #     self.powerDwnButtonCnt = 0        
-
-    # def UpTimePressed (self):
-    #     self.TimeUp (1)
-    #     self.timeUpButtonCnt = 1
-    #     # self.ScreenSaverKick()        
-
-    # def UpTimeReleased (self):
-    #     self.timeUpButtonCnt = 0        
-
-    # def DwnTimePressed (self):
-    #     self.TimeDwn(1)
-    #     self.timeDwnButtonCnt = 1
-    #     # self.ScreenSaverKick()
-
-    # def DwnTimeReleased (self):
-    #     self.timeDwnButtonCnt = 0
-    
-
-    # def PwrUp (self, new_pwr):
-    #     last_pwr = int(self.ui.powerLabel.text())
-    #     if (last_pwr + new_pwr) < 100:
-    #         last_pwr += new_pwr
-    #     else:
-    #         last_pwr = 100
-
-    #     self.ui.powerLabel.setText(str(last_pwr))
-    #     self.StagesUpdateSelectedPower(last_pwr)
-
-        
-    # def PwrDwn (self, new_pwr):
-    #     last_pwr = int(self.ui.powerLabel.text())
-    #     if (last_pwr - new_pwr) > 10:
-    #         last_pwr -= new_pwr
-    #     else:
-    #         last_pwr = 10
-
-    #     self.ui.powerLabel.setText(str(last_pwr))
-    #     self.StagesUpdateSelectedPower(last_pwr)        
-
-        
-    # def TimeUp (self, new_time):
-    #     last_time = int(self.ui.minutesLabel.text())
-    #     if ((last_time + new_time) < 120):
-    #         last_time += new_time
-    #     else:
-    #         last_time = 120
-            
-    #     self.ui.minutesLabel.setText(str(last_time))
-    #     self.StagesUpdateSelectedTime(last_time)
-    #     self.UpdateTotalTime()
-
-        
-    # def TimeDwn (self, new_time):
-    #     last_time = int(self.ui.minutesLabel.text())
-    #     if ((last_time - new_time) > 1):
-    #         last_time -= new_time
-    #     else:
-    #         last_time = 1
-            
-    #     self.ui.minutesLabel.setText(str(last_time))
-    #     self.StagesUpdateSelectedTime(last_time)
-    #     self.UpdateTotalTime()
-    
-
-    # def StagesUpdateSelectedPower (self, new_pwr):
-    #     if self.stage_selected == 'stage1':
-    #         self.ui.stage1PowerLabel.setText(str(new_pwr)+'%')
-    #         self.stage1_info.SetStagePower(new_pwr)
-    #     elif self.stage_selected == 'stage2':
-    #         self.ui.stage2PowerLabel.setText(str(new_pwr)+'%')
-    #         self.stage2_info.SetStagePower(new_pwr)
-    #     else:
-    #         self.ui.stage3PowerLabel.setText(str(new_pwr)+'%')
-    #         self.stage3_info.SetStagePower(new_pwr)
-
-            
-    # def StagesUpdateSelectedTime (self, new_time):
-    #     if self.stage_selected == 'stage1':
-    #         self.ui.stage1MinutesLabel.setText(str(new_time)+"'")
-    #         self.stage1_info.SetStageTimer(new_time)
-    #     elif self.stage_selected == 'stage2':
-    #         self.ui.stage2MinutesLabel.setText(str(new_time)+"'")
-    #         self.stage2_info.SetStageTimer(new_time)
-    #     else:
-    #         self.ui.stage3MinutesLabel.setText(str(new_time)+"'")
-    #         self.stage3_info.SetStageTimer(new_time)
-
-            
-    # def StagesGetSelectedPower (self):
-    #     if self.stage_selected == 'stage1':
-    #         pwr_str = self.ui.stage1PowerLabel.text()
-    #         pwr_str = pwr_str[:-1]
-    #         pwr_save = int(pwr_str)
-    #     elif self.stage_selected == 'stage2':
-    #         pwr_str = self.ui.stage2PowerLabel.text()
-    #         pwr_str = pwr_str[:-1]
-    #         pwr_save = int(pwr_str)
-    #     else:
-    #         pwr_str = self.ui.stage3PowerLabel.text()
-    #         pwr_str = pwr_str[:-1]
-    #         pwr_save = int(pwr_str)
-
-    #     return pwr_save
-
-            
-    # def StagesGetSelectedTime (self):
-    #     if self.stage_selected == 'stage1':
-    #         time_str = self.ui.stage1MinutesLabel.text()
-    #         time_str = time_str[:-1]
-    #         time_save = int(time_str)
-    #     elif self.stage_selected == 'stage2':
-    #         time_str = self.ui.stage2MinutesLabel.text()
-    #         time_str = time_str[:-1]
-    #         time_save = int(time_str)
-    #     else:
-    #         time_str = self.ui.stage3MinutesLabel.text()
-    #         time_str = time_str[:-1]
-    #         time_save = int(time_str)
-
-    #     return time_save
-            
-            
-    # def ScreenSaverKick (self):
-    #     pass
-
-    
-    # def ClearStage (self):
-    #     first_stage_not_disable = 'stage1'
-        
-    #     if self.stage_selected == 'stage1':
-    #         # check if the other two are disabled
-    #         if self.stage2_info.GetStageStatus() != 'disable' or \
-    #            self.stage3_info.GetStageStatus() != 'disable':
-    #             self.stage1_info.SetStageStatus('disable')
-    #             self.Stage1GroupChange('disable')
-
-    #             if self.stage2_info.GetStageStatus() != 'disable':
-    #                 self.SelectStageButton2()
-    #             else:
-    #                 self.SelectStageButton3()
-
-    #     elif self.stage_selected == 'stage2':
-    #         # check if the other two are disabled
-    #         if self.stage1_info.GetStageStatus() != 'disable' or \
-    #            self.stage3_info.GetStageStatus() != 'disable':
-    #             self.stage2_info.SetStageStatus('disable')
-    #             self.Stage2GroupChange('disable')
-
-    #             if self.stage1_info.GetStageStatus() != 'disable':
-    #                 self.SelectStageButton1()
-    #             else:
-    #                 self.SelectStageButton3()
-                    
-    #     else:
-    #         # check if the other two are disabled
-    #         if self.stage1_info.GetStageStatus() != 'disable' or \
-    #            self.stage2_info.GetStageStatus() != 'disable':
-    #             self.stage3_info.SetStageStatus('disable')
-    #             self.Stage3GroupChange('disable')
-
-    #             if self.stage1_info.GetStageStatus() != 'disable':
-    #                 self.SelectStageButton1()
-    #             else:
-    #                 self.SelectStageButton2()
-
-
-    # def UpdateTotalTime (self):
-    #     total_time = 0
-    #     if self.stage1_info.GetStageStatus() == 'enable':
-    #         total_time += self.stage1_info.GetStageTimer()
-
-    #     if self.stage2_info.GetStageStatus() == 'enable':
-    #         total_time += self.stage2_info.GetStageTimer()
-
-    #     if self.stage3_info.GetStageStatus() == 'enable':
-    #         total_time += self.stage3_info.GetStageTimer()
-
-    #     self.ui.totalMinutesLabel.setText(str(total_time))
-            
-        
-    # def BackStage (self):
-    #     self.action = 'none'
-    #     self.accept()
-    
-
-        
         
 ### end of file ###
 
