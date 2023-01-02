@@ -73,27 +73,27 @@ class MemManagerDialog (QDialog):
         self.ui.action1Button.setStyleSheet(self.action_button_disable)
 
         # connect up buttons
-        self.ui.memaButton.clicked.connect(self.SelectButton_mema)
-        self.ui.membButton.clicked.connect(self.SelectButton_memb)
-        self.ui.memcButton.clicked.connect(self.SelectButton_memc)
-        self.ui.memdButton.clicked.connect(self.SelectButton_memd)        
-        self.ui.mem5Button.clicked.connect(self.SelectButton_mem5)
-        self.ui.mem6Button.clicked.connect(self.SelectButton_mem6)
-        self.ui.mem7Button.clicked.connect(self.SelectButton_mem7)
-        self.ui.mem8Button.clicked.connect(self.SelectButton_mem8)        
-        self.ui.mem9Button.clicked.connect(self.SelectButton_mem9)
-        self.ui.mem10Button.clicked.connect(self.SelectButton_mem10)
-        self.ui.mem11Button.clicked.connect(self.SelectButton_mem11)
-        self.ui.mem12Button.clicked.connect(self.SelectButton_mem12)        
-        self.ui.mem13Button.clicked.connect(self.SelectButton_mem13)
-        self.ui.mem14Button.clicked.connect(self.SelectButton_mem14)
-        self.ui.mem15Button.clicked.connect(self.SelectButton_mem15)
-        self.ui.mem16Button.clicked.connect(self.SelectButton_mem16)        
-        self.ui.mem17Button.clicked.connect(self.SelectButton_mem17)
-        self.ui.mem18Button.clicked.connect(self.SelectButton_mem18)
-        self.ui.mem19Button.clicked.connect(self.SelectButton_mem19)
-        self.ui.mem20Button.clicked.connect(self.SelectButton_mem20)
-
+        self.ui.memaButton.clicked.connect(self.SelectButton)
+        self.ui.membButton.clicked.connect(self.SelectButton)
+        self.ui.memcButton.clicked.connect(self.SelectButton)
+        self.ui.memdButton.clicked.connect(self.SelectButton)        
+        self.ui.mem5Button.clicked.connect(self.SelectButton)
+        self.ui.mem6Button.clicked.connect(self.SelectButton)
+        self.ui.mem7Button.clicked.connect(self.SelectButton)
+        self.ui.mem8Button.clicked.connect(self.SelectButton)        
+        self.ui.mem9Button.clicked.connect(self.SelectButton)
+        self.ui.mem10Button.clicked.connect(self.SelectButton)
+        self.ui.mem11Button.clicked.connect(self.SelectButton)
+        self.ui.mem12Button.clicked.connect(self.SelectButton)        
+        self.ui.mem13Button.clicked.connect(self.SelectButton)
+        self.ui.mem14Button.clicked.connect(self.SelectButton)
+        self.ui.mem15Button.clicked.connect(self.SelectButton)
+        self.ui.mem16Button.clicked.connect(self.SelectButton)        
+        self.ui.mem17Button.clicked.connect(self.SelectButton)
+        self.ui.mem18Button.clicked.connect(self.SelectButton)
+        self.ui.mem19Button.clicked.connect(self.SelectButton)
+        self.ui.mem20Button.clicked.connect(self.SelectButton)
+        
         self.ui.action1Button.clicked.connect(self.Action1Button)
         self.ui.action2Button.clicked.connect(self.Action2Button)
         self.ui.action3Button.clicked.connect(self.Action3Button)
@@ -147,24 +147,29 @@ class MemManagerDialog (QDialog):
         
         self.PopullateFromDict (self.mem_dict)
 
-    
-    def SelectButton_mema (self):
+
+    def SelectButton (self):
+        sender = self.sender()
+        button_name = sender.objectName()
+        button_sel = button_name.split('B')
+        button_sel = button_sel[0]
+
+        # get the ui list
+        ui_label_lst = self.ui_label_dict[button_sel]
+        
         # first check if we are previusly selected
         unselect = False
-        if self.selected_blue == 'memaButton':
+        if self.selected_blue == button_name:
             self.selected_blue = ''
             unselect = True
 
-        if self.selected_cyan == 'memaButton':
+        if self.selected_cyan == button_name:
             self.selected_cyan = ''            
             unselect = True
 
         # go unselected
         if unselect:
-            self.ui.memaDescLabel.setStyleSheet(self.label_orig)
-            self.ui.memaOneLabel.setStyleSheet(self.label_orig)
-            self.ui.memaTwoLabel.setStyleSheet(self.label_orig)
-            self.ui.memaThreeLabel.setStyleSheet(self.label_orig)
+            self.PopullateFromDict(self.mem_dict)
             self.CheckForActionsButtons()
             return
 
@@ -173,840 +178,23 @@ class MemManagerDialog (QDialog):
             return
 
         if self.selected_blue == '':
-            self.selected_blue = 'memaButton'
-            # go blue on memaButton
-            self.ui.memaDescLabel.setStyleSheet(self.label_blue)
-            self.ui.memaOneLabel.setStyleSheet(self.label_blue)
-            self.ui.memaTwoLabel.setStyleSheet(self.label_blue)
-            self.ui.memaThreeLabel.setStyleSheet(self.label_blue)
+            self.selected_blue = button_name
+            # go blue on this button
+            ui_label_lst[0].setStyleSheet(self.label_blue)
+            ui_label_lst[1].setStyleSheet(self.label_blue)
+            ui_label_lst[2].setStyleSheet(self.label_blue)
+            ui_label_lst[3].setStyleSheet(self.label_blue)            
 
         elif self.selected_cyan == '':
-            self.selected_cyan = 'memaButton'
-            # go cyan on memaButton
-            self.ui.memaDescLabel.setStyleSheet(self.label_cyan)
-            self.ui.memaOneLabel.setStyleSheet(self.label_cyan)
-            self.ui.memaTwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.memaThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_memb (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'membButton':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'membButton':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.membDescLabel.setStyleSheet(self.label_orig)
-            self.ui.membOneLabel.setStyleSheet(self.label_orig)
-            self.ui.membTwoLabel.setStyleSheet(self.label_orig)
-            self.ui.membThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'membButton'
-            # go blue on membButton
-            self.ui.membDescLabel.setStyleSheet(self.label_blue)
-            self.ui.membOneLabel.setStyleSheet(self.label_blue)
-            self.ui.membTwoLabel.setStyleSheet(self.label_blue)
-            self.ui.membThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'membButton'
-            # go cyan on membButton
-            self.ui.membDescLabel.setStyleSheet(self.label_cyan)
-            self.ui.membOneLabel.setStyleSheet(self.label_cyan)
-            self.ui.membTwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.membThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_memc (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'memcButton':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'memcButton':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.memcDescLabel.setStyleSheet(self.label_orig)
-            self.ui.memcOneLabel.setStyleSheet(self.label_orig)
-            self.ui.memcTwoLabel.setStyleSheet(self.label_orig)
-            self.ui.memcThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'memcButton'
-            # go blue on memcButton
-            self.ui.memcDescLabel.setStyleSheet(self.label_blue)
-            self.ui.memcOneLabel.setStyleSheet(self.label_blue)
-            self.ui.memcTwoLabel.setStyleSheet(self.label_blue)
-            self.ui.memcThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'memcButton'
-            # go cyan on memcButton
-            self.ui.memcDescLabel.setStyleSheet(self.label_cyan)
-            self.ui.memcOneLabel.setStyleSheet(self.label_cyan)
-            self.ui.memcTwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.memcThreeLabel.setStyleSheet(self.label_cyan)
-        
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_memd (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'memdButton':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'memdButton':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.memdDescLabel.setStyleSheet(self.label_orig)
-            self.ui.memdOneLabel.setStyleSheet(self.label_orig)
-            self.ui.memdTwoLabel.setStyleSheet(self.label_orig)
-            self.ui.memdThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'memdButton'
-            # go blue on memdButton
-            self.ui.memdDescLabel.setStyleSheet(self.label_blue)
-            self.ui.memdOneLabel.setStyleSheet(self.label_blue)
-            self.ui.memdTwoLabel.setStyleSheet(self.label_blue)
-            self.ui.memdThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'memdButton'
-            # go cyan on memdButton
-            self.ui.memdDescLabel.setStyleSheet(self.label_cyan)
-            self.ui.memdOneLabel.setStyleSheet(self.label_cyan)
-            self.ui.memdTwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.memdThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem5 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem5Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem5Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem5DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem5OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem5TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem5ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem5Button'
-            # go blue on mem5Button
-            self.ui.mem5DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem5OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem5TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem5ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem5Button'
-            # go cyan on mem5Button
-            self.ui.mem5DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem5OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem5TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem5ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem6 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem6Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem6Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem6DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem6OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem6TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem6ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem6Button'
-            # go blue on mem6Button
-            self.ui.mem6DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem6OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem6TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem6ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem6Button'
-            # go cyan on mem6Button
-            self.ui.mem6DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem6OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem6TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem6ThreeLabel.setStyleSheet(self.label_cyan)
-            
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem7 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem7Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem7Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem7DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem7OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem7TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem7ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem7Button'
-            # go blue on mem7Button
-            self.ui.mem7DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem7OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem7TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem7ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem7Button'
-            # go cyan on mem7Button
-            self.ui.mem7DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem7OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem7TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem7ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem8 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem8Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem8Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem8DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem8OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem8TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem8ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem8Button'
-            # go blue on mem8Button
-            self.ui.mem8DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem8OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem8TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem8ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem8Button'
-            # go cyan on mem8Button
-            self.ui.mem8DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem8OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem8TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem8ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem9 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem9Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem9Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem9DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem9OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem9TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem9ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem9Button'
-            # go blue on mem9Button
-            self.ui.mem9DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem9OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem9TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem9ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem9Button'
-            # go cyan on mem9Button
-            self.ui.mem9DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem9OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem9TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem9ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem10 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem10Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem10Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem10DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem10OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem10TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem10ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem10Button'
-            # go blue on mem10Button
-            self.ui.mem10DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem10OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem10TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem10ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem10Button'
-            # go cyan on mem10Button
-            self.ui.mem10DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem10OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem10TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem10ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem11 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem11Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem11Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem11DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem11OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem11TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem11ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem11Button'
-            # go blue on mem11Button
-            self.ui.mem11DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem11OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem11TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem11ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem11Button'
-            # go cyan on mem11Button
-            self.ui.mem11DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem11OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem11TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem11ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem12 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem12Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem12Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem12DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem12OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem12TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem12ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem12Button'
-            # go blue on mem12Button
-            self.ui.mem12DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem12OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem12TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem12ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem12Button'
-            # go cyan on mem12Button
-            self.ui.mem12DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem12OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem12TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem12ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem13 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem13Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem13Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem13DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem13OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem13TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem13ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem13Button'
-            # go blue on mem13Button
-            self.ui.mem13DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem13OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem13TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem13ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem13Button'
-            # go cyan on mem13Button
-            self.ui.mem13DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem13OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem13TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem13ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem14 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem14Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem14Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem14DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem14OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem14TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem14ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem14Button'
-            # go blue on mem14Button
-            self.ui.mem14DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem14OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem14TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem14ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem14Button'
-            # go cyan on mem14Button
-            self.ui.mem14DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem14OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem14TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem14ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem15 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem15Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem15Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem15DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem15OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem15TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem15ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem15Button'
-            # go blue on mem15Button
-            self.ui.mem15DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem15OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem15TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem15ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem15Button'
-            # go cyan on mem15Button
-            self.ui.mem15DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem15OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem15TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem15ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem16 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem16Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem16Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem16DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem16OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem16TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem16ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem16Button'
-            # go blue on mem16Button
-            self.ui.mem16DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem16OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem16TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem16ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem16Button'
-            # go cyan on mem16Button
-            self.ui.mem16DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem16OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem16TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem16ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem17 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem17Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem17Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem17DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem17OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem17TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem17ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem17Button'
-            # go blue on mem17Button
-            self.ui.mem17DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem17OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem17TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem17ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem17Button'
-            # go cyan on mem17Button
-            self.ui.mem17DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem17OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem17TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem17ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-        
-    def SelectButton_mem18 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem18Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem18Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem18DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem18OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem18TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem18ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem18Button'
-            # go blue on mem18Button
-            self.ui.mem18DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem18OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem18TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem18ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem18Button'
-            # go cyan on mem18Button
-            self.ui.mem18DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem18OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem18TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem18ThreeLabel.setStyleSheet(self.label_cyan)
+            self.selected_cyan = button_name
+            # go cyan on this button
+            ui_label_lst[0].setStyleSheet(self.label_cyan)
+            ui_label_lst[1].setStyleSheet(self.label_cyan)
+            ui_label_lst[2].setStyleSheet(self.label_cyan)
+            ui_label_lst[3].setStyleSheet(self.label_cyan)            
 
         self.CheckForActionsButtons()
         
-
-    def SelectButton_mem19 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem19Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem19Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem19DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem19OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem19TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem19ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem19Button'
-            # go blue on mem19Button
-            self.ui.mem19DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem19OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem19TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem19ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem19Button'
-            # go cyan on mem19Button
-            self.ui.mem19DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem19OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem19TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem19ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
-
-    def SelectButton_mem20 (self):
-        # first check if we are previusly selected
-        unselect = False
-        if self.selected_blue == 'mem20Button':
-            self.selected_blue = ''
-            unselect = True
-
-        if self.selected_cyan == 'mem20Button':
-            self.selected_cyan = ''            
-            unselect = True
-
-        # go unselected
-        if unselect:
-            self.ui.mem20DescLabel.setStyleSheet(self.label_orig)
-            self.ui.mem20OneLabel.setStyleSheet(self.label_orig)
-            self.ui.mem20TwoLabel.setStyleSheet(self.label_orig)
-            self.ui.mem20ThreeLabel.setStyleSheet(self.label_orig)
-            self.CheckForActionsButtons()
-            return
-
-        # check two selections
-        if self.selected_blue != '' and self.selected_cyan != '':
-            return
-
-        if self.selected_blue == '':
-            self.selected_blue = 'mem20Button'
-            # go blue on mem20Button
-            self.ui.mem20DescLabel.setStyleSheet(self.label_blue)
-            self.ui.mem20OneLabel.setStyleSheet(self.label_blue)
-            self.ui.mem20TwoLabel.setStyleSheet(self.label_blue)
-            self.ui.mem20ThreeLabel.setStyleSheet(self.label_blue)
-
-        elif self.selected_cyan == '':
-            self.selected_cyan = 'mem20Button'
-            # go cyan on mem20Button
-            self.ui.mem20DescLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem20OneLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem20TwoLabel.setStyleSheet(self.label_cyan)
-            self.ui.mem20ThreeLabel.setStyleSheet(self.label_cyan)
-
-        self.CheckForActionsButtons()
-
 
     def CheckForActionsButtons (self):
         if self.selected_blue !=  '' and self.selected_cyan != '':
@@ -1100,6 +288,8 @@ class MemManagerDialog (QDialog):
             else:
                 print("error no blue and cyan to copy!!!!!")
 
+        self.CheckForActionsButtons()
+
 
     def Action2Button (self):
         if self.ui.action2Button.text() == 'None':
@@ -1127,7 +317,9 @@ class MemManagerDialog (QDialog):
             else:
                 print("error no blue and cyan to swap!!!!!")
 
-                
+        self.CheckForActionsButtons()
+
+        
     def Action3Button (self):
         self.action = 'accept'
         self.accept()
