@@ -1,17 +1,13 @@
-import sys
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QColor, QIcon
 from stages_class import Stages
 from stylesheet_class import ButtonStyles
 from treatment_class import Treatment
 
-"""
-        Test for StagesDialog
-
-"""
 
 #Here import the UIs or classes that got the UIs
 from ui_magnet40 import Ui_Dialog
+
 
 
 ##############################
@@ -24,7 +20,7 @@ class Dialog(QDialog):
     # one_second_signal = pyqtSignal()
 
     
-    def __init__(self):
+    def __init__(self, debug_bool):
         super(Dialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -32,6 +28,9 @@ class Dialog(QDialog):
         self.ui.setupUi(self)
 
         # Class Startup Init
+        ## backup received data
+        self.debug_bool = debug_bool
+        
         ## Connect up the buttons.
         self.ui.stage1Button.clicked.connect(self.SelectStage)
         self.ui.stage2Button.clicked.connect(self.SelectStage)
@@ -49,6 +48,36 @@ class Dialog(QDialog):
         self.ui.memdButton.pressed.connect(self.MemoryPressed)
         self.ui.memdButton.released.connect(self.MemoryReleased)
 
+        self.ui_label_dict = {
+            "mema" : [self.ui.memaDescLabel, self.ui.memaOneLabel, self.ui.memaTwoLabel, self.ui.memaThreeLabel],
+            "memb" : [self.ui.membDescLabel, self.ui.membOneLabel, self.ui.membTwoLabel, self.ui.membThreeLabel],
+            "memc" : [self.ui.memcDescLabel, self.ui.memcOneLabel, self.ui.memcTwoLabel, self.ui.memcThreeLabel],
+            "memd" : [self.ui.memdDescLabel, self.ui.memdOneLabel, self.ui.memdTwoLabel, self.ui.memdThreeLabel]
+            }
+
+        self.ui_button_dict = {
+            "mema" : self.ui.memaButton,
+            "memb" : self.ui.membButton,
+            "memc" : self.ui.memcButton,
+            "memd" : self.ui.memdButton
+            }
+
+
+        ## set styles
+        self.label_orig = "color: rgb(55, 52, 53);"
+
+        self.label_disable = "color: rgb(230, 231, 232);"        
+
+        self.mem_button_enable = "background-color: rgb(221, 234, 224);\
+                                  border-radius: 20px;\
+                                  border:3px solid rgb(55, 52, 53);\
+                                  color: rgb(55, 52, 53);"
+
+        self.mem_button_disable = "background-color: rgb(245, 245, 245);\
+                                   border-radius: 20px;\
+                                   border:3px solid rgb(230, 231, 232);\
+                                   color: rgb(230,231,232);"
+        
         self.style = ButtonStyles()
         self.t = Treatment()
 
@@ -85,30 +114,32 @@ class Dialog(QDialog):
         self.UpdateTotalTime()
 
         # get memory buttons config        
-        self.MemoryUpdate('mema', [self.t.mema_description,\
-                                   self.t.mema_first_str,\
-                                   self.t.mema_second_str,\
-                                   self.t.mema_third_str])
+        # self.MemoryUpdate('mema', [self.t.mema_description,\
+        #                            self.t.mema_first_str,\
+        #                            self.t.mema_second_str,\
+        #                            self.t.mema_third_str])
 
-        self.MemoryUpdate('memb', [self.t.memb_description,\
-                                   self.t.memb_first_str,\
-                                   self.t.memb_second_str,\
-                                   self.t.memb_third_str])
+        # self.MemoryUpdate('memb', [self.t.memb_description,\
+        #                            self.t.memb_first_str,\
+        #                            self.t.memb_second_str,\
+        #                            self.t.memb_third_str])
 
-        self.MemoryUpdate('memc', [self.t.memc_description,\
-                                   self.t.memc_first_str,\
-                                   self.t.memc_second_str,\
-                                   self.t.memc_third_str])
+        # self.MemoryUpdate('memc', [self.t.memc_description,\
+        #                            self.t.memc_first_str,\
+        #                            self.t.memc_second_str,\
+        #                            self.t.memc_third_str])
 
-        self.MemoryUpdate('memd', [self.t.memd_description,\
-                                   self.t.memd_first_str,\
-                                   self.t.memd_second_str,\
-                                   self.t.memd_third_str])
+        # self.MemoryUpdate('memd', [self.t.memd_description,\
+        #                            self.t.memd_first_str,\
+        #                            self.t.memd_second_str,\
+        #                            self.t.memd_third_str])
         
-        self.MemoryButtonStatus('mema', self.t.mema_status)
-        self.MemoryButtonStatus('memb', self.t.memb_status)
-        self.MemoryButtonStatus('memc', self.t.memc_status)
-        self.MemoryButtonStatus('memd', self.t.memd_status)
+        # self.MemoryButtonStatus('mema', self.t.mema_status)
+        # self.MemoryButtonStatus('memb', self.t.memb_status)
+        # self.MemoryButtonStatus('memc', self.t.memc_status)
+        # self.MemoryButtonStatus('memd', self.t.memd_status)
+
+        self.PopullateFromDict(self.t.mem_instant_dict)
 
         self.ui.textEdit.setText('')
         self.InsertColorText("No serial port found!!!", 'blue')
@@ -347,6 +378,31 @@ class Dialog(QDialog):
         self.ui.totalMinutesLabel.setText(str(total_time))
 
 
+    def PopullateFromDict (self, m_dict):
+        for x in m_dict:
+            mem_lst = m_dict[x]
+            ui_label_lst = self.ui_label_dict[x]
+            ui_button = self.ui_button_dict[x]
+
+            ui_label_lst[0].setText(mem_lst[0])
+            ui_label_lst[1].setText('1 - ' + mem_lst[1])
+            ui_label_lst[2].setText('2 - ' + mem_lst[2])
+            ui_label_lst[3].setText('3 - ' + mem_lst[3])
+                
+            if mem_lst[1] == '' and mem_lst[2] == '' and mem_lst[3] == '':
+                ui_label_lst[0].setStyleSheet(self.label_disable)
+                ui_label_lst[1].setStyleSheet(self.label_disable)
+                ui_label_lst[2].setStyleSheet(self.label_disable)
+                ui_label_lst[3].setStyleSheet(self.label_disable)
+                ui_button.setStyleSheet(self.mem_button_disable)
+            else:
+                ui_label_lst[0].setStyleSheet(self.label_orig)
+                ui_label_lst[1].setStyleSheet(self.label_orig)
+                ui_label_lst[2].setStyleSheet(self.label_orig)
+                ui_label_lst[3].setStyleSheet(self.label_orig)
+                ui_button.setStyleSheet(self.mem_button_enable)
+
+                
     def MemoryUpdate (self, mem, str_lst):
         if mem == 'mema':
             self.ui.memaDescLabel.setText(str_lst[0])
@@ -733,99 +789,25 @@ class Dialog(QDialog):
             self.MemoryScreen('mem1')
         else:
             self.InsertLocalText("Select all parameters first!")
-        
+
+            
     ################################
     # Other Screens Calls are here #
     ################################
 
     def TreatmentScreen (self):
-        print("TreatmentScreen called!")
+        if self.debug_bool:
+            print("TreatmentScreen called!")
+        else:
+            print("call the dialog here!!!!")
 
         
     def MemoryManagerScreen (self):
-        print("MemoryManagerScreen called!")
+        if self.debug_bool:
+            print("MemoryManagerScreen called!")
+        else:
+            print("call the dialog here!!!!")
         
     
-# class TreatmentMock ():
-#     def __init__(self, localization='usa'):
-#         self.localization = localization
-#         self.triangular_power_limit = 100
-#         self.square_power_limit = 50
-#         self.sinusoidal_power_limit = 60       
-        
-#         self.peak_current = 3.6
-#         self.resistance065 = 47
-#         self.resistance080 = 23.5
-#         self.tempcoef065 = 0.2627
-#         self.tempcoef080 = 0.2627
-#         self.tempamb = 25
-
-        
-#     def ReadConfigFile (self):
-#         print ('asked to read config.txt')
-
-
-#     def SaveConfigFile (self):
-#         print ('asked to write config.txt')
-        
-
-        
-####################
-# Function Screens #
-####################
-def TestScreen ():
-    stage1 = Stages()
-    stage2 = Stages()
-    stage3 = Stages()
-
-    stage1.SetStageTimer(45)
-    stage1.SetStagePower(85)
-    stage1.SetStageSignal('triangular')
-    stage1.SetStageFrequency('freq1')
-    stage1.SetStageStatus('enable')
-
-    stage2.SetStageTimer(60)
-    stage2.SetStagePower(100)
-    stage2.SetStageSignal('square')
-    stage2.SetStageFrequency('freq9')
-    stage2.SetStageStatus('enable')
-
-    stage3.SetStageTimer(0)
-    stage3.SetStagePower(0)
-    stage3.SetStageSignal('none')
-    stage3.SetStageFrequency('none')
-    stage3.SetStageStatus('disable')
-    
-    stages_list = [stage1, stage2, stage3]
-    style_obj = ButtonStyles()
-    # treat = TreatmentMock()
-    a = StagesDialog(stages_list, style_obj)
-    
-    a.setModal(True)
-    a.exec_()
-
-    if a.action == 'accept':
-        print('Accept new config')
-        print('Config List')        
-        print(a.st_lst)
-    else:
-        print('Last config')
-        print(stages_list)
-              
-    sys.exit(0)
-
-
 ### End of Dialog ###
-
-############
-# Main App #
-############
-app = QApplication(sys.argv)
-w = Dialog()
-# w.setWindowFlags(Qt.CustomizeWindowHint)
-# w.setWindowFlags(Qt.FramelessWindowHint)
-print('Starting magnet app...')
-w.show()
-sys.exit(app.exec_())
-
 ### End of File ###

@@ -1,7 +1,6 @@
 import configparser
 
 
-
 class Treatment():
     """ Clase para guardar valores de tratamiento """
 
@@ -11,30 +10,42 @@ class Treatment():
         self.stage2_info = 'None'
         self.stage3_info = 'None'
 
-        self.mema_status = 'enable'
-        self.mema_description = 'Arm and Leg Inflammatory'
-        self.mema_first_str = "15' S 35% 7.83Hz"
-        self.mema_second_str = ''
-        self.mema_third_str = ''
+        self.stage_current_dict = {
+            'stage1' : "15' S 35% 7.83Hz",
+            'stage2' : "15' S 35% 7.83Hz",
+            'stage3' : "15' S 35% 7.83Hz"
+            }
 
-        self.memb_status = 'enable'
-        self.memb_description = 'Arm and Leg Inflammatory'
-        self.memb_first_str = "15' S 35% 7.83Hz"
-        self.memb_second_str = "15' R 85% 7.83Hz"
-        self.memb_third_str = "15' T 95% 7.83Hz"
+        self.mem_instant_dict = {
+            'mema' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
+            'memb' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
+            'memc' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
+            'memd' : ['', '', '', '']
+            }
 
-        self.memc_status = 'disable'
-        self.memc_description = 'Arm and Leg Inflammatory'
-        self.memc_first_str = "15' S 35% 7.83Hz"
-        self.memc_second_str = ''
-        self.memc_third_str = ''
-
-        self.memd_status = 'disable'
-        self.memd_description = 'Arm and Leg Inflammatory'
-        self.memd_first_str = "15' S 35% 7.83Hz"
-        self.memd_second_str = ''
-        self.memd_third_str = ''
-        
+        self.mem_all_dict = {
+            'mema' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
+            'memb' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
+            'memc' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
+            'memd' : ['', '', '', ''],
+            'mem5' : ['', '', '', ''],
+            'mem6' : ['', '', '', ''],
+            'mem7' : ['', '', '', ''],
+            'mem8' : ['', '', '', ''],
+            'mem9' : ['', '', '', ''],
+            'mem10' : ['', '', '', ''],
+            'mem11' : ['', '', '', ''],
+            'mem12' : ['', '', '', ''],
+            'mem13' : ['', '', '', ''],
+            'mem14' : ['', '', '', ''],
+            'mem15' : ['', '', '', ''],
+            'mem16' : ['', '', '', ''],
+            'mem17' : ['', '', '', ''],
+            'mem18' : ['', '', '', ''],
+            'mem19' : ['', '', '', ''],
+            'mem20' : ['', '', '', '']
+            }
+            
         self.max_power = 100
         self.min_power = 10
         self.max_treatment_timer = 120

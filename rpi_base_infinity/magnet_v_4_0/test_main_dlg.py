@@ -1,0 +1,115 @@
+import sys
+from PyQt5.QtWidgets import QApplication
+
+"""
+        Test for Main Dialog
+
+"""
+
+#Here import the UIs or classes that got the UIs
+from dlg_main_cls import Dialog
+
+
+class SerialMock ():
+    def __init__(self, cb, port):
+        self.cb = cb
+        print ('port on: ' + port)
+        self.port_open = True
+
+    def Write (self, to_send):
+        print ('serial tx -> ' + to_send)
+        # if 'keepalive' in to_send:
+        #     self.Read('OK')
+
+        # if 'serial num' in to_send:
+        #     self.Read('Device Id: 0xffffffff')
+
+        # if 'voltage' in to_send:
+        #     self.Read('High Supply: 211.11V')
+        #     self.Read('Low Supply: 45.22V')
+
+        # if 'hard_soft' in to_send:
+        #     self.Read('Hardware Version: 2.1\r\n')
+        #     self.Read('Software Version: 1.4\r\n')
+            
+    def Read (self, to_read):
+        print('serial rx <- ' + to_read)
+        self.cb(to_read)        
+
+
+# class TestingClass (QObject):
+#     rcv_signal = pyqtSignal(str)
+    
+#     def __init__(self):
+#         super(QObject, self).__init__()        
+
+#     def MyObjCallback (self, readed):
+#         print (readed)
+#         self.rcv_signal.emit(readed)
+
+def MyObjCallback (readed):
+    print ('cb called: ' + readed)
+        
+####################
+# Function Screens #
+####################
+def TestScreen ():
+
+    s = SerialMock(MyObjCallback, '/dev/ttyACM0')
+    
+    debug = True
+    a = Dialog(debug)
+    
+    a.setModal(True)
+    a.exec_()
+    # stage1 = Stages()
+    # stage2 = Stages()
+    # stage3 = Stages()
+
+    # stage1.SetStageTimer(45)
+    # stage1.SetStagePower(85)
+    # stage1.SetStageSignal('triangular')
+    # stage1.SetStageFrequency('freq1')
+    # stage1.SetStageStatus('enable')
+
+    # stage2.SetStageTimer(60)
+    # stage2.SetStagePower(100)
+    # stage2.SetStageSignal('square')
+    # stage2.SetStageFrequency('freq9')
+    # stage2.SetStageStatus('enable')
+
+    # stage3.SetStageTimer(0)
+    # stage3.SetStagePower(0)
+    # stage3.SetStageSignal('none')
+    # stage3.SetStageFrequency('none')
+    # stage3.SetStageStatus('disable')
+    
+    # stages_list = [stage1, stage2, stage3]
+    # style_obj = ButtonStyles()
+    # # treat = TreatmentMock()
+    # a = StagesDialog(stages_list, style_obj)
+    
+    # a.setModal(True)
+    # a.exec_()
+
+    # if a.action == 'accept':
+    #     print('Accept new config')
+    #     print('Config List')        
+    #     print(a.st_lst)
+    # else:
+    #     print('Last config')
+    #     print(stages_list)
+              
+    sys.exit(0)
+
+
+### End of Dialog ###
+############
+# Test App #
+############
+app = QApplication(sys.argv)
+TestScreen()
+sys.exit(app.exec_())
+
+
+### End of File ###
