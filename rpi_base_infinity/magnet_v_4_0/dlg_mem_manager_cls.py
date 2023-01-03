@@ -11,10 +11,6 @@ from ui_mem_manager_dlg import Ui_Dialog
 ##################################################
 class MemManagerDialog (QDialog):
 
-    #SIGNALS
-    one_second_signal = pyqtSignal()
-
-    # def __init__(self, st_lst, style_obj, caller_stage='stage1'):
     def __init__(self, mem_dict):
         super(QDialog, self).__init__()
 
@@ -25,6 +21,7 @@ class MemManagerDialog (QDialog):
         # backup received data
         self.mem_dict = mem_dict
 
+        # dialog answer variable
         self.action = 'back'
 
         # styles

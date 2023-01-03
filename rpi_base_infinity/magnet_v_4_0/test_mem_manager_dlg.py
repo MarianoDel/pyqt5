@@ -36,6 +36,8 @@ def TestScreen ():
         "mem19" : ["Arm and Leg Inflammatory", "", "", ""],
         "mem20" : ["Arm and Leg Inflammatory", "", "", ""]
         }
+
+    mem_bkp = mem_dict.copy()
     a = MemManagerDialog(mem_dict)
     
     a.setModal(True)
@@ -46,6 +48,11 @@ def TestScreen ():
         print('Config List')        
     else:
         print('Last config')
+
+    print('original mema:')
+    print(mem_bkp['mema'])
+    print('returned mema:')
+    print(mem_dict['mema'])
               
     sys.exit(0)
 
