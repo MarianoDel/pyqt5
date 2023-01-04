@@ -66,16 +66,71 @@ class Communicate(QObject):
 
     
 
-############################
-# Main Class - Main Window #
-############################
-class MyMainClass ():
+##############################
+# Dialog Class - Main Window #
+##############################
+class Dialog(QDialog):
 
     #SIGNALS
     rcv_signal = pyqtSignal(str)
     one_second_signal = pyqtSignal()
+
     
     def __init__(self):
+        super(Dialog, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
+
+        # Class Startup Init
+        ## Connect up the buttons.
+        self.ui.triangularButton.clicked.connect(self.SignalChange)
+        self.ui.squareButton.clicked.connect(self.SignalChange)
+        self.ui.sinusoidalButton.clicked.connect(self.SignalChange)
+        
+        self.ui.freq1Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq2Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq3Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq4Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq5Button.clicked.connect(self.FrequencyChange)
+        self.ui.freq6Button.clicked.connect(self.FrequencyChange)
+        
+        self.ui.ch1Button.clicked.connect(self.AntennaNameChange)
+        # self.ui.ch2Button.clicked.connect(self.ChannelChange)    #for tests
+        self.ui.ch2Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch3Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch4Button.clicked.connect(self.AntennaNameChange)
+        
+        self.ui.powerUpButton.pressed.connect(self.UpPowerPressed)
+        self.ui.powerUpButton.released.connect(self.UpPowerReleased)
+        self.ui.powerDwnButton.pressed.connect(self.DwnPowerPressed)
+        self.ui.powerDwnButton.released.connect(self.DwnPowerReleased)
+        self.ui.timeUpButton.pressed.connect(self.UpTimePressed)
+        self.ui.timeUpButton.released.connect(self.UpTimeReleased)        
+        self.ui.timeDwnButton.pressed.connect(self.DwnTimePressed)
+        self.ui.timeDwnButton.released.connect(self.DwnTimeReleased)
+
+        self.ui.mem1Button.pressed.connect(self.Memory1Pressed)
+        self.ui.mem1Button.released.connect(self.Memory1Released)
+        self.ui.mem2Button.pressed.connect(self.Memory2Pressed)
+        self.ui.mem2Button.released.connect(self.Memory2Released)
+        self.ui.mem3Button.pressed.connect(self.Memory3Pressed)
+        self.ui.mem3Button.released.connect(self.Memory3Released)
+        
+        self.ui.min30Button.clicked.connect(self.TimeSet)
+        self.ui.min45Button.clicked.connect(self.TimeSet)
+        
+        self.ui.startButton.clicked.connect(self.TreatmentScreen)
+        # self.ui.diagButton.clicked.connect(self.DiagnosticsScreen)
+        self.ui.diagButton.pressed.connect(self.DiagsPressed)
+        self.ui.diagButton.released.connect(self.DiagsReleased)
+
+        # connect wifi button
+        self.ui.wifiButton.clicked.connect(self.WifiScreen)
+
+        ## Init treatment object
+        self.t = Treatment()
         self.t.SetCurrentVersion(CURRENT_VERSION)
         if RUNNING_ON_SLACKWARE:
             self.t.SetCurrentSystem('slackware')
@@ -378,6 +433,63 @@ class MyMainClass ():
         self.t.SetFrequency('None')
 
 
+    def FrequencyChange (self):
+        sender = self.sender()
+
+        if sender.objectName() == 'freq1Button':
+            self.FrequencyChangeTo('7.83Hz')
+
+        if sender.objectName() == 'freq2Button':
+            self.FrequencyChangeTo('11.79Hz')
+
+        if sender.objectName() == 'freq3Button':
+            self.FrequencyChangeTo('16.67Hz')
+
+        if sender.objectName() == 'freq4Button':
+            self.FrequencyChangeTo('23.58Hz')
+
+        if sender.objectName() == 'freq5Button':
+            self.FrequencyChangeTo('30.80Hz')
+
+        if sender.objectName() == 'freq6Button':
+            self.FrequencyChangeTo('62.64Hz')
+
+        self.CheckForStart()
+        self.ScreenSaverKick()
+
+
+    def FrequencyChangeTo (self, new_freq):
+        self.FrequencyDisableAll()
+        
+        if new_freq == '7.83Hz':
+            self.ui.freq1Button.setStyleSheet(self.ss.freq1_enable)
+            self.InsertLocalText("7.83Hz selected")
+            self.t.SetFrequency('7.83Hz')
+
+        if new_freq == '11.79Hz':
+            self.ui.freq2Button.setStyleSheet(self.ss.freq2_enable)
+            self.InsertLocalText("11.79Hz selected")            
+            self.t.SetFrequency('11.79Hz')
+
+        if new_freq == '16.67Hz':
+            self.ui.freq3Button.setStyleSheet(self.ss.freq3_enable)
+            self.InsertLocalText("16.67Hz selected")            
+            self.t.SetFrequency('16.67Hz')
+
+        if new_freq == '23.58Hz':
+            self.ui.freq4Button.setStyleSheet(self.ss.freq4_enable)
+            self.InsertLocalText("23.58Hz selected")            
+            self.t.SetFrequency('23.58Hz')
+
+        if new_freq == '30.80Hz':
+            self.ui.freq5Button.setStyleSheet(self.ss.freq5_enable)
+            self.InsertLocalText("30.80Hz selected")            
+            self.t.SetFrequency('30.80Hz')
+
+        if new_freq == '62.64Hz':
+            self.ui.freq6Button.setStyleSheet(self.ss.freq6_enable)
+            self.InsertLocalText("62.64Hz selected")            
+            self.t.SetFrequency('62.64Hz')
 
             
     def ChannelChange (self):
@@ -475,6 +587,39 @@ class MyMainClass ():
         self.ScreenSaverKick()
         
         
+    def TimeSet (self):
+        sender = self.sender()
+        
+        if sender.objectName() == 'min30Button':
+            self.ui.minutesLabel.setText('30')
+            self.t.SetTreatmentTimer(30)
+
+        elif sender.objectName() == 'min45Button':
+            self.ui.minutesLabel.setText('45')
+            self.t.SetTreatmentTimer(45)
+
+        self.ScreenSaverKick()
+
+
+    def CheckForStart (self):
+        if (self.CheckCompleteConf() == True and
+            self.s.port_open == True):
+            self.ui.startButton.setStyleSheet(self.ss.start_enable)
+        else:
+            self.ui.startButton.setStyleSheet(self.ss.start_disable)
+
+
+    def CheckCompleteConf (self):
+        if (self.t.GetFrequency() != 'None' and
+            self.t.GetSignal() != 'None'):
+           if (self.t.GetChannelInTreatment('ch1') != False or
+               self.t.GetChannelInTreatment('ch2') != False or
+               self.t.GetChannelInTreatment('ch3') != False):
+                return True
+
+        return False
+
+
     def UpdateOneSec (self):
         """ paso un segundo, reviso que tengo que hacer """
         # reviso si algun boton sigue presionado
@@ -561,6 +706,50 @@ class MyMainClass ():
             self.wifi_manager_cnt -= 1
             
                             
+    def PwrUp (self, new_pwr):
+        last_pwr = self.t.GetPower()
+        max_pwr = self.t.max_power
+        if ((last_pwr + new_pwr) < max_pwr):
+            last_pwr += new_pwr
+        else:
+            last_pwr = max_pwr
+            
+        self.ui.powerLabel.setText(str(last_pwr))
+        self.t.SetPower(last_pwr)
+
+        
+    def PwrDwn (self, new_pwr):
+        last_pwr = self.t.GetPower()
+        min_pwr = self.t.min_power
+        if ((last_pwr - new_pwr) > min_pwr):
+            last_pwr -= new_pwr
+        else:
+            last_pwr = min_pwr
+            
+        self.ui.powerLabel.setText(str(last_pwr))
+        self.t.SetPower(last_pwr)
+
+        
+    def TimeUp (self, new_time):
+        last_time = self.t.GetTreatmentTimer()
+        max_time = self.t.max_treatment_timer
+        if ((last_time + new_time) < max_time):
+            last_time += new_time
+        else:
+            last_time = max_time
+        self.ui.minutesLabel.setText(str(last_time))
+        self.t.SetTreatmentTimer(last_time)
+
+        
+    def TimeDwn (self, new_time):
+        last_time = self.t.GetTreatmentTimer()
+        min_time = self.t.min_treatment_timer
+        if ((last_time - new_time) > min_time):
+            last_time -= new_time
+        else:
+            last_time = min_time
+        self.ui.minutesLabel.setText(str(last_time))
+        self.t.SetTreatmentTimer(last_time)
 
         
     def TimerOneSec(self):
@@ -710,7 +899,57 @@ class MyMainClass ():
 
                 
     def MySignalCallback (self, rcv):
-        self.SerialProcess (rcv)                
+        self.SerialProcess (rcv)
+                
+
+    def InsertLocalText (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(255, 0, 0))
+        self.ui.textEdit.append(new_text)
+
+        
+    def InsertLocalTextNoNewLine (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(255, 0, 0))
+        # new_text = new_text.rsplit('\r\n')
+        self.ui.textEdit.insertPlainText(new_text)
+        
+        
+    def InsertForeingText (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(0, 255, 0))
+        self.ui.textEdit.append(new_text)
+
+        
+    def InsertForeingTextNoNewLine (self, new_text):
+        self.ui.textEdit.setTextColor(QColor(0, 255, 0))
+        self.ui.textEdit.insertPlainText(new_text)
+        
+
+    def UpdateMemLabels (self):
+        if self.t.mem1_treat_time != 'None':
+            self.ui.mem11Label.setText(self.t.mem1_treat_time + 'min')
+            self.ui.mem12Label.setText(self.t.mem1_frequency + ' - ' + self.t.mem1_power + '%')
+            self.ui.mem13Label.setText((self.t.mem1_signal).capitalize())
+        else:
+            self.ui.mem11Label.setText('Empty')
+            self.ui.mem12Label.setText('')
+            self.ui.mem13Label.setText('')
+        
+        if self.t.mem2_treat_time != 'None':
+            self.ui.mem21Label.setText(self.t.mem2_treat_time + 'min')
+            self.ui.mem22Label.setText(self.t.mem2_frequency + ' - ' + self.t.mem2_power + '%')
+            self.ui.mem23Label.setText((self.t.mem2_signal).capitalize())
+        else:
+            self.ui.mem21Label.setText('Empty')
+            self.ui.mem22Label.setText('')
+            self.ui.mem23Label.setText('')
+
+        if self.t.mem3_treat_time != 'None':
+            self.ui.mem31Label.setText(self.t.mem3_treat_time + 'min')
+            self.ui.mem32Label.setText(self.t.mem3_frequency + ' - ' + self.t.mem3_power + '%')
+            self.ui.mem33Label.setText((self.t.mem3_signal).capitalize())
+        else:
+            self.ui.mem31Label.setText('Empty')
+            self.ui.mem32Label.setText('')
+            self.ui.mem33Label.setText('')
             
 
     def UpdateTwoSec (self):

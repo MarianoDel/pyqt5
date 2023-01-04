@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import pyqtSignal, QObject
 
 """
         Test for Main Dialog
@@ -18,9 +19,12 @@ class SerialMock ():
 
     def Write (self, to_send):
         print ('serial tx -> ' + to_send)
-        # if 'keepalive' in to_send:
-        #     self.Read('OK')
+        if 'keepalive' in to_send:
+            self.Read('OK')
 
+        # if 'get_antenna,' in to_send:
+        #     self.Read('')
+            
         # if 'serial num' in to_send:
         #     self.Read('Device Id: 0xffffffff')
 
@@ -36,29 +40,34 @@ class SerialMock ():
         print('serial rx <- ' + to_read)
         self.cb(to_read)        
 
-
-# class TestingClass (QObject):
-#     rcv_signal = pyqtSignal(str)
-    
-#     def __init__(self):
-#         super(QObject, self).__init__()        
-
-#     def MyObjCallback (self, readed):
-#         print (readed)
-#         self.rcv_signal.emit(readed)
-
-def MyObjCallback (readed):
-    print ('cb called: ' + readed)
         
+def MyFuncCallback (readed):
+    print ('cb called: ' + readed)
+    
+
+class SignalsCb (QObject):
+    rcv_signal = pyqtSignal(str)    
+
+    def __init__(self):
+        super(QObject, self).__init__()
+
+    def MyObjCallback (self, readed):
+        print ('cb obj called: ' + readed)
+        self.rcv_signal.emit(readed)
+        
+    
 ####################
 # Function Screens #
 ####################
 def TestScreen ():
 
-    s = SerialMock(MyObjCallback, '/dev/ttyACM0')
+    scb = SignalsCb()
+
+    # s = SerialMock(MyFuncCallback, '/dev/ttyACM0')
+    s = SerialMock(scb.MyObjCallback, '/dev/ttyACM0')    
     
     debug = True
-    a = Dialog(debug)
+    a = Dialog(debug, s, parent=scb)
     
     a.setModal(True)
     a.exec_()

@@ -171,7 +171,11 @@ class ButtonStyles():
                                  border-radius: 20px;\
                                  border:3px solid rgb(55, 52, 53);"
 
+        self.signal_75_disable = "background-color: rgba(255, 255, 255, 0);\
+                                  border: 0px"
+        
         # End of New Signals icons 75 x 75 px        
+
         
         # New Freq icons 90 x 90 px
         self.freq1_90_enable = "background-image: url(:/frequencies/resources/freq1_90_90.png);\

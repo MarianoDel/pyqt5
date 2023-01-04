@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QColor, QIcon
 from stages_class import Stages
 from stylesheet_class import ButtonStyles
 from treatment_class import Treatment
+from antenna_class import AntennaInTreatment
 
 
 #Here import the UIs or classes that got the UIs
@@ -17,10 +19,10 @@ class Dialog(QDialog):
 
     #SIGNALS
     # rcv_signal = pyqtSignal(str)
-    # one_second_signal = pyqtSignal()
+    one_second_signal = pyqtSignal()
 
     
-    def __init__(self, debug_bool):
+    def __init__(self, debug_bool, ser_instance, parent=None):
         super(Dialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -30,6 +32,8 @@ class Dialog(QDialog):
         # Class Startup Init
         ## backup received data
         self.debug_bool = debug_bool
+        self.s = ser_instance
+        self.parent = parent
         
         ## Connect up the buttons.
         self.ui.stage1Button.clicked.connect(self.SelectStage)
@@ -47,6 +51,13 @@ class Dialog(QDialog):
         self.ui.memcButton.released.connect(self.MemoryReleased)
         self.ui.memdButton.pressed.connect(self.MemoryPressed)
         self.ui.memdButton.released.connect(self.MemoryReleased)
+
+        self.ui.ch1Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch2Button.clicked.connect(self.ChannelChange)    #for tests
+        # self.ui.ch2Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch3Button.clicked.connect(self.AntennaNameChange)
+        self.ui.ch4Button.clicked.connect(self.AntennaNameChange)
+        
 
         self.ui_label_dict = {
             "mema" : [self.ui.memaDescLabel, self.ui.memaOneLabel, self.ui.memaTwoLabel, self.ui.memaThreeLabel],
@@ -77,6 +88,20 @@ class Dialog(QDialog):
                                    border-radius: 20px;\
                                    border:3px solid rgb(230, 231, 232);\
                                    color: rgb(230,231,232);"
+
+        self.start_enable = "background-image: url(:/buttons/resources/Play.png);\
+                             background-color: rgb(0, 168, 89);\
+                             background-repeat:no-repeat;\
+                             background-position: center center;\
+                             border-radius: 20px;\
+                             border:3px solid rgb(55, 52, 53);"
+
+        self.start_disable = "background-image: url(:/buttons/resources/Play.png);\
+                              background-color: rgb(245, 245, 245);\
+                              background-repeat:no-repeat;\
+                              background-position: center center;\
+                              border-radius: 20px;\
+                              border:3px solid rgb(230, 231, 232);"
         
         self.style = ButtonStyles()
         self.t = Treatment()
@@ -113,6 +138,12 @@ class Dialog(QDialog):
 
         self.UpdateTotalTime()
 
+        # CONNECT SIGNALS
+        # connect the timer signal to the Update
+        self.one_second_signal.connect(self.UpdateOneSec)
+        self.parent.rcv_signal.connect(self.SerialDataCallback)
+
+        
         # get memory buttons config        
         # self.MemoryUpdate('mema', [self.t.mema_description,\
         #                            self.t.mema_first_str,\
@@ -138,15 +169,33 @@ class Dialog(QDialog):
         # self.MemoryButtonStatus('memb', self.t.memb_status)
         # self.MemoryButtonStatus('memc', self.t.memc_status)
         # self.MemoryButtonStatus('memd', self.t.memd_status)
-
+        
+        self.memButtonCnt = 0
         self.PopullateFromDict(self.t.mem_instant_dict)
 
         self.ui.textEdit.setText('')
-        self.InsertColorText("No serial port found!!!", 'blue')
-        self.InsertLocalText("Serial port open OK!")
-        self.InsertForeingText("No serial port found!!!")
+        if self.s.port_open:
+            self.InsertInfoText('Serial Port Open: OK')
+        else:
+            self.InsertInfoText('Serial Port Not Found!!!')
 
-        self.AntennaButtonsUpdate (['enable', 'dis', 'dis', 'dis'], ['CH1\nTunnel 10"', '', '', ''])
+        self.InsertInfoText('')
+        self.InsertInfoTextNoNewLine('Communication with power: ')
+        # self.InsertInfoText('Communication with power: ')        
+        self.s.Write('keepalive\r\n')
+
+        ### Ask for know antennas
+        if self.s.port_open == True:
+            self.s.Write('get_antenna,\r\n')
+
+        ## Init Antennas connected
+        self.antennas_connected = AntennaInTreatment()
+            
+        ## instanciate the antennas timer timeout
+        self.antennatimeout = QTimer()
+        self.antennatimeout_finish = True
+            
+        # self.AntennaButtonsUpdate (['enable', 'dis', 'dis', 'dis'], ['CH1\nTunnel 10"', '', '', ''])
 
         
     def SelectStage (self):
@@ -178,6 +227,9 @@ class Dialog(QDialog):
             self.ui.stage1MinutesLabel.setText('')
             self.ui.stage1PowerLabel.setText('')            
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_disable)
+            # small buttons change
+            self.Stage1InnerSignalChange('disable')
+            self.Stage1InnerFreqChange('disable')
             self.ui.stage1Label.raise_()
             
         if raise_inners:
@@ -207,6 +259,9 @@ class Dialog(QDialog):
             self.ui.stage2MinutesLabel.setText('')
             self.ui.stage2PowerLabel.setText('')            
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_disable)
+            # small buttons change
+            self.Stage2InnerSignalChange('disable')
+            self.Stage2InnerFreqChange('disable')
             self.ui.stage2Label.raise_()
             
         if raise_inners:
@@ -236,6 +291,9 @@ class Dialog(QDialog):
             self.ui.stage3MinutesLabel.setText('')
             self.ui.stage3PowerLabel.setText('')            
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_disable)
+            # small buttons change
+            self.Stage3InnerSignalChange('disable')
+            self.Stage3InnerFreqChange('disable')
             self.ui.stage3Label.raise_()
             
         if raise_inners:
@@ -257,8 +315,7 @@ class Dialog(QDialog):
         elif new_signal == 'sinusoidal':
             self.ui.stage1SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
         else:
-            # todo: go transparent here
-            self.ui.stage1SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+            self.ui.stage1SignalButton.setStyleSheet(self.style.signal_75_disable)
 
 
     def Stage2InnerSignalChange (self, new_signal):
@@ -269,8 +326,7 @@ class Dialog(QDialog):
         elif new_signal == 'sinusoidal':
             self.ui.stage2SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
         else:
-            # todo: go transparent here
-            self.ui.stage2SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+            self.ui.stage2SignalButton.setStyleSheet(self.style.signal_75_disable)
 
 
     def Stage3InnerSignalChange (self, new_signal):
@@ -281,8 +337,7 @@ class Dialog(QDialog):
         elif new_signal == 'sinusoidal':
             self.ui.stage3SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
         else:
-            # todo: go transparent here
-            self.ui.stage3SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+            self.ui.stage3SignalButton.setStyleSheet(self.style.signal_75_disable)
             
             
     def Stage1InnerFreqChange (self, new_freq):
@@ -307,8 +362,7 @@ class Dialog(QDialog):
         elif new_freq == 'freq10':
             self.ui.stage1FreqButton.setStyleSheet(self.style.freq10_75_enable)
         else:
-            # todo: go transparent here
-            self.ui.stage1FreqButton.setStyleSheet(self.style.freq10_75_enable)
+            self.ui.stage1FreqButton.setStyleSheet(self.style.signal_75_disable)
 
 
     def Stage2InnerFreqChange (self, new_freq):
@@ -333,8 +387,7 @@ class Dialog(QDialog):
         elif new_freq == 'freq10':
             self.ui.stage2FreqButton.setStyleSheet(self.style.freq10_75_enable)
         else:
-            # todo: go transparent here
-            self.ui.stage2FreqButton.setStyleSheet(self.style.freq10_75_enable)
+            self.ui.stage2FreqButton.setStyleSheet(self.style.signal_75_disable)
 
 
     def Stage3InnerFreqChange (self, new_freq):
@@ -359,8 +412,7 @@ class Dialog(QDialog):
         elif new_freq == 'freq10':
             self.ui.stage3FreqButton.setStyleSheet(self.style.freq10_75_enable)
         else:
-            # todo: go transparent here
-            self.ui.stage3FreqButton.setStyleSheet(self.style.freq10_75_enable)
+            self.ui.stage3FreqButton.setStyleSheet(self.style.signal_75_disable)
             
 
         
@@ -593,6 +645,10 @@ class Dialog(QDialog):
         
     def InsertInfoText (self, new_text):
         self.InsertColorText(new_text, 'blue')
+
+        
+    def InsertInfoTextNoNewLine (self, new_text):
+        self.InsertColorText(new_text, 'blue', True)
         
 
     def InsertLocalTextNoNewLine (self, new_text):
@@ -608,129 +664,182 @@ class Dialog(QDialog):
 
 
     def MemoryPressed (self):
+        self.memButtonCnt = 1
+        self.ScreenSaverKick()
+
+
+    def ChannelChange (self):
         sender = self.sender()
 
-        if sender.objectName() == 'memaButton':
-            self.memaButtonCnt = 1
-
-        if sender.objectName() == 'membButton':
-            self.membButtonCnt = 1
-
-        if sender.objectName() == 'memcButton':
-            self.memcButtonCnt = 1
-
-        if sender.objectName() == 'memdButton':
-            self.memdButtonCnt = 1
+        if sender.objectName() == 'ch2Button':
+            # test ch1 with name
+            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,1\r"
+            self.SerialProcess(ant_str)
+            # test ch1 no name
+            # ant_str = "ch1,020.00,020.00,004.04,065.00,1\r"
+            # self.SerialProcess(ant_str)
+            # test ch2 with name
+            # ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,2\r"
+            # self.SerialProcess(ant_str)
+            # test ch2 no name
+            # ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
+            # self.SerialProcess(ant_str)
+            # test ch3 with name
+            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,3\r"
+            self.SerialProcess(ant_str)
+            # test ch3 no name
+            # ant_str = "ch3,020.00,020.00,004.04,065.00,3\r"
+            # self.SerialProcess(ant_str)
+            # test ch4 with name
+            ant_str = "estoesTunnel 10 inches,020.00,020.00,004.04,065.00,4\r"
+            self.SerialProcess(ant_str)            
             
-        # self.ScreenSaverKick()
+        if sender.objectName() == 'ch3Button':
+            ant_str = "antenna none\r"
+            self.SerialProcess(ant_str)
+
+        if sender.objectName() == 'ch4Button':
+            pass
+
+
+    def AntennaNameChange (self):
+        sender = self.sender()
+        
+        if sender.objectName() == 'ch1Button':
+            if self.antennas_connected.GetActive('ch1') == True and \
+               self.antennas_connected.name_ch1 != 'unknow':
+                if 'L: ' in self.ui.ch1Button.text():
+                    ant_str = self.AntennaProcessName('ch1')
+                else:
+                    ant_str = 'CH1\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch1') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch1') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch1') + '\n'
+
+                self.ui.ch1Button.setText(ant_str)
+
+        if sender.objectName() == 'ch2Button':
+            if self.antennas_connected.GetActive('ch2') == True and \
+               self.antennas_connected.name_ch2 != 'unknow':
+                if 'L: ' in self.ui.ch2Button.text():
+                    ant_str = self.AntennaProcessName('ch2')
+                else:
+                    ant_str = 'CH2\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch2') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch2') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch2') + '\n'
+
+                self.ui.ch2Button.setText(ant_str)
+
+        if sender.objectName() == 'ch3Button':
+            if self.antennas_connected.GetActive('ch3') == True and \
+               self.antennas_connected.name_ch3 != 'unknow':
+                if 'L: ' in self.ui.ch3Button.text():
+                    ant_str = self.AntennaProcessName('ch3')
+                else:
+                    ant_str = 'CH3\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch3') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch3') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch3') + '\n'
+
+                self.ui.ch3Button.setText(ant_str)
+
+        if sender.objectName() == 'ch4Button':
+            if self.antennas_connected.GetActive('ch4') == True and \
+               self.antennas_connected.name_ch4 != 'unknow':
+                if 'L: ' in self.ui.ch4Button.text():
+                    ant_str = self.AntennaProcessName('ch4')
+                else:
+                    ant_str = 'CH4\n' + \
+                              'R: ' + self.antennas_connected.GetRString('ch4') + '\n' + \
+                              'L: ' + self.antennas_connected.GetLString('ch4') + '\n' + \
+                              'I: ' + self.antennas_connected.GetIString('ch4') + '\n'
+
+                self.ui.ch4Button.setText(ant_str)
+        
+        self.ScreenSaverKick()
+
 
         
+    def SerialProcess (self, rcv):
+        show_message = True
+        if rcv.startswith("antenna none"):
+            self.antennas_connected.Flush()
+            self.AntennaUpdate()
+
+        # check if its antenna connection
+        #Tunnel 12 inches,020.00,020.00,004.04,065.00,1
+        #ch2,020.00,020.00,004.04,065.00,2
+        #Tunnel 10 inches,020.00,020.00,004.04,065.00,4
+
+        rcv_list = rcv.split(',')
+        if len(rcv_list) == 6:
+            print("antenna string getted")
+
+            rcv_channel = rcv_list[5].rsplit('\r')
+            if rcv_channel[0] >= '1' and rcv_channel[0] <= '4':
+                if self.antennatimeout_finish == True:
+                    self.antennatimeout_finish = False
+                    self.antennatimeout.singleShot(500, self.AntennaUpdate)
+                    self.antennas_connected.Flush()
+                else:
+                    print("QTimer is active")
+
+                self.antennas_connected.ProcessStringList(rcv_list)
+
+        if rcv.startswith("new antenna ch1"):
+            self.ui.ch1Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch1Button.setText("CH1\ngetting\nparams")
+            show_message = False
+
+        if rcv.startswith("new antenna ch2"):
+            self.ui.ch2Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch2Button.setText("CH2\ngetting\nparams")
+            show_message = False            
+
+        if rcv.startswith("new antenna ch3"):
+            self.ui.ch3Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch3Button.setText("CH3\ngetting\nparams")
+            show_message = False            
+
+        if rcv.startswith("new antenna ch4"):
+            self.ui.ch4Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch4Button.setText("CH4\ngetting\nparams")
+            show_message = False
+
+        if rcv.startswith("temp,"):
+            show_message = False
+            
+        if show_message:
+            self.InsertForeingText(rcv)        
+
+            
     def MemoryReleased (self):
         sender = self.sender()
 
-        print ('before mem modification')
-        print (self.stage1)
-        if sender.objectName() == 'memaButton':
-            if (self.memaButtonCnt > 0 and
-                self.memaButtonCnt < 3):
-                self.memaButtonCnt = 0
+        button_name = sender.objectName()
+        button_sel = button_name.split('B')
+        button_sel = button_sel[0]
+
+        if self.memButtonCnt > 0 and \
+           self.memButtonCnt < 3:
             
-                #get memory values
-                if self.t.mema_status != 'enable':
-                    self.InsertInfoText("Not much to do with memory!")
-                else:
-                    self.MemoryToCurrentConf('mema')
-                    self.Stage1GroupChange(self.stage1.GetStageStatus())
-                    self.Stage2GroupChange(self.stage2.GetStageStatus())
-                    self.Stage3GroupChange(self.stage3.GetStageStatus())
-                    self.UpdateTotalTime()
-                    # self.CheckForStart()
+            self.memButtonCnt = 0
 
-            print ('in mema already modif')
-            print (self.stage1)
-            print (self.stage2)
-            print (self.stage3)            
-
-        if sender.objectName() == 'membButton':
-            if (self.membButtonCnt > 0 and
-                self.membButtonCnt < 3):
-                self.membButtonCnt = 0
-            
-                #get memory values
-                if self.t.memb_status != 'enable':
-                    self.InsertInfoText("Not much to do with memory!")
-                else:
-                    self.MemoryToCurrentConf('memb')
-                    self.Stage1GroupChange(self.stage1.GetStageStatus())
-                    self.Stage2GroupChange(self.stage2.GetStageStatus())
-                    self.Stage3GroupChange(self.stage3.GetStageStatus())
-                    self.UpdateTotalTime()
-                    # self.CheckForStart()
-
-            print ('in memb already modif')
-            print (self.stage1)
-            print (self.stage2)
-            print (self.stage3)            
-
-        if sender.objectName() == 'memcButton':
-            if (self.memcButtonCnt > 0 and
-                self.memcButtonCnt < 3):
-                self.memcButtonCnt = 0
-            
-                #get memory values
-                if self.t.memc_status != 'enable':
-                    self.InsertInfoText("Not much to do with memory!")
-                else:
-                    self.MemoryToCurrentConf('memc')
-                    self.Stage1GroupChange(self.stage1.GetStageStatus())
-                    self.Stage2GroupChange(self.stage2.GetStageStatus())
-                    self.Stage3GroupChange(self.stage3.GetStageStatus())
-                    self.UpdateTotalTime()
-                    # self.CheckForStart()
-
-            print ('in memc already modif')
-            print (self.stage1)
-
-        if sender.objectName() == 'memdButton':
-            if (self.memdButtonCnt > 0 and
-                self.memdButtonCnt < 3):
-                self.memdButtonCnt = 0
-            
-                #get memory values
-                if self.t.memd_status != 'enable':
-                    self.InsertInfoText("Not much to do with memory!")
-                else:
-                    self.MemoryToCurrentConf('memd')
-                    self.Stage1GroupChange(self.stage1.GetStageStatus())
-                    self.Stage2GroupChange(self.stage2.GetStageStatus())
-                    self.Stage3GroupChange(self.stage3.GetStageStatus())
-                    self.UpdateTotalTime()
-                    # self.CheckForStart()
-
-            print ('in memd already modif')
-            print (self.stage1)
+            #get memory values
+            mem_lst = self.t.mem_instant_dict[button_sel]
+            if mem_lst[1] == '' and mem_lst[2] == '' and mem_lst[3] == '':
+                self.InsertInfoText("Not much to do with memory!")
+            else:
+                self.MemoryToCurrentConf(mem_lst[1], mem_lst[2], mem_lst[3])
+                self.Stage1GroupChange(self.stage1.GetStageStatus())
+                self.Stage2GroupChange(self.stage2.GetStageStatus())
+                self.Stage3GroupChange(self.stage3.GetStageStatus())
+                self.UpdateTotalTime()
+                self.CheckForStart()
 
 
-    def MemoryToCurrentConf (self, mem_slot):
-        if mem_slot == 'mema':
-            stage1_str = self.t.mema_first_str
-            stage2_str = self.t.mema_second_str
-            stage3_str = self.t.mema_third_str
-        elif mem_slot == 'memb':
-            stage1_str = self.t.memb_first_str
-            stage2_str = self.t.memb_second_str
-            stage3_str = self.t.memb_third_str
-        elif mem_slot == 'memc':
-            stage1_str = self.t.memc_first_str
-            stage2_str = self.t.memc_second_str
-            stage3_str = self.t.memc_third_str
-        elif mem_slot == 'memd':
-            stage1_str = self.t.memd_first_str
-            stage2_str = self.t.memd_second_str
-            stage3_str = self.t.memd_third_str
-        else:
-            return
-            
+    def MemoryToCurrentConf (self, stage1_str, stage2_str, stage3_str):
         (time, signal, power, freq, status) = self.MemoryStringParse(stage1_str)
         if status == 'enable':
             self.stage1.SetStageStatus('enable')
@@ -790,23 +899,169 @@ class Dialog(QDialog):
         else:
             self.InsertLocalText("Select all parameters first!")
 
+
+    def SerialDataCallback (self, rcv):        
+        # print ("serial data callback!")
+        # self.SerialProcessString(rcv)
+        # print (rcv)
+        self.InsertForeingText(rcv)
+
+
+    def UpdateOneSec (self):
+        pass
+
+
+    def CheckForStart (self):
+        if self.CheckCompleteConf() == True and \
+           self.s.port_open == True:
+            self.ui.startButton.setStyleSheet(self.start_enable)
+        else:
+            self.ui.startButton.setStyleSheet(self.start_disable)
+
             
+    def CheckCompleteConf (self):
+        stages_in = False
+        channels_in = False
+        
+        if self.stage1.GetStageStatus == 'enable' or \
+           self.stage2.GetStageStatus == 'enable' or \
+           self.stage3.GetStageStatus == 'enable':
+            stages_in = True
+
+        if self.t.GetChannelInTreatment('ch1') != False or \
+           self.t.GetChannelInTreatment('ch2') != False or \
+           self.t.GetChannelInTreatment('ch3') != False or \
+           self.t.GetChannelInTreatment('ch4') != False:
+            channels_in = True
+                                               
+        if stages_in and channels_in:
+            return True        
+
+        return False
+    
+    
     ################################
     # Other Screens Calls are here #
     ################################
 
+    ## Treatment Screen
     def TreatmentScreen (self):
         if self.debug_bool:
             print("TreatmentScreen called!")
-        else:
-            print("call the dialog here!!!!")
-
+            return
         
+        if self.CheckCompleteConf() == True:
+            if self.s.port_open == True:
+                self.screensaver_window = False
+                
+                self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
+                # a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
+                a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, self.parent)
+                a.setModal(True)
+                a.exec_()
+
+                self.ScreenSaverKick()
+                self.screensaver_window = True
+                
+            else:
+                self.InsertInfoText("Serial Port Not Open!")
+        else:
+            self.InsertInfoText("Complete all params before start")
+
+
+    ## DiagnosticsSreen
+    def DiagnosticsScreen (self):
+        if self.debug_bool:
+            print("DiagnosticsScreen called!")
+            return
+
+        self.screensaver_window = False
+        
+        a = DiagnosticsDialog(self.s, self.t, parent=self)
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
+        # fuerzo un update de fecha y hora cuando vuelvo de diagnostico
+        date_now = datetime.today()
+        self.UpdateDateTime(date_now)            
+            
+        
+    ## MemoryScreen
+    def MemoryScreen (self, which_mem):
+        if self.debug_bool:
+            print("MemoryScreen called!")
+            return
+
+        self.screensaver_window = False
+        
+        a = MemoryDialog(self.ss, which_mem)
+        a.setModal(True)
+        a.exec_()
+
+        if a.action == 'save':
+            self.t.MoveCurrentConfToMem(which_mem)
+            self.t.SaveConfigFile()
+            self.UpdateMemLabels()
+        
+        if a.action == 'empty':
+            self.t.EmptyMem(which_mem)
+            self.t.SaveConfigFile()
+            self.UpdateMemLabels()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
+        
+            
+    ## ScreenSaver
+    def ScreenSaverDialogScreen (self):
+        a = ScreenSaverDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+
+    def ScreenSaverKick (self):
+        self.timer_screensaver = self.t.timeout_screensaver
+            
+
+    ## wifi screen
+    def WifiScreen (self):
+        if self.debug_bool:
+            print("WifiScreen called!")
+            return
+
+        self.screensaver_window = False
+        a = WiFiDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
+        
+
     def MemoryManagerScreen (self):
         if self.debug_bool:
             print("MemoryManagerScreen called!")
+            return
+
+        mem_for_conf = self.t.mem_all_dict.copy()
+
+        self.screensaver_window = False
+        a = MemManagerDialog(mem_for_conf)
+        a.setModal(True)
+        a.exec_()
+        
+        if a.action == 'accept':
+            print('Accept new config')
+            self.t.mem_all_dict = mem_for_conf
         else:
-            print("call the dialog here!!!!")
+            print('Last config its still valid')
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
+        
         
     
 ### End of Dialog ###
