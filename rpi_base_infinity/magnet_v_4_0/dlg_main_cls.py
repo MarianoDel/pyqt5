@@ -9,6 +9,9 @@ from antenna_class import AntennaInTreatment
 
 #Here import the UIs or classes that got the UIs
 from ui_magnet40 import Ui_Dialog
+# from dlg_treat_cls import TreatmentDialog
+from dlg_mem_manager_cls import MemManagerDialog
+from dlg_stages_cls import StagesDialog
 
 
 
@@ -22,7 +25,7 @@ class Dialog(QDialog):
     one_second_signal = pyqtSignal()
 
     
-    def __init__(self, debug_bool, ser_instance, parent=None):
+    def __init__(self, debug_bool, ser_instance, treat_instance, parent=None):
         super(Dialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -34,11 +37,15 @@ class Dialog(QDialog):
         self.debug_bool = debug_bool
         self.s = ser_instance
         self.parent = parent
+        if self.debug_bool:
+            self.t = Treatment()
+        else:
+            self.t = treat_instance
         
         ## Connect up the buttons.
-        self.ui.stage1Button.clicked.connect(self.SelectStage)
-        self.ui.stage2Button.clicked.connect(self.SelectStage)
-        self.ui.stage3Button.clicked.connect(self.SelectStage)
+        self.ui.stage1Button.clicked.connect(self.StagesConfScreen)
+        self.ui.stage2Button.clicked.connect(self.StagesConfScreen)
+        self.ui.stage3Button.clicked.connect(self.StagesConfScreen)
 
         self.ui.startButton.clicked.connect(self.TreatmentScreen)
         self.ui.memManagerButton.clicked.connect(self.MemoryManagerScreen)
@@ -104,7 +111,6 @@ class Dialog(QDialog):
                               border:3px solid rgb(230, 231, 232);"
         
         self.style = ButtonStyles()
-        self.t = Treatment()
 
         self.t.stage1_info = Stages()
         self.t.stage2_info = Stages()
@@ -198,19 +204,6 @@ class Dialog(QDialog):
         # self.AntennaButtonsUpdate (['enable', 'dis', 'dis', 'dis'], ['CH1\nTunnel 10"', '', '', ''])
 
         
-    def SelectStage (self):
-        sender = self.sender()
-
-        if sender.objectName() == 'stage1Button':
-            print('Stage 1 selected for config')
-
-        if sender.objectName() == 'stage2Button':
-            print('Stage 2 selected for config')
-            
-        if sender.objectName() == 'stage3Button':
-            print('Stage 3 selected for config')
-
-
     def Stage1GroupChange (self, change_to):
         raise_inners = False
         
@@ -590,34 +583,34 @@ class Dialog(QDialog):
             self.ui.ch4Button.setText("CH4")
 
 
-    def AntennaButtonsUpdate (self, status_lst, names_lst):        
-        if status_lst[0] == 'enable':
-            self.ui.ch1Button.setStyleSheet(self.style.ch_enable)
-            self.ui.ch1Button.setText(names_lst[0])
-        else:
-            self.ui.ch1Button.setStyleSheet(self.style.ch_disable)
-            self.ui.ch1Button.setText("CH1")
+    # def AntennaButtonsUpdate (self, status_lst, names_lst):        
+    #     if status_lst[0] == 'enable':
+    #         self.ui.ch1Button.setStyleSheet(self.style.ch_enable)
+    #         self.ui.ch1Button.setText(names_lst[0])
+    #     else:
+    #         self.ui.ch1Button.setStyleSheet(self.style.ch_disable)
+    #         self.ui.ch1Button.setText("CH1")
 
-        if status_lst[1] == 'enable':
-            self.ui.ch2Button.setStyleSheet(self.style.ch_enable)
-            self.ui.ch2Button.setText(names_lst[1])
-        else:
-            self.ui.ch2Button.setStyleSheet(self.style.ch_disable)
-            self.ui.ch2Button.setText("CH2")
+    #     if status_lst[1] == 'enable':
+    #         self.ui.ch2Button.setStyleSheet(self.style.ch_enable)
+    #         self.ui.ch2Button.setText(names_lst[1])
+    #     else:
+    #         self.ui.ch2Button.setStyleSheet(self.style.ch_disable)
+    #         self.ui.ch2Button.setText("CH2")
 
-        if status_lst[2] == 'enable':
-            self.ui.ch3Button.setStyleSheet(self.style.ch_enable)
-            self.ui.ch3Button.setText(names_lst[2])
-        else:
-            self.ui.ch3Button.setStyleSheet(self.style.ch_disable)
-            self.ui.ch3Button.setText("CH3")
+    #     if status_lst[2] == 'enable':
+    #         self.ui.ch3Button.setStyleSheet(self.style.ch_enable)
+    #         self.ui.ch3Button.setText(names_lst[2])
+    #     else:
+    #         self.ui.ch3Button.setStyleSheet(self.style.ch_disable)
+    #         self.ui.ch3Button.setText("CH3")
 
-        if status_lst[3] == 'enable':
-            self.ui.ch4Button.setStyleSheet(self.style.ch_enable)
-            self.ui.ch4Button.setText(names_lst[3])
-        else:
-            self.ui.ch4Button.setStyleSheet(self.style.ch_disable)
-            self.ui.ch4Button.setText("CH4")
+    #     if status_lst[3] == 'enable':
+    #         self.ui.ch4Button.setStyleSheet(self.style.ch_enable)
+    #         self.ui.ch4Button.setText(names_lst[3])
+    #     else:
+    #         self.ui.ch4Button.setStyleSheet(self.style.ch_disable)
+    #         self.ui.ch4Button.setText("CH4")
             
 
     def InsertColorText (self, new_text, color='red', plain=False):
@@ -788,22 +781,22 @@ class Dialog(QDialog):
                 self.antennas_connected.ProcessStringList(rcv_list)
 
         if rcv.startswith("new antenna ch1"):
-            self.ui.ch1Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch1Button.setStyleSheet(self.style.ch_getting)
             self.ui.ch1Button.setText("CH1\ngetting\nparams")
             show_message = False
 
         if rcv.startswith("new antenna ch2"):
-            self.ui.ch2Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch2Button.setStyleSheet(self.style.ch_getting)
             self.ui.ch2Button.setText("CH2\ngetting\nparams")
             show_message = False            
 
         if rcv.startswith("new antenna ch3"):
-            self.ui.ch3Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch3Button.setStyleSheet(self.style.ch_getting)
             self.ui.ch3Button.setText("CH3\ngetting\nparams")
             show_message = False            
 
         if rcv.startswith("new antenna ch4"):
-            self.ui.ch4Button.setStyleSheet(self.ss.ch_getting)
+            self.ui.ch4Button.setStyleSheet(self.style.ch_getting)
             self.ui.ch4Button.setText("CH4\ngetting\nparams")
             show_message = False
 
@@ -902,9 +895,8 @@ class Dialog(QDialog):
 
     def SerialDataCallback (self, rcv):        
         # print ("serial data callback!")
-        # self.SerialProcessString(rcv)
         # print (rcv)
-        self.InsertForeingText(rcv)
+        self.SerialProcess(rcv)
 
 
     def UpdateOneSec (self):
@@ -922,10 +914,10 @@ class Dialog(QDialog):
     def CheckCompleteConf (self):
         stages_in = False
         channels_in = False
-        
-        if self.stage1.GetStageStatus == 'enable' or \
-           self.stage2.GetStageStatus == 'enable' or \
-           self.stage3.GetStageStatus == 'enable':
+
+        if self.stage1.GetStageStatus() == 'enable' or \
+           self.stage2.GetStageStatus() == 'enable' or \
+           self.stage3.GetStageStatus() == 'enable':
             stages_in = True
 
         if self.t.GetChannelInTreatment('ch1') != False or \
@@ -956,7 +948,7 @@ class Dialog(QDialog):
                 
                 self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
                 # a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
-                a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, self.parent)
+                a = TreatmentDialog(self.t, self.style, self.antennas_connected, self.s, self.parent)
                 a.setModal(True)
                 a.exec_()
 
@@ -996,7 +988,7 @@ class Dialog(QDialog):
 
         self.screensaver_window = False
         
-        a = MemoryDialog(self.ss, which_mem)
+        a = MemoryDialog(self.style, which_mem)
         a.setModal(True)
         a.exec_()
 
@@ -1041,6 +1033,7 @@ class Dialog(QDialog):
         self.screensaver_window = True
         
 
+    ## Memory Manager Screen
     def MemoryManagerScreen (self):
         if self.debug_bool:
             print("MemoryManagerScreen called!")
@@ -1056,13 +1049,64 @@ class Dialog(QDialog):
         if a.action == 'accept':
             print('Accept new config')
             self.t.mem_all_dict = mem_for_conf
+
+            self.t.mem_instant_dict['mema'] = self.t.mem_all_dict['mema']
+            self.t.mem_instant_dict['memb'] = self.t.mem_all_dict['memb']
+            self.t.mem_instant_dict['memc'] = self.t.mem_all_dict['memc']
+            self.t.mem_instant_dict['memd'] = self.t.mem_all_dict['memd']            
+            self.PopullateFromDict(self.t.mem_instant_dict)            
+            
         else:
             print('Last config its still valid')
 
         self.ScreenSaverKick()
         self.screensaver_window = True
+
         
+    ## Stages Configuration Screen
+    def StagesConfScreen (self):
+        sender = self.sender()
         
+        if self.debug_bool:
+            print("Stages Configuration Screen called!")
+
+            if sender.objectName() == 'stage1Button':
+                print('Stage 1 selected for config')
+
+            if sender.objectName() == 'stage2Button':
+                print('Stage 2 selected for config')
+            
+            if sender.objectName() == 'stage3Button':
+                print('Stage 3 selected for config')
+
+            return 
+
+        button_sel = sender.objectName()
+        button_name = button_sel.split('B')
+        button_name = button_name[0]
+        stages_list = [self.stage1, self.stage2, self.stage3]
+        a = StagesDialog(stages_list, self.style, button_name)
+    
+        a.setModal(True)
+        a.exec_()
+
+        if a.action == 'accept':
+            print('Accept new config')
+            print('Config List')
+            print(a.st_lst)
+
+            self.stage1 = a.st_lst[0]
+            self.stage2 = a.st_lst[1]
+            self.stage3 = a.st_lst[2]
+            self.Stage1GroupChange(self.stage1.GetStageStatus())
+            self.Stage2GroupChange(self.stage2.GetStageStatus())
+            self.Stage3GroupChange(self.stage3.GetStageStatus())
+            self.UpdateTotalTime()
+            
+        else:
+            print('Last config is still valid')
+            print(stages_list)
+            
     
 ### End of Dialog ###
 ### End of File ###

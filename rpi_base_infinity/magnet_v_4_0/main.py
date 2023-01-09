@@ -8,6 +8,7 @@ from stylesheet_class import ButtonStyles
 from time import sleep, time
 from datetime import datetime
 from antenna_class import AntennaInTreatment
+import platform
 
 
 #para el timer de 1 segundo
@@ -23,37 +24,16 @@ from threading import Timer
 """
 
 ### GLOBALS FOR CONFIGURATION #########
-## What version of UI we must run
-# RUN_VER_3_2 = 0    #not new version for magnet
-RUN_VER_3_1 = 1
-## OS where its run
-RUNNING_ON_SLACKWARE = 1
-RUNNING_ON_RASP = 0
+CURRENT_VERSION = 'Magnet ver 4.0'
 ## No call the first Dialog - code empty presentation page -
-NO_CALL_FIRST_DLG = 0
+NO_CALL_FIRST_DLG = True
 
 
-#Here import the UIs or the classes that got the UIs
-# if RUN_VER_3_2:
-#     from ui_magnet32 import Ui_Dialog
-#     CURRENT_VERSION = "Stretcher_ver_3_2"
-# elif RUN_VER_3_1:
-#     from ui_magnet31 import Ui_Dialog
-#     CURRENT_VERSION = "Stretcher_ver_3_1"
-# else:
-#     print('Please select the UI version to run!!!')
-#     CURRENT_VERSION = "Stretcher_unknown"
-#     sys.exit()
-from ui_magnet31 import Ui_Dialog
-CURRENT_VERSION = "Magnet_ver_3_1"
-
-    
-from dlg_treat_cls import TreatmentDialog
-from diagnostics_cls import DiagnosticsDialog
-from dlg_mems_cls import MemoryDialog
+## Import UIs classes used
+from dlg_main_cls import Dialog
 from first_dialog_cls import FirstDialog
-from screen_saver_cls import ScreenSaverDialog
-from wifi_enable_cls import WiFiDialog
+# from screen_saver_cls import ScreenSaverDialog
+# from wifi_enable_cls import WiFiDialog
 
 #get the code for manager
 from wifi_thread_manager import WiFiThreadManager
@@ -69,591 +49,93 @@ class Communicate(QObject):
 ############################
 # Main Class - Main Window #
 ############################
-class MyMainClass ():
+class MyMainClass (QObject):
 
     #SIGNALS
     rcv_signal = pyqtSignal(str)
     one_second_signal = pyqtSignal()
     
     def __init__(self):
+        super(MyMainClass, self).__init__()
+        self.t = Treatment()
+
+        self.distro = self.GetDistroName(True)
+        # print ('distro: ' + self.distro + ' distro len: ' + str(len(self.distro)))
+        print (self.distro)        
+        
         self.t.SetCurrentVersion(CURRENT_VERSION)
-        if RUNNING_ON_SLACKWARE:
-            self.t.SetCurrentSystem('slackware')
-        elif RUNNING_ON_RASP:
-            self.t.SetCurrentSystem('raspbian')
+        self.t.SetCurrentSystem(self.distro)
         
-        ## Init stylesheet object
-        self.ss = ButtonStyles()
-
-        ## Init Antennas connected
-        self.antennas_connected = AntennaInTreatment()
-        
-        ## Init the default state:
-        self.SignalDisableAll()
-        self.FrequencyDisableAll()
-        self.ui.powerLabel.setText(str(self.t.GetPower()))
-        self.ui.minutesLabel.setText(str(self.t.GetTreatmentTimer()))
-
-        ## to carry on with date-time
-        date_now = datetime.today()
-        self.minutes_last = date_now.minute
-        self.UpdateDateTime(date_now)
-        
-        # #con el boton lanzo el evento close, que luego llama a closeEvent
-        # self.ui.closeButton.clicked.connect(self.close)
-        self.ui.textEdit.setText('')
-
         #creo el evento y lo conecto al slot
         self.c = Communicate()
-        self.c.closeApp.connect(self.close) #Envio3 lo dispara
+        # self.c.closeApp.connect(self.close) #Envio3 lo dispara
 
         ## connect with serial data rx signal
-        self.rcv_signal.connect(self.MySignalCallback)
-
-        ## counters for buttons with press release functionality
-        self.powerUpButtonCnt = 0
-        self.powerDwnButtonCnt = 0
-        self.timeUpButtonCnt = 0
-        self.timeDwnButtonCnt = 0
-        self.mem1ButtonCnt = 0
-        self.mem2ButtonCnt = 0
-        self.mem3ButtonCnt = 0
-        self.diagButtonCnt = 0
-        self.upDwnButtonCnt = 0
+        # self.rcv_signal.connect(self.MySignalCallback)
 
         ## PARA SLACKWARE
-        if self.t.GetCurrentSystem() == 'slackware':
-            self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+        if self.t.GetCurrentSystem() == 'Slackware ':
+            # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+            self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')
         ## PARA RASPBERRY
         elif self.t.GetCurrentSystem() == 'raspbian':
             self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
             
-        if self.s.port_open == False:
-            self.ui.textEdit.append("No serial port found!!!")
-            # sys.exit(-1)
-            #TODO: agregar un timer que vaya buscando el puerto!!!
-        else:
-            self.InsertLocalText("Serial port open OK!")
-            self.InsertLocalTextNoNewLine("\nComm with Power: ")
-            self.s.Write("keepalive,\r\n")
 
 
-        ## setup antennas icons
-        ## url(:/buttons/resources/Stop.png)
-        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
-        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
-        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
-        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
+        # ## setup antennas icons
+        # ## url(:/buttons/resources/Stop.png)
+        # self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        # self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        # self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        # self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
 
-        # start manager background process
-        self.wifi_manager_cnt = 2
-        self.MyThread = WiFiThreadManager()
-        self.MyThread.start()
+        # # start manager background process
+        # self.wifi_manager_cnt = 2
+        # self.MyThread = WiFiThreadManager()
+        # self.MyThread.start()
             
-        ## activate the 1 second timer it is repetitive
-        self.t1seg = QTimer()
-        self.t1seg.timeout.connect(self.TimerOneSec)
-        self.t1seg.start(1000)
+        # ## activate the 1 second timer it is repetitive
+        # self.t1seg = QTimer()
+        # self.t1seg.timeout.connect(self.TimerOneSec)
+        # self.t1seg.start(1000)
 
-        ## instanciate the antennas timer timeout
-        self.antennatimeout = QTimer()
-        self.antennatimeout_finish = True
+        # ## instanciate the antennas timer timeout
+        # self.antennatimeout = QTimer()
+        # self.antennatimeout_finish = True
         
-        # screen saver timer activation
-        self.timer_screensaver = self.t.timeout_screensaver
-        self.screensaver_window = True
+        # # screen saver timer activation
+        # self.timer_screensaver = self.t.timeout_screensaver
+        # self.screensaver_window = True
             
-        #SIGNALS CONNECTION
-        # conecto senial del timer a la funcion de Update
-        self.one_second_signal.connect(self.UpdateOneSec)
+        # #SIGNALS CONNECTION
+        # # conecto senial del timer a la funcion de Update
+        # self.one_second_signal.connect(self.UpdateOneSec)
 
-        ## read and update memory buttons
-        self.UpdateMemLabels()
+        # ## read and update memory buttons
+        # self.UpdateMemLabels()
 
         ### For last call to the first f*** dialog
         if NO_CALL_FIRST_DLG == 0:
             self.FirstDialogScreen()
 
-        ### Ask for know antennas
-        if self.s.port_open == True:
-            self.s.Write("get_antenna,\r\n")
-
-
-    def UpdateDateTime(self, new_date_time):
-        date_str = ""
-        if self.t.GetLocalization() == 'usa':
-            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
-        elif self.t.GetLocalization() == 'arg':
-            date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
-            
-        self.ui.date_timeLabel.setText(date_str)
-
-
-    def UpTimePressed (self):
-        self.TimeUp (1)
-        self.timeUpButtonCnt = 1
-        self.ScreenSaverKick()        
-
-        
-    def UpTimeReleased (self):
-        self.timeUpButtonCnt = 0
-
-        
-    def DwnTimePressed (self):
-        self.TimeDwn(1)
-        self.timeDwnButtonCnt = 1
-        self.ScreenSaverKick()
-
-        
-    def DwnTimeReleased (self):
-        self.timeDwnButtonCnt = 0
-
-        
-    def UpPowerPressed (self):
-        self.PwrUp (1)
-        self.powerUpButtonCnt = 1
-        self.ScreenSaverKick()
-
-        
-    def UpPowerReleased (self):
-        self.powerUpButtonCnt = 0
-
-        
-    def DwnPowerPressed (self):
-        self.PwrDwn(1)
-        self.powerDwnButtonCnt = 1
-        self.ScreenSaverKick()        
-
-        
-    def DwnPowerReleased (self):
-        self.powerDwnButtonCnt = 0
-
-        
-    def Memory1Pressed (self):
-        self.mem1ButtonCnt = 1
-        self.ScreenSaverKick()
-
-        
-    def Memory1Released (self):
-        if (self.mem1ButtonCnt > 0 and
-            self.mem1ButtonCnt < 3):
-            self.mem1ButtonCnt = 0
-            
-            #get memory values
-            if self.t.mem1_treat_time == 'None':
-                self.InsertLocalText("Not much to do with memory1!")
-            else:
-                self.SignalChangeTo(self.t.mem1_signal)
-                self.FrequencyChangeTo(self.t.mem1_frequency)
-                self.ui.minutesLabel.setText(self.t.mem1_treat_time)
-                self.t.SetTreatmentTimer(int(self.t.mem1_treat_time))
-                self.ui.powerLabel.setText(self.t.mem1_power)
-                self.t.SetPower(int(self.t.mem1_power))
-                self.CheckForStart()
-
-
-    def Memory1Config (self):
-        if self.CheckCompleteConf() == True:
-            self.MemoryScreen('mem1')
-        else:
-            self.InsertLocalText("Select all parameters first!")
-
-
-    def Memory2Pressed (self):
-        self.mem2ButtonCnt = 1
-        self.ScreenSaverKick()
-
-        
-    def Memory2Released (self):
-        if (self.mem2ButtonCnt > 0 and
-            self.mem2ButtonCnt < 3):
-            self.mem2ButtonCnt = 0
-            
-            #get memory values
-            if self.t.mem2_treat_time == 'None':
-                self.InsertLocalText("Not much to do with memory2!")
-            else:
-                self.SignalChangeTo(self.t.mem2_signal)
-                self.FrequencyChangeTo(self.t.mem2_frequency)
-                self.ui.minutesLabel.setText(self.t.mem2_treat_time)
-                self.t.SetTreatmentTimer(int(self.t.mem2_treat_time))
-                self.ui.powerLabel.setText(self.t.mem2_power)
-                self.t.SetPower(int(self.t.mem2_power))
-                self.CheckForStart()
-
-
-    def Memory2Config (self):
-        if self.CheckCompleteConf() == True:
-            self.MemoryScreen('mem2')
-        else:
-            self.InsertLocalText("Select all parameters first!")
-
-
-    def Memory3Pressed (self):
-        self.mem3ButtonCnt = 1
-        self.ScreenSaverKick()
-
-        
-    def Memory3Released (self):
-        if (self.mem3ButtonCnt > 0 and
-            self.mem3ButtonCnt < 3):
-            self.mem3ButtonCnt = 0
-            
-            #get memory values
-            if self.t.mem3_treat_time == 'None':
-                self.InsertLocalText("Not much to do with memory3!")
-            else:
-                self.SignalChangeTo(self.t.mem3_signal)
-                self.FrequencyChangeTo(self.t.mem3_frequency)
-                self.ui.minutesLabel.setText(self.t.mem3_treat_time)
-                self.t.SetTreatmentTimer(int(self.t.mem3_treat_time))
-                self.ui.powerLabel.setText(self.t.mem3_power)
-                self.t.SetPower(int(self.t.mem3_power))
-                self.CheckForStart()
-
-
-    def Memory3Config (self):
-        if self.CheckCompleteConf() == True:
-            self.MemoryScreen('mem3')
-        else:
-            self.InsertLocalText("Select all parameters first!")
-
-
-    def DiagsPressed (self):
-        self.diagButtonCnt = 1
-
-        
-    def DiagsReleased (self):
-        self.diagButtonCnt = 0
+        self.MainDialogScreen()
+        self.closeEvent()
 
             
-    def SignalDisableAll(self):
-        self.ui.triangularButton.setStyleSheet(self.ss.triangular_disable)
-        self.ui.squareButton.setStyleSheet(self.ss.square_disable)
-        self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_disable)
-                       
+    def GetDistroName (self, show=False):
+        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        if show:
+            os_text = "--" + distname + version + "-- "
+            print("os: " + os_text)
 
-    def SignalChange (self):
-        sender = self.sender()
-
-        if sender.objectName() == 'triangularButton':
-            self.SignalChangeTo('triangular')
-
-        elif sender.objectName() == 'squareButton':
-            self.SignalChangeTo('square')
-
-        elif sender.objectName() == 'sinusoidalButton':
-            self.SignalChangeTo('sinusoidal')
-
-        self.CheckForStart()
-        self.ScreenSaverKick()
-
-        
-    def SignalChangeTo (self, new_signal):
-        self.SignalDisableAll()
-        
-        if new_signal == 'triangular':
-            self.ui.triangularButton.setStyleSheet(self.ss.triangular_enable)
-            self.InsertLocalText("tringular signal selected")
-            self.t.SetSignal('triangular')
-
-        elif new_signal == 'square':
-            self.ui.squareButton.setStyleSheet(self.ss.square_enable)
-            self.InsertLocalText("square signal selected")            
-            self.t.SetSignal('square')
-
-        elif new_signal == 'sinusoidal':
-            self.ui.sinusoidalButton.setStyleSheet(self.ss.sinusoidal_enable)
-            self.InsertLocalText("sinusoidal signal selected")            
-            self.t.SetSignal('sinusoidal')
-        
-
-    def FrequencyDisableAll(self):
-        self.ui.freq1Button.setStyleSheet(self.ss.freq1_disable)
-        self.ui.freq2Button.setStyleSheet(self.ss.freq2_disable)
-        self.ui.freq3Button.setStyleSheet(self.ss.freq3_disable)
-        self.ui.freq4Button.setStyleSheet(self.ss.freq4_disable)
-        self.ui.freq5Button.setStyleSheet(self.ss.freq5_disable)
-        self.ui.freq6Button.setStyleSheet(self.ss.freq6_disable)
-        self.t.SetFrequency('None')
-
-
+        return distname
 
             
-    def ChannelChange (self):
-        sender = self.sender()
-
-        if sender.objectName() == 'ch2Button':
-            # test ch1 with name
-            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,1\r"
-            self.SerialProcess(ant_str)
-            # test ch1 no name
-            # ant_str = "ch1,020.00,020.00,004.04,065.00,1\r"
-            # self.SerialProcess(ant_str)
-            # test ch2 with name
-            # ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,2\r"
-            # self.SerialProcess(ant_str)
-            # test ch2 no name
-            # ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
-            # self.SerialProcess(ant_str)
-            # test ch3 with name
-            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,3\r"
-            self.SerialProcess(ant_str)
-            # test ch3 no name
-            # ant_str = "ch3,020.00,020.00,004.04,065.00,3\r"
-            # self.SerialProcess(ant_str)
-            # test ch4 with name
-            ant_str = "estoesTunnel 10 inches,020.00,020.00,004.04,065.00,4\r"
-            self.SerialProcess(ant_str)            
-            
-        if sender.objectName() == 'ch3Button':
-            ant_str = "antenna none\r"
-            self.SerialProcess(ant_str)
-
-        if sender.objectName() == 'ch4Button':
-            pass
-
-        self.CheckForStart()
-        self.ScreenSaverKick()        
-
-
-    def AntennaNameChange (self):
-        sender = self.sender()
-        
-        if sender.objectName() == 'ch1Button':
-            if self.antennas_connected.GetActive('ch1') == True and \
-               self.antennas_connected.name_ch1 != 'unknow':
-                if 'L: ' in self.ui.ch1Button.text():
-                    ant_str = self.AntennaProcessName('ch1')
-                else:
-                    ant_str = 'CH1\n' + \
-                              'R: ' + self.antennas_connected.GetRString('ch1') + '\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch1') + '\n' + \
-                              'I: ' + self.antennas_connected.GetIString('ch1') + '\n'
-
-                self.ui.ch1Button.setText(ant_str)
-
-        if sender.objectName() == 'ch2Button':
-            if self.antennas_connected.GetActive('ch2') == True and \
-               self.antennas_connected.name_ch2 != 'unknow':
-                if 'L: ' in self.ui.ch2Button.text():
-                    ant_str = self.AntennaProcessName('ch2')
-                else:
-                    ant_str = 'CH2\n' + \
-                              'R: ' + self.antennas_connected.GetRString('ch2') + '\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch2') + '\n' + \
-                              'I: ' + self.antennas_connected.GetIString('ch2') + '\n'
-
-                self.ui.ch2Button.setText(ant_str)
-
-        if sender.objectName() == 'ch3Button':
-            if self.antennas_connected.GetActive('ch3') == True and \
-               self.antennas_connected.name_ch3 != 'unknow':
-                if 'L: ' in self.ui.ch3Button.text():
-                    ant_str = self.AntennaProcessName('ch3')
-                else:
-                    ant_str = 'CH3\n' + \
-                              'R: ' + self.antennas_connected.GetRString('ch3') + '\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch3') + '\n' + \
-                              'I: ' + self.antennas_connected.GetIString('ch3') + '\n'
-
-                self.ui.ch3Button.setText(ant_str)
-
-        if sender.objectName() == 'ch4Button':
-            if self.antennas_connected.GetActive('ch4') == True and \
-               self.antennas_connected.name_ch4 != 'unknow':
-                if 'L: ' in self.ui.ch4Button.text():
-                    ant_str = self.AntennaProcessName('ch4')
-                else:
-                    ant_str = 'CH4\n' + \
-                              'R: ' + self.antennas_connected.GetRString('ch4') + '\n' + \
-                              'L: ' + self.antennas_connected.GetLString('ch4') + '\n' + \
-                              'I: ' + self.antennas_connected.GetIString('ch4') + '\n'
-
-                self.ui.ch4Button.setText(ant_str)
-        
-        self.ScreenSaverKick()
-        
-        
-    def UpdateOneSec (self):
-        """ paso un segundo, reviso que tengo que hacer """
-        # reviso si algun boton sigue presionado
-        ## Power Buttons
-        if self.powerUpButtonCnt > 3:
-            self.PwrUp(10)
-        elif self.powerUpButtonCnt > 1:
-            self.PwrUp(5)
-            self.powerUpButtonCnt += 1
-        elif self.powerUpButtonCnt == 1:
-            self.powerUpButtonCnt += 1
-
-        if self.powerDwnButtonCnt > 3:
-            self.PwrDwn(10)
-        elif self.powerDwnButtonCnt > 1:
-            self.PwrDwn(5)
-            self.powerDwnButtonCnt += 1
-        elif self.powerDwnButtonCnt == 1:
-            self.powerDwnButtonCnt += 1
-
-        ## Time Buttons
-        if self.timeUpButtonCnt > 3:
-            self.TimeUp(10)
-        elif self.timeUpButtonCnt > 1:
-            self.TimeUp(5)
-            self.timeUpButtonCnt += 1            
-        elif  self.timeUpButtonCnt == 1:
-            self.timeUpButtonCnt += 1
-
-        if self.timeDwnButtonCnt > 3:
-            self.TimeDwn(10)
-        elif self.timeDwnButtonCnt > 1:
-            self.TimeDwn(5)
-            self.timeDwnButtonCnt += 1            
-        elif self.timeDwnButtonCnt == 1:
-            self.timeDwnButtonCnt += 1
-
-        if self.mem1ButtonCnt > 3:
-            self.mem1ButtonCnt = 0
-            self.Memory1Config()
-        elif self.mem1ButtonCnt > 0:
-            self.mem1ButtonCnt += 1
-
-        if self.mem2ButtonCnt > 3:
-            self.mem2ButtonCnt = 0
-            self.Memory2Config()
-        elif self.mem2ButtonCnt > 0:
-            self.mem2ButtonCnt += 1
-
-        if self.mem3ButtonCnt > 3:
-            self.mem3ButtonCnt = 0
-            self.Memory3Config()
-        elif self.mem3ButtonCnt > 0:
-            self.mem3ButtonCnt += 1
-
-        if self.diagButtonCnt > 5:
-            self.diagButtonCnt = 0
-            self.DiagnosticsScreen()
-        elif self.diagButtonCnt > 0:
-            self.diagButtonCnt += 1
-
-        #button debouncing
-        if self.upDwnButtonCnt:
-            self.upDwnButtonCnt -= 1
-
-        date_now = datetime.today()
-        if date_now.minute != self.minutes_last:
-            # print(date_now)
-            self.minutes_last = date_now.minute
-            self.UpdateDateTime(date_now)
-
-        # check for screensaver activation
-        if self.screensaver_window == True:
-            if self.timer_screensaver > 0:
-                self.timer_screensaver -= 1
-            else:
-                self.ScreenSaverDialogScreen()
-
-        # check for wifi manager
-        if self.wifi_manager_cnt == 0:
-            self.wifi_manager_cnt = 2
-            self.UpdateTwoSec()
-        else:
-            self.wifi_manager_cnt -= 1
-            
-                            
-
-        
-    def TimerOneSec(self):
-        self.one_second_signal.emit()        
-
-        
     def MyObjCallback (self, dataread):
         d = dataread.rstrip()
         self.rcv_signal.emit(d)
 
-
-    def AntennaProcessInnerName (self, ant_str):
-        ant_name = ''
-        list_cntr = 0
-        ant_list = ant_str.split(' ')
-        for inner in ant_list:
-            if list_cntr < 3:
-                if len(inner) < 8:
-                    ant_name += inner + '\n'
-                    list_cntr += 1
-
-        if len(ant_name) > 1:
-            ant_name = ant_name[:-1]
-
-        return ant_name
-            
-            
-    def AntennaProcessName (self, channel):
-        ant_name = 'unknow'
-        ant_ch = '1'
-        
-        if channel == 'ch1':
-            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch1)
-            ant_ch = '1'
-
-        if channel == 'ch2':
-            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch2)
-            ant_ch = '2'            
-
-        if channel == 'ch3':
-            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch3)
-            ant_ch = '3'            
-
-        if channel == 'ch4':
-            ant_name = self.AntennaProcessInnerName(self.antennas_connected.name_ch4)
-            ant_ch = '4'            
-            
-        if ant_name != 'unknow':
-            ant_str = 'CH' + ant_ch + '\n' + ant_name
-        else:
-            ant_str = 'CH' + ant_ch + '\n' + \
-                      'R: ' + self.antennas_connected.GetRString(channel) + '\n' + \
-                      'L: ' + self.antennas_connected.GetLString(channel) + '\n' + \
-                      'I: ' + self.antennas_connected.GetIString(channel) + '\n'
-
-        return ant_str
-
-    
-    def AntennaUpdate (self):
-        print("activar o desactivar canales ahora!")
-        self.antennatimeout_finish = True
-        
-        if self.antennas_connected.GetActive('ch1') == True:
-            self.ui.ch1Button.setStyleSheet(self.ss.ch_enable)
-            ant_str = self.AntennaProcessName('ch1')
-            self.ui.ch1Button.setText(ant_str)
-        else:
-            self.ui.ch1Button.setStyleSheet(self.ss.ch_disable)
-            self.ui.ch1Button.setText("CH1")
-
-        if self.antennas_connected.GetActive('ch2') == True:
-            self.ui.ch2Button.setStyleSheet(self.ss.ch_enable)
-            ant_str = self.AntennaProcessName('ch2')
-            self.ui.ch2Button.setText(ant_str)
-        else:
-            self.ui.ch2Button.setStyleSheet(self.ss.ch_disable)
-            self.ui.ch2Button.setText("CH2")
-
-        if self.antennas_connected.GetActive('ch3') == True:
-            self.ui.ch3Button.setStyleSheet(self.ss.ch_enable)
-            ant_str = self.AntennaProcessName('ch3')
-            self.ui.ch3Button.setText(ant_str)
-        else:
-            self.ui.ch3Button.setStyleSheet(self.ss.ch_disable)
-            self.ui.ch3Button.setText("CH3")
-
-        if self.antennas_connected.GetActive('ch4') == True:
-            self.ui.ch4Button.setStyleSheet(self.ss.ch_enable)
-            ant_str = self.AntennaProcessName('ch4')
-            self.ui.ch4Button.setText(ant_str)
-        else:
-            self.ui.ch4Button.setStyleSheet(self.ss.ch_disable)
-            self.ui.ch4Button.setText("CH4")
 
 
     def SerialProcess (self, rcv):
@@ -745,103 +227,28 @@ class MyMainClass ():
         a.setModal(True)
         a.exec_()
 
-        self.ScreenSaverKick()
-        self.screensaver_window = True
-
         
-    ## Treatment Screen
-    def TreatmentScreen (self):
-        if self.CheckCompleteConf() == True:
-            if self.s.port_open == True:
-                self.screensaver_window = False
-                
-                self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
-                a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
-                a.setModal(True)
-                a.exec_()
-
-                self.ScreenSaverKick()
-                self.screensaver_window = True
-                
-            else:
-                self.InsertLocalText("Serial Port Not Open!")
-        else:
-            # self.ui.textEdit.append("Complete all params before start")
-            self.InsertLocalText("Complete all params before start")
-
-
-    ## DiagnosticsSreen
-    def DiagnosticsScreen (self):
-        self.screensaver_window = False
-        
-        a = DiagnosticsDialog(self.s, self.t, parent=self)
+    ## Main Screen
+    def MainDialogScreen (self):
+        debug = False
+        a = Dialog(debug, self.s, self.t, parent=self)
         a.setModal(True)
         a.exec_()
 
-        self.ScreenSaverKick()
-        self.screensaver_window = True
-        # fuerzo un update de fecha y hora cuando vuelvo de diagnostico
-        date_now = datetime.today()
-        self.UpdateDateTime(date_now)            
-            
+
         
-    ## MemoryScreen
-    def MemoryScreen (self, which_mem):
-        self.screensaver_window = False
-        
-        a = MemoryDialog(self.ss, which_mem)
-        a.setModal(True)
-        a.exec_()
-
-        if a.action == 'save':
-            self.t.MoveCurrentConfToMem(which_mem)
-            self.t.SaveConfigFile()
-            self.UpdateMemLabels()
-        
-        if a.action == 'empty':
-            self.t.EmptyMem(which_mem)
-            self.t.SaveConfigFile()
-            self.UpdateMemLabels()
-
-        self.ScreenSaverKick()
-        self.screensaver_window = True
-        
-            
-    ## ScreenSaver
-    def ScreenSaverDialogScreen (self):
-        a = ScreenSaverDialog()
-        a.setModal(True)
-        a.exec_()
-
-        self.ScreenSaverKick()
-
-    def ScreenSaverKick (self):
-        self.timer_screensaver = self.t.timeout_screensaver
-            
-
-    ## wifi screen
-    def WifiScreen (self):
-        self.screensaver_window = False
-        a = WiFiDialog()
-        a.setModal(True)
-        a.exec_()
-
-        self.ScreenSaverKick()
-        self.screensaver_window = True
-        
-
 ### End of Dialog ###
 
 ############
 # Main App #
 ############
 app = QApplication(sys.argv)
-w = Dialog()
+w = MyMainClass()
 #http://doc.qt.io/qt-5/qt.html#WindowType-enum
-w.setWindowFlags(Qt.CustomizeWindowHint)
+# w.setWindowFlags(Qt.CustomizeWindowHint)
 # w.setWindowFlags(Qt.FramelessWindowHint)
 print('Starting magnet app...')
-w.show()
+# w.show()
 sys.exit(app.exec_())
 
 

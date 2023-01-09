@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="background">
+    <file>resources/bkg_treat_all_buttons.png</file>
+    <file>resources/bkg_treat_no_buttons.png</file>
     <file>resources/bkg_mem_no_buttons.png</file>
     <file>resources/bkg_mem_full_buttons.png</file>
     <file>resources/bkg_main_no_buttons.png</file>

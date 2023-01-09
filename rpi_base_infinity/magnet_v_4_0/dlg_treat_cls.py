@@ -83,52 +83,59 @@ class TreatmentDialog(QDialog):
 
         ## Default Screen
         self.ui.progressLabel.setText('Session Starting...')
-        self.ui.minutesLabel.setText(str(self.treat.treatment_timer) + "'")
-        self.ui.powerLabel.setText(str(self.treat.power) + "%")
+        # stage1
+        self.ui.stage1MinutesLabel.setText(str(self.treat.stage1_info.GetStageTimer() + "'"))
+        self.ui.stage1PowerLabel.setText(str(self.treat.stage1_info.GetStagePower() + "%"))
+        # stage2
+        self.ui.stage2MinutesLabel.setText(str(self.treat.stage1_info.GetStageTimer() + "'"))
+        self.ui.stage2PowerLabel.setText(str(self.treat.stage1_info.GetStagePower() + "%"))
+        # stage3
+        self.ui.stage3MinutesLabel.setText(str(self.treat.stage1_info.GetStageTimer() + "'"))
+        self.ui.stage3PowerLabel.setText(str(self.treat.stage1_info.GetStagePower() + "%"))
 
-        current_signal = self.treat.GetSignal()
-        if current_signal == 'triangular':
-            self.ui.signalButton.setStyleSheet(self.style.triangular_enable)
-        elif current_signal == 'square':
-            self.ui.signalButton.setStyleSheet(self.style.square_enable)
-        elif current_signal == 'sinusoidal':
-            self.ui.signalButton.setStyleSheet(self.style.sinusoidal_enable)
+        # current_signal = self.treat.GetSignal()
+        # if current_signal == 'triangular':
+        #     self.ui.signalButton.setStyleSheet(self.style.triangular_enable)
+        # elif current_signal == 'square':
+        #     self.ui.signalButton.setStyleSheet(self.style.square_enable)
+        # elif current_signal == 'sinusoidal':
+        #     self.ui.signalButton.setStyleSheet(self.style.sinusoidal_enable)
 
-        current_frequency = self.treat.GetFrequency()
-        if current_frequency == '7.83Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq1_enable)
-        elif current_frequency == '11.79Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq2_enable)
-        elif current_frequency == '16.67Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq3_enable)
-        elif current_frequency == '23.58Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq4_enable)
-        elif current_frequency == '30.80Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq5_enable)
-        elif current_frequency == '62.64Hz':
-            self.ui.freqButton.setStyleSheet(self.style.freq6_enable)
+        # current_frequency = self.treat.GetFrequency()
+        # if current_frequency == '7.83Hz':
+        #     self.ui.freqButton.setStyleSheet(self.style.freq1_enable)
+        # elif current_frequency == '11.79Hz':
+        #     self.ui.freqButton.setStyleSheet(self.style.freq2_enable)
+        # elif current_frequency == '16.67Hz':
+        #     self.ui.freqButton.setStyleSheet(self.style.freq3_enable)
+        # elif current_frequency == '23.58Hz':
+        #     self.ui.freqButton.setStyleSheet(self.style.freq4_enable)
+        # elif current_frequency == '30.80Hz':
+        #     self.ui.freqButton.setStyleSheet(self.style.freq5_enable)
+        # elif current_frequency == '62.64Hz':
+        #     self.ui.freqButton.setStyleSheet(self.style.freq6_enable)
 
-        self.ui.stopButton.setEnabled(False)
-        self.ui.rsmButton.setEnabled(False)
-        self.ui.stop_rsmButton.raise_()
+        # self.ui.stopButton.setEnabled(False)
+        # self.ui.rsmButton.setEnabled(False)
+        # self.ui.stop_rsmButton.raise_()
 
-        ## setup antennas icons
-        ## url(:/buttons/resources/Stop.png)
-        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
-        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
-        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
-        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
+        # ## setup antennas icons
+        # ## url(:/buttons/resources/Stop.png)
+        # self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        # self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        # self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        # self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
         
-        ## setup antennas
-        self.antenna_emmiting = False
-        self.AntennasUpdate_UI(False)
+        # ## setup antennas
+        # self.antenna_emmiting = False
+        # self.AntennasUpdate_UI(False)
             
-        ## start the timer
-        self.t1sec.timeout.connect(self.TimerOneSec)
-        self.t1sec.start(1000)
+        # ## start the timer
+        # self.t1sec.timeout.connect(self.TimerOneSec)
+        # self.t1sec.start(1000)
 
-        ## Effectively start treatment
-        self.StartTreatment()
+        # ## Effectively start treatment
+        # self.StartTreatment()
 
 
     def AntennasUpdate_UI (self, emit):

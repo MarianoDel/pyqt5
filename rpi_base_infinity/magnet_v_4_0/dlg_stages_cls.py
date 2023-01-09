@@ -89,11 +89,14 @@ class StagesDialog (QDialog):
         
         # check which was selected, or select the first one
         if self.stage_selected == 'stage1':
-            self.Stage1GroupChange('select')
+            # self.Stage1GroupChange('select')
+            self.SelectStageButton1()
         elif self.stage_selected == 'stage2':
-            self.Stage2GroupChange('select')
+            # self.Stage2GroupChange('select')
+            self.SelectStageButton2()            
         else:
-            self.Stage3GroupChange('select')
+            # self.Stage3GroupChange('select')
+            self.SelectStageButton3()            
 
 
         ## activate the 1 second timer it is repetitive
@@ -265,6 +268,8 @@ class StagesDialog (QDialog):
             self.ui.stage1MinutesLabel.setText('')
             self.ui.stage1PowerLabel.setText('')            
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_disable)
+            self.ui.stage1SignalButton.setStyleSheet(self.style.signal_75_disable)
+            self.ui.stage1FreqButton.setStyleSheet(self.style.signal_75_disable)            
             self.ui.stage1Label.raise_()
             
         if raise_inners:
@@ -297,6 +302,8 @@ class StagesDialog (QDialog):
             self.ui.stage2MinutesLabel.setText('')
             self.ui.stage2PowerLabel.setText('')            
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_disable)
+            self.ui.stage2SignalButton.setStyleSheet(self.style.signal_75_disable)
+            self.ui.stage2FreqButton.setStyleSheet(self.style.signal_75_disable)            
             self.ui.stage2Label.raise_()
             
         if raise_inners:
@@ -329,6 +336,8 @@ class StagesDialog (QDialog):
             self.ui.stage3MinutesLabel.setText('')
             self.ui.stage3PowerLabel.setText('')            
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_disable)
+            self.ui.stage3SignalButton.setStyleSheet(self.style.signal_75_disable)
+            self.ui.stage3FreqButton.setStyleSheet(self.style.signal_75_disable)            
             self.ui.stage3Label.raise_()
             
         if raise_inners:

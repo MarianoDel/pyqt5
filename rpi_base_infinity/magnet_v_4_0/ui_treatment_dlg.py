@@ -13,26 +13,8 @@ class Ui_TreatmentDialog(object):
         TreatmentDialog.setObjectName("TreatmentDialog")
         TreatmentDialog.resize(1280, 800)
         TreatmentDialog.setStyleSheet("QDialog {\n"
-"background-image: url(:/background/resources/background_magnet_infinity_02.png);\n"
+"background-image: url(:/background/resources/bkg_treat_no_buttons.png);\n"
 "}")
-        self.freqButton = QtWidgets.QPushButton(TreatmentDialog)
-        self.freqButton.setGeometry(QtCore.QRect(100, 290, 100, 100))
-        self.freqButton.setMinimumSize(QtCore.QSize(100, 100))
-        self.freqButton.setStyleSheet("background-image: url(:/frequencies/resources/62_64Hz.png);\n"
-"background-color: rgb(196, 161, 203);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);")
-        self.freqButton.setText("")
-        self.freqButton.setObjectName("freqButton")
-        self.signalButton = QtWidgets.QPushButton(TreatmentDialog)
-        self.signalButton.setGeometry(QtCore.QRect(100, 120, 100, 100))
-        self.signalButton.setMinimumSize(QtCore.QSize(100, 100))
-        self.signalButton.setStyleSheet("background-image: url(:/buttons/resources/Sinus.png);\n"
-"background-color: rgb(240, 238, 126);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);")
-        self.signalButton.setText("")
-        self.signalButton.setObjectName("signalButton")
         self.textEdit = QtWidgets.QTextEdit(TreatmentDialog)
         self.textEdit.setGeometry(QtCore.QRect(450, 650, 796, 111))
         self.textEdit.setStyleSheet("border:2px outset;\n"
@@ -46,8 +28,8 @@ class Ui_TreatmentDialog(object):
         self.stop_rsmButton.setMinimumSize(QtCore.QSize(100, 100))
         self.stop_rsmButton.setStyleSheet("background-image: url(:/buttons/resources/Stop-Pause.png);\n"
 "background-color: rgb(237, 50, 55);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);")
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
         self.stop_rsmButton.setText("")
         self.stop_rsmButton.setObjectName("stop_rsmButton")
         self.date_timeLabel = QtWidgets.QLabel(TreatmentDialog)
@@ -61,17 +43,17 @@ class Ui_TreatmentDialog(object):
         self.date_timeLabel.setStyleSheet("color: rgb(55, 52, 53);")
         self.date_timeLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.date_timeLabel.setObjectName("date_timeLabel")
-        self.powerLabel = QtWidgets.QLabel(TreatmentDialog)
-        self.powerLabel.setGeometry(QtCore.QRect(90, 440, 151, 51))
+        self.stage1PowerLabel = QtWidgets.QLabel(TreatmentDialog)
+        self.stage1PowerLabel.setGeometry(QtCore.QRect(260, 120, 151, 51))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(36)
         font.setBold(True)
         font.setWeight(75)
-        self.powerLabel.setFont(font)
-        self.powerLabel.setStyleSheet("color: rgb(237, 50, 55);")
-        self.powerLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.powerLabel.setObjectName("powerLabel")
+        self.stage1PowerLabel.setFont(font)
+        self.stage1PowerLabel.setStyleSheet("color: rgb(237, 50, 55);")
+        self.stage1PowerLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.stage1PowerLabel.setObjectName("stage1PowerLabel")
         self.progressLabel = QtWidgets.QLabel(TreatmentDialog)
         self.progressLabel.setGeometry(QtCore.QRect(448, 109, 611, 61))
         font = QtGui.QFont()
@@ -105,24 +87,24 @@ class Ui_TreatmentDialog(object):
         self.remaining_minsLabel.setStyleSheet("color: rgb(55, 52, 53);")
         self.remaining_minsLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.remaining_minsLabel.setObjectName("remaining_minsLabel")
-        self.minutesLabel = QtWidgets.QLabel(TreatmentDialog)
-        self.minutesLabel.setGeometry(QtCore.QRect(90, 520, 151, 51))
+        self.stage1MinutesLabel = QtWidgets.QLabel(TreatmentDialog)
+        self.stage1MinutesLabel.setGeometry(QtCore.QRect(260, 170, 151, 51))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(36)
         font.setBold(True)
         font.setWeight(75)
-        self.minutesLabel.setFont(font)
-        self.minutesLabel.setStyleSheet("color: rgb(55, 52, 53);")
-        self.minutesLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.minutesLabel.setObjectName("minutesLabel")
+        self.stage1MinutesLabel.setFont(font)
+        self.stage1MinutesLabel.setStyleSheet("color: rgb(55, 52, 53);")
+        self.stage1MinutesLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.stage1MinutesLabel.setObjectName("stage1MinutesLabel")
         self.stopButton = QtWidgets.QPushButton(TreatmentDialog)
         self.stopButton.setGeometry(QtCore.QRect(70, 630, 120, 120))
         self.stopButton.setMinimumSize(QtCore.QSize(100, 100))
         self.stopButton.setStyleSheet("background-image: url(:/buttons/resources/Stop.png);\n"
 "background-color: rgb(237, 50, 55);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);")
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
         self.stopButton.setText("")
         self.stopButton.setObjectName("stopButton")
         self.rsmButton = QtWidgets.QPushButton(TreatmentDialog)
@@ -130,8 +112,8 @@ class Ui_TreatmentDialog(object):
         self.rsmButton.setMinimumSize(QtCore.QSize(100, 100))
         self.rsmButton.setStyleSheet("background-image: url(:/buttons/resources/Rsm.png);\n"
 "background-color: rgb(0, 168, 89);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);")
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
         self.rsmButton.setText("")
         self.rsmButton.setObjectName("rsmButton")
         self.doneButton = QtWidgets.QPushButton(TreatmentDialog)
@@ -143,8 +125,7 @@ class Ui_TreatmentDialog(object):
         font.setWeight(75)
         self.doneButton.setFont(font)
         self.doneButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.doneButton.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
+        self.doneButton.setStyleSheet("border: 0px;\n"
 "color: rgb(55, 52, 53);")
         self.doneButton.setObjectName("doneButton")
         self.layoutWidget_6 = QtWidgets.QWidget(TreatmentDialog)
@@ -167,8 +148,7 @@ class Ui_TreatmentDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.ant1Button.setFont(font)
-        self.ant1Button.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
+        self.ant1Button.setStyleSheet("border: 0px;\n"
 "")
         self.ant1Button.setText("")
         icon = QtGui.QIcon()
@@ -190,8 +170,7 @@ class Ui_TreatmentDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.ant2Button.setFont(font)
-        self.ant2Button.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
+        self.ant2Button.setStyleSheet("border: 0px;\n"
 "")
         self.ant2Button.setText("")
         self.ant2Button.setIcon(icon)
@@ -211,8 +190,7 @@ class Ui_TreatmentDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.ant3Button.setFont(font)
-        self.ant3Button.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
+        self.ant3Button.setStyleSheet("border: 0px;\n"
 "")
         self.ant3Button.setText("")
         self.ant3Button.setIcon(icon)
@@ -232,8 +210,7 @@ class Ui_TreatmentDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.ant4Button.setFont(font)
-        self.ant4Button.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
+        self.ant4Button.setStyleSheet("border: 0px;\n"
 "")
         self.ant4Button.setText("")
         self.ant4Button.setIcon(icon)
@@ -251,6 +228,228 @@ class Ui_TreatmentDialog(object):
         self.tempLabel.setStyleSheet("color: rgb(55, 52, 53);")
         self.tempLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.tempLabel.setObjectName("tempLabel")
+        self.stage2MinutesLabel = QtWidgets.QLabel(TreatmentDialog)
+        self.stage2MinutesLabel.setGeometry(QtCore.QRect(260, 330, 151, 51))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage2MinutesLabel.setFont(font)
+        self.stage2MinutesLabel.setStyleSheet("color: rgb(55, 52, 53);")
+        self.stage2MinutesLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.stage2MinutesLabel.setObjectName("stage2MinutesLabel")
+        self.stage2PowerLabel = QtWidgets.QLabel(TreatmentDialog)
+        self.stage2PowerLabel.setGeometry(QtCore.QRect(260, 280, 151, 51))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage2PowerLabel.setFont(font)
+        self.stage2PowerLabel.setStyleSheet("color: rgb(237, 50, 55);")
+        self.stage2PowerLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.stage2PowerLabel.setObjectName("stage2PowerLabel")
+        self.stage3MinutesLabel = QtWidgets.QLabel(TreatmentDialog)
+        self.stage3MinutesLabel.setGeometry(QtCore.QRect(260, 490, 151, 51))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage3MinutesLabel.setFont(font)
+        self.stage3MinutesLabel.setStyleSheet("color: rgb(55, 52, 53);")
+        self.stage3MinutesLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.stage3MinutesLabel.setObjectName("stage3MinutesLabel")
+        self.stage3PowerLabel = QtWidgets.QLabel(TreatmentDialog)
+        self.stage3PowerLabel.setGeometry(QtCore.QRect(260, 440, 151, 51))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage3PowerLabel.setFont(font)
+        self.stage3PowerLabel.setStyleSheet("color: rgb(237, 50, 55);")
+        self.stage3PowerLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.stage3PowerLabel.setObjectName("stage3PowerLabel")
+        self.layoutWidget = QtWidgets.QWidget(TreatmentDialog)
+        self.layoutWidget.setGeometry(QtCore.QRect(5, 120, 236, 106))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setSpacing(5)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.stage1SignalButton = QtWidgets.QPushButton(self.layoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage1SignalButton.sizePolicy().hasHeightForWidth())
+        self.stage1SignalButton.setSizePolicy(sizePolicy)
+        self.stage1SignalButton.setMinimumSize(QtCore.QSize(90, 90))
+        self.stage1SignalButton.setStyleSheet("background-image: url(:/buttons/resources/triangular_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage1SignalButton.setText("")
+        self.stage1SignalButton.setObjectName("stage1SignalButton")
+        self.horizontalLayout.addWidget(self.stage1SignalButton)
+        self.stage1FreqButton = QtWidgets.QPushButton(self.layoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage1FreqButton.sizePolicy().hasHeightForWidth())
+        self.stage1FreqButton.setSizePolicy(sizePolicy)
+        self.stage1FreqButton.setMinimumSize(QtCore.QSize(90, 90))
+        self.stage1FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/freq1_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage1FreqButton.setText("")
+        self.stage1FreqButton.setObjectName("stage1FreqButton")
+        self.horizontalLayout.addWidget(self.stage1FreqButton)
+        self.layoutWidget_2 = QtWidgets.QWidget(TreatmentDialog)
+        self.layoutWidget_2.setGeometry(QtCore.QRect(5, 280, 236, 106))
+        self.layoutWidget_2.setObjectName("layoutWidget_2")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.layoutWidget_2)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(5)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.stage2SignalButton = QtWidgets.QPushButton(self.layoutWidget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage2SignalButton.sizePolicy().hasHeightForWidth())
+        self.stage2SignalButton.setSizePolicy(sizePolicy)
+        self.stage2SignalButton.setMinimumSize(QtCore.QSize(90, 90))
+        self.stage2SignalButton.setStyleSheet("background-image: url(:/buttons/resources/square_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-color: rgb(237, 211, 152);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage2SignalButton.setText("")
+        self.stage2SignalButton.setObjectName("stage2SignalButton")
+        self.horizontalLayout_2.addWidget(self.stage2SignalButton)
+        self.stage2FreqButton = QtWidgets.QPushButton(self.layoutWidget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage2FreqButton.sizePolicy().hasHeightForWidth())
+        self.stage2FreqButton.setSizePolicy(sizePolicy)
+        self.stage2FreqButton.setMinimumSize(QtCore.QSize(90, 90))
+        self.stage2FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/freq1_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage2FreqButton.setText("")
+        self.stage2FreqButton.setObjectName("stage2FreqButton")
+        self.horizontalLayout_2.addWidget(self.stage2FreqButton)
+        self.layoutWidget_3 = QtWidgets.QWidget(TreatmentDialog)
+        self.layoutWidget_3.setGeometry(QtCore.QRect(5, 440, 236, 106))
+        self.layoutWidget_3.setObjectName("layoutWidget_3")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.layoutWidget_3)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(5)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.stage3SignalButton = QtWidgets.QPushButton(self.layoutWidget_3)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage3SignalButton.sizePolicy().hasHeightForWidth())
+        self.stage3SignalButton.setSizePolicy(sizePolicy)
+        self.stage3SignalButton.setMinimumSize(QtCore.QSize(90, 90))
+        self.stage3SignalButton.setStyleSheet("background-image: url(:/buttons/resources/square_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-color: rgb(237, 211, 152);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage3SignalButton.setText("")
+        self.stage3SignalButton.setObjectName("stage3SignalButton")
+        self.horizontalLayout_3.addWidget(self.stage3SignalButton)
+        self.stage3FreqButton = QtWidgets.QPushButton(self.layoutWidget_3)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage3FreqButton.sizePolicy().hasHeightForWidth())
+        self.stage3FreqButton.setSizePolicy(sizePolicy)
+        self.stage3FreqButton.setMinimumSize(QtCore.QSize(90, 90))
+        self.stage3FreqButton.setStyleSheet("background-image: url(:/frequencies/resources/freq1_90_90.png);\n"
+"background-repeat:no-repeat;\n"
+"background-position: center center;\n"
+"background-color: rgb(230, 231, 232);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(55, 52, 53);")
+        self.stage3FreqButton.setText("")
+        self.stage3FreqButton.setObjectName("stage3FreqButton")
+        self.horizontalLayout_3.addWidget(self.stage3FreqButton)
+        self.stage2BkgButton = QtWidgets.QPushButton(TreatmentDialog)
+        self.stage2BkgButton.setGeometry(QtCore.QRect(5, 280, 386, 106))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage2BkgButton.sizePolicy().hasHeightForWidth())
+        self.stage2BkgButton.setSizePolicy(sizePolicy)
+        self.stage2BkgButton.setMinimumSize(QtCore.QSize(90, 90))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage2BkgButton.setFont(font)
+        self.stage2BkgButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.stage2BkgButton.setStyleSheet("color: rgb(55, 52, 53);\n"
+"background-color: rgb(233, 245, 235);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(233, 245, 235);")
+        self.stage2BkgButton.setText("")
+        self.stage2BkgButton.setObjectName("stage2BkgButton")
+        self.stage1BkgButton = QtWidgets.QPushButton(TreatmentDialog)
+        self.stage1BkgButton.setGeometry(QtCore.QRect(5, 120, 386, 106))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage1BkgButton.sizePolicy().hasHeightForWidth())
+        self.stage1BkgButton.setSizePolicy(sizePolicy)
+        self.stage1BkgButton.setMinimumSize(QtCore.QSize(90, 90))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage1BkgButton.setFont(font)
+        self.stage1BkgButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.stage1BkgButton.setStyleSheet("color: rgb(55, 52, 53);\n"
+"background-color: rgb(233, 245, 235);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(233, 245, 235);")
+        self.stage1BkgButton.setText("")
+        self.stage1BkgButton.setObjectName("stage1BkgButton")
+        self.stage3BkgButton = QtWidgets.QPushButton(TreatmentDialog)
+        self.stage3BkgButton.setGeometry(QtCore.QRect(5, 440, 386, 106))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stage3BkgButton.sizePolicy().hasHeightForWidth())
+        self.stage3BkgButton.setSizePolicy(sizePolicy)
+        self.stage3BkgButton.setMinimumSize(QtCore.QSize(90, 90))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(24)
+        font.setBold(True)
+        font.setWeight(75)
+        self.stage3BkgButton.setFont(font)
+        self.stage3BkgButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.stage3BkgButton.setStyleSheet("color: rgb(55, 52, 53);\n"
+"background-color: rgb(233, 245, 235);\n"
+"border-radius: 20px;\n"
+"border:3px solid rgb(233, 245, 235);")
+        self.stage3BkgButton.setText("")
+        self.stage3BkgButton.setObjectName("stage3BkgButton")
 
         self.retranslateUi(TreatmentDialog)
         QtCore.QMetaObject.connectSlotsByName(TreatmentDialog)
@@ -259,12 +458,16 @@ class Ui_TreatmentDialog(object):
         _translate = QtCore.QCoreApplication.translate
         TreatmentDialog.setWindowTitle(_translate("TreatmentDialog", "Dialog"))
         self.date_timeLabel.setText(_translate("TreatmentDialog", "19/03/2020 - 17:45"))
-        self.powerLabel.setText(_translate("TreatmentDialog", "100%"))
+        self.stage1PowerLabel.setText(_translate("TreatmentDialog", "100%"))
         self.progressLabel.setText(_translate("TreatmentDialog", "Session in Progress"))
         self.remaining_secsLabel.setText(_translate("TreatmentDialog", "59\'\'"))
         self.remaining_minsLabel.setText(_translate("TreatmentDialog", "115\'"))
-        self.minutesLabel.setText(_translate("TreatmentDialog", "120\'"))
+        self.stage1MinutesLabel.setText(_translate("TreatmentDialog", "120\'"))
         self.doneButton.setText(_translate("TreatmentDialog", "Tap to return to a previous screen"))
         self.tempLabel.setText(_translate("TreatmentDialog", "CH1 Temp: 35.0C"))
+        self.stage2MinutesLabel.setText(_translate("TreatmentDialog", "120\'"))
+        self.stage2PowerLabel.setText(_translate("TreatmentDialog", "100%"))
+        self.stage3MinutesLabel.setText(_translate("TreatmentDialog", "120\'"))
+        self.stage3PowerLabel.setText(_translate("TreatmentDialog", "100%"))
 
-import magnet3_res_rc
+import magnet4_res_rc
