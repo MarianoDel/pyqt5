@@ -19,8 +19,10 @@ class TreatmentMock ():
     def __init__(self, localization='usa'):
         self.localization = localization
         self.triangular_power_limit = 100
-        self.square_power_limit = 50
-        self.sinusoidal_power_limit = 60       
+        self.square_power_limit = 100
+        self.sinusoidal_power_limit = 100
+        # self.square_power_limit = 50
+        # self.sinusoidal_power_limit = 60       
         
         self.peak_current = 3.6
         self.resistance065 = 47
@@ -36,17 +38,25 @@ class TreatmentMock ():
             'stage2' : "15' S 35% 7.83Hz",
             'stage3' : "15' S 35% 7.83Hz"
             }
+
+        self.treatment_state = 'STOP'
         
 
-    def ReadConfigFile (self):
-        print ('asked to read config.txt')
+    def GetTreatmentTimer (self):
+        my_time = 10
+        print ('asked for treatment timer, always return ' + str(my_time))
+        return my_time
 
-    def SaveConfigFile (self):
-        print ('asked to write config.txt')
+    
+    # def ReadConfigFile (self):
+    #     print ('asked to read config.txt')
 
-    def GetCurrentVersion (self):
-        print ('asked for version: ' + self.current_version)
-        return self.current_version
+    # def SaveConfigFile (self):
+    #     print ('asked to write config.txt')
+
+    # def GetCurrentVersion (self):
+    #     print ('asked for version: ' + self.current_version)
+    #     return self.current_version
 
     def GetLocalization (self):
         print ('asked for localization: ' + self.localization)
@@ -107,28 +117,32 @@ class SignalsCb (QObject):
 # Function Screens #
 ####################
 def TestScreen ():
+
+    ## set mocked stages info
     stage1 = Stages()
     stage2 = Stages()
     stage3 = Stages()
 
-    stage1.SetStageTimer(45)
+    stage1.SetStageTimer(1)
     stage1.SetStagePower(85)
     stage1.SetStageSignal('triangular')
     stage1.SetStageFrequency('freq1')
     stage1.SetStageStatus('enable')
 
-    stage2.SetStageTimer(60)
+    stage2.SetStageTimer(1)
     stage2.SetStagePower(100)
     stage2.SetStageSignal('square')
     stage2.SetStageFrequency('freq9')
     stage2.SetStageStatus('enable')
 
-    stage3.SetStageTimer(0)
-    stage3.SetStagePower(0)
-    stage3.SetStageSignal('none')
-    stage3.SetStageFrequency('none')
-    stage3.SetStageStatus('disable')
-
+    stage3.SetStageTimer(1)
+    stage3.SetStagePower(10)
+    stage3.SetStageSignal('sinusoidal')
+    stage3.SetStageFrequency('freq10')
+    stage3.SetStageStatus('enable')
+    
+    stages_list = [stage1, stage2, stage3]
+    
     ## set mocked antennas
     antennas = AntennaInTreatment()
     #Tunnel 10 inches,020.00,020.00,004.04,065.00,4
@@ -137,12 +151,11 @@ def TestScreen ():
     antennas.ProcessStringList(rcv_list)
 
     
-    stages_list = [stage1, stage2, stage3]
     style_obj = ButtonStyles()
     treat_obj = TreatmentMock()
     scb = SignalsCb()
     serial_obj = SerialMock(scb.MyObjCallback, '/dev/ttyUSB0')
-    a = TreatmentDialog(treat_obj, style_obj, antennas, serial_obj, parent=scb)
+    a = TreatmentDialog(stages_list, treat_obj, style_obj, antennas, serial_obj, parent=scb)
     a.setModal(True)
     a.exec_()
 

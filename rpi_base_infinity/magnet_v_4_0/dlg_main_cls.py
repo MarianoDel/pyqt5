@@ -615,15 +615,12 @@ class Dialog(QDialog):
 
     def InsertColorText (self, new_text, color='red', plain=False):
         if color == 'red':
-            # self.ui.textEdit.setTextColor(QColor(255, 0, 0))
             self.ui.textEdit.setTextColor(QColor(237, 50, 55))            
 
         if color == 'blue':
-            # self.ui.textEdit.setTextColor(QColor(0, 0, 255))
             self.ui.textEdit.setTextColor(QColor(62, 64, 149))
 
         if color == 'green':
-            # self.ui.textEdit.setTextColor(QColor(0, 255, 0))
             self.ui.textEdit.setTextColor(QColor(0, 168, 89))
 
         if plain:
@@ -947,8 +944,9 @@ class Dialog(QDialog):
                 self.screensaver_window = False
                 
                 self.t.treatment_state = 'STOP'    #para un buen arranque la llamo con estado de stop
+                stages_lst = [self.stage1, self.stage2, self.stage3]
                 # a = TreatmentDialog(self.t, self.ss, self.antennas_connected, self.s, parent=self)
-                a = TreatmentDialog(self.t, self.style, self.antennas_connected, self.s, self.parent)
+                a = TreatmentDialog(stages_lst, self.t, self.style, self.antennas_connected, self.s, self.parent)
                 a.setModal(True)
                 a.exec_()
 
