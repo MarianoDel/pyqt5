@@ -8,6 +8,8 @@ from datetime import datetime
 
 #get the UI from here
 from ui_treatment_dlg import Ui_TreatmentDialog
+# get Dialog classes from here
+from screen_saver_cls import ScreenSaverDialog
 
 
 #####################################################
@@ -201,6 +203,10 @@ class TreatmentDialog(QDialog):
         self.antenna_emmiting = False
         self.AntennasUpdate_UI(False)
             
+        ## screen saver at end of treatment
+        self.timer_screensaver_on_treat = self.treat.timeout_screensaver
+        self.screensaver_on_treat_window = False
+        
         ## start the timer
         self.t1sec.timeout.connect(self.TimerOneSec)
         self.t1sec.start(1000)
@@ -427,6 +433,13 @@ class TreatmentDialog(QDialog):
         if self.treat.treatment_state == 'ENDED':
             self.UpdateEndedLabels()
 
+        # check for screensaver activation
+        if self.screensaver_on_treat_window == True:
+            if self.timer_screensaver_on_treat > 0:
+                self.timer_screensaver_on_treat -= 1
+            else:
+                self.ScreenSaverDialogScreen()
+            
 
     def StartTreatment (self):
         print(self.treat.treatment_state)
@@ -718,6 +731,9 @@ class TreatmentDialog(QDialog):
             self.ui.stopButton.setEnabled(True)
             self.ui.rsmButton.setEnabled(True)
             self.AntennasUpdate_UI(False)
+            # screensaver at paused treatment
+            self.ScreenSaverKick()
+            self.screensaver_on_treat_window = True
 
 
     """ possible states from rsmButton resuming, resumed """
@@ -742,6 +758,8 @@ class TreatmentDialog(QDialog):
             self.ui.progressLabel.setStyleSheet(self.style.label_green)
             self.treat.treatment_state = 'START'
             self.ui.stop_rsmButton.setEnabled(True)
+            # screensaver at resuming treatment
+            self.screensaver_on_treat_window = False
 
 
     """ possible states from stopButton stoping, stoped """
@@ -788,6 +806,9 @@ class TreatmentDialog(QDialog):
             self.treat.treatment_state = 'ENDED'
             self.ui.doneButton.setEnabled(True)
             self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_rewind)
+            # screensaver at end of treatment
+            self.ScreenSaverKick()
+            self.screensaver_on_treat_window = True
     
 
     ##############################
@@ -989,6 +1010,17 @@ class TreatmentDialog(QDialog):
         # self.t1seg.cancel()
         self.accept()
 
+        
+    ## ScreenSaver
+    def ScreenSaverDialogScreen (self):
+        a = ScreenSaverDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+
+    def ScreenSaverKick (self):
+        self.timer_screensaver_on_treat = self.treat.timeout_screensaver
 
     #######################################################
     # String Utils Functions - Convert Treatments strings #

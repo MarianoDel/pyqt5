@@ -38,11 +38,15 @@ class StagesDialog (QDialog):
         self.powerDwnButtonCnt = 0
         self.timeUpButtonCnt = 0
         self.timeDwnButtonCnt = 0
+
+        # close dialog things
+        self.closeTimeout = 5 * 60
+        self.closeDialogCnt = self.closeTimeout        
         
         # get the close event and connect the buttons
         self.ui.clearButton.clicked.connect(self.ClearStage)
         self.ui.backButton.clicked.connect(self.BackStage)
-        self.ui.acceptButton.clicked.connect(self.accept)
+        self.ui.acceptButton.clicked.connect(self.AcceptStage)
 
         self.ui.stage1Button.clicked.connect(self.SelectStageButton1)
         self.ui.stage2Button.clicked.connect(self.SelectStageButton2)
@@ -169,6 +173,19 @@ class StagesDialog (QDialog):
         elif self.timeDwnButtonCnt == 1:
             self.timeDwnButtonCnt += 1
 
+        # update the time
+        date_now = datetime.today()
+        if date_now.minute != self.minutes_last:
+            # print(date_now)
+            self.minutes_last = date_now.minute
+            self.UpdateDateTime(date_now)
+
+        # check the default close
+        if self.closeDialogCnt:
+            self.closeDialogCnt -= 1
+        else:
+            self.BackStage()
+
 
     def SelectStageButton1 (self):
         self.stage_selected = 'stage1'
@@ -196,6 +213,7 @@ class StagesDialog (QDialog):
         self.FrequencyChangeTo(self.stage1_info.GetStageFrequency())
         self.SignalChangeTo(self.stage1_info.GetStageSignal())
         self.UpdateTotalTime()
+        self.CloseKick()
         
 
     def SelectStageButton2 (self):
@@ -224,7 +242,8 @@ class StagesDialog (QDialog):
         self.FrequencyChangeTo(self.stage2_info.GetStageFrequency())
         self.SignalChangeTo(self.stage2_info.GetStageSignal())
         self.UpdateTotalTime()
-
+        self.CloseKick()
+        
         
     def SelectStageButton3 (self):
         self.stage_selected = 'stage3'
@@ -252,7 +271,8 @@ class StagesDialog (QDialog):
         self.FrequencyChangeTo(self.stage3_info.GetStageFrequency())
         self.SignalChangeTo(self.stage3_info.GetStageSignal())
         self.UpdateTotalTime()
-
+        self.CloseKick()
+        
             
     def Stage1GroupChange (self, change_to):
         raise_inners = False
@@ -501,6 +521,8 @@ class StagesDialog (QDialog):
         elif sender.objectName() == 'sinusoidalButton':
             self.SignalChangeTo('sinusoidal')
 
+        self.CloseKick()
+
         
     def SignalChangeTo (self, new_signal):
         self.SignalDisableAll()
@@ -590,7 +612,9 @@ class StagesDialog (QDialog):
 
         if sender.objectName() == 'freq10Button':
             self.FrequencyChangeTo('freq10')
-            
+
+        self.CloseKick()
+        
 
     def FrequencyChangeTo (self, new_freq):
         self.FrequencyDisableAll()
@@ -719,6 +743,7 @@ class StagesDialog (QDialog):
     def UpPowerPressed (self):
         self.PwrUp (1)
         self.powerUpButtonCnt = 1
+        self.CloseKick()
 
     def UpPowerReleased (self):
         self.powerUpButtonCnt = 0
@@ -726,6 +751,7 @@ class StagesDialog (QDialog):
     def DwnPowerPressed (self):
         self.PwrDwn(1)
         self.powerDwnButtonCnt = 1
+        self.CloseKick()
 
     def DwnPowerReleased (self):
         self.powerDwnButtonCnt = 0        
@@ -733,6 +759,7 @@ class StagesDialog (QDialog):
     def UpTimePressed (self):
         self.TimeUp (1)
         self.timeUpButtonCnt = 1
+        self.CloseKick()
 
     def UpTimeReleased (self):
         self.timeUpButtonCnt = 0        
@@ -740,6 +767,7 @@ class StagesDialog (QDialog):
     def DwnTimePressed (self):
         self.TimeDwn(1)
         self.timeDwnButtonCnt = 1
+        self.CloseKick()
 
     def DwnTimeReleased (self):
         self.timeDwnButtonCnt = 0
@@ -888,6 +916,8 @@ class StagesDialog (QDialog):
                 else:
                     self.SelectStageButton2()
 
+        self.CloseKick()
+
 
     def UpdateTotalTime (self):
         total_time = 0
@@ -903,10 +933,80 @@ class StagesDialog (QDialog):
         self.ui.totalMinutesLabel.setText(str(total_time))
             
 
+    def CloseKick (self):
+        self.closeDialogCnt = self.closeTimeout
+
+        
     def BackStage (self):
         self.action = 'none'
         self.accept()
-    
+
+
+    def AcceptStage (self):
+        # check if all the enabled stages have signal and freq
+        if self.stage1_info.GetStageStatus() == 'enable':
+            signal = self.stage1_info.GetStageSignal()
+            if signal != 'triangular' and \
+               signal != 'square' and \
+               signal != 'sinusoidal':
+                self.stage1_info.SetStageSignal('triangular')
+
+            frequency = self.stage1_info.GetStageFrequency()
+            if frequency != 'freq1' and \
+               frequency != 'freq2' and \
+               frequency != 'freq3' and \
+               frequency != 'freq4' and \
+               frequency != 'freq5' and \
+               frequency != 'freq6' and \
+               frequency != 'freq7' and \
+               frequency != 'freq8' and \
+               frequency != 'freq9' and \
+               frequency != 'freq10':
+                self.stage1_info.SetStageFrequency('freq1')
+
+        if self.stage2_info.GetStageStatus() == 'enable':
+            signal = self.stage2_info.GetStageSignal()
+            if signal != 'triangular' and \
+               signal != 'square' and \
+               signal != 'sinusoidal':
+                self.stage2_info.SetStageSignal('triangular')
+
+            frequency = self.stage2_info.GetStageFrequency()
+            if frequency != 'freq1' and \
+               frequency != 'freq2' and \
+               frequency != 'freq3' and \
+               frequency != 'freq4' and \
+               frequency != 'freq5' and \
+               frequency != 'freq6' and \
+               frequency != 'freq7' and \
+               frequency != 'freq8' and \
+               frequency != 'freq9' and \
+               frequency != 'freq10':
+                self.stage2_info.SetStageFrequency('freq1')
+
+        if self.stage3_info.GetStageStatus() == 'enable':
+            signal = self.stage3_info.GetStageSignal()
+            if signal != 'triangular' and \
+               signal != 'square' and \
+               signal != 'sinusoidal':
+                self.stage3_info.SetStageSignal('triangular')
+
+            frequency = self.stage3_info.GetStageFrequency()
+            if frequency != 'freq1' and \
+               frequency != 'freq2' and \
+               frequency != 'freq3' and \
+               frequency != 'freq4' and \
+               frequency != 'freq5' and \
+               frequency != 'freq6' and \
+               frequency != 'freq7' and \
+               frequency != 'freq8' and \
+               frequency != 'freq9' and \
+               frequency != 'freq10':
+                self.stage3_info.SetStageFrequency('freq1')                
+            
+        self.action = 'accept'
+        self.accept()
+        
 
         
 ### end of file ###

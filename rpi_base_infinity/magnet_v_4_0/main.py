@@ -26,7 +26,7 @@ from threading import Timer
 ### GLOBALS FOR CONFIGURATION #########
 CURRENT_VERSION = 'Magnet ver 4.0'
 ## No call the first Dialog - code empty presentation page -
-NO_CALL_FIRST_DLG = True
+NO_CALL_FIRST_DLG = False
 
 
 ## Import UIs classes used
@@ -78,43 +78,9 @@ class MyMainClass (QObject):
             # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
             self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')
         ## PARA RASPBERRY
-        elif self.t.GetCurrentSystem() == 'raspbian':
+        elif self.t.GetCurrentSystem() == 'debian':
             self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
             
-
-
-        # ## setup antennas icons
-        # ## url(:/buttons/resources/Stop.png)
-        # self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
-        # self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
-        # self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
-        # self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
-
-        # # start manager background process
-        # self.wifi_manager_cnt = 2
-        # self.MyThread = WiFiThreadManager()
-        # self.MyThread.start()
-            
-        # ## activate the 1 second timer it is repetitive
-        # self.t1seg = QTimer()
-        # self.t1seg.timeout.connect(self.TimerOneSec)
-        # self.t1seg.start(1000)
-
-        # ## instanciate the antennas timer timeout
-        # self.antennatimeout = QTimer()
-        # self.antennatimeout_finish = True
-        
-        # # screen saver timer activation
-        # self.timer_screensaver = self.t.timeout_screensaver
-        # self.screensaver_window = True
-            
-        # #SIGNALS CONNECTION
-        # # conecto senial del timer a la funcion de Update
-        # self.one_second_signal.connect(self.UpdateOneSec)
-
-        # ## read and update memory buttons
-        # self.UpdateMemLabels()
-
         ### For last call to the first f*** dialog
         if NO_CALL_FIRST_DLG == 0:
             self.FirstDialogScreen()

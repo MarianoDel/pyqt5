@@ -16,6 +16,7 @@ from dlg_stages_cls import StagesDialog
 from diagnostics_cls import DiagnosticsDialog
 from screen_saver_cls import ScreenSaverDialog
 from wifi_enable_cls import WiFiDialog
+from dlg_mems_cls import MemoryDialog
 
 #get the code for manager
 from wifi_thread_manager import WiFiThreadManager
@@ -163,7 +164,8 @@ class Dialog(QDialog):
         self.minutes_last = date_now.minute
         self.UpdateDateTime(date_now)
 
-        ## Memory things and timed counters        
+        ## Memory things and timed counters
+        self.lastButtonChecked = ''
         self.memButtonCnt = 0
         self.diagButtonCnt = 0
         self.PopullateFromDict(self.t.mem_instant_dict)
@@ -186,6 +188,7 @@ class Dialog(QDialog):
         self.antennas_connected = AntennaInTreatment()
 
         # screen saver timer activation
+        # self.timer_screensaver = 10      
         self.timer_screensaver = self.t.timeout_screensaver
         self.screensaver_window = True
         
@@ -454,56 +457,56 @@ class Dialog(QDialog):
                 ui_button.setStyleSheet(self.mem_button_enable)
 
                 
-    def MemoryUpdate (self, mem, str_lst):
-        if mem == 'mema':
-            self.ui.memaDescLabel.setText(str_lst[0])
-            self.ui.memaOneLabel.setText('1 - ' + str_lst[1])
-            self.ui.memaTwoLabel.setText('2 - ' + str_lst[2])
-            self.ui.memaThreeLabel.setText('3 - ' + str_lst[3])            
+    # def MemoryUpdate (self, mem, str_lst):
+    #     if mem == 'mema':
+    #         self.ui.memaDescLabel.setText(str_lst[0])
+    #         self.ui.memaOneLabel.setText('1 - ' + str_lst[1])
+    #         self.ui.memaTwoLabel.setText('2 - ' + str_lst[2])
+    #         self.ui.memaThreeLabel.setText('3 - ' + str_lst[3])            
 
-        if mem == 'memb':
-            self.ui.membDescLabel.setText(str_lst[0])
-            self.ui.membOneLabel.setText('1 - ' + str_lst[1])
-            self.ui.membTwoLabel.setText('2 - ' + str_lst[2])
-            self.ui.membThreeLabel.setText('3 - ' + str_lst[3])            
+    #     if mem == 'memb':
+    #         self.ui.membDescLabel.setText(str_lst[0])
+    #         self.ui.membOneLabel.setText('1 - ' + str_lst[1])
+    #         self.ui.membTwoLabel.setText('2 - ' + str_lst[2])
+    #         self.ui.membThreeLabel.setText('3 - ' + str_lst[3])            
 
-        if mem == 'memc':
-            self.ui.memcDescLabel.setText(str_lst[0])
-            self.ui.memcOneLabel.setText('1 - ' + str_lst[1])
-            self.ui.memcTwoLabel.setText('2 - ' + str_lst[2])
-            self.ui.memcThreeLabel.setText('3 - ' + str_lst[3])            
+    #     if mem == 'memc':
+    #         self.ui.memcDescLabel.setText(str_lst[0])
+    #         self.ui.memcOneLabel.setText('1 - ' + str_lst[1])
+    #         self.ui.memcTwoLabel.setText('2 - ' + str_lst[2])
+    #         self.ui.memcThreeLabel.setText('3 - ' + str_lst[3])            
 
-        if mem == 'memd':
-            self.ui.memdDescLabel.setText(str_lst[0])
-            self.ui.memdOneLabel.setText('1 - ' + str_lst[1])
-            self.ui.memdTwoLabel.setText('2 - ' + str_lst[2])
-            self.ui.memdThreeLabel.setText('3 - ' + str_lst[3])            
+    #     if mem == 'memd':
+    #         self.ui.memdDescLabel.setText(str_lst[0])
+    #         self.ui.memdOneLabel.setText('1 - ' + str_lst[1])
+    #         self.ui.memdTwoLabel.setText('2 - ' + str_lst[2])
+    #         self.ui.memdThreeLabel.setText('3 - ' + str_lst[3])            
 
             
-    def MemoryButtonStatus (self, mem, status):
-        if mem == 'mema':
-            if status == 'enable':
-                self.ui.memaButton.setStyleSheet(self.style.mem_90_button_enable)
-            else:
-                self.ui.memaButton.setStyleSheet(self.style.mem_90_button_disable)
+    # def MemoryButtonStatus (self, mem, status):
+    #     if mem == 'mema':
+    #         if status == 'enable':
+    #             self.ui.memaButton.setStyleSheet(self.style.mem_90_button_enable)
+    #         else:
+    #             self.ui.memaButton.setStyleSheet(self.style.mem_90_button_disable)
 
-        if mem == 'memb':
-            if status == 'enable':
-                self.ui.membButton.setStyleSheet(self.style.mem_90_button_enable)
-            else:
-                self.ui.membButton.setStyleSheet(self.style.mem_90_button_disable)
+    #     if mem == 'memb':
+    #         if status == 'enable':
+    #             self.ui.membButton.setStyleSheet(self.style.mem_90_button_enable)
+    #         else:
+    #             self.ui.membButton.setStyleSheet(self.style.mem_90_button_disable)
 
-        if mem == 'memc':
-            if status == 'enable':
-                self.ui.memcButton.setStyleSheet(self.style.mem_90_button_enable)
-            else:
-                self.ui.memcButton.setStyleSheet(self.style.mem_90_button_disable)
+    #     if mem == 'memc':
+    #         if status == 'enable':
+    #             self.ui.memcButton.setStyleSheet(self.style.mem_90_button_enable)
+    #         else:
+    #             self.ui.memcButton.setStyleSheet(self.style.mem_90_button_disable)
 
-        if mem == 'memd':
-            if status == 'enable':
-                self.ui.memdButton.setStyleSheet(self.style.mem_90_button_enable)
-            else:
-                self.ui.memdButton.setStyleSheet(self.style.mem_90_button_disable)
+    #     if mem == 'memd':
+    #         if status == 'enable':
+    #             self.ui.memdButton.setStyleSheet(self.style.mem_90_button_enable)
+    #         else:
+    #             self.ui.memdButton.setStyleSheet(self.style.mem_90_button_disable)
 
 
     ###########################
@@ -517,7 +520,9 @@ class Dialog(QDialog):
         """ one second gone, check if its something to do """
         if self.memButtonCnt > 3:
             self.memButtonCnt = 0
-            self.Memory1Config()
+            print('go to configure ' + self.lastButtonChecked)
+            self.MemoryScreen(self.lastButtonChecked)
+            self.lastButtonChecked = ''            
         elif self.memButtonCnt > 0:
             self.memButtonCnt += 1
 
@@ -756,6 +761,13 @@ class Dialog(QDialog):
 
 
     def MemoryPressed (self):
+        sender = self.sender()
+
+        button_name = sender.objectName()
+        button_sel = button_name.split('B')
+        button_sel = button_sel[0]
+
+        self.lastButtonChecked = button_sel
         self.memButtonCnt = 1
         self.ScreenSaverKick()
 
@@ -870,7 +882,7 @@ class Dialog(QDialog):
                 self.Stage2GroupChange(self.stage2.GetStageStatus())
                 self.Stage3GroupChange(self.stage3.GetStageStatus())
                 self.UpdateTotalTime()
-                self.CheckForStart()
+                self.CheckForStart()            
 
 
     def MemoryToCurrentConf (self, stage1_str, stage2_str, stage3_str):
@@ -926,13 +938,6 @@ class Dialog(QDialog):
 
         return (time_str, signal_str, power_str, frequency_str, 'enable')
         
-
-    def Memory1Config (self):
-        if self.CheckCompleteConf() == True:
-            self.MemoryScreen('mem1')
-        else:
-            self.InsertLocalText("Select all parameters first!")
-
 
     def DiagsPressed (self):
         self.diagButtonCnt = 1
@@ -1033,21 +1038,26 @@ class Dialog(QDialog):
             return
 
         self.screensaver_window = False
+
+        # send a list of the current config
+        # ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', '']
+        stage_new_lst = ['',\
+                         self.stage1.StageDataToStr(),\
+                         self.stage2.StageDataToStr(),\
+                         self.stage3.StageDataToStr()]
         
-        a = MemoryDialog(self.style, which_mem)
+        a = MemoryDialog(which_mem, stage_new_lst)
         a.setModal(True)
         a.exec_()
 
         if a.action == 'save':
-            self.t.MoveCurrentConfToMem(which_mem)
-            self.t.SaveConfigFile()
-            self.UpdateMemLabels()
+            self.t.mem_instant_dict[which_mem] = stage_new_lst
+            print(self.t.mem_instant_dict)
+            self.PopullateFromDict(self.t.mem_instant_dict)
+            # self.t.MoveCurrentConfToMem(which_mem)
+            # self.t.SaveConfigFile()
+            # self.UpdateMemLabels()
         
-        if a.action == 'empty':
-            self.t.EmptyMem(which_mem)
-            self.t.SaveConfigFile()
-            self.UpdateMemLabels()
-
         self.ScreenSaverKick()
         self.screensaver_window = True
         
