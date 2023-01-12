@@ -5,14 +5,20 @@ from stages_class import Stages
 from stylesheet_class import ButtonStyles
 from treatment_class import Treatment
 from antenna_class import AntennaInTreatment
+from datetime import datetime
 
 
 #Here import the UIs or classes that got the UIs
 from ui_magnet40 import Ui_Dialog
-# from dlg_treat_cls import TreatmentDialog
+from dlg_treat_cls import TreatmentDialog
 from dlg_mem_manager_cls import MemManagerDialog
 from dlg_stages_cls import StagesDialog
+from diagnostics_cls import DiagnosticsDialog
+from screen_saver_cls import ScreenSaverDialog
+from wifi_enable_cls import WiFiDialog
 
+#get the code for manager
+from wifi_thread_manager import WiFiThreadManager
 
 
 ##############################
@@ -21,9 +27,7 @@ from dlg_stages_cls import StagesDialog
 class Dialog(QDialog):
 
     #SIGNALS
-    # rcv_signal = pyqtSignal(str)
     one_second_signal = pyqtSignal()
-
     
     def __init__(self, debug_bool, ser_instance, treat_instance, parent=None):
         super(Dialog, self).__init__()
@@ -60,12 +64,17 @@ class Dialog(QDialog):
         self.ui.memdButton.released.connect(self.MemoryReleased)
 
         self.ui.ch1Button.clicked.connect(self.AntennaNameChange)
-        self.ui.ch2Button.clicked.connect(self.ChannelChange)    #for tests
-        # self.ui.ch2Button.clicked.connect(self.AntennaNameChange)
+        # self.ui.ch2Button.clicked.connect(self.ChannelChange)    #for tests
+        self.ui.ch2Button.clicked.connect(self.AntennaNameChange)
         self.ui.ch3Button.clicked.connect(self.AntennaNameChange)
         self.ui.ch4Button.clicked.connect(self.AntennaNameChange)
-        
 
+        self.ui.diagButton.pressed.connect(self.DiagsPressed)
+        self.ui.diagButton.released.connect(self.DiagsReleased)
+
+        # connect wifi button
+        self.ui.wifiButton.clicked.connect(self.WifiScreen)
+        
         self.ui_label_dict = {
             "mema" : [self.ui.memaDescLabel, self.ui.memaOneLabel, self.ui.memaTwoLabel, self.ui.memaThreeLabel],
             "memb" : [self.ui.membDescLabel, self.ui.membOneLabel, self.ui.membTwoLabel, self.ui.membThreeLabel],
@@ -149,46 +158,25 @@ class Dialog(QDialog):
         self.one_second_signal.connect(self.UpdateOneSec)
         self.parent.rcv_signal.connect(self.SerialDataCallback)
 
-        
-        # get memory buttons config        
-        # self.MemoryUpdate('mema', [self.t.mema_description,\
-        #                            self.t.mema_first_str,\
-        #                            self.t.mema_second_str,\
-        #                            self.t.mema_third_str])
+        ## to carry on with date-time
+        date_now = datetime.today()
+        self.minutes_last = date_now.minute
+        self.UpdateDateTime(date_now)
 
-        # self.MemoryUpdate('memb', [self.t.memb_description,\
-        #                            self.t.memb_first_str,\
-        #                            self.t.memb_second_str,\
-        #                            self.t.memb_third_str])
-
-        # self.MemoryUpdate('memc', [self.t.memc_description,\
-        #                            self.t.memc_first_str,\
-        #                            self.t.memc_second_str,\
-        #                            self.t.memc_third_str])
-
-        # self.MemoryUpdate('memd', [self.t.memd_description,\
-        #                            self.t.memd_first_str,\
-        #                            self.t.memd_second_str,\
-        #                            self.t.memd_third_str])
-        
-        # self.MemoryButtonStatus('mema', self.t.mema_status)
-        # self.MemoryButtonStatus('memb', self.t.memb_status)
-        # self.MemoryButtonStatus('memc', self.t.memc_status)
-        # self.MemoryButtonStatus('memd', self.t.memd_status)
-        
+        ## Memory things and timed counters        
         self.memButtonCnt = 0
+        self.diagButtonCnt = 0
         self.PopullateFromDict(self.t.mem_instant_dict)
 
+        ## Activity Information
         self.ui.textEdit.setText('')
         if self.s.port_open:
             self.InsertInfoText('Serial Port Open: OK')
+            self.InsertInfoText('')
+            self.InsertInfoTextNoNewLine('Communication with power: ')
+            self.s.Write('keepalive\r\n')
         else:
             self.InsertInfoText('Serial Port Not Found!!!')
-
-        self.InsertInfoText('')
-        self.InsertInfoTextNoNewLine('Communication with power: ')
-        # self.InsertInfoText('Communication with power: ')        
-        self.s.Write('keepalive\r\n')
 
         ### Ask for know antennas
         if self.s.port_open == True:
@@ -196,13 +184,32 @@ class Dialog(QDialog):
 
         ## Init Antennas connected
         self.antennas_connected = AntennaInTreatment()
+
+        # screen saver timer activation
+        self.timer_screensaver = self.t.timeout_screensaver
+        self.screensaver_window = True
+        
+        ## setup antennas icons
+        ## url(:/buttons/resources/Stop.png)
+        self.wifi_act_Icon = QIcon(':/buttons/resources/wifi-symbol_act.png')
+        self.wifi_err_Icon = QIcon(':/buttons/resources/wifi-symbol_err.png')
+        self.wifi_disa_Icon = QIcon(':/buttons/resources/wifi-symbol_disa.png')
+        self.wifi_emit_Icon = QIcon(':/buttons/resources/wifi-symbol_emit.png')
+
+        # start manager background process
+        self.wifi_manager_cnt = 2
+        self.MyThread = WiFiThreadManager()
+        self.MyThread.start()
             
+        ## activate the 1 second timer it is repetitive
+        self.t1seg = QTimer()
+        self.t1seg.timeout.connect(self.TimerOneSec)
+        self.t1seg.start(1000)
+
         ## instanciate the antennas timer timeout
         self.antennatimeout = QTimer()
         self.antennatimeout_finish = True
             
-        # self.AntennaButtonsUpdate (['enable', 'dis', 'dis', 'dis'], ['CH1\nTunnel 10"', '', '', ''])
-
         
     def Stage1GroupChange (self, change_to):
         raise_inners = False
@@ -407,7 +414,6 @@ class Dialog(QDialog):
         else:
             self.ui.stage3FreqButton.setStyleSheet(self.style.signal_75_disable)
             
-
         
     def UpdateTotalTime (self):
         total_time = 0
@@ -500,6 +506,74 @@ class Dialog(QDialog):
                 self.ui.memdButton.setStyleSheet(self.style.mem_90_button_disable)
 
 
+    ###########################
+    # One Second Timer signal #
+    ###########################
+    def TimerOneSec(self):
+        self.one_second_signal.emit()
+
+
+    def UpdateOneSec (self):
+        """ one second gone, check if its something to do """
+        if self.memButtonCnt > 3:
+            self.memButtonCnt = 0
+            self.Memory1Config()
+        elif self.memButtonCnt > 0:
+            self.memButtonCnt += 1
+
+        if self.diagButtonCnt > 5:
+            self.diagButtonCnt = 0
+            self.DiagnosticsScreen()
+        elif self.diagButtonCnt > 0:
+            self.diagButtonCnt += 1
+
+        date_now = datetime.today()
+        if date_now.minute != self.minutes_last:
+            # print(date_now)
+            self.minutes_last = date_now.minute
+            self.UpdateDateTime(date_now)
+
+        # check for screensaver activation
+        if self.screensaver_window == True:
+            if self.timer_screensaver > 0:
+                self.timer_screensaver -= 1
+            else:
+                self.ScreenSaverDialogScreen()
+
+        # check for wifi manager
+        if self.wifi_manager_cnt == 0:
+            self.wifi_manager_cnt = 2
+            self.UpdateTwoSec()
+        else:
+            self.wifi_manager_cnt -= 1
+
+
+    def UpdateDateTime(self, new_date_time):
+        date_str = ""
+        if self.t.GetLocalization() == 'usa':
+            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
+        elif self.t.GetLocalization() == 'arg':
+            date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+            
+        self.ui.date_timeLabel.setText(date_str)
+
+
+    def UpdateTwoSec (self):
+        new_status = self.MyThread.GetStatus()
+
+        if new_status == 'NO CONN':
+            self.ui.wifiButton.setIcon(self.wifi_disa_Icon)
+        elif new_status == 'IP':
+            self.ui.wifiButton.setIcon(self.wifi_err_Icon)
+        elif new_status == 'PING':
+            self.ui.wifiButton.setIcon(self.wifi_act_Icon)
+        elif new_status == 'TUNNEL':
+            self.ui.wifiButton.setIcon(self.wifi_emit_Icon)
+
+            
+    #############################
+    # Antenna related Functions #
+    #############################
     def AntennaProcessInnerName (self, ant_str):
         ant_name = ''
         list_cntr = 0
@@ -583,115 +657,6 @@ class Dialog(QDialog):
             self.ui.ch4Button.setText("CH4")
 
 
-    # def AntennaButtonsUpdate (self, status_lst, names_lst):        
-    #     if status_lst[0] == 'enable':
-    #         self.ui.ch1Button.setStyleSheet(self.style.ch_enable)
-    #         self.ui.ch1Button.setText(names_lst[0])
-    #     else:
-    #         self.ui.ch1Button.setStyleSheet(self.style.ch_disable)
-    #         self.ui.ch1Button.setText("CH1")
-
-    #     if status_lst[1] == 'enable':
-    #         self.ui.ch2Button.setStyleSheet(self.style.ch_enable)
-    #         self.ui.ch2Button.setText(names_lst[1])
-    #     else:
-    #         self.ui.ch2Button.setStyleSheet(self.style.ch_disable)
-    #         self.ui.ch2Button.setText("CH2")
-
-    #     if status_lst[2] == 'enable':
-    #         self.ui.ch3Button.setStyleSheet(self.style.ch_enable)
-    #         self.ui.ch3Button.setText(names_lst[2])
-    #     else:
-    #         self.ui.ch3Button.setStyleSheet(self.style.ch_disable)
-    #         self.ui.ch3Button.setText("CH3")
-
-    #     if status_lst[3] == 'enable':
-    #         self.ui.ch4Button.setStyleSheet(self.style.ch_enable)
-    #         self.ui.ch4Button.setText(names_lst[3])
-    #     else:
-    #         self.ui.ch4Button.setStyleSheet(self.style.ch_disable)
-    #         self.ui.ch4Button.setText("CH4")
-            
-
-    def InsertColorText (self, new_text, color='red', plain=False):
-        if color == 'red':
-            self.ui.textEdit.setTextColor(QColor(237, 50, 55))            
-
-        if color == 'blue':
-            self.ui.textEdit.setTextColor(QColor(62, 64, 149))
-
-        if color == 'green':
-            self.ui.textEdit.setTextColor(QColor(0, 168, 89))
-
-        if plain:
-            self.ui.textEdit.insertPlainText(new_text)
-        else:
-            self.ui.textEdit.append(new_text)
-
-            
-    def InsertLocalText (self, new_text):
-        self.InsertColorText(new_text, 'red')
-
-        
-    def InsertInfoText (self, new_text):
-        self.InsertColorText(new_text, 'blue')
-
-        
-    def InsertInfoTextNoNewLine (self, new_text):
-        self.InsertColorText(new_text, 'blue', True)
-        
-
-    def InsertLocalTextNoNewLine (self, new_text):
-        self.InsertColorText(new_text, 'red', True)
-        
-        
-    def InsertForeingText (self, new_text):
-        self.InsertColorText(new_text, 'green')
-
-        
-    def InsertForeingTextNoNewLine (self, new_text):
-        self.InsertColorText(new_text, 'green', True)
-
-
-    def MemoryPressed (self):
-        self.memButtonCnt = 1
-        self.ScreenSaverKick()
-
-
-    def ChannelChange (self):
-        sender = self.sender()
-
-        if sender.objectName() == 'ch2Button':
-            # test ch1 with name
-            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,1\r"
-            self.SerialProcess(ant_str)
-            # test ch1 no name
-            # ant_str = "ch1,020.00,020.00,004.04,065.00,1\r"
-            # self.SerialProcess(ant_str)
-            # test ch2 with name
-            # ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,2\r"
-            # self.SerialProcess(ant_str)
-            # test ch2 no name
-            # ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
-            # self.SerialProcess(ant_str)
-            # test ch3 with name
-            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,3\r"
-            self.SerialProcess(ant_str)
-            # test ch3 no name
-            # ant_str = "ch3,020.00,020.00,004.04,065.00,3\r"
-            # self.SerialProcess(ant_str)
-            # test ch4 with name
-            ant_str = "estoesTunnel 10 inches,020.00,020.00,004.04,065.00,4\r"
-            self.SerialProcess(ant_str)            
-            
-        if sender.objectName() == 'ch3Button':
-            ant_str = "antenna none\r"
-            self.SerialProcess(ant_str)
-
-        if sender.objectName() == 'ch4Button':
-            pass
-
-
     def AntennaNameChange (self):
         sender = self.sender()
         
@@ -748,9 +713,88 @@ class Dialog(QDialog):
                 self.ui.ch4Button.setText(ant_str)
         
         self.ScreenSaverKick()
+            
 
+    def InsertColorText (self, new_text, color='red', plain=False):
+        if color == 'red':
+            self.ui.textEdit.setTextColor(QColor(237, 50, 55))            
+
+        if color == 'blue':
+            self.ui.textEdit.setTextColor(QColor(62, 64, 149))
+
+        if color == 'green':
+            self.ui.textEdit.setTextColor(QColor(0, 168, 89))
+
+        if plain:
+            self.ui.textEdit.insertPlainText(new_text)
+        else:
+            self.ui.textEdit.append(new_text)
+
+            
+    def InsertLocalText (self, new_text):
+        self.InsertColorText(new_text, 'red')
 
         
+    def InsertInfoText (self, new_text):
+        self.InsertColorText(new_text, 'blue')
+
+        
+    def InsertInfoTextNoNewLine (self, new_text):
+        self.InsertColorText(new_text, 'blue', True)
+        
+
+    def InsertLocalTextNoNewLine (self, new_text):
+        self.InsertColorText(new_text, 'red', True)
+        
+        
+    def InsertForeingText (self, new_text):
+        self.InsertColorText(new_text, 'green')
+
+        
+    def InsertForeingTextNoNewLine (self, new_text):
+        self.InsertColorText(new_text, 'green', True)
+
+
+    def MemoryPressed (self):
+        self.memButtonCnt = 1
+        self.ScreenSaverKick()
+
+
+    """ function for tests, generates the required antenna strings """
+    def ChannelChange (self):
+        sender = self.sender()
+
+        if sender.objectName() == 'ch2Button':
+            # test ch1 with name
+            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,1\r"
+            self.SerialProcess(ant_str)
+            # test ch1 no name
+            # ant_str = "ch1,020.00,020.00,004.04,065.00,1\r"
+            # self.SerialProcess(ant_str)
+            # test ch2 with name
+            # ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,2\r"
+            # self.SerialProcess(ant_str)
+            # test ch2 no name
+            # ant_str = "ch2,020.00,020.00,004.04,065.00,2\r"
+            # self.SerialProcess(ant_str)
+            # test ch3 with name
+            ant_str = "Tunnel 12 inches fucker!,020.00,020.00,004.04,065.00,3\r"
+            self.SerialProcess(ant_str)
+            # test ch3 no name
+            # ant_str = "ch3,020.00,020.00,004.04,065.00,3\r"
+            # self.SerialProcess(ant_str)
+            # test ch4 with name
+            ant_str = "estoesTunnel 10 inches,020.00,020.00,004.04,065.00,4\r"
+            self.SerialProcess(ant_str)            
+            
+        if sender.objectName() == 'ch3Button':
+            ant_str = "antenna none\r"
+            self.SerialProcess(ant_str)
+
+        if sender.objectName() == 'ch4Button':
+            pass
+
+
     def SerialProcess (self, rcv):
         show_message = True
         if rcv.startswith("antenna none"):
@@ -890,14 +934,18 @@ class Dialog(QDialog):
             self.InsertLocalText("Select all parameters first!")
 
 
+    def DiagsPressed (self):
+        self.diagButtonCnt = 1
+
+        
+    def DiagsReleased (self):
+        self.diagButtonCnt = 0
+
+        
     def SerialDataCallback (self, rcv):        
         # print ("serial data callback!")
         # print (rcv)
         self.SerialProcess(rcv)
-
-
-    def UpdateOneSec (self):
-        pass
 
 
     def CheckForStart (self):
@@ -967,7 +1015,7 @@ class Dialog(QDialog):
 
         self.screensaver_window = False
         
-        a = DiagnosticsDialog(self.s, self.t, parent=self)
+        a = DiagnosticsDialog(self.s, self.t, parent=self.parent)
         a.setModal(True)
         a.exec_()
 
@@ -1012,6 +1060,7 @@ class Dialog(QDialog):
 
         self.ScreenSaverKick()
 
+        
     def ScreenSaverKick (self):
         self.timer_screensaver = self.t.timeout_screensaver
             
@@ -1083,7 +1132,8 @@ class Dialog(QDialog):
         button_name = button_sel.split('B')
         button_name = button_name[0]
         stages_list = [self.stage1, self.stage2, self.stage3]
-        a = StagesDialog(stages_list, self.style, button_name)
+        localization = self.t.GetLocalization()
+        a = StagesDialog(stages_list, self.style, localization, button_name)
     
         a.setModal(True)
         a.exec_()

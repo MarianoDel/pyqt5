@@ -40,7 +40,8 @@ def TestScreen ():
     
     stages_list = [stage1, stage2, stage3]
     style_obj = ButtonStyles()
-    a = StagesDialog(stages_list, style_obj)
+    localization = 'usa'
+    a = StagesDialog(stages_list, style_obj, localization)
     
     a.setModal(True)
     a.exec_()

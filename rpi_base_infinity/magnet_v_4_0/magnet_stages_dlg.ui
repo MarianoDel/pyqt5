@@ -620,10 +620,10 @@ border:3px solid rgb(55, 52, 53);</string>
   <widget class="QPushButton" name="diagButton">
    <property name="geometry">
     <rect>
-     <x>45</x>
-     <y>30</y>
-     <width>186</width>
-     <height>41</height>
+     <x>30</x>
+     <y>10</y>
+     <width>236</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">

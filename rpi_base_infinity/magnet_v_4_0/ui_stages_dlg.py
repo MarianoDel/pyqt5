@@ -344,7 +344,7 @@ class Ui_StagesDialog(object):
         self.date_timeLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.date_timeLabel.setObjectName("date_timeLabel")
         self.diagButton = QtWidgets.QPushButton(StagesDialog)
-        self.diagButton.setGeometry(QtCore.QRect(45, 30, 186, 41))
+        self.diagButton.setGeometry(QtCore.QRect(30, 10, 236, 61))
         self.diagButton.setStyleSheet("background-color: rgba(255, 255, 255, 0);\n"
 "border: 0px")
         self.diagButton.setText("")

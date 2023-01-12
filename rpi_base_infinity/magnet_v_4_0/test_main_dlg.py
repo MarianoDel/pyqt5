@@ -55,6 +55,16 @@ class SignalsCb (QObject):
         print ('cb obj called: ' + readed)
         self.rcv_signal.emit(readed)
         
+
+class TreatmentMock ():
+
+    def __init__(self):
+        self.system = 'Slackware '
+    
+    def GetCurrentSystem(self):
+        print('someone asked for system: ' + self.system)
+        return self.system
+
     
 ####################
 # Function Screens #
@@ -67,7 +77,8 @@ def TestScreen ():
     s = SerialMock(scb.MyObjCallback, '/dev/ttyACM0')    
     
     debug = True
-    a = Dialog(debug, s, parent=scb)
+    treat = TreatmentMock()
+    a = Dialog(debug, s, treat, parent=scb)
     a.setModal(True)
     a.exec_()
               

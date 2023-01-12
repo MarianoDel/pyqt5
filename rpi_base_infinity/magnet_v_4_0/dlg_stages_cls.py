@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QTimer
+from datetime import datetime
 
 
 #get the UI from here
@@ -14,7 +15,7 @@ class StagesDialog (QDialog):
     #SIGNALS
     one_second_signal = pyqtSignal()
 
-    def __init__(self, st_lst, style_obj, caller_stage='stage1'):
+    def __init__(self, st_lst, style_obj, localization, caller_stage='stage1'):
         super(StagesDialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -24,6 +25,7 @@ class StagesDialog (QDialog):
         # backup received info
         self.st_lst = st_lst
         self.style = style_obj
+        self.localization = localization
         
         self.stage1_info = st_lst[0]
         self.stage2_info = st_lst[1]
@@ -98,20 +100,31 @@ class StagesDialog (QDialog):
             # self.Stage3GroupChange('select')
             self.SelectStageButton3()            
 
-
         ## activate the 1 second timer it is repetitive
         self.t1seg = QTimer()
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
-
-        # screen saver timer activation
-        # self.timer_screensaver = self.t.timeout_screensaver
-        # self.screensaver_window = True
             
         #SIGNALS CONNECTION
         # connect through a signal the timer to the update event function
         self.one_second_signal.connect(self.UpdateOneSec)
             
+        ## to carry on with date-time
+        date_now = datetime.today()
+        self.minutes_last = date_now.minute
+        self.UpdateDateTime(date_now)
+
+        
+    def UpdateDateTime(self, new_date_time):
+        date_str = ""
+        if self.localization == 'usa':
+            date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
+        # elif self.localization == 'arg':
+        else:          
+            date_str = new_date_time.strftime("%d/%m/%Y - %H:%M")
+            
+        self.ui.date_timeLabel.setText(date_str)
+
 
     # one second update signal
     def TimerOneSec(self):
@@ -156,15 +169,7 @@ class StagesDialog (QDialog):
         elif self.timeDwnButtonCnt == 1:
             self.timeDwnButtonCnt += 1
 
-        # check for screensaver activation
-        # if self.screensaver_window == True:
-        #     if self.timer_screensaver > 0:
-        #         self.timer_screensaver -= 1
-        #     else:
-        #         self.ScreenSaverDialogScreen()
 
-
-    
     def SelectStageButton1 (self):
         self.stage_selected = 'stage1'
         self.stage1_info.status = 'enable'
@@ -256,12 +261,18 @@ class StagesDialog (QDialog):
             self.ui.stage1MinutesLabel.setText(str(self.stage1_info.timer)+"'")
             self.ui.stage1PowerLabel.setText(str(self.stage1_info.power)+"%")
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_enable)
+            # small buttons change
+            self.Stage1InnerSignalChange(self.stage1_info.GetStageSignal())
+            self.Stage1InnerFreqChange(self.stage1_info.GetStageFrequency())        
             raise_inners = True
 
         if change_to == 'select':
             self.ui.stage1MinutesLabel.setText(str(self.stage1_info.timer)+"'")
             self.ui.stage1PowerLabel.setText(str(self.stage1_info.power)+"%")
             self.ui.stage1Label.setStyleSheet(self.style.stage1_button_select)
+            # small buttons change
+            self.Stage1InnerSignalChange(self.stage1_info.GetStageSignal())
+            self.Stage1InnerFreqChange(self.stage1_info.GetStageFrequency())        
             raise_inners = True            
 
         if change_to == 'disable':
@@ -290,18 +301,25 @@ class StagesDialog (QDialog):
             self.ui.stage2MinutesLabel.setText(str(self.stage2_info.timer)+"'")
             self.ui.stage2PowerLabel.setText(str(self.stage2_info.power)+"%")
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_enable)
+            # small buttons change
+            self.Stage2InnerSignalChange(self.stage2_info.GetStageSignal())
+            self.Stage2InnerFreqChange(self.stage2_info.GetStageFrequency())        
             raise_inners = True
 
         if change_to == 'select':
             self.ui.stage2MinutesLabel.setText(str(self.stage2_info.timer)+"'")
             self.ui.stage2PowerLabel.setText(str(self.stage2_info.power)+"%")
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_select)
+            # small buttons change
+            self.Stage2InnerSignalChange(self.stage2_info.GetStageSignal())
+            self.Stage2InnerFreqChange(self.stage2_info.GetStageFrequency())        
             raise_inners = True            
 
         if change_to == 'disable':
             self.ui.stage2MinutesLabel.setText('')
             self.ui.stage2PowerLabel.setText('')            
             self.ui.stage2Label.setStyleSheet(self.style.stage2_button_disable)
+            # small buttons change
             self.ui.stage2SignalButton.setStyleSheet(self.style.signal_75_disable)
             self.ui.stage2FreqButton.setStyleSheet(self.style.signal_75_disable)            
             self.ui.stage2Label.raise_()
@@ -324,12 +342,18 @@ class StagesDialog (QDialog):
             self.ui.stage3MinutesLabel.setText(str(self.stage3_info.timer)+"'")
             self.ui.stage3PowerLabel.setText(str(self.stage3_info.power)+"%")
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_enable)
+            # small buttons change
+            self.Stage3InnerSignalChange(self.stage3_info.GetStageSignal())
+            self.Stage3InnerFreqChange(self.stage3_info.GetStageFrequency())        
             raise_inners = True
 
         if change_to == 'select':
             self.ui.stage3MinutesLabel.setText(str(self.stage3_info.timer)+"'")
             self.ui.stage3PowerLabel.setText(str(self.stage3_info.power)+"%")
             self.ui.stage3Label.setStyleSheet(self.style.stage3_button_select)
+            # small buttons change
+            self.Stage3InnerSignalChange(self.stage3_info.GetStageSignal())
+            self.Stage3InnerFreqChange(self.stage3_info.GetStageFrequency())        
             raise_inners = True            
 
         if change_to == 'disable':
@@ -350,6 +374,114 @@ class StagesDialog (QDialog):
         # then raise transparent button
         self.ui.stage3Button.raise_()
 
+
+    def Stage1InnerSignalChange (self, new_signal):
+        if new_signal == 'triangular':
+            self.ui.stage1SignalButton.setStyleSheet(self.style.triangular_75_enable)
+        elif new_signal == 'square':
+            self.ui.stage1SignalButton.setStyleSheet(self.style.square_75_enable)
+        elif new_signal == 'sinusoidal':
+            self.ui.stage1SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+        else:
+            self.ui.stage1SignalButton.setStyleSheet(self.style.signal_75_disable)
+
+
+    def Stage2InnerSignalChange (self, new_signal):
+        if new_signal == 'triangular':
+            self.ui.stage2SignalButton.setStyleSheet(self.style.triangular_75_enable)
+        elif new_signal == 'square':
+            self.ui.stage2SignalButton.setStyleSheet(self.style.square_75_enable)
+        elif new_signal == 'sinusoidal':
+            self.ui.stage2SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+        else:
+            self.ui.stage2SignalButton.setStyleSheet(self.style.signal_75_disable)
+
+
+    def Stage3InnerSignalChange (self, new_signal):
+        if new_signal == 'triangular':
+            self.ui.stage3SignalButton.setStyleSheet(self.style.triangular_75_enable)
+        elif new_signal == 'square':
+            self.ui.stage3SignalButton.setStyleSheet(self.style.square_75_enable)
+        elif new_signal == 'sinusoidal':
+            self.ui.stage3SignalButton.setStyleSheet(self.style.sinusoidal_75_enable)
+        else:
+            self.ui.stage3SignalButton.setStyleSheet(self.style.signal_75_disable)
+            
+            
+    def Stage1InnerFreqChange (self, new_freq):
+        if new_freq == 'freq1':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq1_75_enable)
+        elif new_freq == 'freq2':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq2_75_enable)
+        elif new_freq == 'freq3':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq3_75_enable)
+        elif new_freq == 'freq4':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq4_75_enable)
+        elif new_freq == 'freq5':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq5_75_enable)
+        elif new_freq == 'freq6':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq6_75_enable)
+        elif new_freq == 'freq7':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq7_75_enable)
+        elif new_freq == 'freq8':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq8_75_enable)
+        elif new_freq == 'freq9':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq9_75_enable)
+        elif new_freq == 'freq10':
+            self.ui.stage1FreqButton.setStyleSheet(self.style.freq10_75_enable)
+        else:
+            self.ui.stage1FreqButton.setStyleSheet(self.style.signal_75_disable)
+
+
+    def Stage2InnerFreqChange (self, new_freq):
+        if new_freq == 'freq1':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq1_75_enable)
+        elif new_freq == 'freq2':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq2_75_enable)
+        elif new_freq == 'freq3':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq3_75_enable)
+        elif new_freq == 'freq4':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq4_75_enable)
+        elif new_freq == 'freq5':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq5_75_enable)
+        elif new_freq == 'freq6':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq6_75_enable)
+        elif new_freq == 'freq7':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq7_75_enable)
+        elif new_freq == 'freq8':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq8_75_enable)
+        elif new_freq == 'freq9':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq9_75_enable)
+        elif new_freq == 'freq10':
+            self.ui.stage2FreqButton.setStyleSheet(self.style.freq10_75_enable)
+        else:
+            self.ui.stage2FreqButton.setStyleSheet(self.style.signal_75_disable)
+
+
+    def Stage3InnerFreqChange (self, new_freq):
+        if new_freq == 'freq1':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq1_75_enable)
+        elif new_freq == 'freq2':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq2_75_enable)
+        elif new_freq == 'freq3':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq3_75_enable)
+        elif new_freq == 'freq4':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq4_75_enable)
+        elif new_freq == 'freq5':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq5_75_enable)
+        elif new_freq == 'freq6':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq6_75_enable)
+        elif new_freq == 'freq7':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq7_75_enable)
+        elif new_freq == 'freq8':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq8_75_enable)
+        elif new_freq == 'freq9':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq9_75_enable)
+        elif new_freq == 'freq10':
+            self.ui.stage3FreqButton.setStyleSheet(self.style.freq10_75_enable)
+        else:
+            self.ui.stage3FreqButton.setStyleSheet(self.style.signal_75_disable)
+        
         
     def SignalDisableAll(self):
         self.ui.triangularButton.setStyleSheet(self.style.triangular_90_disable)
@@ -368,8 +500,6 @@ class StagesDialog (QDialog):
 
         elif sender.objectName() == 'sinusoidalButton':
             self.SignalChangeTo('sinusoidal')
-
-        self.ScreenSaverKick()
 
         
     def SignalChangeTo (self, new_signal):
@@ -461,8 +591,6 @@ class StagesDialog (QDialog):
         if sender.objectName() == 'freq10Button':
             self.FrequencyChangeTo('freq10')
             
-        self.ScreenSaverKick()
-
 
     def FrequencyChangeTo (self, new_freq):
         self.FrequencyDisableAll()
@@ -591,7 +719,6 @@ class StagesDialog (QDialog):
     def UpPowerPressed (self):
         self.PwrUp (1)
         self.powerUpButtonCnt = 1
-        # self.ScreenSaverKick()
 
     def UpPowerReleased (self):
         self.powerUpButtonCnt = 0
@@ -599,7 +726,6 @@ class StagesDialog (QDialog):
     def DwnPowerPressed (self):
         self.PwrDwn(1)
         self.powerDwnButtonCnt = 1
-        # self.ScreenSaverKick()        
 
     def DwnPowerReleased (self):
         self.powerDwnButtonCnt = 0        
@@ -607,7 +733,6 @@ class StagesDialog (QDialog):
     def UpTimePressed (self):
         self.TimeUp (1)
         self.timeUpButtonCnt = 1
-        # self.ScreenSaverKick()        
 
     def UpTimeReleased (self):
         self.timeUpButtonCnt = 0        
@@ -615,7 +740,6 @@ class StagesDialog (QDialog):
     def DwnTimePressed (self):
         self.TimeDwn(1)
         self.timeDwnButtonCnt = 1
-        # self.ScreenSaverKick()
 
     def DwnTimeReleased (self):
         self.timeDwnButtonCnt = 0
@@ -725,10 +849,6 @@ class StagesDialog (QDialog):
         return time_save
             
             
-    def ScreenSaverKick (self):
-        pass
-
-    
     def ClearStage (self):
         first_stage_not_disable = 'stage1'
         
@@ -782,13 +902,12 @@ class StagesDialog (QDialog):
 
         self.ui.totalMinutesLabel.setText(str(total_time))
             
-        
+
     def BackStage (self):
         self.action = 'none'
         self.accept()
     
 
-        
         
 ### end of file ###
 
