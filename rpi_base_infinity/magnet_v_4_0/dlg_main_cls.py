@@ -6,6 +6,7 @@ from stylesheet_class import ButtonStyles
 from treatment_class import Treatment
 from antenna_class import AntennaInTreatment
 from datetime import datetime
+import copy
 
 
 #Here import the UIs or classes that got the UIs
@@ -122,25 +123,30 @@ class Dialog(QDialog):
         
         self.style = ButtonStyles()
 
-        self.t.stage1_info = Stages()
-        self.t.stage2_info = Stages()
-        self.t.stage3_info = Stages()
+        # do not backup current stages info on treatment instance
+        # self.t.stage1_info = Stages()
+        # self.t.stage2_info = Stages()
+        # self.t.stage3_info = Stages()
+        # self.stage1 = self.t.stage1_info
+        # self.stage2 = self.t.stage2_info
+        # self.stage3 = self.t.stage3_info
 
-        self.stage1 = self.t.stage1_info
-        self.stage2 = self.t.stage2_info
-        self.stage3 = self.t.stage3_info
-        
-        self.stage1.SetStageTimer(45)
-        self.stage1.SetStagePower(85)
-        self.stage1.SetStageSignal('triangular')
-        self.stage1.SetStageFrequency('freq1')
+        # current stages info
+        self.stage1 = Stages()
+        self.stage2 = Stages()
+        self.stage3 = Stages()        
+        # default stages config
+        self.stage1.SetStageTimer(30)
+        self.stage1.SetStagePower(70)
+        self.stage1.SetStageSignal('sinusoidal')
+        self.stage1.SetStageFrequency('freq4')
         self.stage1.SetStageStatus('enable')
 
-        self.stage2.SetStageTimer(55)
-        self.stage2.SetStagePower(100)
-        self.stage2.SetStageSignal('square')
-        self.stage2.SetStageFrequency('freq9')
-        self.stage2.SetStageStatus('enable')
+        self.stage2.SetStageTimer(0)
+        self.stage2.SetStagePower(0)
+        self.stage2.SetStageSignal('')
+        self.stage2.SetStageFrequency('')
+        self.stage2.SetStageStatus('disable')
 
         self.stage3.SetStageTimer(0)
         self.stage3.SetStagePower(0)
@@ -1054,10 +1060,14 @@ class Dialog(QDialog):
             self.t.mem_instant_dict[which_mem] = stage_new_lst
             print(self.t.mem_instant_dict)
             self.PopullateFromDict(self.t.mem_instant_dict)
-            # self.t.MoveCurrentConfToMem(which_mem)
-            # self.t.SaveConfigFile()
-            # self.UpdateMemLabels()
-        
+
+            ## backup instant mems to all mems
+            for x in self.t.mem_instant_dict:
+                self.t.mem_all_dict[x] = self.t.mem_instant_dict[x]
+
+            ## save data on backup file
+            self.t.SaveConfigFile()
+
         self.ScreenSaverKick()
         self.screensaver_window = True
         
@@ -1107,11 +1117,15 @@ class Dialog(QDialog):
             print('Accept new config')
             self.t.mem_all_dict = mem_for_conf
 
-            self.t.mem_instant_dict['mema'] = self.t.mem_all_dict['mema']
-            self.t.mem_instant_dict['memb'] = self.t.mem_all_dict['memb']
-            self.t.mem_instant_dict['memc'] = self.t.mem_all_dict['memc']
-            self.t.mem_instant_dict['memd'] = self.t.mem_all_dict['memd']            
-            self.PopullateFromDict(self.t.mem_instant_dict)            
+            ## change data on instant mems
+            for x in self.t.mem_instant_dict:
+                self.t.mem_instant_dict[x] = self.t.mem_all_dict[x]
+
+            ## show changes on instant mems
+            self.PopullateFromDict(self.t.mem_instant_dict)
+
+            ## save data on backup file
+            self.t.SaveConfigFile()
             
         else:
             print('Last config its still valid')
@@ -1142,8 +1156,12 @@ class Dialog(QDialog):
         button_name = button_sel.split('B')
         button_name = button_name[0]
         stages_list = [self.stage1, self.stage2, self.stage3]
+        s1_copy = copy.copy(self.stage1)
+        s2_copy = copy.copy(self.stage2)
+        s3_copy = copy.copy(self.stage3)
+        stages_copy = [s1_copy, s2_copy, s3_copy]
         localization = self.t.GetLocalization()
-        a = StagesDialog(stages_list, self.style, localization, button_name)
+        a = StagesDialog(stages_copy, self.style, localization, button_name)
     
         a.setModal(True)
         a.exec_()
@@ -1164,6 +1182,8 @@ class Dialog(QDialog):
         else:
             print('Last config is still valid')
             print(stages_list)
+            print('No implemented config')
+            print(a.st_lst)
             
     
 ### End of Dialog ###

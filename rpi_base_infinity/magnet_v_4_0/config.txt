@@ -11,23 +11,125 @@ tempcoef065 = 0.2627
 tempcoef080 = 0.2627
 tempamb = 25.0
 
-[mem1]
-frequency = None
-signal = None
-time = None
-power = None
+[mema]
+desc = 10 20 30
+one = 10' T 10% 0.98Hz
+two = 20' R 20% 1.96Hz
+three = 30' S 30% 3.92Hz
 
-[mem2]
-frequency = 23.58Hz
-signal = sinusoidal
-time = 60
-power = 70
+[memb]
+desc = 
+one = 
+two = 
+three = 
 
-[mem3]
-frequency = 7.83Hz
-signal = triangular
-time = 60
-power = 70
+[memc]
+desc = 
+one = 
+two = 
+three = 
+
+[memd]
+desc = 
+one = 
+two = 
+three = 
+
+[mem5]
+desc = 
+one = 
+two = 
+three = 
+
+[mem6]
+desc = 
+one = 
+two = 
+three = 
+
+[mem7]
+desc = 
+one = 
+two = 
+three = 
+
+[mem8]
+desc = 
+one = 
+two = 
+three = 
+
+[mem9]
+desc = 
+one = 
+two = 
+three = 
+
+[mem10]
+desc = 
+one = 
+two = 
+three = 
+
+[mem11]
+desc = 
+one = 
+two = 
+three = 
+
+[mem12]
+desc = 
+one = 
+two = 
+three = 
+
+[mem13]
+desc = 
+one = 
+two = 
+three = 
+
+[mem14]
+desc = 
+one = 
+two = 
+three = 
+
+[mem15]
+desc = 
+one = 
+two = 
+three = 
+
+[mem16]
+desc = 
+one = 
+two = 
+three = 
+
+[mem17]
+desc = 
+one = 
+two = 
+three = 
+
+[mem18]
+desc = 
+one = 
+two = 
+three = 
+
+[mem19]
+desc = 
+one = 
+two = 
+three = 
+
+[mem20]
+desc = 10 20 30
+one = 10' T 10% 0.98Hz
+two = 20' R 20% 1.96Hz
+three = 30' S 30% 3.92Hz
 
 [static_config]
 localization = usa

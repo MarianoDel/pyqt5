@@ -6,16 +6,19 @@ class Treatment():
 
     def __init__(self):
         ## Parametros por Default
-        self.stage1_info = 'None'
-        self.stage2_info = 'None'
-        self.stage3_info = 'None'
+        # no current stages info in treatment
+        # self.stage1_info = 'None'
+        # self.stage2_info = 'None'
+        # self.stage3_info = 'None'
 
-        self.stage_current_dict = {
-            'stage1' : "15' S 35% 7.83Hz",
-            'stage2' : "15' S 35% 7.83Hz",
-            'stage3' : "15' S 35% 7.83Hz"
-            }
+        # no current stages info in treatment
+        # self.stage_current_dict = {
+        #     'stage1' : "15' S 35% 7.83Hz",
+        #     'stage2' : "15' S 35% 7.83Hz",
+        #     'stage3' : "15' S 35% 7.83Hz"
+        #     }
 
+        ## this two will be overrided by ReadConfigFile()
         self.mem_instant_dict = {
             'mema' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
             'memb' : ['Arm and Leg Inflammatory', "15' S 35% 7.83Hz", '', ''],
@@ -262,20 +265,38 @@ class Treatment():
         self.tempcoef080 = float(t080)
         self.tempamb = float(ta)
 
-        self.mem1_frequency = config.get('mem1', 'frequency', fallback = 'None')
-        self.mem1_signal = config.get('mem1', 'signal', fallback = 'None')
-        self.mem1_treat_time = config.get('mem1', 'time', fallback = 'None')
-        self.mem1_power = config.get('mem1', 'power', fallback = 'None')
+        ## get all memories config or defaults
+        mem_all_dict_index = self.mem_all_dict
+        for mem_index in mem_all_dict_index:
+            to_save_lst = ['','','','']
+            to_save_lst[0] = config.get(mem_index, 'desc', fallback = '')
+            to_save_lst[1] = config.get(mem_index, 'one', fallback = '')
+            to_save_lst[2] = config.get(mem_index, 'two', fallback = '')
+            to_save_lst[3] = config.get(mem_index, 'three', fallback = '')
+            self.mem_all_dict[mem_index] = to_save_lst
+            print('in ' + mem_index)
+            print(self.mem_all_dict[mem_index])
 
-        self.mem2_frequency = config.get('mem2', 'frequency', fallback = 'None')
-        self.mem2_signal = config.get('mem2', 'signal', fallback = 'None')
-        self.mem2_treat_time = config.get('mem2', 'time', fallback = 'None')
-        self.mem2_power = config.get('mem2', 'power', fallback = 'None')
+        ## get instant access memory config from all
+        mem_instant_index = self.mem_instant_dict
+        for mem_index in mem_instant_index:
+            self.mem_instant_dict[mem_index] = self.mem_all_dict[mem_index]
 
-        self.mem3_frequency = config.get('mem3', 'frequency', fallback = 'None')
-        self.mem3_signal = config.get('mem3', 'signal', fallback = 'None')
-        self.mem3_treat_time = config.get('mem3', 'time', fallback = 'None')
-        self.mem3_power = config.get('mem3', 'power', fallback = 'None')
+        print(self.mem_instant_dict)
+        # self.mem1_frequency = config.get('mem1', 'frequency', fallback = 'None')
+        # self.mem1_signal = config.get('mem1', 'signal', fallback = 'None')
+        # self.mem1_treat_time = config.get('mem1', 'time', fallback = 'None')
+        # self.mem1_power = config.get('mem1', 'power', fallback = 'None')
+
+        # self.mem2_frequency = config.get('mem2', 'frequency', fallback = 'None')
+        # self.mem2_signal = config.get('mem2', 'signal', fallback = 'None')
+        # self.mem2_treat_time = config.get('mem2', 'time', fallback = 'None')
+        # self.mem2_power = config.get('mem2', 'power', fallback = 'None')
+
+        # self.mem3_frequency = config.get('mem3', 'frequency', fallback = 'None')
+        # self.mem3_signal = config.get('mem3', 'signal', fallback = 'None')
+        # self.mem3_treat_time = config.get('mem3', 'time', fallback = 'None')
+        # self.mem3_power = config.get('mem3', 'power', fallback = 'None')
 
         self.localization = config.get('static_config', 'localization', fallback='usa')
 
@@ -298,23 +319,26 @@ class Treatment():
         config.set('static_params', 'tempcoef080', str(self.tempcoef080))
         config.set('static_params', 'tempamb', str(self.tempamb))
 
-        config.add_section('mem1')
-        config.set('mem1', 'frequency', self.mem1_frequency)
-        config.set('mem1', 'signal', self.mem1_signal)
-        config.set('mem1', 'time', self.mem1_treat_time)
-        config.set('mem1', 'power', self.mem1_power)
+        ## save all memory dict
+        for mem_index in self.mem_all_dict:
+            config.add_section(mem_index)
+            to_save_lst = self.mem_all_dict[mem_index]
+            config.set(mem_index, 'desc', to_save_lst[0])
+            config.set(mem_index, 'one', to_save_lst[1])
+            config.set(mem_index, 'two', to_save_lst[2])
+            config.set(mem_index, 'three', to_save_lst[3])
 
-        config.add_section('mem2')
-        config.set('mem2', 'frequency', self.mem2_frequency)
-        config.set('mem2', 'signal', self.mem2_signal)
-        config.set('mem2', 'time', self.mem2_treat_time)
-        config.set('mem2', 'power', self.mem2_power)
+        # config.add_section('mem2')
+        # config.set('mem2', 'frequency', self.mem2_frequency)
+        # config.set('mem2', 'signal', self.mem2_signal)
+        # config.set('mem2', 'time', self.mem2_treat_time)
+        # config.set('mem2', 'power', self.mem2_power)
 
-        config.add_section('mem3')
-        config.set('mem3', 'frequency', self.mem3_frequency)
-        config.set('mem3', 'signal', self.mem3_signal)
-        config.set('mem3', 'time', self.mem3_treat_time)
-        config.set('mem3', 'power', self.mem3_power)
+        # config.add_section('mem3')
+        # config.set('mem3', 'frequency', self.mem3_frequency)
+        # config.set('mem3', 'signal', self.mem3_signal)
+        # config.set('mem3', 'time', self.mem3_treat_time)
+        # config.set('mem3', 'power', self.mem3_power)
 
         config.add_section('static_config')
         config.set('static_config', 'localization', self.localization)
