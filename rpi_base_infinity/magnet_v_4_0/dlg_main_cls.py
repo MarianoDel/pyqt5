@@ -667,6 +667,8 @@ class Dialog(QDialog):
             self.ui.ch4Button.setStyleSheet(self.style.ch_disable)
             self.ui.ch4Button.setText("CH4")
 
+        self.CheckForStart()
+
 
     def AntennaNameChange (self):
         sender = self.sender()
@@ -976,10 +978,10 @@ class Dialog(QDialog):
            self.stage3.GetStageStatus() == 'enable':
             stages_in = True
 
-        if self.t.GetChannelInTreatment('ch1') != False or \
-           self.t.GetChannelInTreatment('ch2') != False or \
-           self.t.GetChannelInTreatment('ch3') != False or \
-           self.t.GetChannelInTreatment('ch4') != False:
+        if self.antennas_connected.GetActive('ch1') != False or \
+           self.antennas_connected.GetActive('ch2') != False or \
+           self.antennas_connected.GetActive('ch3') != False or \
+           self.antennas_connected.GetActive('ch4') != False:
             channels_in = True
                                                
         if stages_in and channels_in:
@@ -1068,6 +1070,7 @@ class Dialog(QDialog):
             ## save data on backup file
             self.t.SaveConfigFile()
 
+        self.CheckForStart()
         self.ScreenSaverKick()
         self.screensaver_window = True
         
@@ -1184,6 +1187,8 @@ class Dialog(QDialog):
             print(stages_list)
             print('No implemented config')
             print(a.st_lst)
+
+        self.CheckForStart()
             
     
 ### End of Dialog ###

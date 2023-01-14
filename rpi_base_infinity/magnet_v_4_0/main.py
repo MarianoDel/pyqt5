@@ -189,7 +189,7 @@ class MyMainClass (QObject):
     ## Initial Screen
     def FirstDialogScreen (self):
         self.screensaver_window = False
-        a = FirstDialog('magnet', self.t.GetLocalization(), self.t.timeout_screensaver)
+        a = FirstDialog(self.t.GetLocalization(), self.t.timeout_screensaver)
         a.setModal(True)
         a.exec_()
 

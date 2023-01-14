@@ -18,7 +18,7 @@ from first_dialog_cls import FirstDialog
 def TestScreen ():
     # a = FirstDialog('magnet', 'usa', 30)
     # a = FirstDialog('magnet', 'arg', 30)
-    a = FirstDialog('stretcher', 'usa', 30)
+    a = FirstDialog('usa', 30)
     # a = FirstDialog('stretcher', 'arg', 30)
     
     a.setModal(True)

@@ -14,13 +14,15 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QDialog {
+	background-image: url(:/background/resources/background.png);
+}</string>
   </property>
   <widget class="QPushButton" name="doneButton">
    <property name="geometry">
     <rect>
      <x>330</x>
-     <y>510</y>
+     <y>590</y>
      <width>621</width>
      <height>121</height>
     </rect>
@@ -33,10 +35,13 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(230, 245, 253);
-border: 0px;
-color: rgb(55, 52, 53);</string>
+    <string notr="true">border: 0px;
+/*color: rgb(102, 129, 171);*/
+color: rgb(35, 76, 140);</string>
    </property>
    <property name="text">
     <string>Tap to continue</string>
@@ -60,7 +65,9 @@ color: rgb(55, 52, 53);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(55, 52, 53);</string>
+    <string notr="true">/*color: rgb(55, 52, 53);*/
+/*color: rgb(102, 129, 171);*/
+color: rgb(35, 76, 140);</string>
    </property>
    <property name="text">
     <string>19/03/2020 - 17:45</string>

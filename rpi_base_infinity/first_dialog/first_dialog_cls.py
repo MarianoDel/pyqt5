@@ -23,7 +23,7 @@ class FirstDialog(QDialog):
     # signal to update in 1 second
     one_second_signal = pyqtSignal()
 
-    def __init__(self, program_type, localization, screen_saver_timer):
+    def __init__(self, localization, screen_saver_timer):
         super(FirstDialog, self).__init__()
 
         # Set up the user interface from Designer.
@@ -35,41 +35,6 @@ class FirstDialog(QDialog):
         self.screen_saver_timeout = screen_saver_timer
         self.ended_label = False
         
-
-        # set values on program_type
-        if program_type == 'magnet':
-            self.button_enable_style = "background-color: rgb(230, 245, 253);\
-                                        border: 0px;\
-                                        color: rgb(55, 52, 53);"
-
-            self.button_disable_style = "background-color: rgb(230, 245, 253);\
-                                         border: 0px;\
-                                         color: rgb(230, 245, 253);"
-
-            self.background = "QDialog {background-image: url(:/background/resources/background_magnet_01.png);}"
-            
-        elif program_type == 'stretcher':
-            self.button_enable_style = "background-color: rgb(255, 255, 255);\
-                                        border: 0px;\
-                                        color: rgb(55, 52, 53);"
-
-            self.button_disable_style = "background-color: rgb(255, 255, 255);\
-                                         border: 0px;\
-                                         color: rgb(255, 255, 255);"
-
-            self.background = "QDialog {background-image: url(:/background/resources/background_stretcher_01.png);}"
-        else:    # has to be light_treatment
-            # self.button_disable_style
-            # self.button_enable_style
-            # self.background
-            pass
-
-        # set the selected background
-        self.setStyleSheet(self.background)
-        
-        # set first button color
-        self.ui.doneButton.setStyleSheet(self.button_enable_style)
-            
         # get the close event
         self.ui.doneButton.clicked.connect(self.accept)
 
@@ -115,10 +80,10 @@ class FirstDialog(QDialog):
 
         if self.ended_label == True:
             self.ended_label = False
-            self.ui.doneButton.setStyleSheet(self.button_disable_style)
-        else:
+            self.ui.doneButton.setText('')
+        else:            
             self.ended_label = True
-            self.ui.doneButton.setStyleSheet(self.button_enable_style)
+            self.ui.doneButton.setText('Tap to continue')
 
         # check for screensaver activation
         if self.screensaver_timer > 0:

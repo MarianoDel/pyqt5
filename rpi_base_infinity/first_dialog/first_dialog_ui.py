@@ -12,18 +12,21 @@ class Ui_FirstDialog(object):
     def setupUi(self, FirstDialog):
         FirstDialog.setObjectName("FirstDialog")
         FirstDialog.resize(1280, 800)
-        FirstDialog.setStyleSheet("")
+        FirstDialog.setStyleSheet("QDialog {\n"
+"    background-image: url(:/background/resources/background.png);\n"
+"}")
         self.doneButton = QtWidgets.QPushButton(FirstDialog)
-        self.doneButton.setGeometry(QtCore.QRect(330, 510, 621, 121))
+        self.doneButton.setGeometry(QtCore.QRect(330, 590, 621, 121))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(26)
         font.setBold(True)
         font.setWeight(75)
         self.doneButton.setFont(font)
-        self.doneButton.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
-"color: rgb(55, 52, 53);")
+        self.doneButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.doneButton.setStyleSheet("border: 0px;\n"
+"/*color: rgb(102, 129, 171);*/\n"
+"color: rgb(35, 76, 140);")
         self.doneButton.setObjectName("doneButton")
         self.date_timeLabel = QtWidgets.QLabel(FirstDialog)
         self.date_timeLabel.setGeometry(QtCore.QRect(910, 40, 331, 41))
@@ -33,7 +36,9 @@ class Ui_FirstDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.date_timeLabel.setFont(font)
-        self.date_timeLabel.setStyleSheet("color: rgb(55, 52, 53);")
+        self.date_timeLabel.setStyleSheet("/*color: rgb(55, 52, 53);*/\n"
+"/*color: rgb(102, 129, 171);*/\n"
+"color: rgb(35, 76, 140);")
         self.date_timeLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.date_timeLabel.setObjectName("date_timeLabel")
 
