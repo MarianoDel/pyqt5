@@ -501,7 +501,8 @@ class TreatmentDialog(QDialog):
             self.treat.remaining_seconds = 0
 
             self.init_state = 'clean'
-            self.SendStartSM()
+            # self.SendStartSM()
+            self.SendStartNewSM()            
 
             self.treat.treatment_state = 'START'
             self.ui.progressLabel.setText('Session in Progress')
@@ -559,6 +560,105 @@ class TreatmentDialog(QDialog):
             self.init_state = 'start'
             self.init_timer.singleShot(100, self.SendStartSM)
                 
+        elif self.init_state == 'start':
+            self.InsertInfoText("Starting Treatment...")
+            self.s.Write("start,\r\n")
+
+
+    def SendStartNewSM (self):
+        if self.init_state == 'clean':
+            # limpio el puerto y luego la configuracion
+            self.s.Write("keepalive,\r\n")
+            
+            self.init_state = 'signal'
+            self.init_timer.singleShot(100, self.SendStartNewSM)
+
+        elif self.init_state == 'signal':
+            # check which stage info to send
+            if self.stages_to_change[self.current_index] == 'stage1':
+                signal = self.stages_lst[0].GetStageSignal()
+            elif self.stages_to_change[self.current_index] == 'stage2':
+                signal = self.stages_lst[1].GetStageSignal()                
+            elif self.stages_to_change[self.current_index] == 'stage3':
+                signal = self.stages_lst[2].GetStageSignal()                
+            else:
+                print ('Fatal error, no good stage to send on StartSM - signal!!!')
+                return
+
+            to_send = "signal " + signal
+            self.s.Write(to_send + "\r\n")
+            self.InsertLocalText(to_send)
+            self.init_state = 'frequency'
+            self.init_timer.singleShot(100, self.SendStartNewSM)
+
+        elif self.init_state == 'frequency':
+            # check which stage info to send
+            if self.stages_to_change[self.current_index] == 'stage1':
+                frequency = self.stages_lst[0].GetStageFrequency()
+            elif self.stages_to_change[self.current_index] == 'stage2':
+                frequency = self.stages_lst[1].GetStageFrequency()
+            elif self.stages_to_change[self.current_index] == 'stage3':
+                frequency = self.stages_lst[2].GetStageFrequency()
+            else:
+                print ('Fatal error, no good stage to send on StartSM - Frequency!!!')
+                return
+
+            to_send = "frequency " + self.FreqIndexToString(frequency)
+            self.s.Write(to_send + "\r\n")
+            self.InsertLocalText(to_send)
+            self.init_state = 'power'
+            self.init_timer.singleShot(100, self.SendStartNewSM)
+
+        elif self.init_state == 'power':
+            # check which stage info to send
+            if self.stages_to_change[self.current_index] == 'stage1':
+                signal = self.stages_lst[0].GetStageSignal()
+                power = self.stages_lst[0].GetStagePower()
+            elif self.stages_to_change[self.current_index] == 'stage2':
+                signal = self.stages_lst[1].GetStageSignal()
+                power = self.stages_lst[1].GetStagePower()
+            elif self.stages_to_change[self.current_index] == 'stage3':
+                signal = self.stages_lst[2].GetStageSignal()
+                power = self.stages_lst[2].GetStagePower()
+            else:
+                print ('Fatal error, no good stage to send on StartSM - power!!!')
+                return
+
+            if signal == 'square':
+                new_power = int(self.treat.square_power_limit * power / 100)
+            elif signal == 'triangular':
+                new_power = int(self.treat.triangular_power_limit * power / 100)
+            else:    # must be sinusoidal
+                new_power = int(self.treat.sinusoidal_power_limit * power / 100)
+                
+            if new_power < 10:
+                new_power = 10
+
+            to_send = 'power {:03d}'.format(new_power)
+            self.s.Write(to_send + "\r\n")
+            self.InsertLocalText(to_send)
+            self.init_state = 'duration'
+            self.init_timer.singleShot(100, self.SendStartNewSM)
+            
+        elif self.init_state == 'duration':
+            # check which stage info to send
+            if self.stages_to_change[self.current_index] == 'stage1':
+                new_timer = self.stages_lst[0].GetStageTimer()
+            elif self.stages_to_change[self.current_index] == 'stage2':
+                new_timer = self.stages_lst[1].GetStageTimer()
+            elif self.stages_to_change[self.current_index] == 'stage3':
+                new_timer = self.stages_lst[2].GetStageTimer()
+            else:
+                print ('Fatal error, no good stage to send on StartSM - duration!!!')
+                return
+
+            to_send = 'duration,{:03d},'.format(new_timer)
+            
+            self.s.Write(to_send + "\r\n")
+            self.InsertLocalText(to_send)
+            self.init_state = 'start'
+            self.init_timer.singleShot(100, self.SendStartNewSM)
+
         elif self.init_state == 'start':
             self.InsertInfoText("Starting Treatment...")
             self.s.Write("start,\r\n")
@@ -1132,5 +1232,31 @@ class TreatmentDialog(QDialog):
     def GetMagnetoDurationString (self, timer):
         treat_time = 'duration,00,{:02d},00,1'.format(timer)
         return treat_time
+
+
+    def FreqIndexToString (self, freq_index):
+        if freq_index == 'freq1':
+            return '0.98Hz'
+        elif freq_index == 'freq2':
+            return '1.96Hz'
+        elif freq_index == 'freq3':
+            return '3.92Hz'
+        elif freq_index == 'freq4':
+            return '7.83Hz'
+        elif freq_index == 'freq5':
+            return '11.79Hz'
+        elif freq_index == 'freq6':
+            return '16.67Hz'
+        elif freq_index == 'freq7':
+            return '23.58Hz'
+        elif freq_index == 'freq8':
+            return '30.80Hz'
+        elif freq_index == 'freq9':
+            return '62.64Hz'
+        elif freq_index == 'freq10':
+            return '86.22Hz'
+        else:
+            return '10.00Hz'
+                
     
 ### end of file ###

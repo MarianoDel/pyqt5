@@ -183,6 +183,7 @@ class Dialog(QDialog):
             self.InsertInfoText('')
             self.InsertInfoTextNoNewLine('Communication with power: ')
             self.s.Write('keepalive\r\n')
+            self.s.Write('keepalive\r\n')            
         else:
             self.InsertInfoText('Serial Port Not Found!!!')
 

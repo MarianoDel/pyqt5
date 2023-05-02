@@ -68,10 +68,6 @@ class MyMainClass (QObject):
         
         #creo el evento y lo conecto al slot
         self.c = Communicate()
-        # self.c.closeApp.connect(self.close) #Envio3 lo dispara
-
-        ## connect with serial data rx signal
-        # self.rcv_signal.connect(self.MySignalCallback)
 
         ## PARA SLACKWARE
         if self.t.GetCurrentSystem() == 'Slackware ':
@@ -86,7 +82,7 @@ class MyMainClass (QObject):
             self.FirstDialogScreen()
 
         self.MainDialogScreen()
-        self.closeEvent()
+        self.closeEvent(self)
 
             
     def GetDistroName (self, show=False):
@@ -102,84 +98,13 @@ class MyMainClass (QObject):
         d = dataread.rstrip()
         self.rcv_signal.emit(d)
 
-
-
-    def SerialProcess (self, rcv):
-        show_message = True
-        if rcv.startswith("antenna none"):
-            self.antennas_connected.Flush()
-            self.AntennaUpdate()
-
-        # check if its antenna connection
-        #Tunnel 12 inches,020.00,020.00,004.04,065.00,1
-        #ch2,020.00,020.00,004.04,065.00,2
-        #Tunnel 10 inches,020.00,020.00,004.04,065.00,4
-
-        rcv_list = rcv.split(',')
-        if len(rcv_list) == 6:
-            print("antenna string getted")
-
-            rcv_channel = rcv_list[5].rsplit('\r')
-            if rcv_channel[0] >= '1' and rcv_channel[0] <= '4':
-                if self.antennatimeout_finish == True:
-                    self.antennatimeout_finish = False
-                    self.antennatimeout.singleShot(500, self.AntennaUpdate)
-                    self.antennas_connected.Flush()
-                else:
-                    print("QTimer is active")
-
-                self.antennas_connected.ProcessStringList(rcv_list)
-
-        if rcv.startswith("new antenna ch1"):
-            self.ui.ch1Button.setStyleSheet(self.ss.ch_getting)
-            self.ui.ch1Button.setText("CH1\ngetting\nparams")
-            show_message = False
-
-        if rcv.startswith("new antenna ch2"):
-            self.ui.ch2Button.setStyleSheet(self.ss.ch_getting)
-            self.ui.ch2Button.setText("CH2\ngetting\nparams")
-            show_message = False            
-
-        if rcv.startswith("new antenna ch3"):
-            self.ui.ch3Button.setStyleSheet(self.ss.ch_getting)
-            self.ui.ch3Button.setText("CH3\ngetting\nparams")
-            show_message = False            
-
-        if rcv.startswith("new antenna ch4"):
-            self.ui.ch4Button.setStyleSheet(self.ss.ch_getting)
-            self.ui.ch4Button.setText("CH4\ngetting\nparams")
-            show_message = False
-
-        if rcv.startswith("temp,"):
-            show_message = False
-            
-        if show_message:
-            self.InsertForeingText(rcv)        
-
-                
-    def MySignalCallback (self, rcv):
-        self.SerialProcess (rcv)                
-            
-
-    def UpdateTwoSec (self):
-        new_status = self.MyThread.GetStatus()
-
-        if new_status == 'NO CONN':
-            self.ui.wifiButton.setIcon(self.wifi_disa_Icon)
-        elif new_status == 'IP':
-            self.ui.wifiButton.setIcon(self.wifi_err_Icon)
-        elif new_status == 'PING':
-            self.ui.wifiButton.setIcon(self.wifi_act_Icon)
-        elif new_status == 'TUNNEL':
-            self.ui.wifiButton.setIcon(self.wifi_emit_Icon)
-
-            
+        
     #capturo el cierre
     def closeEvent (self, event):
-        self.ui.textEdit.append("Closing, Please Wait...")
+        print("Closing, Please Wait...")
         self.s.Close()
-        # sleep(2)
-        event.accept()
+        sleep(0.5)
+        sys.exit()
 
         
 ####################################

@@ -180,7 +180,8 @@ class Dialog(QDialog):
 
         ## PARA SLACKWARE
         if self.t.GetCurrentSystem() == 'slackware':
-            self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+            # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+            self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')            
         ## PARA RASPBERRY
         elif self.t.GetCurrentSystem() == 'raspbian':
             self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
@@ -810,7 +811,8 @@ class Dialog(QDialog):
     ## Initial Screen
     def FirstDialogScreen (self):
         self.screensaver_window = False
-        a = FirstDialog('stretcher', self.t.GetLocalization(), self.t.timeout_screensaver)
+        # a = FirstDialog('stretcher', self.t.GetLocalization(), self.t.timeout_screensaver)
+        a = FirstDialog(self.t.GetLocalization(), self.t.timeout_screensaver)        
         a.setModal(True)
         a.exec_()
 
