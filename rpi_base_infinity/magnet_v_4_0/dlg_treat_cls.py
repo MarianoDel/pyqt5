@@ -69,6 +69,20 @@ class TreatmentDialog(QDialog):
         self.temp_ch3_str = ''
         self.temp_ch4_str = ''
 
+        ## setup channels in this treatment
+        self.antenna_ch1 = False
+        self.antenna_ch2 = False
+        self.antenna_ch3 = False
+        self.antenna_ch4 = False
+        if self.ant.GetActive('ch1') == True:
+            self.antenna_ch1 = True
+        if self.ant.GetActive('ch2') == True:
+            self.antenna_ch2 = True
+        if self.ant.GetActive('ch3') == True:
+            self.antenna_ch3 = True
+        if self.ant.GetActive('ch4') == True:
+            self.antenna_ch4 = True
+
         self.tempLabelCntr = 0
         self.ui.tempLabel.setText('')
 
@@ -391,18 +405,30 @@ class TreatmentDialog(QDialog):
         else:
             current_icon = self.wifi_act_Icon
 
-        if self.ant.GetActive('ch1') == True:
+        if self.antenna_ch1 == True:
             self.ui.ant1Button.setIcon(current_icon)
 
-        if self.ant.GetActive('ch2') == True:
+        if self.antenna_ch2 == True:
             self.ui.ant2Button.setIcon(current_icon)
 
-        if self.ant.GetActive('ch3') == True:
+        if self.antenna_ch3 == True:
             self.ui.ant3Button.setIcon(current_icon)
 
-        if self.ant.GetActive('ch4') == True:
+        if self.antenna_ch4 == True:
             self.ui.ant4Button.setIcon(current_icon)
 
+        # if self.ant.GetActive('ch1') == True:
+        #     self.ui.ant1Button.setIcon(current_icon)
+
+        # if self.ant.GetActive('ch2') == True:
+        #     self.ui.ant2Button.setIcon(current_icon)
+
+        # if self.ant.GetActive('ch3') == True:
+        #     self.ui.ant3Button.setIcon(current_icon)
+
+        # if self.ant.GetActive('ch4') == True:
+        #     self.ui.ant4Button.setIcon(current_icon)
+            
             
     def UpdateDateTime(self, new_date_time):
         date_str = ""
@@ -1037,21 +1063,37 @@ class TreatmentDialog(QDialog):
 
         current_icon = self.wifi_err_Icon
 
-        if error_channel.startswith('1') and self.ant.GetActive('ch1') == True:
-            self.ant.SetActiveStatus('ch1', False)
+        if error_channel.startswith('1') and self.antenna_ch1 == True:
+            self.antenna_ch1 = False            
             self.ui.ant1Button.setIcon(current_icon)
 
-        if error_channel.startswith('2') and self.ant.GetActive('ch2') == True:
-            self.ant.SetActiveStatus('ch2', False)
+        if error_channel.startswith('2') and self.antenna_ch2 == True:
+            self.antenna_ch2 = False            
             self.ui.ant2Button.setIcon(current_icon)
 
-        if error_channel.startswith('3') and self.ant.GetActive('ch3') == True:
-            self.ant.SetActiveStatus('ch3', False)
+        if error_channel.startswith('3') and self.antenna_ch3 == True:
+            self.antenna_ch3 = False
             self.ui.ant3Button.setIcon(current_icon)
 
-        if error_channel.startswith('4') and self.ant.GetActive('ch4') == True:
-            self.ant.SetActiveStatus('ch4', False)
+        if error_channel.startswith('4') and self.antenna_ch4 == True:
+            self.antenna_ch4 = False
             self.ui.ant4Button.setIcon(current_icon)
+
+        # if error_channel.startswith('1') and self.ant.GetActive('ch1') == True:
+        #     self.ant.SetActiveStatus('ch1', False)
+        #     self.ui.ant1Button.setIcon(current_icon)
+
+        # if error_channel.startswith('2') and self.ant.GetActive('ch2') == True:
+        #     self.ant.SetActiveStatus('ch2', False)
+        #     self.ui.ant2Button.setIcon(current_icon)
+
+        # if error_channel.startswith('3') and self.ant.GetActive('ch3') == True:
+        #     self.ant.SetActiveStatus('ch3', False)
+        #     self.ui.ant3Button.setIcon(current_icon)
+
+        # if error_channel.startswith('4') and self.ant.GetActive('ch4') == True:
+        #     self.ant.SetActiveStatus('ch4', False)
+        #     self.ui.ant4Button.setIcon(current_icon)
             
             
     def ChannelGetTemp (self):

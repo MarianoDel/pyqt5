@@ -1,7 +1,7 @@
 [power_limits]
-triangular = 60
-square = 70
-sinusoidal = 80
+triangular = 100
+square = 100
+sinusoidal = 100
 
 [static_params]
 peak_current = 3.6
@@ -18,10 +18,10 @@ two = 20' R 20% 1.96Hz
 three = 30' S 30% 3.92Hz
 
 [memb]
-desc = 
-one = 
-two = 
-three = 
+desc = test
+one = 5' T 100% 7.83Hz
+two = 5' R 100% 7.83Hz
+three = 5' S 100% 7.83Hz
 
 [memc]
 desc = 
