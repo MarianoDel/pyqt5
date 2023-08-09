@@ -862,6 +862,26 @@ class Dialog(QDialog):
             self.ui.ch4Button.setText("CH4\ngetting\nparams")
             show_message = False
 
+        if rcv.startswith("old antenna ch1"):
+            self.ui.ch1Button.setStyleSheet(self.style.ch_old_ant)
+            self.ui.ch1Button.setText("CH1\nwrong\nantenna")
+            show_message = False
+
+        if rcv.startswith("old antenna ch2"):
+            self.ui.ch2Button.setStyleSheet(self.style.ch_old_ant)
+            self.ui.ch2Button.setText("CH2\nwrong\nantenna")
+            show_message = False            
+
+        if rcv.startswith("old antenna ch3"):
+            self.ui.ch3Button.setStyleSheet(self.style.ch_old_ant)
+            self.ui.ch3Button.setText("CH3\nwrong\nantenna")
+            show_message = False            
+
+        if rcv.startswith("old antenna ch4"):
+            self.ui.ch4Button.setStyleSheet(self.style.ch_old_ant)
+            self.ui.ch4Button.setText("CH4\nwrong\nantenna")
+            show_message = False
+            
         if rcv.startswith("temp,"):
             show_message = False
             

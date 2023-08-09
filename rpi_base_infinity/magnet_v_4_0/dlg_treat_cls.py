@@ -527,8 +527,8 @@ class TreatmentDialog(QDialog):
             self.treat.remaining_seconds = 0
 
             self.init_state = 'clean'
-            # self.SendStartSM()
-            self.SendStartNewSM()            
+            self.SendStartSM()
+            # self.SendStartNewSM()            
 
             self.treat.treatment_state = 'START'
             self.ui.progressLabel.setText('Session in Progress')

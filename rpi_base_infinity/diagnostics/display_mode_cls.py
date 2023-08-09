@@ -25,7 +25,8 @@ class DisplayModeDialog(QDialog):
         self.ui.saveButton.clicked.connect(self.SaveNewMode)
 
         # populate comboBox and connect signals
-        self.ui.comboBox.addItem('Magnet')
+        self.ui.comboBox.addItem('Magnet ver 4.0')
+        self.ui.comboBox.addItem('Magnet ver 4.0 new')        
         self.ui.comboBox.addItem('Stretcher ver 3.1')
         self.ui.comboBox.addItem('Stretcher ver 3.2')
         self.ui.comboBox.addItem('Light Treatment')
@@ -67,8 +68,10 @@ class DisplayModeDialog(QDialog):
         
         (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
         if distname == 'debian':
-            if self.current_sel == 'Magnet':
-                os.system('python3 change_display_operation_mode.py magnet')
+            if self.current_sel == 'Magnet ver 4.0':
+                os.system('python3 change_display_operation_mode.py magnet40')
+            elif self.current_sel == 'Magnet ver 4.0 new':
+                os.system('python3 change_display_operation_mode.py magnet40_new')
             elif self.current_sel == 'Stretcher ver 3.2':
                 os.system('python3 change_display_operation_mode.py stretcher32')
             elif self.current_sel == 'Stretcher ver 3.1':

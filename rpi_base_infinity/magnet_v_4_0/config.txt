@@ -24,10 +24,10 @@ two = 5' R 100% 7.83Hz
 three = 5' S 100% 7.83Hz
 
 [memc]
-desc = 
-one = 
-two = 
-three = 
+desc = test t
+one = 5' S 100% 11.79Hz
+two = 5' T 100% 23.58Hz
+three = 5' R 100% 30.80Hz
 
 [memd]
 desc = 

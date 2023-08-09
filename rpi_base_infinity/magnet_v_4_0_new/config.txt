@@ -1,0 +1,136 @@
+[power_limits]
+triangular = 100
+square = 100
+sinusoidal = 100
+
+[static_params]
+peak_current = 3.6
+resistance065 = 47.0
+resistance080 = 23.5
+tempcoef065 = 0.2627
+tempcoef080 = 0.2627
+tempamb = 25.0
+
+[mema]
+desc = 10 20 30
+one = 10' T 10% 0.98Hz
+two = 20' R 20% 1.96Hz
+three = 30' S 30% 3.92Hz
+
+[memb]
+desc = test
+one = 5' T 100% 7.83Hz
+two = 5' R 100% 7.83Hz
+three = 5' S 100% 7.83Hz
+
+[memc]
+desc = test t
+one = 5' S 100% 11.79Hz
+two = 5' T 100% 23.58Hz
+three = 5' R 100% 30.80Hz
+
+[memd]
+desc = 
+one = 
+two = 
+three = 
+
+[mem5]
+desc = 
+one = 
+two = 
+three = 
+
+[mem6]
+desc = 
+one = 
+two = 
+three = 
+
+[mem7]
+desc = 
+one = 
+two = 
+three = 
+
+[mem8]
+desc = 
+one = 
+two = 
+three = 
+
+[mem9]
+desc = 
+one = 
+two = 
+three = 
+
+[mem10]
+desc = 
+one = 
+two = 
+three = 
+
+[mem11]
+desc = 
+one = 
+two = 
+three = 
+
+[mem12]
+desc = 
+one = 
+two = 
+three = 
+
+[mem13]
+desc = 
+one = 
+two = 
+three = 
+
+[mem14]
+desc = 
+one = 
+two = 
+three = 
+
+[mem15]
+desc = 
+one = 
+two = 
+three = 
+
+[mem16]
+desc = 
+one = 
+two = 
+three = 
+
+[mem17]
+desc = 
+one = 
+two = 
+three = 
+
+[mem18]
+desc = 
+one = 
+two = 
+three = 
+
+[mem19]
+desc = 
+one = 
+two = 
+three = 
+
+[mem20]
+desc = 10 20 30
+one = 10' T 10% 0.98Hz
+two = 20' R 20% 1.96Hz
+three = 30' S 30% 3.92Hz
+
+[static_config]
+localization = usa
+
