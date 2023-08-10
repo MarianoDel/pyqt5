@@ -24,7 +24,7 @@ from threading import Timer
 """
 
 ### GLOBALS FOR CONFIGURATION #########
-CURRENT_VERSION = 'Magnet ver 4.0'
+CURRENT_VERSION = 'Magnet ver 4.1'
 ## No call the first Dialog - code empty presentation page -
 NO_CALL_FIRST_DLG = False
 

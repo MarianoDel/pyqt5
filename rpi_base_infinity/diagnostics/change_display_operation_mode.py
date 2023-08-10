@@ -22,16 +22,16 @@ if __name__ == "__main__":
     # check line arguments
     if len(sys.argv) != 2:
         print("use executable new_operation")
-        print("options are: magnet40 magnet40_new stretcher31 stretcher32 light_treat")
+        print("options are: magnet40 magnet41 stretcher31 stretcher32 light_treat")
         sys.exit(0)
 
     # check line arguments content
     if sys.argv[1] != 'magnet40' and \
-       sys.argv[1] != 'magnet40_new' and \
-       sys.argv[1] != 'stretcher31' and \                      
+       sys.argv[1] != 'magnet41' and \
+       sys.argv[1] != 'stretcher31' and \
        sys.argv[1] != 'stretcher32' and \
        sys.argv[1] != 'light_treat':
-        print("options are: magnet40 magnet40_new stretcher31 stretcher32 light_treat")        
+        print("options are: magnet40 magnet41 stretcher31 stretcher32 light_treat")        
         sys.exit(0)
     
     # check distro
