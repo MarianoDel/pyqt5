@@ -43,7 +43,12 @@
     <file>resources/freq10_90_90.png</file>
   </qresource>
   <qresource prefix="buttons">
+    <file>resources/key_tamper.png</file>
+    <file>resources/key_act.png</file>
+    <file>resources/key_disa.png</file>
+    <file>resources/key_unknow.png</file>
     <file>resources/square_75_75.png</file>
+    <file>resources/key_low_bat.png</file>
     <file>resources/sinus_75_75.png</file>
     <file>resources/triangular_75_75.png</file>
     <file>resources/sinus_90_90.png</file>

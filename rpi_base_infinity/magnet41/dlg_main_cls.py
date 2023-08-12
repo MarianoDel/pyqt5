@@ -10,7 +10,7 @@ import copy
 
 
 #Here import the UIs or classes that got the UIs
-from ui_magnet40 import Ui_Dialog
+from ui_magnet41 import Ui_Dialog
 from dlg_treat_cls import TreatmentDialog
 from dlg_mem_manager_cls import MemManagerDialog
 from dlg_stages_cls import StagesDialog
@@ -76,6 +76,9 @@ class Dialog(QDialog):
 
         # connect wifi button
         self.ui.wifiButton.clicked.connect(self.WifiScreen)
+
+        # connect tamper button
+        self.ui.securityButton.clicked.connect(self.SecurityScreen)
         
         self.ui_label_dict = {
             "mema" : [self.ui.memaDescLabel, self.ui.memaOneLabel, self.ui.memaTwoLabel, self.ui.memaThreeLabel],
@@ -219,8 +222,48 @@ class Dialog(QDialog):
         ## instanciate the antennas timer timeout
         self.antennatimeout = QTimer()
         self.antennatimeout_finish = True
-            
+
+        ## check the tamper status
+        ## url(:/buttons/resources/key_unknow.png)
+        self.tamper_act_Icon = QIcon(':/buttons/resources/key_act.png')
+        self.tamper_low_bat_Icon = QIcon(':/buttons/resources/key_low_bat.png')
+        self.tamper_disa_Icon = QIcon(':/buttons/resources/key_disa.png')
+        self.tamper_unknow_Icon = QIcon(':/buttons/resources/key_unknow.png')
+        self.tamper_tamper_Icon = QIcon(':/buttons/resources/key_tamper.png')
+        self.tamper_status = 'TAMPER_UNKNOW'
+        self.tamper_timer = QTimer()
+        self.tamper_timer.singleShot(100, self.GetTamperStatus)
+
         
+    def GetTamperStatus (self):
+        if self.s.port_open == True:
+            self.s.Write('tamper get status\r\n')
+
+            
+    def SetTamperStatus (self, msg):
+    # char * tamper_string[6] = {"TAMPER_DISABLE",
+    #                            "TAMPER_ENABLE",
+    #                            "TAMPER_ENABLE_TAMPERED",
+    #                            "TAMPER_ENABLE_NO_TAMPER",
+    #                            "TAMPER_ENABLE_LOW_BAT",
+    #                            "TAMPER_ERROR"};
+        if msg.startswith('TAMPER_DISABLE'):
+            self.tamper_status = 'TAMPER_DISABLE'
+            self.ui.securityButton.setIcon(self.tamper_disa_Icon)
+
+        elif msg.startswith('TAMPER_ENABLE_TAMPERED'):
+            self.tamper_status = 'TAMPER_ENABLE_TAMPERED'
+            self.ui.securityButton.setIcon(self.tamper_tamper_Icon)
+
+        elif msg.startswith('TAMPER_ENABLE_NO_TAMPER'):
+            self.tamper_status = 'TAMPER_ENABLE_NO_TAMPER'
+            self.ui.securityButton.setIcon(self.tamper_act_Icon)
+
+        elif msg.startswith('TAMPER_ENABLE_LOW_BAT'):
+            self.tamper_status = 'TAMPER_ENABLE_LOW_BAT'
+            self.ui.securityButton.setIcon(self.tamper_low_bat_Icon)
+            
+
     def Stage1GroupChange (self, change_to):
         raise_inners = False
         
@@ -884,6 +927,10 @@ class Dialog(QDialog):
             
         if rcv.startswith("temp,"):
             show_message = False
+
+        if rcv.startswith("TAMPER"):
+            self.SetTamperStatus(rcv)
+            show_message = False
             
         if show_message:
             self.InsertForeingText(rcv)        
@@ -1020,6 +1067,14 @@ class Dialog(QDialog):
         if self.debug_bool:
             print("TreatmentScreen called!")
             return
+
+        if self.tamper_status == 'TAMPER_ENABLE_TAMPERED':
+            self.InsertInfoText("System was Tampered!")
+            return
+
+        if self.tamper_status == 'TAMPER_UNKNOW':
+            self.InsertInfoText("Security status unknow!")
+            return            
         
         if self.CheckCompleteConf() == True:
             if self.s.port_open == True:
@@ -1119,6 +1174,21 @@ class Dialog(QDialog):
         a = WiFiDialog()
         a.setModal(True)
         a.exec_()
+
+        self.ScreenSaverKick()
+        self.screensaver_window = True
+
+
+    ## security screen
+    def SecurityScreen (self):
+        if self.debug_bool:
+            print("SecurityScreen called!")
+            return
+
+        self.screensaver_window = False
+        # a = WiFiDialog()
+        # a.setModal(True)
+        # a.exec_()
 
         self.ScreenSaverKick()
         self.screensaver_window = True
