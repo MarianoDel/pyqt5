@@ -72,13 +72,11 @@ class TreatmentMock ():
 def TestScreen ():
 
     scb = SignalsCb()
-
-    # s = SerialMock(MyFuncCallback, '/dev/ttyACM0')
     s = SerialMock(scb.MyObjCallback, '/dev/ttyACM0')    
     
     debug = True
     treat = TreatmentMock()
-    a = MainWindow()
+    a = MainWindow(s)
     a.show()
     sys.exit(app.exec_())
 

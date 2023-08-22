@@ -67,7 +67,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.frame_2 = QtWidgets.QFrame(self.channelsFrame)
-        self.frame_2.setStyleSheet("background-color: rgb(129, 129, 129);")
+        self.frame_2.setStyleSheet("background-color: rgb(129, 129, 129);\n"
+"")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -104,7 +105,16 @@ class Ui_MainWindow(object):
         self.ch1_pwrDwnButton = QtWidgets.QPushButton(self.groupBox_4)
         self.ch1_pwrDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
         self.ch1_pwrDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_pwrDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_pwrDwnButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_pwrDwnButton.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/icons/resources/go-down-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -114,7 +124,16 @@ class Ui_MainWindow(object):
         self.ch1_pwrUpButton = QtWidgets.QPushButton(self.groupBox_4)
         self.ch1_pwrUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
         self.ch1_pwrUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_pwrUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_pwrUpButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_pwrUpButton.setText("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/icons/resources/go-up-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -154,7 +173,16 @@ class Ui_MainWindow(object):
         self.ch1_freqDwnButton = QtWidgets.QPushButton(self.groupBox_5)
         self.ch1_freqDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
         self.ch1_freqDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_freqDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_freqDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_freqDwnButton.setText("")
         self.ch1_freqDwnButton.setIcon(icon2)
         self.ch1_freqDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -162,7 +190,16 @@ class Ui_MainWindow(object):
         self.ch1_freqUpButton = QtWidgets.QPushButton(self.groupBox_5)
         self.ch1_freqUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
         self.ch1_freqUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_freqUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_freqUpButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_freqUpButton.setText("")
         self.ch1_freqUpButton.setIcon(icon3)
         self.ch1_freqUpButton.setIconSize(QtCore.QSize(50, 50))
@@ -200,7 +237,16 @@ class Ui_MainWindow(object):
         self.ch1_timerDwnButton = QtWidgets.QPushButton(self.groupBox_6)
         self.ch1_timerDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
         self.ch1_timerDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_timerDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_timerDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_timerDwnButton.setText("")
         self.ch1_timerDwnButton.setIcon(icon2)
         self.ch1_timerDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -208,7 +254,16 @@ class Ui_MainWindow(object):
         self.ch1_timerUpButton = QtWidgets.QPushButton(self.groupBox_6)
         self.ch1_timerUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
         self.ch1_timerUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_timerUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_timerUpButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_timerUpButton.setText("")
         self.ch1_timerUpButton.setIcon(icon3)
         self.ch1_timerUpButton.setIconSize(QtCore.QSize(50, 50))
@@ -306,7 +361,16 @@ class Ui_MainWindow(object):
         self.ch1_gainDwnButton = QtWidgets.QPushButton(self.groupBox_8)
         self.ch1_gainDwnButton.setGeometry(QtCore.QRect(205, 125, 81, 60))
         self.ch1_gainDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_gainDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_gainDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_gainDwnButton.setText("")
         self.ch1_gainDwnButton.setIcon(icon2)
         self.ch1_gainDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -314,14 +378,32 @@ class Ui_MainWindow(object):
         self.ch1_gainUpButton = QtWidgets.QPushButton(self.groupBox_8)
         self.ch1_gainUpButton.setGeometry(QtCore.QRect(295, 125, 81, 60))
         self.ch1_gainUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch1_gainUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_gainUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_gainUpButton.setText("")
         self.ch1_gainUpButton.setIcon(icon3)
         self.ch1_gainUpButton.setIconSize(QtCore.QSize(50, 50))
         self.ch1_gainUpButton.setObjectName("ch1_gainUpButton")
         self.ch1_startButton = QtWidgets.QPushButton(self.frame_2)
         self.ch1_startButton.setGeometry(QtCore.QRect(1300, 50, 101, 156))
-        self.ch1_startButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_startButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_startButton.setText("")
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap(":/icons/resources/pan-start-symbolic-rtl.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -337,7 +419,16 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.ch1_enableButton.setFont(font)
         self.ch1_enableButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.ch1_enableButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch1_enableButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch1_enableButton.setObjectName("ch1_enableButton")
         self.groupBox_9 = QtWidgets.QGroupBox(self.frame_2)
         self.groupBox_9.setGeometry(QtCore.QRect(1620, 20, 191, 196))
@@ -372,6 +463,46 @@ class Ui_MainWindow(object):
         self.ch1_probeLabel.setFont(font)
         self.ch1_probeLabel.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.ch1_probeLabel.setObjectName("ch1_probeLabel")
+        self.ch1_stopButton = QtWidgets.QPushButton(self.frame_2)
+        self.ch1_stopButton.setGeometry(QtCore.QRect(1300, 130, 101, 76))
+        self.ch1_stopButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch1_stopButton.setText("")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/resources/media-playback-stop-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ch1_stopButton.setIcon(icon5)
+        self.ch1_stopButton.setIconSize(QtCore.QSize(32, 32))
+        self.ch1_stopButton.setObjectName("ch1_stopButton")
+        self.ch1_remainMinsLabel = QtWidgets.QLabel(self.frame_2)
+        self.ch1_remainMinsLabel.setGeometry(QtCore.QRect(1285, 50, 81, 76))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch1_remainMinsLabel.setFont(font)
+        self.ch1_remainMinsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch1_remainMinsLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.ch1_remainMinsLabel.setObjectName("ch1_remainMinsLabel")
+        self.ch1_remainSecsLabel = QtWidgets.QLabel(self.frame_2)
+        self.ch1_remainSecsLabel.setGeometry(QtCore.QRect(1370, 55, 96, 71))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch1_remainSecsLabel.setFont(font)
+        self.ch1_remainSecsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch1_remainSecsLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.ch1_remainSecsLabel.setObjectName("ch1_remainSecsLabel")
         self.verticalLayout_3.addWidget(self.frame_2)
         self.frame_3 = QtWidgets.QFrame(self.channelsFrame)
         self.frame_3.setStyleSheet("background-color: rgb(129, 129, 129);")
@@ -589,7 +720,15 @@ class Ui_MainWindow(object):
         self.ch2_enableButton.setObjectName("ch2_enableButton")
         self.ch2_startButton = QtWidgets.QPushButton(self.frame_3)
         self.ch2_startButton.setGeometry(QtCore.QRect(1300, 45, 101, 156))
-        self.ch2_startButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(22)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch2_startButton.setFont(font)
+        self.ch2_startButton.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.ch2_startButton.setStyleSheet("background-color: rgb(218, 218, 218);\n"
+"")
         self.ch2_startButton.setText("")
         self.ch2_startButton.setIcon(icon4)
         self.ch2_startButton.setIconSize(QtCore.QSize(32, 32))
@@ -1341,18 +1480,18 @@ class Ui_MainWindow(object):
         self.audioButton.setMinimumSize(QtCore.QSize(0, 50))
         self.audioButton.setStyleSheet("background-color: rgb(176, 176, 176);")
         self.audioButton.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/resources/audio-speakers-symbolic.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.audioButton.setIcon(icon5)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/resources/audio-speakers-symbolic.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.audioButton.setIcon(icon6)
         self.audioButton.setIconSize(QtCore.QSize(32, 32))
         self.audioButton.setObjectName("audioButton")
         self.verticalLayout_7.addWidget(self.audioButton)
         self.logButton = QtWidgets.QPushButton(self.frame_7)
         self.logButton.setStyleSheet("background-color: rgb(176, 176, 176);")
         self.logButton.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/resources/view-paged-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.logButton.setIcon(icon6)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/resources/view-paged-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.logButton.setIcon(icon7)
         self.logButton.setIconSize(QtCore.QSize(50, 50))
         self.logButton.setObjectName("logButton")
         self.verticalLayout_7.addWidget(self.logButton)
@@ -1362,18 +1501,18 @@ class Ui_MainWindow(object):
         self.configButton = QtWidgets.QPushButton(self.frame_7)
         self.configButton.setStyleSheet("background-color: rgb(176, 176, 176);")
         self.configButton.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/resources/system-run-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.configButton.setIcon(icon7)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/icons/resources/system-run-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.configButton.setIcon(icon8)
         self.configButton.setIconSize(QtCore.QSize(50, 50))
         self.configButton.setObjectName("configButton")
         self.verticalLayout_6.addWidget(self.configButton)
         self.pushButton_6 = QtWidgets.QPushButton(self.frame_7)
         self.pushButton_6.setStyleSheet("background-color: rgb(176, 176, 176);")
         self.pushButton_6.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(":/icons/resources/insert-link-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_6.setIcon(icon8)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/icons/resources/insert-link-symbolic.symbolic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_6.setIcon(icon9)
         self.pushButton_6.setIconSize(QtCore.QSize(50, 50))
         self.pushButton_6.setObjectName("pushButton_6")
         self.verticalLayout_6.addWidget(self.pushButton_6)
@@ -1662,6 +1801,8 @@ class Ui_MainWindow(object):
         self.ch1_enableButton.setText(_translate("MainWindow", "Enable Channel"))
         self.groupBox_9.setTitle(_translate("MainWindow", "Probe"))
         self.ch1_probeLabel.setText(_translate("MainWindow", "Normal Probe"))
+        self.ch1_remainMinsLabel.setText(_translate("MainWindow", "22\'"))
+        self.ch1_remainSecsLabel.setText(_translate("MainWindow", "22\'\'"))
         self.groupBox_10.setTitle(_translate("MainWindow", "Polarity"))
         self.ch2_posButton.setText(_translate("MainWindow", "Positive"))
         self.ch2_altButton.setText(_translate("MainWindow", "Alternative"))

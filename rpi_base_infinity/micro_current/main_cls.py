@@ -3,6 +3,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
+from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QColor
 from PyQt5 import QtCore, QtWidgets
 
@@ -12,13 +13,20 @@ from ui_micro import Ui_MainWindow
 
 
 class MainWindow (QMainWindow):
-    def __init__(self):
+
+    #SIGNALS
+    one_second_signal = pyqtSignal()
+
+    def __init__(self, serialport):
         super(MainWindow, self).__init__()
 
         # Setup the user interface from Designer.
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # get parent info
+        self.s = serialport
+        
         # self.bt_close.clicked.connect(self.close)
         self.ui.bt_menu_close.clicked.connect(self.move_menu)
         self.ui.bt_menu_open.clicked.connect(self.move_menu)
@@ -55,6 +63,7 @@ class MainWindow (QMainWindow):
 
         # others on ch1
         self.ui.ch1_startButton.clicked.connect(self.StartCh1)
+        self.ui.ch1_stopButton.clicked.connect(self.StopCh1)        
         self.ui.ch1_enableButton.clicked.connect(self.EnableCh1)
 
         # # self.bt_min.clicked.connect(self.control_minimized)
@@ -73,9 +82,25 @@ class MainWindow (QMainWindow):
         self.ui.audioButton.clicked.connect(self.LateralMenu)
         self.ui.configButton.clicked.connect(self.LateralMenu)
         self.ui.logButton.clicked.connect(self.LateralMenu)
-        # self.bt_4.clicked.connect(self.LateralMenu)        
-        
+        # self.bt_4.clicked.connect(self.LateralMenu)
 
+        ## connect the signals
+        # timer signal to the Update
+        self.one_second_signal.connect(self.UpdateOneSec)
+        
+        ## initial setup
+        self.ui.ch1_stopButton.hide()
+        self.ui.ch1_remainMinsLabel.hide()
+        self.ui.ch1_remainSecsLabel.hide()        
+        self.ui.bt_menu_close.hide()
+        self.ch1_in_treat = False        
+        
+        ## activate the 1 second timer its repetitive
+        self.t1seg = QTimer()
+        self.t1seg.timeout.connect(self.TimerOneSec)
+        self.t1seg.start(1000)
+
+        
     def move_menu (self):
         width = self.ui.lateralMenu.width()
         normal = 0
@@ -110,23 +135,6 @@ class MainWindow (QMainWindow):
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_log)
             
         
-    def control_page_one (self):
-
-        self.page_animation()
-
-    def control_page_two (self):
-        self.stackedWidget.setCurrentWidget(self.page_two)
-        self.page_animation()
-
-    def control_page_three (self):
-        self.stackedWidget.setCurrentWidget(self.page_three)
-        self.page_animation()
-
-    def control_page_four (self):
-        self.stackedWidget.setCurrentWidget(self.page_four)
-        self.page_animation()
-        
-
     def GainUpDwn (self):
         sender = self.sender()
         
@@ -140,6 +148,7 @@ class MainWindow (QMainWindow):
 
         self.ui.ch1_gainLabel.setText(str(self.gain))
         self.ui.ch1_displayLabel.setText(str(self.gain))
+        self.SendConfig('ch1', 'gain ' + str(self.gain))
 
 
     def ChangePolarity (self):
@@ -149,16 +158,19 @@ class MainWindow (QMainWindow):
             self.ui.ch1_posButton.setStyleSheet('background-color: rgb(218, 218, 218);')
             self.ui.ch1_altButton.setStyleSheet('')
             self.ui.ch1_negButton.setStyleSheet('')
+            self.SendConfig('ch1', 'polarity positive')
 
         if sender.objectName() == 'ch1_altButton':
             self.ui.ch1_posButton.setStyleSheet('')
             self.ui.ch1_altButton.setStyleSheet('background-color: rgb(218, 218, 218);')
             self.ui.ch1_negButton.setStyleSheet('')
+            self.SendConfig('ch1', 'polarity alternative')
 
         if sender.objectName() == 'ch1_negButton':
             self.ui.ch1_posButton.setStyleSheet('')
             self.ui.ch1_altButton.setStyleSheet('')
             self.ui.ch1_negButton.setStyleSheet('background-color: rgb(218, 218, 218);')
+            self.SendConfig('ch1', 'polarity negative')
             
 
     def ChangeTimer (self):
@@ -186,7 +198,9 @@ class MainWindow (QMainWindow):
             if self.ch1_freq_index > 0:
                 self.ch1_freq_index -= 1
 
-        self.ui.ch1_freqLabel.setText(self.freq_list[self.ch1_freq_index])
+        freq_str = self.freq_list[self.ch1_freq_index]
+        self.ui.ch1_freqLabel.setText(freq_str)
+        self.SendConfig('ch1', 'freq ' + freq_str)
 
 
     def ChangePower (self):
@@ -200,12 +214,79 @@ class MainWindow (QMainWindow):
             if self.ch1_pwr_index > 0:
                 self.ch1_pwr_index -= 1
 
-        self.ui.ch1_pwrLabel.setText(self.pwr_list[self.ch1_pwr_index])
+        power_str = self.pwr_list[self.ch1_pwr_index]
+        self.ui.ch1_pwrLabel.setText(power_str)
+        self.SendConfig('ch1', 'power ' + power_str)
 
 
     def StartCh1 (self):
-        pass
+        self.SendConfig('ch1', 'start')
+        timer = self.ui.ch1_timerLabel.text()
+        if timer[-1] == 's':
+            self.ch1_remaining_minutes = 0
+            self.ch1_remaining_seconds = int(timer[:-1])
+        elif timer[-1] == 'm':
+            self.ch1_remaining_minutes = int(timer[:-1])
+            self.ch1_remaining_seconds = 0
+            
+        self.ui.ch1_remainMinsLabel.setText(str(self.ch1_remaining_minutes) + "'")
+        self.ui.ch1_remainSecsLabel.setText(str(self.ch1_remaining_seconds) + "''")        
+
+        self.ch1_in_treat = True
+        self.ui.ch1_remainMinsLabel.show()
+        self.ui.ch1_remainSecsLabel.show()
+        self.ui.ch1_stopButton.show()
+        self.ui.ch1_startButton.hide()
+
+
+    def StopCh1 (self):
+        self.SendConfig('ch1', 'stop')
+        self.ch1_in_treat = False
+        self.ui.ch1_remainMinsLabel.hide()
+        self.ui.ch1_remainSecsLabel.hide()
+        self.ui.ch1_stopButton.hide()
+        self.ui.ch1_startButton.show()
+
+
 
     def EnableCh1 (self):
-        pass
+        self.SendConfig('ch1', 'enable channel')
     
+
+    def SendConfig (self, channel, command):
+        if self.s.port_open == True:
+            self.s.Write(channel + ' ' + command)
+
+ 
+    ###########################
+    # One Second Timer signal #
+    ###########################
+    def TimerOneSec(self):
+        self.one_second_signal.emit()
+
+
+    def UpdateOneSec (self):
+        """ one second gone, check if its something to do """
+        if self.ch1_in_treat:
+            if (self.ch1_remaining_minutes > 0 or
+                self.ch1_remaining_seconds > 0):
+                if self.ch1_remaining_seconds > 0:
+                    self.ch1_remaining_seconds -= 1
+                else:
+                    self.ch1_remaining_minutes -= 1
+                    self.ch1_remaining_seconds = 59
+
+                #todos los segundos actualizo ui
+                self.ui.ch1_remainMinsLabel.setText(str(self.ch1_remaining_minutes) + "'")
+                self.ui.ch1_remainSecsLabel.setText(str(self.ch1_remaining_seconds) + "''")
+
+            else:
+                self.StopCh1()
+
+        # date_now = datetime.today()
+        # if date_now.minute != self.minutes_last:
+        #     # print(date_now)
+        #     self.minutes_last = date_now.minute
+        #     self.UpdateDateTime(date_now)
+
+           

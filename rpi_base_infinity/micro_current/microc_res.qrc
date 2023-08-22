@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/media-playback-stop-symbolic.symbolic.png</file>
     <file>resources/audio-speakers-symbolic.svg</file>
     <file>resources/document-open-symbolic.symbolic.png</file>
     <file>resources/go-down-symbolic.symbolic.png</file>
