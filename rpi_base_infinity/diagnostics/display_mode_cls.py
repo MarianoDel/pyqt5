@@ -19,7 +19,7 @@ class DisplayModeDialog(QDialog):
         self.ui.setupUi(self)
 
         # get the close event
-        self.ui.cancelButton.clicked.connect(self.accept)
+        self.ui.cancelButton.clicked.connect(self.RebootOrCancel)
 
         # save button
         self.ui.saveButton.clicked.connect(self.SaveNewMode)
@@ -80,13 +80,29 @@ class DisplayModeDialog(QDialog):
                 os.system('python3 change_display_operation_mode.py light_treat')
                 
         else:
-            print('anything on slackware')
+            print('slackware: not executing change_display_operation_mode.py')
 
 
         self.ui.saveButton.setText('Saved')
         self.ui.cancelButton.setStyleSheet(self.button_enable)
         self.ui.cancelButton.setText('Done!')
         self.ui.cancelButton.setEnabled(True)
+
+    def RebootOrCancel (self):
+        sender = self.sender()
+
+        if sender.text() == 'Done!':
+            (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
+            if distname == 'debian':
+                os.system('sudo reboot')
+                
+            else:
+                print('slackware: not rebooting')
+                self.accept()
+
+        else:
+            self.accept()
+
 
         
 ### end of file ###

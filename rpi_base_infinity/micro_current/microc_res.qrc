@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>resources/audio-speakers-symbolic.svg</file>
+    <file>resources/document-open-symbolic.symbolic.png</file>
+    <file>resources/go-down-symbolic.symbolic.png</file>
+    <file>resources/go-next-symbolic.symbolic.png</file>
+    <file>resources/go-previous-symbolic.symbolic.png</file>
+    <file>resources/go-up-symbolic.symbolic.png</file>
+    <file>resources/insert-link-symbolic.symbolic.png</file>
+    <file>resources/pan-start-symbolic-rtl.symbolic.png</file>
+    <file>resources/system-run-symbolic.symbolic.png</file>
+    <file>resources/system-search-symbolic.symbolic.png</file>
+    <file>resources/view-paged-symbolic.symbolic.png</file>
+    <file>resources/window-close-symbolic.symbolic.png</file>
+    <file>resources/window-minimize-symbolic.symbolic.png</file>
+  </qresource>
+</RCC>

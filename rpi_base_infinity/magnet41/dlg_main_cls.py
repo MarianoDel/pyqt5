@@ -18,6 +18,7 @@ from diagnostics_cls import DiagnosticsDialog
 from screen_saver_cls import ScreenSaverDialog
 from wifi_enable_cls import WiFiDialog
 from dlg_mems_cls import MemoryDialog
+from security_code_cls import SecurityDialog
 
 #get the code for manager
 from wifi_thread_manager import WiFiThreadManager
@@ -1185,10 +1186,13 @@ class Dialog(QDialog):
             print("SecurityScreen called!")
             return
 
+        if self.s.port_open != True:
+            return
+        
         self.screensaver_window = False
-        # a = WiFiDialog()
-        # a.setModal(True)
-        # a.exec_()
+        a = SecurityDialog(self.s)
+        a.setModal(True)
+        a.exec_()
 
         self.ScreenSaverKick()
         self.screensaver_window = True

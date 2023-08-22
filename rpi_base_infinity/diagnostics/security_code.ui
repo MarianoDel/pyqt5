@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SecurityDialog</class>
+ <widget class="QDialog" name="SecurityDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>646</width>
+    <height>489</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QLineEdit" name="securityEdit">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>200</y>
+     <width>591</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>28</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancelButton">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>355</y>
+     <width>200</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>36</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 238, 126);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);
+color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="saveButton">
+   <property name="geometry">
+    <rect>
+     <x>315</x>
+     <y>355</y>
+     <width>300</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>36</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 238, 126);
+border-radius: 10px;
+border:2px solid rgb(55, 52, 53);
+color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Save &amp;&amp; Exit</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lanLabel1">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>10</y>
+     <width>396</width>
+     <height>56</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>28</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Actual Security Code:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lanLabel2">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>130</y>
+     <width>301</width>
+     <height>56</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>28</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>Enter new Code:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="securityButton">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>200</y>
+     <width>591</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(196, 255, 157, 0);
+border: 0px
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="actualLabel">
+   <property name="geometry">
+    <rect>
+     <x>445</x>
+     <y>10</y>
+     <width>131</width>
+     <height>56</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>28</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>9999</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="statusLabel">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>295</y>
+     <width>586</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>true</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(55, 52, 53);</string>
+   </property>
+   <property name="text">
+    <string>No new code detected!</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="diagnostics_res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
