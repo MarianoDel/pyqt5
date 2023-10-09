@@ -109,6 +109,12 @@ class ButtonStyles():
                            text-align:top;\
                            border:2px solid rgb(55, 52, 53);"
 
+        self.ch_old_ant = "color: rgb(55, 52, 53);\
+                           background-color: rgb(246, 172, 172);\
+                           border-radius: 10px;\
+                           text-align:top;\
+                           border:2px solid rgb(55, 52, 53);"
+
         self.ch_enable = "color: rgb(55, 52, 53);\
                           background-color: rgb(157, 211, 175);\
                           border-radius: 10px;\

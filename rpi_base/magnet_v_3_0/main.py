@@ -8,6 +8,7 @@ from stylesheet_class import ButtonStyles
 from time import sleep, time
 from datetime import datetime
 from antenna_class import AntennaInTreatment
+import platform
 
 
 #para el timer de 1 segundo
@@ -23,29 +24,13 @@ from threading import Timer
 """
 
 ### GLOBALS FOR CONFIGURATION #########
-## What version of UI we must run
-# RUN_VER_3_2 = 0    #not new version for magnet
-RUN_VER_3_1 = 1
-## OS where its run
-RUNNING_ON_SLACKWARE = 1
-RUNNING_ON_RASP = 0
+CURRENT_VERSION = 'Magnet ver 3.1'
 ## No call the first Dialog - code empty presentation page -
-NO_CALL_FIRST_DLG = 0
+NO_CALL_FIRST_DLG = False
 
 
-#Here import the UIs or the classes that got the UIs
-# if RUN_VER_3_2:
-#     from ui_magnet32 import Ui_Dialog
-#     CURRENT_VERSION = "Stretcher_ver_3_2"
-# elif RUN_VER_3_1:
-#     from ui_magnet31 import Ui_Dialog
-#     CURRENT_VERSION = "Stretcher_ver_3_1"
-# else:
-#     print('Please select the UI version to run!!!')
-#     CURRENT_VERSION = "Stretcher_unknown"
-#     sys.exit()
+## Import UIs classes used
 from ui_magnet31 import Ui_Dialog
-CURRENT_VERSION = "Magnet_ver_3_1"
 
     
 from dlg_treat_cls import TreatmentDialog
@@ -131,11 +116,13 @@ class Dialog(QDialog):
 
         ## Init treatment object
         self.t = Treatment()
+
+        self.distro = self.GetDistroName(True)
+        # print ('distro: ' + self.distro + ' distro len: ' + str(len(self.distro)))
+        print (self.distro)        
+        
         self.t.SetCurrentVersion(CURRENT_VERSION)
-        if RUNNING_ON_SLACKWARE:
-            self.t.SetCurrentSystem('slackware')
-        elif RUNNING_ON_RASP:
-            self.t.SetCurrentSystem('raspbian')
+        self.t.SetCurrentSystem(self.distro)
         
         ## Init stylesheet object
         self.ss = ButtonStyles()
@@ -177,10 +164,11 @@ class Dialog(QDialog):
         self.upDwnButtonCnt = 0
 
         ## PARA SLACKWARE
-        if self.t.GetCurrentSystem() == 'slackware':
-            self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+        if self.t.GetCurrentSystem() == 'Slackware ':
+            # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+            self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')
         ## PARA RASPBERRY
-        elif self.t.GetCurrentSystem() == 'raspbian':
+        elif self.t.GetCurrentSystem() == 'debian':
             self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
             
         if self.s.port_open == False:
@@ -234,6 +222,15 @@ class Dialog(QDialog):
             self.s.Write("get_antenna,\r\n")
 
 
+    def GetDistroName (self, show=False):
+        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        if show:
+            os_text = "--" + distname + version + "-- "
+            print("os: " + os_text)
+
+        return distname
+
+    
     def UpdateDateTime(self, new_date_time):
         date_str = ""
         if self.t.GetLocalization() == 'usa':
@@ -612,9 +609,10 @@ class Dialog(QDialog):
     def CheckCompleteConf (self):
         if (self.t.GetFrequency() != 'None' and
             self.t.GetSignal() != 'None'):
-           if (self.t.GetChannelInTreatment('ch1') != False or
-               self.t.GetChannelInTreatment('ch2') != False or
-               self.t.GetChannelInTreatment('ch3') != False):
+            if (self.antennas_connected.GetActive('ch1') != False or
+                self.antennas_connected.GetActive('ch2') != False or
+                self.antennas_connected.GetActive('ch3') != False or
+                self.antennas_connected.GetActive('ch4') != False):
                 return True
 
         return False
@@ -844,6 +842,8 @@ class Dialog(QDialog):
             self.ui.ch4Button.setStyleSheet(self.ss.ch_disable)
             self.ui.ch4Button.setText("CH4")
 
+        self.CheckForStart()
+
 
     def SerialProcess (self, rcv):
         show_message = True
@@ -889,6 +889,26 @@ class Dialog(QDialog):
         if rcv.startswith("new antenna ch4"):
             self.ui.ch4Button.setStyleSheet(self.ss.ch_getting)
             self.ui.ch4Button.setText("CH4\ngetting\nparams")
+            show_message = False
+
+        if rcv.startswith("old antenna ch1"):
+            self.ui.ch1Button.setStyleSheet(self.ss.ch_old_ant)
+            self.ui.ch1Button.setText("CH1\nwrong\nantenna")
+            show_message = False
+
+        if rcv.startswith("old antenna ch2"):
+            self.ui.ch2Button.setStyleSheet(self.ss.ch_old_ant)
+            self.ui.ch2Button.setText("CH2\nwrong\nantenna")
+            show_message = False            
+
+        if rcv.startswith("old antenna ch3"):
+            self.ui.ch3Button.setStyleSheet(self.ss.ch_old_ant)
+            self.ui.ch3Button.setText("CH3\nwrong\nantenna")
+            show_message = False            
+
+        if rcv.startswith("old antenna ch4"):
+            self.ui.ch4Button.setStyleSheet(self.ss.ch_old_ant)
+            self.ui.ch4Button.setText("CH4\nwrong\nantenna")
             show_message = False
 
         if rcv.startswith("temp,"):

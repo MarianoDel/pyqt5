@@ -1,7 +1,7 @@
 [power_limits]
-triangular = 89
-square = 79
-sinusoidal = 69
+triangular = 100
+square = 100
+sinusoidal = 100
 
 [static_params]
 peak_current = 3.6
@@ -28,4 +28,7 @@ frequency = 7.83Hz
 signal = triangular
 time = 60
 power = 70
+
+[static_config]
+localization = usa
 
