@@ -1,0 +1,1 @@
+../diagnostics/get_mac.py
