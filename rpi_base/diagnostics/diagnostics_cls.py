@@ -5,6 +5,7 @@ from threading import Timer
 from datetime import datetime
 import platform
 import os
+import subprocess
 
 
 # get the UI from here
@@ -89,6 +90,8 @@ class DiagnosticsDialog(QDialog):
         (system, node, release, version, machine, processor) = platform.uname()
         self.ui.kernelLabel.setText(release)
         self.ui.softLabel.setText(self.t.GetCurrentVersion())
+
+        self.GetMac()
 
         # recupero informacion de la placa power si el puerto esta OK
         self.comm_progress = 'clean'        
@@ -181,6 +184,20 @@ class DiagnosticsDialog(QDialog):
         self.UpdateDateTime(date_now)
 
         
+    def GetMac (self):
+        output = ''
+        try:
+            output = subprocess.check_output(['python3','get_mac.py'])
+        except subprocess.CalledProcessError as err:
+            print(err)
+            return
+ 
+        output_str = output.decode('utf-8')
+        line = output_str.split(' ')
+        # print (line[1])
+        self.ui.macLabel.setText(line[1])
+
+
     def FinishThisDialog (self):
         # to save localization
         self.t.SaveConfigFile()
