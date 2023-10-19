@@ -7,6 +7,7 @@ from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
 from time import sleep, time
 from datetime import datetime
+import platform
 
 
 #para el timer de 1 segundo
@@ -26,11 +27,11 @@ from threading import Timer
 ## What version of UI we must run
 RUN_VER_3_2 = 1
 RUN_VER_3_1 = 0
-## OS where its run
-RUNNING_ON_SLACKWARE = 1
-RUNNING_ON_RASP = 0
 ## No call the first Dialog - code empty presentation page -
 NO_CALL_FIRST_DLG = 0
+## For debug mock serial port instance
+# DEBUG_MOCK_SERIAL_INSTANCE = True
+DEBUG_MOCK_SERIAL_INSTANCE = False
 
 
 #Here import the UIs or the classes that got the UIs
@@ -44,6 +45,10 @@ else:
     print('Please select the UI version to run!!!')
     CURRENT_VERSION = "Stretcher_unknown"
     sys.exit()
+
+if DEBUG_MOCK_SERIAL_INSTANCE == True:
+    from  serialcomm_mock import SerialCommMock
+
     
 from dlg_treat_cls import TreatmentDialog
 from diagnostics_cls import DiagnosticsDialog
@@ -130,11 +135,12 @@ class Dialog(QDialog):
 
         ## Init treatment object
         self.t = Treatment()
+
+        self.distro = self.GetDistroName(True)
+        print (self.distro)        
+        
         self.t.SetCurrentVersion(CURRENT_VERSION)
-        if RUNNING_ON_SLACKWARE:
-            self.t.SetCurrentSystem('slackware')
-        elif RUNNING_ON_RASP:
-            self.t.SetCurrentSystem('raspbian')
+        self.t.SetCurrentSystem(self.distro)
         
         ## Init stylesheet object
         self.ss = ButtonStyles()
@@ -178,12 +184,16 @@ class Dialog(QDialog):
         self.diagButtonCnt = 0
         self.upDwnButtonCnt = 0
 
-        ## PARA SLACKWARE
-        if self.t.GetCurrentSystem() == 'slackware':
-            self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
-        ## PARA RASPBERRY
-        elif self.t.GetCurrentSystem() == 'raspbian':
-            self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
+        if DEBUG_MOCK_SERIAL_INSTANCE == True:
+            self.s = SerialCommMock(self.MyObjCallback, '/dev/ttyUSB0')
+        else:
+            ## PARA SLACKWARE
+            if self.t.GetCurrentSystem() == 'Slackware ':
+                # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+                self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')
+            ## PARA RASPBERRY
+            elif self.t.GetCurrentSystem() == 'debian':
+                self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
             
         if self.s.port_open == False:
             self.ui.textEdit.append("No serial port found!!!")
@@ -227,6 +237,15 @@ class Dialog(QDialog):
         if NO_CALL_FIRST_DLG == 0:
             self.FirstDialogScreen()
 
+
+    def GetDistroName (self, show=False):
+        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        if show:
+            os_text = "--" + distname + version + "-- "
+            print("os: " + os_text)
+
+        return distname
+            
 
     def UpdateDateTime(self, new_date_time):
         date_str = ""
