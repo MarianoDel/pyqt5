@@ -7,6 +7,15 @@ from PyQt5.QtGui import QColor
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.uic import loadUi
 
+from treatment_class import Treatment
+import platform
+from serialcomm import SerialComm
+
+
+### GLOBALS FOR CONFIGURATION #########
+CURRENT_VERSION = 'Micro Current ver 1.0'
+
+
 
 class MainWindow (QMainWindow):
     def __init__(self):
@@ -67,7 +76,25 @@ class MainWindow (QMainWindow):
         # self.bt_1.clicked.connect(self.control_page_one)
         # self.bt_2.clicked.connect(self.control_page_two)
         # self.bt_3.clicked.connect(self.control_page_three)
-        # self.bt_4.clicked.connect(self.control_page_four)        
+        # self.bt_4.clicked.connect(self.control_page_four)
+
+        ## Distro Information
+        self.t = Treatment()
+        self.distro = self.GetDistroName(True)
+        # print ('distro: ' + self.distro + ' distro len: ' + str(len(self.distro)))
+        print (self.distro)        
+        
+        self.t.SetCurrentVersion(CURRENT_VERSION)
+        self.t.SetCurrentSystem(self.distro)
+        
+        ## PARA SLACKWARE
+        if self.t.GetCurrentSystem() == 'Slackware ':
+            # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
+            self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')
+        ## PARA RASPBERRY
+        elif self.t.GetCurrentSystem() == 'debian':
+            self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
+        
         
 
     def move_menu (self):
@@ -231,6 +258,20 @@ class MainWindow (QMainWindow):
 
     def EnableCh1 (self):
         pass
+
+    def GetDistroName (self, show=False):
+        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        if show:
+            os_text = "--" + distname + version + "-- "
+            print("os: " + os_text)
+
+        return distname
+
+    def MyObjCallback (self, dataread):
+        d = dataread.rstrip()
+        self.rcv_signal.emit(d)
+    
+    
     
 if __name__ == "__main__":
     app = QApplication(sys.argv)

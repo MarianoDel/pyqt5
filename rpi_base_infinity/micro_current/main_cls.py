@@ -17,7 +17,7 @@ class MainWindow (QMainWindow):
     #SIGNALS
     one_second_signal = pyqtSignal()
 
-    def __init__(self, serialport):
+    def __init__(self, serialport, parent=None):
         super(MainWindow, self).__init__()
 
         # Setup the user interface from Designer.
@@ -26,6 +26,7 @@ class MainWindow (QMainWindow):
 
         # get parent info
         self.s = serialport
+        self.parent = parent
         
         # self.bt_close.clicked.connect(self.close)
         self.ui.bt_menu_close.clicked.connect(self.move_menu)
@@ -50,6 +51,7 @@ class MainWindow (QMainWindow):
         # frequency options
         self.ch1_freq_index = 0
         self.freq_list = ['0.5Hz', '1.0Hz', '2.0Hz', '4.0Hz', '8.0Hz', '10Hz', '20Hz', '40Hz', '80Hz', '160Hz', '320Hz']
+        self.freq_conf_list = ['0.50', '1.00', '2.00', '4.00', '8.00', '10.00', '20.00', '40.00', '80.00', '160.00', '320.00']        
         # frequency on ch1
         self.ui.ch1_freqUpButton.clicked.connect(self.ChangeFrequency)
         self.ui.ch1_freqDwnButton.clicked.connect(self.ChangeFrequency)
@@ -87,6 +89,7 @@ class MainWindow (QMainWindow):
         ## connect the signals
         # timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
+        self.parent.rcv_signal.connect(self.SerialDataCallback)        
         
         ## initial setup
         self.ui.ch1_stopButton.hide()
@@ -185,42 +188,57 @@ class MainWindow (QMainWindow):
                 self.ch1_timer_index -= 1
 
         self.ui.ch1_timerLabel.setText(self.timer_list[self.ch1_timer_index])
+        if self.ch1_in_treat == True:
+            self.StartCh1()
 
 
     def ChangeFrequency (self):
         sender = self.sender()
+        send_encod = False
         
         if sender.objectName() == 'ch1_freqUpButton':
+            send_encod = True
             if self.ch1_freq_index < 10:
                 self.ch1_freq_index += 1
 
         if sender.objectName() == 'ch1_freqDwnButton':
+            send_encod = True            
             if self.ch1_freq_index > 0:
                 self.ch1_freq_index -= 1
 
         freq_str = self.freq_list[self.ch1_freq_index]
         self.ui.ch1_freqLabel.setText(freq_str)
-        self.SendConfig('ch1', 'freq ' + freq_str)
+        self.SendConfig('ch1', 'frequency ' + self.freq_conf_list[self.ch1_freq_index])
+        if send_encod:
+            self.SendEncodFreq('ch1', self.ch1_freq_index)
 
 
     def ChangePower (self):
         sender = self.sender()
+        send_encod = False
         
         if sender.objectName() == 'ch1_pwrUpButton':
+            send_encod = True            
             if self.ch1_pwr_index < 5:
                 self.ch1_pwr_index += 1
 
         if sender.objectName() == 'ch1_pwrDwnButton':
+            send_encod = True            
             if self.ch1_pwr_index > 0:
                 self.ch1_pwr_index -= 1
 
         power_str = self.pwr_list[self.ch1_pwr_index]
         self.ui.ch1_pwrLabel.setText(power_str)
-        self.SendConfig('ch1', 'power ' + power_str)
+        self.SendConfig('ch1', 'intensity ' + power_str)
+        if send_encod:
+            self.SendEncodPwr('ch1', self.ch1_pwr_index)        
 
 
     def StartCh1 (self):
-        self.SendConfig('ch1', 'start')
+        # sends or resend a start to channel
+        if self.ch1_in_treat == False:
+            self.SendConfig('ch1', 'start')
+            
         timer = self.ui.ch1_timerLabel.text()
         if timer[-1] == 's':
             self.ch1_remaining_minutes = 0
@@ -250,13 +268,47 @@ class MainWindow (QMainWindow):
 
 
     def EnableCh1 (self):
-        self.SendConfig('ch1', 'enable channel')
+        self.SendConfig('ch1', 'enable')
     
 
     def SendConfig (self, channel, command):
         if self.s.port_open == True:
-            self.s.Write(channel + ' ' + command)
+            self.s.Write(channel + ' ' + command + '\n')
 
+    def SendEncodFreq (self, channel, value):
+        if self.s.port_open == True:
+            encoder = ''
+            if channel == 'ch1':
+                encoder = 'encod0'
+            elif channel == 'ch2':
+                encoder = 'encod2'
+            elif channel == 'ch3':
+                encoder = 'encod4'
+            else: # channel == 'ch4'
+                encoder = 'encod6'
+
+            if value <= 9:
+                self.s.Write(encoder + ' ' + str(value) + '\n')
+            elif value == 10:
+                self.s.Write(encoder + ' :\n')
+            elif value == 11:
+                self.s.Write(encoder + ' ;\n')
+                
+
+    def SendEncodPwr (self, channel, value):
+        if self.s.port_open == True:
+            encoder = ''
+            if channel == 'ch1':
+                encoder = 'encod1'
+            elif channel == 'ch2':
+                encoder = 'encod3'
+            elif channel == 'ch3':
+                encoder = 'encod5'
+            else: # channel == 'ch4'
+                encoder = 'encod7'
+                
+            self.s.Write(encoder + ' ' + str(value) + '\n')
+            
  
     ###########################
     # One Second Timer signal #
@@ -289,4 +341,34 @@ class MainWindow (QMainWindow):
         #     self.minutes_last = date_now.minute
         #     self.UpdateDateTime(date_now)
 
-           
+        
+        ##################
+        # Serial Methods #
+        ##################
+    def SerialDataCallback (self, rcv):        
+        # print ("serial data callback!")
+        # print (rcv)
+        # self.SerialProcess(rcv)
+        if rcv.startswith("enc "):
+            rcv_list = rcv.split(' ')
+            if rcv_list[1] >= '0' and \
+               rcv_list[1] <= '8':
+                pos = int(rcv_list[3])
+                # only for ch1
+                if rcv_list[1] == '0':
+                    if pos > 10:
+                        pos = 10
+                    self.ch1_freq_index = pos
+                    self.ChangeFrequency()
+
+                if rcv_list[1] == '1':
+                    self.ch1_pwr_index = pos
+                    self.ChangePower()
+                    
+                    
+    # def SerialProcess (self, rcv):
+    #     show_message = True
+    #     if rcv.startswith("antenna none"):
+    #         self.antennas_connected.Flush()
+    #         self.AntennaUpdate()
+        
