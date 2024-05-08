@@ -680,6 +680,17 @@ class MainWindow (QMainWindow):
             rcv_list = rcv.split(' ')
             self.ui.ch2_probeLabel.setText(rcv_list[3])
             
+        if rcv.startswith("ch1 probe start"):
+            if self.in_treat_ch_list[0] == False:
+                self.SendConfig('ch1', 'start')
+
+            self.StartChannelByIndex(0)            
+
+        if rcv.startswith("ch2 probe start"):
+            if self.in_treat_ch_list[1] == False:
+                self.SendConfig('ch2', 'start')
+
+            self.StartChannelByIndex(1)            
             
                     
                     
