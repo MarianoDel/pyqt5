@@ -608,7 +608,16 @@ class Ui_MainWindow(object):
         self.ch2_pwrDwnButton = QtWidgets.QPushButton(self.groupBox_11)
         self.ch2_pwrDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
         self.ch2_pwrDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_pwrDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_pwrDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_pwrDwnButton.setText("")
         self.ch2_pwrDwnButton.setIcon(icon2)
         self.ch2_pwrDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -616,7 +625,16 @@ class Ui_MainWindow(object):
         self.ch2_pwrUpButton = QtWidgets.QPushButton(self.groupBox_11)
         self.ch2_pwrUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
         self.ch2_pwrUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_pwrUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_pwrUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_pwrUpButton.setText("")
         self.ch2_pwrUpButton.setIcon(icon3)
         self.ch2_pwrUpButton.setIconSize(QtCore.QSize(50, 50))
@@ -660,7 +678,16 @@ class Ui_MainWindow(object):
         self.ch2_gainDwnButton = QtWidgets.QPushButton(self.groupBox_12)
         self.ch2_gainDwnButton.setGeometry(QtCore.QRect(205, 125, 81, 60))
         self.ch2_gainDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_gainDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_gainDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_gainDwnButton.setText("")
         self.ch2_gainDwnButton.setIcon(icon2)
         self.ch2_gainDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -668,7 +695,16 @@ class Ui_MainWindow(object):
         self.ch2_gainUpButton = QtWidgets.QPushButton(self.groupBox_12)
         self.ch2_gainUpButton.setGeometry(QtCore.QRect(295, 125, 81, 60))
         self.ch2_gainUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_gainUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_gainUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_gainUpButton.setText("")
         self.ch2_gainUpButton.setIcon(icon3)
         self.ch2_gainUpButton.setIconSize(QtCore.QSize(50, 50))
@@ -706,7 +742,16 @@ class Ui_MainWindow(object):
         self.ch2_freqDwnButton = QtWidgets.QPushButton(self.groupBox_13)
         self.ch2_freqDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
         self.ch2_freqDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_freqDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_freqDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_freqDwnButton.setText("")
         self.ch2_freqDwnButton.setIcon(icon2)
         self.ch2_freqDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -714,7 +759,16 @@ class Ui_MainWindow(object):
         self.ch2_freqUpButton = QtWidgets.QPushButton(self.groupBox_13)
         self.ch2_freqUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
         self.ch2_freqUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_freqUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_freqUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_freqUpButton.setText("")
         self.ch2_freqUpButton.setIcon(icon3)
         self.ch2_freqUpButton.setIconSize(QtCore.QSize(50, 50))
@@ -728,7 +782,16 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.ch2_enableButton.setFont(font)
         self.ch2_enableButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.ch2_enableButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_enableButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_enableButton.setObjectName("ch2_enableButton")
         self.ch2_startButton = QtWidgets.QPushButton(self.frame_3)
         self.ch2_startButton.setGeometry(QtCore.QRect(1300, 45, 101, 156))
@@ -739,7 +802,16 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.ch2_startButton.setFont(font)
         self.ch2_startButton.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.ch2_startButton.setStyleSheet("background-color: rgb(218, 218, 218);\n"
+        self.ch2_startButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"\n"
 "")
         self.ch2_startButton.setText("")
         self.ch2_startButton.setIcon(icon4)
@@ -778,7 +850,16 @@ class Ui_MainWindow(object):
         self.ch2_timerDwnButton = QtWidgets.QPushButton(self.groupBox_14)
         self.ch2_timerDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
         self.ch2_timerDwnButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_timerDwnButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_timerDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_timerDwnButton.setText("")
         self.ch2_timerDwnButton.setIcon(icon2)
         self.ch2_timerDwnButton.setIconSize(QtCore.QSize(50, 50))
@@ -786,7 +867,16 @@ class Ui_MainWindow(object):
         self.ch2_timerUpButton = QtWidgets.QPushButton(self.groupBox_14)
         self.ch2_timerUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
         self.ch2_timerUpButton.setMinimumSize(QtCore.QSize(60, 60))
-        self.ch2_timerUpButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_timerUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_timerUpButton.setText("")
         self.ch2_timerUpButton.setIcon(icon3)
         self.ch2_timerUpButton.setIconSize(QtCore.QSize(50, 50))
@@ -833,19 +923,55 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.ch2_linkButton.setFont(font)
         self.ch2_linkButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.ch2_linkButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch2_linkButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
         self.ch2_linkButton.setObjectName("ch2_linkButton")
-        self.frame_2.raise_()
-        self.frame_2.raise_()
-        self.groupBox_10.raise_()
-        self.groupBox_11.raise_()
-        self.groupBox_12.raise_()
-        self.groupBox_13.raise_()
-        self.ch2_enableButton.raise_()
-        self.ch2_startButton.raise_()
-        self.groupBox_14.raise_()
-        self.groupBox_15.raise_()
-        self.ch2_linkButton.raise_()
+        self.ch2_stopButton = QtWidgets.QPushButton(self.frame_3)
+        self.ch2_stopButton.setGeometry(QtCore.QRect(1300, 125, 101, 76))
+        self.ch2_stopButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch2_stopButton.setText("")
+        self.ch2_stopButton.setIcon(icon5)
+        self.ch2_stopButton.setIconSize(QtCore.QSize(32, 32))
+        self.ch2_stopButton.setObjectName("ch2_stopButton")
+        self.ch2_remainMinsLabel = QtWidgets.QLabel(self.frame_3)
+        self.ch2_remainMinsLabel.setGeometry(QtCore.QRect(1280, 45, 81, 76))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch2_remainMinsLabel.setFont(font)
+        self.ch2_remainMinsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch2_remainMinsLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.ch2_remainMinsLabel.setObjectName("ch2_remainMinsLabel")
+        self.ch2_remainSecsLabel = QtWidgets.QLabel(self.frame_3)
+        self.ch2_remainSecsLabel.setGeometry(QtCore.QRect(1365, 50, 66, 71))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch2_remainSecsLabel.setFont(font)
+        self.ch2_remainSecsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch2_remainSecsLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.ch2_remainSecsLabel.setObjectName("ch2_remainSecsLabel")
         self.verticalLayout_3.addWidget(self.frame_3)
         self.frame_4 = QtWidgets.QFrame(self.channelsFrame)
         self.frame_4.setStyleSheet("background-color: rgb(129, 129, 129);")
@@ -1145,18 +1271,6 @@ class Ui_MainWindow(object):
 "}")
         self.progressBar_2.setProperty("value", 24)
         self.progressBar_2.setObjectName("progressBar_2")
-        self.frame_3.raise_()
-        self.frame_3.raise_()
-        self.frame_3.raise_()
-        self.groupBox_16.raise_()
-        self.groupBox_17.raise_()
-        self.pushButton_31.raise_()
-        self.groupBox_18.raise_()
-        self.groupBox_19.raise_()
-        self.pushButton_36.raise_()
-        self.groupBox_20.raise_()
-        self.groupBox_21.raise_()
-        self.progressBar_2.raise_()
         self.verticalLayout_3.addWidget(self.frame_4)
         self.frame_5 = QtWidgets.QFrame(self.channelsFrame)
         self.frame_5.setStyleSheet("background-color: rgb(129, 129, 129);")
@@ -1772,8 +1886,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.pushButton_58.setFont(font)
         self.pushButton_58.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_58.setStyleSheet("\n"
-"")
+        self.pushButton_58.setStyleSheet("")
         self.pushButton_58.setObjectName("pushButton_58")
         self.stackedWidget.addWidget(self.page_config)
         self.verticalLayout_8.addWidget(self.stackedWidget)
@@ -1833,6 +1946,8 @@ class Ui_MainWindow(object):
         self.groupBox_15.setTitle(_translate("MainWindow", "Probe"))
         self.ch2_probeLabel.setText(_translate("MainWindow", "Normal Probe"))
         self.ch2_linkButton.setText(_translate("MainWindow", "Link To Ch1"))
+        self.ch2_remainMinsLabel.setText(_translate("MainWindow", "22\'"))
+        self.ch2_remainSecsLabel.setText(_translate("MainWindow", "22\'\'"))
         self.groupBox_16.setTitle(_translate("MainWindow", "Gain"))
         self.ch1_displayLabel_3.setText(_translate("MainWindow", "100"))
         self.groupBox_17.setTitle(_translate("MainWindow", "Polarity"))

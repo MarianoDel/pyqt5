@@ -1331,7 +1331,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1363,7 +1372,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1480,7 +1498,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1512,7 +1539,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1609,7 +1645,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1641,7 +1686,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1679,7 +1733,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                   <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string>Enable Channel</string>
@@ -1706,7 +1769,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                   <enum>Qt::LeftToRight</enum>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+
 </string>
                  </property>
                  <property name="text">
@@ -1803,7 +1875,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1835,7 +1916,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -1936,23 +2026,110 @@ top: -8px;
                   <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string>Link To Ch1</string>
                  </property>
                 </widget>
-                <zorder>frame_2</zorder>
-                <zorder>frame_2</zorder>
-                <zorder>groupBox_10</zorder>
-                <zorder>groupBox_11</zorder>
-                <zorder>groupBox_12</zorder>
-                <zorder>groupBox_13</zorder>
-                <zorder>ch2_enableButton</zorder>
-                <zorder>ch2_startButton</zorder>
-                <zorder>groupBox_14</zorder>
-                <zorder>groupBox_15</zorder>
-                <zorder>ch2_linkButton</zorder>
+                <widget class="QPushButton" name="ch2_stopButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1300</x>
+                   <y>125</y>
+                   <width>101</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch2_remainMinsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1280</x>
+                   <y>45</y>
+                   <width>81</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>36</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22'</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch2_remainSecsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1365</x>
+                   <y>50</y>
+                   <width>66</width>
+                   <height>71</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22''</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
                </widget>
               </item>
               <item>
@@ -2679,18 +2856,6 @@ QProgressBar::chunk {
                   <string>%p%</string>
                  </property>
                 </widget>
-                <zorder>frame_3</zorder>
-                <zorder>frame_3</zorder>
-                <zorder>frame_3</zorder>
-                <zorder>groupBox_16</zorder>
-                <zorder>groupBox_17</zorder>
-                <zorder>pushButton_31</zorder>
-                <zorder>groupBox_18</zorder>
-                <zorder>groupBox_19</zorder>
-                <zorder>pushButton_36</zorder>
-                <zorder>groupBox_20</zorder>
-                <zorder>groupBox_21</zorder>
-                <zorder>progressBar_2</zorder>
                </widget>
               </item>
               <item>
@@ -4152,8 +4317,7 @@ QProgressBar::chunk {
                        <enum>Qt::NoFocus</enum>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">
-</string>
+                       <string notr="true"/>
                       </property>
                       <property name="text">
                        <string>CH4 Acuscope</string>
