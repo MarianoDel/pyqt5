@@ -2181,7 +2181,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_displayLabel_3">
+                 <widget class="QLabel" name="ch3_displayLabel">
                   <property name="geometry">
                    <rect>
                     <x>5</x>
@@ -2240,7 +2240,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QPushButton" name="pushButton_16">
+                 <widget class="QPushButton" name="ch3_posButton">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -2267,7 +2267,7 @@ top: -8px;
                    <string>Positive</string>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_29">
+                 <widget class="QPushButton" name="ch3_altButton">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -2291,7 +2291,7 @@ top: -8px;
                    <string>Alternative</string>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_30">
+                 <widget class="QPushButton" name="ch3_negButton">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -2316,7 +2316,7 @@ top: -8px;
                   </property>
                  </widget>
                 </widget>
-                <widget class="QPushButton" name="pushButton_31">
+                <widget class="QPushButton" name="ch3_enableButton">
                  <property name="geometry">
                   <rect>
                    <x>1230</x>
@@ -2337,7 +2337,16 @@ top: -8px;
                   <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string>Enable Channel</string>
@@ -2381,7 +2390,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_gainLabel_13">
+                 <widget class="QLabel" name="ch3_freqLabel">
                   <property name="geometry">
                    <rect>
                     <x>14</x>
@@ -2407,7 +2416,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_32">
+                 <widget class="QPushButton" name="ch3_freqDwnButton">
                   <property name="geometry">
                    <rect>
                     <x>10</x>
@@ -2423,7 +2432,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -2439,7 +2457,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_33">
+                 <widget class="QPushButton" name="ch3_freqUpButton">
                   <property name="geometry">
                    <rect>
                     <x>100</x>
@@ -2455,7 +2473,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -2510,7 +2537,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_gainLabel_14">
+                 <widget class="QLabel" name="ch3_timerLabel">
                   <property name="geometry">
                    <rect>
                     <x>19</x>
@@ -2536,7 +2563,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_34">
+                 <widget class="QPushButton" name="ch3_timerDwnButton">
                   <property name="geometry">
                    <rect>
                     <x>10</x>
@@ -2552,7 +2579,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -2568,7 +2604,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_35">
+                 <widget class="QPushButton" name="ch3_timerUpButton">
                   <property name="geometry">
                    <rect>
                     <x>100</x>
@@ -2584,7 +2620,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -2601,7 +2646,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                   </property>
                  </widget>
                 </widget>
-                <widget class="QPushButton" name="pushButton_36">
+                <widget class="QPushButton" name="ch3_startButton">
                  <property name="geometry">
                   <rect>
                    <x>1095</x>
@@ -2611,7 +2656,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                   </rect>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -2665,7 +2719,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_gainLabel_15">
+                 <widget class="QLabel" name="ch3_pwrLabel">
                   <property name="geometry">
                    <rect>
                     <x>14</x>
@@ -2691,7 +2745,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_37">
+                 <widget class="QPushButton" name="ch3_pwrDwnButton">
                   <property name="geometry">
                    <rect>
                     <x>10</x>
@@ -2707,7 +2761,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -2723,7 +2786,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_38">
+                 <widget class="QPushButton" name="ch3_pwrUpButton">
                   <property name="geometry">
                    <rect>
                     <x>100</x>
@@ -2739,7 +2802,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -2794,7 +2866,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="label_3">
+                 <widget class="QLabel" name="ch3_probeLabel">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -2819,7 +2891,7 @@ top: -8px;
                   </property>
                  </widget>
                 </widget>
-                <widget class="QProgressBar" name="progressBar_2">
+                <widget class="QProgressBar" name="ch3_progressBar">
                  <property name="geometry">
                   <rect>
                    <x>1235</x>
@@ -2854,6 +2926,95 @@ QProgressBar::chunk {
                  </property>
                  <property name="format">
                   <string>%p%</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch3_remainMinsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1075</x>
+                   <y>50</y>
+                   <width>81</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>36</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22'</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="ch3_stopButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1095</x>
+                   <y>130</y>
+                   <width>101</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch3_remainSecsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1160</x>
+                   <y>55</y>
+                   <width>66</width>
+                   <height>71</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22''</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </widget>
@@ -2907,7 +3068,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QPushButton" name="pushButton_39">
+                 <widget class="QPushButton" name="ch4_posButton">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -2934,7 +3095,7 @@ top: -8px;
                    <string>Positive</string>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_40">
+                 <widget class="QPushButton" name="ch4_altButton">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -2958,7 +3119,7 @@ top: -8px;
                    <string>Alternative</string>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_41">
+                 <widget class="QPushButton" name="ch4_negButton">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -3021,7 +3182,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_gainLabel_16">
+                 <widget class="QLabel" name="ch4_freqLabel">
                   <property name="geometry">
                    <rect>
                     <x>14</x>
@@ -3047,7 +3208,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_42">
+                 <widget class="QPushButton" name="ch4_freqDwnButton">
                   <property name="geometry">
                    <rect>
                     <x>10</x>
@@ -3063,7 +3224,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -3079,7 +3249,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_43">
+                 <widget class="QPushButton" name="ch4_freqUpButton">
                   <property name="geometry">
                    <rect>
                     <x>100</x>
@@ -3095,7 +3265,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -3112,7 +3291,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                   </property>
                  </widget>
                 </widget>
-                <widget class="QPushButton" name="pushButton_44">
+                <widget class="QPushButton" name="ch4_enableButton">
                  <property name="geometry">
                   <rect>
                    <x>1230</x>
@@ -3133,7 +3312,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                   <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string>Enable Channel</string>
@@ -3177,7 +3365,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_gainLabel_17">
+                 <widget class="QLabel" name="ch4_timerLabel">
                   <property name="geometry">
                    <rect>
                     <x>19</x>
@@ -3203,7 +3391,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_45">
+                 <widget class="QPushButton" name="ch4_timerDwnButton">
                   <property name="geometry">
                    <rect>
                     <x>10</x>
@@ -3219,7 +3407,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -3235,7 +3432,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_46">
+                 <widget class="QPushButton" name="ch4_timerUpButton">
                   <property name="geometry">
                    <rect>
                     <x>100</x>
@@ -3251,7 +3448,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -3306,7 +3512,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="label_4">
+                 <widget class="QLabel" name="ch4_probeLabel">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
@@ -3369,7 +3575,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_gainLabel_18">
+                 <widget class="QLabel" name="ch4_pwrLabel">
                   <property name="geometry">
                    <rect>
                     <x>14</x>
@@ -3395,7 +3601,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_47">
+                 <widget class="QPushButton" name="ch4_pwrDwnButton">
                   <property name="geometry">
                    <rect>
                     <x>10</x>
@@ -3411,7 +3617,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -3427,7 +3642,7 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="pushButton_48">
+                 <widget class="QPushButton" name="ch4_pwrUpButton">
                   <property name="geometry">
                    <rect>
                     <x>100</x>
@@ -3443,7 +3658,16 @@ font: 75 36pt &quot;Liberation Sans&quot;;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -3498,7 +3722,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch1_displayLabel_4">
+                 <widget class="QLabel" name="ch4_displayLabel">
                   <property name="geometry">
                    <rect>
                     <x>5</x>
@@ -3519,7 +3743,7 @@ font: 75 65pt &quot;Liberation Sans&quot;;</string>
                   </property>
                  </widget>
                 </widget>
-                <widget class="QPushButton" name="pushButton_49">
+                <widget class="QPushButton" name="ch4_startButton">
                  <property name="geometry">
                   <rect>
                    <x>1095</x>
@@ -3529,7 +3753,16 @@ font: 75 65pt &quot;Liberation Sans&quot;;</string>
                   </rect>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -3545,7 +3778,7 @@ font: 75 65pt &quot;Liberation Sans&quot;;</string>
                   </size>
                  </property>
                 </widget>
-                <widget class="QPushButton" name="pushButton_50">
+                <widget class="QPushButton" name="ch4_linkButton">
                  <property name="geometry">
                   <rect>
                    <x>1415</x>
@@ -3566,13 +3799,22 @@ font: 75 65pt &quot;Liberation Sans&quot;;</string>
                   <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
                  </property>
                  <property name="text">
                   <string>Link To Ch3</string>
                  </property>
                 </widget>
-                <widget class="QProgressBar" name="progressBar">
+                <widget class="QProgressBar" name="ch4_progressBar">
                  <property name="geometry">
                   <rect>
                    <x>1235</x>
@@ -3607,6 +3849,95 @@ QProgressBar::chunk {
                  </property>
                  <property name="format">
                   <string>%p%</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch4_remainMinsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1075</x>
+                   <y>45</y>
+                   <width>81</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>36</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22'</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="ch4_stopButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1095</x>
+                   <y>125</y>
+                   <width>101</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch4_remainSecsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1160</x>
+                   <y>50</y>
+                   <width>66</width>
+                   <height>71</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22''</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </widget>

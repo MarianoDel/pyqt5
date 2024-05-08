@@ -37,8 +37,6 @@ class MainWindow (QMainWindow):
         self.ui.ch1_gainDwnButton.clicked.connect(self.GainUpDwn)
         self.ui.ch2_gainUpButton.clicked.connect(self.GainUpDwn)
         self.ui.ch2_gainDwnButton.clicked.connect(self.GainUpDwn)
-        # self.ch1_gain = 0
-        # self.ch2_gain = 0
         self.gain_ch_list = [0,0,0,0]
         self.gain_ui_list = [self.ui.ch1_gainLabel, self.ui.ch2_gainLabel, 0, 0]
 
@@ -49,21 +47,17 @@ class MainWindow (QMainWindow):
         self.ui.ch2_posButton.clicked.connect(self.ChangePolarity)
         self.ui.ch2_altButton.clicked.connect(self.ChangePolarity)
         self.ui.ch2_negButton.clicked.connect(self.ChangePolarity)
-        # self.ui.ch3_posButton.clicked.connect(self.ChangePolarity)
-        # self.ui.ch3_altButton.clicked.connect(self.ChangePolarity)
-        # self.ui.ch3_negButton.clicked.connect(self.ChangePolarity)
-        # self.ui.ch4_posButton.clicked.connect(self.ChangePolarity)
-        # self.ui.ch4_altButton.clicked.connect(self.ChangePolarity)
-        # self.ui.ch4_negButton.clicked.connect(self.ChangePolarity)
-        self.pol_pos_ui_list = [self.ui.ch1_posButton, self.ui.ch2_posButton, 0, 0]        
-        self.pol_alt_ui_list = [self.ui.ch1_altButton, self.ui.ch2_altButton, 0, 0]
-        self.pol_neg_ui_list = [self.ui.ch1_negButton, self.ui.ch2_negButton, 0, 0]                
+        self.ui.ch3_posButton.clicked.connect(self.ChangePolarity)
+        self.ui.ch3_altButton.clicked.connect(self.ChangePolarity)
+        self.ui.ch3_negButton.clicked.connect(self.ChangePolarity)
+        self.ui.ch4_posButton.clicked.connect(self.ChangePolarity)
+        self.ui.ch4_altButton.clicked.connect(self.ChangePolarity)
+        self.ui.ch4_negButton.clicked.connect(self.ChangePolarity)
+        self.pol_pos_ui_list = [self.ui.ch1_posButton, self.ui.ch2_posButton, self.ui.ch3_posButton, self.ui.ch4_posButton]        
+        self.pol_alt_ui_list = [self.ui.ch1_altButton, self.ui.ch2_altButton, self.ui.ch3_altButton, self.ui.ch4_altButton]
+        self.pol_neg_ui_list = [self.ui.ch1_negButton, self.ui.ch2_negButton, self.ui.ch3_negButton, self.ui.ch4_negButton]
 
         # ch1 ch2 ch3 & ch4 timer options
-        # self.ch1_timer_index = 0
-        # self.ch2_timer_index = 0
-        # self.ch3_timer_index = 0
-        # self.ch4_timer_index = 0
         self.timer_index_ch_list = [0, 0, 0, 0]        
         self.timer_list = ['6s', '12s', '30s', '1m', '10m', '30m']
         # timer on ch1 ch2 ch3 ch4
@@ -71,17 +65,13 @@ class MainWindow (QMainWindow):
         self.ui.ch1_timerDwnButton.clicked.connect(self.ChangeTimer)
         self.ui.ch2_timerUpButton.clicked.connect(self.ChangeTimer)
         self.ui.ch2_timerDwnButton.clicked.connect(self.ChangeTimer)
-        # self.ui.ch3_timerUpButton.clicked.connect(self.ChangeTimer)
-        # self.ui.ch3_timerDwnButton.clicked.connect(self.ChangeTimer)
-        # self.ui.ch4_timerUpButton.clicked.connect(self.ChangeTimer)
-        # self.ui.ch4_timerDwnButton.clicked.connect(self.ChangeTimer)
-        self.timer_ui_list = [self.ui.ch1_timerLabel, self.ui.ch2_timerLabel, 0, 0]
+        self.ui.ch3_timerUpButton.clicked.connect(self.ChangeTimer)
+        self.ui.ch3_timerDwnButton.clicked.connect(self.ChangeTimer)
+        self.ui.ch4_timerUpButton.clicked.connect(self.ChangeTimer)
+        self.ui.ch4_timerDwnButton.clicked.connect(self.ChangeTimer)
+        self.timer_ui_list = [self.ui.ch1_timerLabel, self.ui.ch2_timerLabel, self.ui.ch3_timerLabel, self.ui.ch4_timerLabel]
 
         # frequency options
-        # self.ch1_freq_index = 0
-        # self.ch2_freq_index = 0
-        # self.ch3_freq_index = 0
-        # self.ch4_freq_index = 0
         self.freq_index_ch_list = [0, 0, 0, 0]
         self.freq_list = ['0.5Hz', '1.0Hz', '2.0Hz', '4.0Hz', '8.0Hz', '10Hz', '20Hz', '40Hz', '80Hz', '160Hz', '320Hz']
         self.freq_conf_list = ['0.50', '1.00', '2.00', '4.00', '8.00', '10.00', '20.00', '40.00', '80.00', '160.00', '320.00']        
@@ -90,17 +80,13 @@ class MainWindow (QMainWindow):
         self.ui.ch1_freqDwnButton.clicked.connect(self.ChangeFrequency)
         self.ui.ch2_freqUpButton.clicked.connect(self.ChangeFrequency)
         self.ui.ch2_freqDwnButton.clicked.connect(self.ChangeFrequency)
-        # self.ui.ch3_freqUpButton.clicked.connect(self.ChangeFrequency)
-        # self.ui.ch3_freqDwnButton.clicked.connect(self.ChangeFrequency)
-        # self.ui.ch4_freqUpButton.clicked.connect(self.ChangeFrequency)
-        # self.ui.ch4_freqDwnButton.clicked.connect(self.ChangeFrequency)
-        self.freq_ui_list = [self.ui.ch1_freqLabel, self.ui.ch2_freqLabel, 0, 0]
+        self.ui.ch3_freqUpButton.clicked.connect(self.ChangeFrequency)
+        self.ui.ch3_freqDwnButton.clicked.connect(self.ChangeFrequency)
+        self.ui.ch4_freqUpButton.clicked.connect(self.ChangeFrequency)
+        self.ui.ch4_freqDwnButton.clicked.connect(self.ChangeFrequency)
+        self.freq_ui_list = [self.ui.ch1_freqLabel, self.ui.ch2_freqLabel, self.ui.ch3_freqLabel, self.ui.ch4_freqLabel]
 
         # ch1 ch2 ch3 ch4 intensity options
-        # self.ch1_pwr_index = 0
-        # self.ch2_pwr_index = 0
-        # self.ch3_pwr_index = 0
-        # self.ch4_pwr_index = 0
         self.pwr_index_ch_list = [0, 0, 0, 0]        
         self.pwr_list = ['25uA', '50uA', '100uA', '200uA', '400uA', '600uA']
         # ch1 ch2 ch3 ch4 power
@@ -108,11 +94,11 @@ class MainWindow (QMainWindow):
         self.ui.ch1_pwrDwnButton.clicked.connect(self.ChangePower)
         self.ui.ch2_pwrUpButton.clicked.connect(self.ChangePower)
         self.ui.ch2_pwrDwnButton.clicked.connect(self.ChangePower)
-        # self.ui.ch3_pwrUpButton.clicked.connect(self.ChangePower)
-        # self.ui.ch3_pwrDwnButton.clicked.connect(self.ChangePower)
-        # self.ui.ch4_pwrUpButton.clicked.connect(self.ChangePower)
-        # self.ui.ch4_pwrDwnButton.clicked.connect(self.ChangePower)
-        self.pwr_ui_list = [self.ui.ch1_pwrLabel, self.ui.ch2_pwrLabel, 0, 0]        
+        self.ui.ch3_pwrUpButton.clicked.connect(self.ChangePower)
+        self.ui.ch3_pwrDwnButton.clicked.connect(self.ChangePower)
+        self.ui.ch4_pwrUpButton.clicked.connect(self.ChangePower)
+        self.ui.ch4_pwrDwnButton.clicked.connect(self.ChangePower)
+        self.pwr_ui_list = [self.ui.ch1_pwrLabel, self.ui.ch2_pwrLabel, self.ui.ch3_pwrLabel, self.ui.ch4_pwrLabel]
 
         # ch1 to ch4 others buttons
         self.ui.ch1_startButton.clicked.connect(self.StartChannel)
@@ -121,12 +107,12 @@ class MainWindow (QMainWindow):
         self.ui.ch2_startButton.clicked.connect(self.StartChannel)
         self.ui.ch2_stopButton.clicked.connect(self.StopChannel)        
         self.ui.ch2_enableButton.clicked.connect(self.EnableChannel)
-        # self.ui.ch3_startButton.clicked.connect(self.StartCh1)
-        # self.ui.ch3_stopButton.clicked.connect(self.StopCh1)        
-        # self.ui.ch3_enableButton.clicked.connect(self.EnableCh1)
-        # self.ui.ch4_startButton.clicked.connect(self.StartCh1)
-        # self.ui.ch4_stopButton.clicked.connect(self.StopCh1)        
-        # self.ui.ch4_enableButton.clicked.connect(self.EnableCh1)
+        self.ui.ch3_startButton.clicked.connect(self.StartChannel)
+        self.ui.ch3_stopButton.clicked.connect(self.StopChannel)
+        self.ui.ch3_enableButton.clicked.connect(self.EnableChannel)
+        self.ui.ch4_startButton.clicked.connect(self.StartChannel)
+        self.ui.ch4_stopButton.clicked.connect(self.StopChannel)        
+        self.ui.ch4_enableButton.clicked.connect(self.EnableChannel)
 
         # # self.bt_min.clicked.connect(self.control_minimized)
         # # self.bt_med.clicked.connect(self.control_normal)
@@ -154,36 +140,20 @@ class MainWindow (QMainWindow):
         ##
         ## initial setup for channels
         ##
-        self.startButton_ui_list = [self.ui.ch1_startButton, self.ui.ch2_startButton, 0 , 0]        
-        self.stopButton_ui_list = [self.ui.ch1_stopButton, self.ui.ch2_stopButton, 0 , 0]
-        self.remainMins_ui_list = [self.ui.ch1_remainMinsLabel, self.ui.ch2_remainMinsLabel, 0, 0]
-        self.remainSecs_ui_list = [self.ui.ch1_remainSecsLabel, self.ui.ch2_remainSecsLabel, 0, 0]
-        self.enableButton_ui_list = [self.ui.ch1_enableButton, self.ui.ch2_enableButton, 0, 0]
+        self.startButton_ui_list = [self.ui.ch1_startButton, self.ui.ch2_startButton, self.ui.ch3_startButton, self.ui.ch4_startButton]
+        self.stopButton_ui_list = [self.ui.ch1_stopButton, self.ui.ch2_stopButton, self.ui.ch3_stopButton, self.ui.ch4_stopButton]
+        self.remainMins_ui_list = [self.ui.ch1_remainMinsLabel, self.ui.ch2_remainMinsLabel, self.ui.ch3_remainMinsLabel, self.ui.ch4_remainMinsLabel]
+        self.remainSecs_ui_list = [self.ui.ch1_remainSecsLabel, self.ui.ch2_remainSecsLabel, self.ui.ch3_remainSecsLabel, self.ui.ch4_remainSecsLabel]
+        self.enableButton_ui_list = [self.ui.ch1_enableButton, self.ui.ch2_enableButton, self.ui.ch3_enableButton, self.ui.ch4_enableButton]
 
         self.remaining_minutes_ch_list = [0, 0, 0, 0]
         self.remaining_seconds_ch_list = [0, 0, 0, 0]
         
-        for x in range(2):
+        for x in range(4):
             self.stopButton_ui_list[x].hide()
             self.remainMins_ui_list[x].hide()
             self.remainSecs_ui_list[x].hide()
 
-        # self.ui.ch1_stopButton.hide()
-        # self.ui.ch1_remainMinsLabel.hide()
-        # self.ui.ch1_remainSecsLabel.hide()        
-        # self.ui.ch2_stopButton.hide()
-        # self.ui.ch2_remainMinsLabel.hide()
-        # self.ui.ch2_remainSecsLabel.hide()        
-        # self.ui.ch3_stopButton.hide()
-        # self.ui.ch3_remainMinsLabel.hide()
-        # self.ui.ch3_remainSecsLabel.hide()        
-        # self.ui.ch4_stopButton.hide()
-        # self.ui.ch4_remainMinsLabel.hide()
-        # self.ui.ch4_remainSecsLabel.hide()        
-        # self.ch1_in_treat = False
-        # self.ch2_in_treat = False
-        # self.ch3_in_treat = False
-        # self.ch4_in_treat = False
         self.in_treat_ch_list = [False, False, False, False]
         self.ui.bt_menu_close.hide()
 
@@ -247,17 +217,6 @@ class MainWindow (QMainWindow):
         self.gain_ui_list[ch_index].setText(str(self.gain_ch_list[ch_index]))
         self.SendConfig(ch_name, 'set_gain ' + str(self.gain_ch_list[ch_index]))
         
-        # if sender.objectName() == 'ch1_gainUpButton':
-        #     if self.gain < 100:
-        #         self.gain += 1
-
-        # if sender.objectName() == 'ch1_gainDwnButton':
-        #     if self.gain > 0:
-        #         self.gain -= 1
-        
-        # self.ui.ch1_gainLabel.setText(str(self.gain))
-        # self.SendConfig('ch1', 'set_gain ' + str(self.gain))
-
 
     def ChangePolarity (self):
         sender = self.sender()
@@ -284,25 +243,7 @@ class MainWindow (QMainWindow):
             self.pol_alt_ui_list[ch_index].setStyleSheet('')
             self.pol_neg_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
             self.SendConfig(ch_name, 'polarity negative')
-        
-        # if sender.objectName() == 'ch1_posButton':
-        #     self.ui.ch1_posButton.setStyleSheet('background-color: rgb(218, 218, 218);')
-        #     self.ui.ch1_altButton.setStyleSheet('')
-        #     self.ui.ch1_negButton.setStyleSheet('')
-        #     self.SendConfig('ch1', 'polarity positive')
-
-        # if sender.objectName() == 'ch1_altButton':
-        #     self.ui.ch1_posButton.setStyleSheet('')
-        #     self.ui.ch1_altButton.setStyleSheet('background-color: rgb(218, 218, 218);')
-        #     self.ui.ch1_negButton.setStyleSheet('')
-        #     self.SendConfig('ch1', 'polarity alternative')
-
-        # if sender.objectName() == 'ch1_negButton':
-        #     self.ui.ch1_posButton.setStyleSheet('')
-        #     self.ui.ch1_altButton.setStyleSheet('')
-        #     self.ui.ch1_negButton.setStyleSheet('background-color: rgb(218, 218, 218);')
-        #     self.SendConfig('ch1', 'polarity negative')
-            
+                    
 
     def ChangeTimer (self):
         sender = self.sender()
@@ -325,18 +266,6 @@ class MainWindow (QMainWindow):
         if self.in_treat_ch_list[ch_index] == True:
             self.StartChannelByIndex(ch_index)
                 
-        # if sender.objectName() == 'ch1_timerUpButton':
-        #     if self.ch1_timer_index < 5:
-        #         self.ch1_timer_index += 1
-
-        # if sender.objectName() == 'ch1_timerDwnButton':
-        #     if self.ch1_timer_index > 0:
-        #         self.ch1_timer_index -= 1
-
-        # self.ui.ch1_timerLabel.setText(self.timer_list[self.ch1_timer_index])
-        # if self.ch1_in_treat == True:
-        #     self.StartCh1()
-
 
     def ChangeFrequency (self):
         sender = self.sender()
@@ -361,23 +290,6 @@ class MainWindow (QMainWindow):
         if send_encod:
             self.SendEncodFreq(ch_name, self.freq_index_ch_list[ch_index])
         
-
-        # if sender.objectName() == 'ch1_freqUpButton':
-        #     send_encod = True
-        #     if self.ch1_freq_index < 10:
-        #         self.ch1_freq_index += 1
-
-        # if sender.objectName() == 'ch1_freqDwnButton':
-        #     send_encod = True            
-        #     if self.ch1_freq_index > 0:
-        #         self.ch1_freq_index -= 1
-
-        # freq_str = self.freq_list[self.ch1_freq_index]
-        # self.ui.ch1_freqLabel.setText(freq_str)
-        # self.SendConfig('ch1', 'frequency ' + self.freq_conf_list[self.ch1_freq_index])
-        # if send_encod:
-        #     self.SendEncodFreq('ch1', self.ch1_freq_index)
-
 
     def ChangeFrequencyByIndex (self, ch_index):
         freq_str = self.freq_list[self.freq_index_ch_list[ch_index]]                
@@ -408,21 +320,6 @@ class MainWindow (QMainWindow):
         if send_encod:
             self.SendEncodPwr(ch_name, self.pwr_index_ch_list[ch_index])
             
-        # if sender.objectName() == 'ch1_pwrUpButton':
-        #     send_encod = True            
-        #     if self.ch1_pwr_index < 5:
-        #         self.ch1_pwr_index += 1
-
-        # if sender.objectName() == 'ch1_pwrDwnButton':
-        #     send_encod = True            
-        #     if self.ch1_pwr_index > 0:
-        #         self.ch1_pwr_index -= 1
-
-        # power_str = self.pwr_list[self.ch1_pwr_index]
-        # self.ui.ch1_pwrLabel.setText(power_str)
-        # self.SendConfig('ch1', 'intensity ' + power_str)
-        # if send_encod:
-        #     self.SendEncodPwr('ch1', self.ch1_pwr_index)        
 
     def ChangePowerByIndex (self, ch_index):
         power_str = self.pwr_list[self.pwr_index_ch_list[ch_index]]
@@ -443,27 +340,6 @@ class MainWindow (QMainWindow):
             self.SendConfig(ch_name, 'start')
 
         self.StartChannelByIndex(ch_index)            
-
-        
-        # self.ch1_in_treat == False:
-        #     self.SendConfig('ch1', 'start')
-            
-        # timer = self.ui.ch1_timerLabel.text()
-        # if timer[-1] == 's':
-        #     self.ch1_remaining_minutes = 0
-        #     self.ch1_remaining_seconds = int(timer[:-1])
-        # elif timer[-1] == 'm':
-        #     self.ch1_remaining_minutes = int(timer[:-1])
-        #     self.ch1_remaining_seconds = 0
-            
-        # self.ui.ch1_remainMinsLabel.setText(str(self.ch1_remaining_minutes) + "'")
-        # self.ui.ch1_remainSecsLabel.setText(str(self.ch1_remaining_seconds) + "''")        
-
-        # self.ch1_in_treat = True
-        # self.ui.ch1_remainMinsLabel.show()
-        # self.ui.ch1_remainSecsLabel.show()
-        # self.ui.ch1_stopButton.show()
-        # self.ui.ch1_startButton.hide()
 
 
     def StartChannelByIndex (self, ch_index):
@@ -493,13 +369,6 @@ class MainWindow (QMainWindow):
         ch_func = obj_list[1]
         ch_index = self.GetChannelIndexFromString(ch_name)
         self.StopChannelByIndex(ch_index)
-
-        # self.SendConfig('ch1', 'stop')
-        # self.ch1_in_treat = False
-        # self.ui.ch1_remainMinsLabel.hide()
-        # self.ui.ch1_remainSecsLabel.hide()
-        # self.ui.ch1_stopButton.hide()
-        # self.ui.ch1_startButton.show()
 
         
     def StopChannelByIndex (self, ch_index):
@@ -591,7 +460,7 @@ class MainWindow (QMainWindow):
 
     def UpdateOneSec (self):
         """ one second gone, check if its something to do """
-        for x in range(2):
+        for x in range(4):
             if self.in_treat_ch_list[x]:
                 if (self.remaining_minutes_ch_list[x] > 0 or
                     self.remaining_seconds_ch_list[x] > 0):

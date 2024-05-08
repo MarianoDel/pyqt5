@@ -1001,12 +1001,12 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_16.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_16.setObjectName("groupBox_16")
-        self.ch1_displayLabel_3 = QtWidgets.QLabel(self.groupBox_16)
-        self.ch1_displayLabel_3.setGeometry(QtCore.QRect(5, 25, 181, 161))
-        self.ch1_displayLabel_3.setStyleSheet("background-color: rgb(157, 205, 255);\n"
+        self.ch3_displayLabel = QtWidgets.QLabel(self.groupBox_16)
+        self.ch3_displayLabel.setGeometry(QtCore.QRect(5, 25, 181, 161))
+        self.ch3_displayLabel.setStyleSheet("background-color: rgb(157, 205, 255);\n"
 "font: 75 65pt \"Liberation Sans\";")
-        self.ch1_displayLabel_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_displayLabel_3.setObjectName("ch1_displayLabel_3")
+        self.ch3_displayLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_displayLabel.setObjectName("ch3_displayLabel")
         self.groupBox_17 = QtWidgets.QGroupBox(self.frame_4)
         self.groupBox_17.setGeometry(QtCore.QRect(235, 25, 191, 196))
         font = QtGui.QFont()
@@ -1030,48 +1030,57 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_17.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_17.setObjectName("groupBox_17")
-        self.pushButton_16 = QtWidgets.QPushButton(self.groupBox_17)
-        self.pushButton_16.setGeometry(QtCore.QRect(20, 45, 146, 31))
+        self.ch3_posButton = QtWidgets.QPushButton(self.groupBox_17)
+        self.ch3_posButton.setGeometry(QtCore.QRect(20, 45, 146, 31))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_16.setFont(font)
-        self.pushButton_16.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_16.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_16.setObjectName("pushButton_16")
-        self.pushButton_29 = QtWidgets.QPushButton(self.groupBox_17)
-        self.pushButton_29.setGeometry(QtCore.QRect(20, 95, 146, 31))
+        self.ch3_posButton.setFont(font)
+        self.ch3_posButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch3_posButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch3_posButton.setObjectName("ch3_posButton")
+        self.ch3_altButton = QtWidgets.QPushButton(self.groupBox_17)
+        self.ch3_altButton.setGeometry(QtCore.QRect(20, 95, 146, 31))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_29.setFont(font)
-        self.pushButton_29.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_29.setObjectName("pushButton_29")
-        self.pushButton_30 = QtWidgets.QPushButton(self.groupBox_17)
-        self.pushButton_30.setGeometry(QtCore.QRect(20, 145, 146, 31))
+        self.ch3_altButton.setFont(font)
+        self.ch3_altButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch3_altButton.setObjectName("ch3_altButton")
+        self.ch3_negButton = QtWidgets.QPushButton(self.groupBox_17)
+        self.ch3_negButton.setGeometry(QtCore.QRect(20, 145, 146, 31))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_30.setFont(font)
-        self.pushButton_30.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_30.setObjectName("pushButton_30")
-        self.pushButton_31 = QtWidgets.QPushButton(self.frame_4)
-        self.pushButton_31.setGeometry(QtCore.QRect(1230, 140, 161, 61))
+        self.ch3_negButton.setFont(font)
+        self.ch3_negButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch3_negButton.setObjectName("ch3_negButton")
+        self.ch3_enableButton = QtWidgets.QPushButton(self.frame_4)
+        self.ch3_enableButton.setGeometry(QtCore.QRect(1230, 140, 161, 61))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_31.setFont(font)
-        self.pushButton_31.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_31.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_31.setObjectName("pushButton_31")
+        self.ch3_enableButton.setFont(font)
+        self.ch3_enableButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch3_enableButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_enableButton.setObjectName("ch3_enableButton")
         self.groupBox_18 = QtWidgets.QGroupBox(self.frame_4)
         self.groupBox_18.setGeometry(QtCore.QRect(660, 25, 191, 196))
         font = QtGui.QFont()
@@ -1095,29 +1104,47 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_18.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_18.setObjectName("groupBox_18")
-        self.ch1_gainLabel_13 = QtWidgets.QLabel(self.groupBox_18)
-        self.ch1_gainLabel_13.setGeometry(QtCore.QRect(14, 27, 161, 81))
-        self.ch1_gainLabel_13.setMinimumSize(QtCore.QSize(130, 80))
-        self.ch1_gainLabel_13.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.ch3_freqLabel = QtWidgets.QLabel(self.groupBox_18)
+        self.ch3_freqLabel.setGeometry(QtCore.QRect(14, 27, 161, 81))
+        self.ch3_freqLabel.setMinimumSize(QtCore.QSize(130, 80))
+        self.ch3_freqLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "font: 75 36pt \"Liberation Sans\";")
-        self.ch1_gainLabel_13.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_gainLabel_13.setObjectName("ch1_gainLabel_13")
-        self.pushButton_32 = QtWidgets.QPushButton(self.groupBox_18)
-        self.pushButton_32.setGeometry(QtCore.QRect(10, 124, 81, 60))
-        self.pushButton_32.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_32.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_32.setText("")
-        self.pushButton_32.setIcon(icon2)
-        self.pushButton_32.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_32.setObjectName("pushButton_32")
-        self.pushButton_33 = QtWidgets.QPushButton(self.groupBox_18)
-        self.pushButton_33.setGeometry(QtCore.QRect(100, 125, 81, 60))
-        self.pushButton_33.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_33.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_33.setText("")
-        self.pushButton_33.setIcon(icon3)
-        self.pushButton_33.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_33.setObjectName("pushButton_33")
+        self.ch3_freqLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_freqLabel.setObjectName("ch3_freqLabel")
+        self.ch3_freqDwnButton = QtWidgets.QPushButton(self.groupBox_18)
+        self.ch3_freqDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
+        self.ch3_freqDwnButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch3_freqDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_freqDwnButton.setText("")
+        self.ch3_freqDwnButton.setIcon(icon2)
+        self.ch3_freqDwnButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch3_freqDwnButton.setObjectName("ch3_freqDwnButton")
+        self.ch3_freqUpButton = QtWidgets.QPushButton(self.groupBox_18)
+        self.ch3_freqUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
+        self.ch3_freqUpButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch3_freqUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_freqUpButton.setText("")
+        self.ch3_freqUpButton.setIcon(icon3)
+        self.ch3_freqUpButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch3_freqUpButton.setObjectName("ch3_freqUpButton")
         self.groupBox_19 = QtWidgets.QGroupBox(self.frame_4)
         self.groupBox_19.setGeometry(QtCore.QRect(445, 25, 191, 196))
         font = QtGui.QFont()
@@ -1141,36 +1168,63 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_19.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_19.setObjectName("groupBox_19")
-        self.ch1_gainLabel_14 = QtWidgets.QLabel(self.groupBox_19)
-        self.ch1_gainLabel_14.setGeometry(QtCore.QRect(19, 27, 156, 81))
-        self.ch1_gainLabel_14.setMinimumSize(QtCore.QSize(130, 80))
-        self.ch1_gainLabel_14.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.ch3_timerLabel = QtWidgets.QLabel(self.groupBox_19)
+        self.ch3_timerLabel.setGeometry(QtCore.QRect(19, 27, 156, 81))
+        self.ch3_timerLabel.setMinimumSize(QtCore.QSize(130, 80))
+        self.ch3_timerLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "font: 75 36pt \"Liberation Sans\";")
-        self.ch1_gainLabel_14.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_gainLabel_14.setObjectName("ch1_gainLabel_14")
-        self.pushButton_34 = QtWidgets.QPushButton(self.groupBox_19)
-        self.pushButton_34.setGeometry(QtCore.QRect(10, 124, 81, 60))
-        self.pushButton_34.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_34.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_34.setText("")
-        self.pushButton_34.setIcon(icon2)
-        self.pushButton_34.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_34.setObjectName("pushButton_34")
-        self.pushButton_35 = QtWidgets.QPushButton(self.groupBox_19)
-        self.pushButton_35.setGeometry(QtCore.QRect(100, 125, 81, 60))
-        self.pushButton_35.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_35.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_35.setText("")
-        self.pushButton_35.setIcon(icon3)
-        self.pushButton_35.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_35.setObjectName("pushButton_35")
-        self.pushButton_36 = QtWidgets.QPushButton(self.frame_4)
-        self.pushButton_36.setGeometry(QtCore.QRect(1095, 50, 101, 156))
-        self.pushButton_36.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_36.setText("")
-        self.pushButton_36.setIcon(icon4)
-        self.pushButton_36.setIconSize(QtCore.QSize(32, 32))
-        self.pushButton_36.setObjectName("pushButton_36")
+        self.ch3_timerLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_timerLabel.setObjectName("ch3_timerLabel")
+        self.ch3_timerDwnButton = QtWidgets.QPushButton(self.groupBox_19)
+        self.ch3_timerDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
+        self.ch3_timerDwnButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch3_timerDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_timerDwnButton.setText("")
+        self.ch3_timerDwnButton.setIcon(icon2)
+        self.ch3_timerDwnButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch3_timerDwnButton.setObjectName("ch3_timerDwnButton")
+        self.ch3_timerUpButton = QtWidgets.QPushButton(self.groupBox_19)
+        self.ch3_timerUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
+        self.ch3_timerUpButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch3_timerUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_timerUpButton.setText("")
+        self.ch3_timerUpButton.setIcon(icon3)
+        self.ch3_timerUpButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch3_timerUpButton.setObjectName("ch3_timerUpButton")
+        self.ch3_startButton = QtWidgets.QPushButton(self.frame_4)
+        self.ch3_startButton.setGeometry(QtCore.QRect(1095, 50, 101, 156))
+        self.ch3_startButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_startButton.setText("")
+        self.ch3_startButton.setIcon(icon4)
+        self.ch3_startButton.setIconSize(QtCore.QSize(32, 32))
+        self.ch3_startButton.setObjectName("ch3_startButton")
         self.groupBox_20 = QtWidgets.QGroupBox(self.frame_4)
         self.groupBox_20.setGeometry(QtCore.QRect(875, 25, 191, 196))
         font = QtGui.QFont()
@@ -1194,29 +1248,47 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_20.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_20.setObjectName("groupBox_20")
-        self.ch1_gainLabel_15 = QtWidgets.QLabel(self.groupBox_20)
-        self.ch1_gainLabel_15.setGeometry(QtCore.QRect(14, 27, 161, 81))
-        self.ch1_gainLabel_15.setMinimumSize(QtCore.QSize(130, 80))
-        self.ch1_gainLabel_15.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.ch3_pwrLabel = QtWidgets.QLabel(self.groupBox_20)
+        self.ch3_pwrLabel.setGeometry(QtCore.QRect(14, 27, 161, 81))
+        self.ch3_pwrLabel.setMinimumSize(QtCore.QSize(130, 80))
+        self.ch3_pwrLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "font: 75 36pt \"Liberation Sans\";")
-        self.ch1_gainLabel_15.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_gainLabel_15.setObjectName("ch1_gainLabel_15")
-        self.pushButton_37 = QtWidgets.QPushButton(self.groupBox_20)
-        self.pushButton_37.setGeometry(QtCore.QRect(10, 124, 81, 60))
-        self.pushButton_37.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_37.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_37.setText("")
-        self.pushButton_37.setIcon(icon2)
-        self.pushButton_37.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_37.setObjectName("pushButton_37")
-        self.pushButton_38 = QtWidgets.QPushButton(self.groupBox_20)
-        self.pushButton_38.setGeometry(QtCore.QRect(100, 125, 81, 60))
-        self.pushButton_38.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_38.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_38.setText("")
-        self.pushButton_38.setIcon(icon3)
-        self.pushButton_38.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_38.setObjectName("pushButton_38")
+        self.ch3_pwrLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_pwrLabel.setObjectName("ch3_pwrLabel")
+        self.ch3_pwrDwnButton = QtWidgets.QPushButton(self.groupBox_20)
+        self.ch3_pwrDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
+        self.ch3_pwrDwnButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch3_pwrDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_pwrDwnButton.setText("")
+        self.ch3_pwrDwnButton.setIcon(icon2)
+        self.ch3_pwrDwnButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch3_pwrDwnButton.setObjectName("ch3_pwrDwnButton")
+        self.ch3_pwrUpButton = QtWidgets.QPushButton(self.groupBox_20)
+        self.ch3_pwrUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
+        self.ch3_pwrUpButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch3_pwrUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_pwrUpButton.setText("")
+        self.ch3_pwrUpButton.setIcon(icon3)
+        self.ch3_pwrUpButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch3_pwrUpButton.setObjectName("ch3_pwrUpButton")
         self.groupBox_21 = QtWidgets.QGroupBox(self.frame_4)
         self.groupBox_21.setGeometry(QtCore.QRect(1620, 115, 191, 96))
         font = QtGui.QFont()
@@ -1240,25 +1312,25 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_21.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_21.setObjectName("groupBox_21")
-        self.label_3 = QtWidgets.QLabel(self.groupBox_21)
-        self.label_3.setGeometry(QtCore.QRect(20, 35, 151, 41))
+        self.ch3_probeLabel = QtWidgets.QLabel(self.groupBox_21)
+        self.ch3_probeLabel.setGeometry(QtCore.QRect(20, 35, 151, 41))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.label_3.setFont(font)
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.progressBar_2 = QtWidgets.QProgressBar(self.frame_4)
-        self.progressBar_2.setGeometry(QtCore.QRect(1235, 60, 571, 36))
+        self.ch3_probeLabel.setFont(font)
+        self.ch3_probeLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_probeLabel.setObjectName("ch3_probeLabel")
+        self.ch3_progressBar = QtWidgets.QProgressBar(self.frame_4)
+        self.ch3_progressBar.setGeometry(QtCore.QRect(1235, 60, 571, 36))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.progressBar_2.setFont(font)
-        self.progressBar_2.setStyleSheet("QProgressBar {\n"
+        self.ch3_progressBar.setFont(font)
+        self.ch3_progressBar.setStyleSheet("QProgressBar {\n"
 "    border: 2px solid #2196F3;\n"
 "    border-radius: 5px;\n"
 "    background-color: #E0E0E0;\n"
@@ -1269,8 +1341,46 @@ class Ui_MainWindow(object):
 "    width: 10px; \n"
 "    margin: 0.5px;\n"
 "}")
-        self.progressBar_2.setProperty("value", 24)
-        self.progressBar_2.setObjectName("progressBar_2")
+        self.ch3_progressBar.setProperty("value", 24)
+        self.ch3_progressBar.setObjectName("ch3_progressBar")
+        self.ch3_remainMinsLabel = QtWidgets.QLabel(self.frame_4)
+        self.ch3_remainMinsLabel.setGeometry(QtCore.QRect(1075, 50, 81, 76))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch3_remainMinsLabel.setFont(font)
+        self.ch3_remainMinsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch3_remainMinsLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.ch3_remainMinsLabel.setObjectName("ch3_remainMinsLabel")
+        self.ch3_stopButton = QtWidgets.QPushButton(self.frame_4)
+        self.ch3_stopButton.setGeometry(QtCore.QRect(1095, 130, 101, 76))
+        self.ch3_stopButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch3_stopButton.setText("")
+        self.ch3_stopButton.setIcon(icon5)
+        self.ch3_stopButton.setIconSize(QtCore.QSize(32, 32))
+        self.ch3_stopButton.setObjectName("ch3_stopButton")
+        self.ch3_remainSecsLabel = QtWidgets.QLabel(self.frame_4)
+        self.ch3_remainSecsLabel.setGeometry(QtCore.QRect(1160, 55, 66, 71))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch3_remainSecsLabel.setFont(font)
+        self.ch3_remainSecsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch3_remainSecsLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.ch3_remainSecsLabel.setObjectName("ch3_remainSecsLabel")
         self.verticalLayout_3.addWidget(self.frame_4)
         self.frame_5 = QtWidgets.QFrame(self.channelsFrame)
         self.frame_5.setStyleSheet("background-color: rgb(129, 129, 129);")
@@ -1300,37 +1410,37 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_22.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_22.setObjectName("groupBox_22")
-        self.pushButton_39 = QtWidgets.QPushButton(self.groupBox_22)
-        self.pushButton_39.setGeometry(QtCore.QRect(20, 45, 146, 31))
+        self.ch4_posButton = QtWidgets.QPushButton(self.groupBox_22)
+        self.ch4_posButton.setGeometry(QtCore.QRect(20, 45, 146, 31))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_39.setFont(font)
-        self.pushButton_39.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_39.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_39.setObjectName("pushButton_39")
-        self.pushButton_40 = QtWidgets.QPushButton(self.groupBox_22)
-        self.pushButton_40.setGeometry(QtCore.QRect(20, 95, 146, 31))
+        self.ch4_posButton.setFont(font)
+        self.ch4_posButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch4_posButton.setStyleSheet("background-color: rgb(218, 218, 218);")
+        self.ch4_posButton.setObjectName("ch4_posButton")
+        self.ch4_altButton = QtWidgets.QPushButton(self.groupBox_22)
+        self.ch4_altButton.setGeometry(QtCore.QRect(20, 95, 146, 31))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_40.setFont(font)
-        self.pushButton_40.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_40.setObjectName("pushButton_40")
-        self.pushButton_41 = QtWidgets.QPushButton(self.groupBox_22)
-        self.pushButton_41.setGeometry(QtCore.QRect(20, 145, 146, 31))
+        self.ch4_altButton.setFont(font)
+        self.ch4_altButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch4_altButton.setObjectName("ch4_altButton")
+        self.ch4_negButton = QtWidgets.QPushButton(self.groupBox_22)
+        self.ch4_negButton.setGeometry(QtCore.QRect(20, 145, 146, 31))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_41.setFont(font)
-        self.pushButton_41.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_41.setObjectName("pushButton_41")
+        self.ch4_negButton.setFont(font)
+        self.ch4_negButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch4_negButton.setObjectName("ch4_negButton")
         self.groupBox_23 = QtWidgets.QGroupBox(self.frame_5)
         self.groupBox_23.setGeometry(QtCore.QRect(660, 20, 191, 196))
         font = QtGui.QFont()
@@ -1354,40 +1464,67 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_23.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_23.setObjectName("groupBox_23")
-        self.ch1_gainLabel_16 = QtWidgets.QLabel(self.groupBox_23)
-        self.ch1_gainLabel_16.setGeometry(QtCore.QRect(14, 27, 161, 81))
-        self.ch1_gainLabel_16.setMinimumSize(QtCore.QSize(130, 80))
-        self.ch1_gainLabel_16.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.ch4_freqLabel = QtWidgets.QLabel(self.groupBox_23)
+        self.ch4_freqLabel.setGeometry(QtCore.QRect(14, 27, 161, 81))
+        self.ch4_freqLabel.setMinimumSize(QtCore.QSize(130, 80))
+        self.ch4_freqLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "font: 75 36pt \"Liberation Sans\";")
-        self.ch1_gainLabel_16.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_gainLabel_16.setObjectName("ch1_gainLabel_16")
-        self.pushButton_42 = QtWidgets.QPushButton(self.groupBox_23)
-        self.pushButton_42.setGeometry(QtCore.QRect(10, 124, 81, 60))
-        self.pushButton_42.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_42.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_42.setText("")
-        self.pushButton_42.setIcon(icon2)
-        self.pushButton_42.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_42.setObjectName("pushButton_42")
-        self.pushButton_43 = QtWidgets.QPushButton(self.groupBox_23)
-        self.pushButton_43.setGeometry(QtCore.QRect(100, 125, 81, 60))
-        self.pushButton_43.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_43.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_43.setText("")
-        self.pushButton_43.setIcon(icon3)
-        self.pushButton_43.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_43.setObjectName("pushButton_43")
-        self.pushButton_44 = QtWidgets.QPushButton(self.frame_5)
-        self.pushButton_44.setGeometry(QtCore.QRect(1230, 135, 161, 61))
+        self.ch4_freqLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_freqLabel.setObjectName("ch4_freqLabel")
+        self.ch4_freqDwnButton = QtWidgets.QPushButton(self.groupBox_23)
+        self.ch4_freqDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
+        self.ch4_freqDwnButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch4_freqDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_freqDwnButton.setText("")
+        self.ch4_freqDwnButton.setIcon(icon2)
+        self.ch4_freqDwnButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch4_freqDwnButton.setObjectName("ch4_freqDwnButton")
+        self.ch4_freqUpButton = QtWidgets.QPushButton(self.groupBox_23)
+        self.ch4_freqUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
+        self.ch4_freqUpButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch4_freqUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_freqUpButton.setText("")
+        self.ch4_freqUpButton.setIcon(icon3)
+        self.ch4_freqUpButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch4_freqUpButton.setObjectName("ch4_freqUpButton")
+        self.ch4_enableButton = QtWidgets.QPushButton(self.frame_5)
+        self.ch4_enableButton.setGeometry(QtCore.QRect(1230, 135, 161, 61))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_44.setFont(font)
-        self.pushButton_44.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_44.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_44.setObjectName("pushButton_44")
+        self.ch4_enableButton.setFont(font)
+        self.ch4_enableButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch4_enableButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_enableButton.setObjectName("ch4_enableButton")
         self.groupBox_24 = QtWidgets.QGroupBox(self.frame_5)
         self.groupBox_24.setGeometry(QtCore.QRect(445, 20, 191, 196))
         font = QtGui.QFont()
@@ -1411,29 +1548,47 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_24.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_24.setObjectName("groupBox_24")
-        self.ch1_gainLabel_17 = QtWidgets.QLabel(self.groupBox_24)
-        self.ch1_gainLabel_17.setGeometry(QtCore.QRect(19, 27, 156, 81))
-        self.ch1_gainLabel_17.setMinimumSize(QtCore.QSize(130, 80))
-        self.ch1_gainLabel_17.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.ch4_timerLabel = QtWidgets.QLabel(self.groupBox_24)
+        self.ch4_timerLabel.setGeometry(QtCore.QRect(19, 27, 156, 81))
+        self.ch4_timerLabel.setMinimumSize(QtCore.QSize(130, 80))
+        self.ch4_timerLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "font: 75 36pt \"Liberation Sans\";")
-        self.ch1_gainLabel_17.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_gainLabel_17.setObjectName("ch1_gainLabel_17")
-        self.pushButton_45 = QtWidgets.QPushButton(self.groupBox_24)
-        self.pushButton_45.setGeometry(QtCore.QRect(10, 124, 81, 60))
-        self.pushButton_45.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_45.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_45.setText("")
-        self.pushButton_45.setIcon(icon2)
-        self.pushButton_45.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_45.setObjectName("pushButton_45")
-        self.pushButton_46 = QtWidgets.QPushButton(self.groupBox_24)
-        self.pushButton_46.setGeometry(QtCore.QRect(100, 125, 81, 60))
-        self.pushButton_46.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_46.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_46.setText("")
-        self.pushButton_46.setIcon(icon3)
-        self.pushButton_46.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_46.setObjectName("pushButton_46")
+        self.ch4_timerLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_timerLabel.setObjectName("ch4_timerLabel")
+        self.ch4_timerDwnButton = QtWidgets.QPushButton(self.groupBox_24)
+        self.ch4_timerDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
+        self.ch4_timerDwnButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch4_timerDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_timerDwnButton.setText("")
+        self.ch4_timerDwnButton.setIcon(icon2)
+        self.ch4_timerDwnButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch4_timerDwnButton.setObjectName("ch4_timerDwnButton")
+        self.ch4_timerUpButton = QtWidgets.QPushButton(self.groupBox_24)
+        self.ch4_timerUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
+        self.ch4_timerUpButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch4_timerUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_timerUpButton.setText("")
+        self.ch4_timerUpButton.setIcon(icon3)
+        self.ch4_timerUpButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch4_timerUpButton.setObjectName("ch4_timerUpButton")
         self.groupBox_25 = QtWidgets.QGroupBox(self.frame_5)
         self.groupBox_25.setGeometry(QtCore.QRect(1620, 110, 191, 96))
         font = QtGui.QFont()
@@ -1457,16 +1612,16 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_25.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_25.setObjectName("groupBox_25")
-        self.label_4 = QtWidgets.QLabel(self.groupBox_25)
-        self.label_4.setGeometry(QtCore.QRect(20, 35, 151, 41))
+        self.ch4_probeLabel = QtWidgets.QLabel(self.groupBox_25)
+        self.ch4_probeLabel.setGeometry(QtCore.QRect(20, 35, 151, 41))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.label_4.setFont(font)
-        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_4.setObjectName("label_4")
+        self.ch4_probeLabel.setFont(font)
+        self.ch4_probeLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_probeLabel.setObjectName("ch4_probeLabel")
         self.groupBox_26 = QtWidgets.QGroupBox(self.frame_5)
         self.groupBox_26.setGeometry(QtCore.QRect(875, 20, 191, 196))
         font = QtGui.QFont()
@@ -1490,29 +1645,47 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_26.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_26.setObjectName("groupBox_26")
-        self.ch1_gainLabel_18 = QtWidgets.QLabel(self.groupBox_26)
-        self.ch1_gainLabel_18.setGeometry(QtCore.QRect(14, 27, 161, 81))
-        self.ch1_gainLabel_18.setMinimumSize(QtCore.QSize(130, 80))
-        self.ch1_gainLabel_18.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.ch4_pwrLabel = QtWidgets.QLabel(self.groupBox_26)
+        self.ch4_pwrLabel.setGeometry(QtCore.QRect(14, 27, 161, 81))
+        self.ch4_pwrLabel.setMinimumSize(QtCore.QSize(130, 80))
+        self.ch4_pwrLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "font: 75 36pt \"Liberation Sans\";")
-        self.ch1_gainLabel_18.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_gainLabel_18.setObjectName("ch1_gainLabel_18")
-        self.pushButton_47 = QtWidgets.QPushButton(self.groupBox_26)
-        self.pushButton_47.setGeometry(QtCore.QRect(10, 124, 81, 60))
-        self.pushButton_47.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_47.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_47.setText("")
-        self.pushButton_47.setIcon(icon2)
-        self.pushButton_47.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_47.setObjectName("pushButton_47")
-        self.pushButton_48 = QtWidgets.QPushButton(self.groupBox_26)
-        self.pushButton_48.setGeometry(QtCore.QRect(100, 125, 81, 60))
-        self.pushButton_48.setMinimumSize(QtCore.QSize(60, 60))
-        self.pushButton_48.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_48.setText("")
-        self.pushButton_48.setIcon(icon3)
-        self.pushButton_48.setIconSize(QtCore.QSize(50, 50))
-        self.pushButton_48.setObjectName("pushButton_48")
+        self.ch4_pwrLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_pwrLabel.setObjectName("ch4_pwrLabel")
+        self.ch4_pwrDwnButton = QtWidgets.QPushButton(self.groupBox_26)
+        self.ch4_pwrDwnButton.setGeometry(QtCore.QRect(10, 124, 81, 60))
+        self.ch4_pwrDwnButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch4_pwrDwnButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_pwrDwnButton.setText("")
+        self.ch4_pwrDwnButton.setIcon(icon2)
+        self.ch4_pwrDwnButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch4_pwrDwnButton.setObjectName("ch4_pwrDwnButton")
+        self.ch4_pwrUpButton = QtWidgets.QPushButton(self.groupBox_26)
+        self.ch4_pwrUpButton.setGeometry(QtCore.QRect(100, 125, 81, 60))
+        self.ch4_pwrUpButton.setMinimumSize(QtCore.QSize(60, 60))
+        self.ch4_pwrUpButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_pwrUpButton.setText("")
+        self.ch4_pwrUpButton.setIcon(icon3)
+        self.ch4_pwrUpButton.setIconSize(QtCore.QSize(50, 50))
+        self.ch4_pwrUpButton.setObjectName("ch4_pwrUpButton")
         self.groupBox_27 = QtWidgets.QGroupBox(self.frame_5)
         self.groupBox_27.setGeometry(QtCore.QRect(15, 20, 196, 196))
         font = QtGui.QFont()
@@ -1536,39 +1709,57 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_27.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_27.setObjectName("groupBox_27")
-        self.ch1_displayLabel_4 = QtWidgets.QLabel(self.groupBox_27)
-        self.ch1_displayLabel_4.setGeometry(QtCore.QRect(5, 25, 181, 161))
-        self.ch1_displayLabel_4.setStyleSheet("background-color: rgb(157, 205, 255);\n"
+        self.ch4_displayLabel = QtWidgets.QLabel(self.groupBox_27)
+        self.ch4_displayLabel.setGeometry(QtCore.QRect(5, 25, 181, 161))
+        self.ch4_displayLabel.setStyleSheet("background-color: rgb(157, 205, 255);\n"
 "font: 75 65pt \"Liberation Sans\";")
-        self.ch1_displayLabel_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_displayLabel_4.setObjectName("ch1_displayLabel_4")
-        self.pushButton_49 = QtWidgets.QPushButton(self.frame_5)
-        self.pushButton_49.setGeometry(QtCore.QRect(1095, 45, 101, 156))
-        self.pushButton_49.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_49.setText("")
-        self.pushButton_49.setIcon(icon4)
-        self.pushButton_49.setIconSize(QtCore.QSize(32, 32))
-        self.pushButton_49.setObjectName("pushButton_49")
-        self.pushButton_50 = QtWidgets.QPushButton(self.frame_5)
-        self.pushButton_50.setGeometry(QtCore.QRect(1415, 135, 161, 61))
+        self.ch4_displayLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_displayLabel.setObjectName("ch4_displayLabel")
+        self.ch4_startButton = QtWidgets.QPushButton(self.frame_5)
+        self.ch4_startButton.setGeometry(QtCore.QRect(1095, 45, 101, 156))
+        self.ch4_startButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_startButton.setText("")
+        self.ch4_startButton.setIcon(icon4)
+        self.ch4_startButton.setIconSize(QtCore.QSize(32, 32))
+        self.ch4_startButton.setObjectName("ch4_startButton")
+        self.ch4_linkButton = QtWidgets.QPushButton(self.frame_5)
+        self.ch4_linkButton.setGeometry(QtCore.QRect(1415, 135, 161, 61))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_50.setFont(font)
-        self.pushButton_50.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_50.setStyleSheet("background-color: rgb(218, 218, 218);")
-        self.pushButton_50.setObjectName("pushButton_50")
-        self.progressBar = QtWidgets.QProgressBar(self.frame_5)
-        self.progressBar.setGeometry(QtCore.QRect(1235, 55, 571, 36))
+        self.ch4_linkButton.setFont(font)
+        self.ch4_linkButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.ch4_linkButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_linkButton.setObjectName("ch4_linkButton")
+        self.ch4_progressBar = QtWidgets.QProgressBar(self.frame_5)
+        self.ch4_progressBar.setGeometry(QtCore.QRect(1235, 55, 571, 36))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.progressBar.setFont(font)
-        self.progressBar.setStyleSheet("QProgressBar {\n"
+        self.ch4_progressBar.setFont(font)
+        self.ch4_progressBar.setStyleSheet("QProgressBar {\n"
 "    border: 2px solid #2196F3;\n"
 "    border-radius: 5px;\n"
 "    background-color: #E0E0E0;\n"
@@ -1579,8 +1770,46 @@ class Ui_MainWindow(object):
 "    width: 10px; \n"
 "    margin: 0.5px;\n"
 "}")
-        self.progressBar.setProperty("value", 24)
-        self.progressBar.setObjectName("progressBar")
+        self.ch4_progressBar.setProperty("value", 24)
+        self.ch4_progressBar.setObjectName("ch4_progressBar")
+        self.ch4_remainMinsLabel = QtWidgets.QLabel(self.frame_5)
+        self.ch4_remainMinsLabel.setGeometry(QtCore.QRect(1075, 45, 81, 76))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch4_remainMinsLabel.setFont(font)
+        self.ch4_remainMinsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch4_remainMinsLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.ch4_remainMinsLabel.setObjectName("ch4_remainMinsLabel")
+        self.ch4_stopButton = QtWidgets.QPushButton(self.frame_5)
+        self.ch4_stopButton.setGeometry(QtCore.QRect(1095, 125, 101, 76))
+        self.ch4_stopButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.ch4_stopButton.setText("")
+        self.ch4_stopButton.setIcon(icon5)
+        self.ch4_stopButton.setIconSize(QtCore.QSize(32, 32))
+        self.ch4_stopButton.setObjectName("ch4_stopButton")
+        self.ch4_remainSecsLabel = QtWidgets.QLabel(self.frame_5)
+        self.ch4_remainSecsLabel.setGeometry(QtCore.QRect(1160, 50, 66, 71))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch4_remainSecsLabel.setFont(font)
+        self.ch4_remainSecsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch4_remainSecsLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.ch4_remainSecsLabel.setObjectName("ch4_remainSecsLabel")
         self.verticalLayout_3.addWidget(self.frame_5)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
         self.lateralMenu = QtWidgets.QFrame(self.channelsFrame)
@@ -1949,38 +2178,42 @@ class Ui_MainWindow(object):
         self.ch2_remainMinsLabel.setText(_translate("MainWindow", "22\'"))
         self.ch2_remainSecsLabel.setText(_translate("MainWindow", "22\'\'"))
         self.groupBox_16.setTitle(_translate("MainWindow", "Gain"))
-        self.ch1_displayLabel_3.setText(_translate("MainWindow", "100"))
+        self.ch3_displayLabel.setText(_translate("MainWindow", "100"))
         self.groupBox_17.setTitle(_translate("MainWindow", "Polarity"))
-        self.pushButton_16.setText(_translate("MainWindow", "Positive"))
-        self.pushButton_29.setText(_translate("MainWindow", "Alternative"))
-        self.pushButton_30.setText(_translate("MainWindow", "Negative"))
-        self.pushButton_31.setText(_translate("MainWindow", "Enable Channel"))
+        self.ch3_posButton.setText(_translate("MainWindow", "Positive"))
+        self.ch3_altButton.setText(_translate("MainWindow", "Alternative"))
+        self.ch3_negButton.setText(_translate("MainWindow", "Negative"))
+        self.ch3_enableButton.setText(_translate("MainWindow", "Enable Channel"))
         self.groupBox_18.setTitle(_translate("MainWindow", "Frequency"))
-        self.ch1_gainLabel_13.setText(_translate("MainWindow", "100Hz"))
+        self.ch3_freqLabel.setText(_translate("MainWindow", "100Hz"))
         self.groupBox_19.setTitle(_translate("MainWindow", "Timer"))
-        self.ch1_gainLabel_14.setText(_translate("MainWindow", "100s"))
+        self.ch3_timerLabel.setText(_translate("MainWindow", "100s"))
         self.groupBox_20.setTitle(_translate("MainWindow", "Intensity"))
-        self.ch1_gainLabel_15.setText(_translate("MainWindow", "100uA"))
+        self.ch3_pwrLabel.setText(_translate("MainWindow", "100uA"))
         self.groupBox_21.setTitle(_translate("MainWindow", "Probe"))
-        self.label_3.setText(_translate("MainWindow", "Normal Probe"))
-        self.progressBar_2.setFormat(_translate("MainWindow", "%p%"))
+        self.ch3_probeLabel.setText(_translate("MainWindow", "Normal Probe"))
+        self.ch3_progressBar.setFormat(_translate("MainWindow", "%p%"))
+        self.ch3_remainMinsLabel.setText(_translate("MainWindow", "22\'"))
+        self.ch3_remainSecsLabel.setText(_translate("MainWindow", "22\'\'"))
         self.groupBox_22.setTitle(_translate("MainWindow", "Polarity"))
-        self.pushButton_39.setText(_translate("MainWindow", "Positive"))
-        self.pushButton_40.setText(_translate("MainWindow", "Alternative"))
-        self.pushButton_41.setText(_translate("MainWindow", "Negative"))
+        self.ch4_posButton.setText(_translate("MainWindow", "Positive"))
+        self.ch4_altButton.setText(_translate("MainWindow", "Alternative"))
+        self.ch4_negButton.setText(_translate("MainWindow", "Negative"))
         self.groupBox_23.setTitle(_translate("MainWindow", "Frequency"))
-        self.ch1_gainLabel_16.setText(_translate("MainWindow", "100Hz"))
-        self.pushButton_44.setText(_translate("MainWindow", "Enable Channel"))
+        self.ch4_freqLabel.setText(_translate("MainWindow", "100Hz"))
+        self.ch4_enableButton.setText(_translate("MainWindow", "Enable Channel"))
         self.groupBox_24.setTitle(_translate("MainWindow", "Timer"))
-        self.ch1_gainLabel_17.setText(_translate("MainWindow", "100s"))
+        self.ch4_timerLabel.setText(_translate("MainWindow", "100s"))
         self.groupBox_25.setTitle(_translate("MainWindow", "Probe"))
-        self.label_4.setText(_translate("MainWindow", "Normal Probe"))
+        self.ch4_probeLabel.setText(_translate("MainWindow", "Normal Probe"))
         self.groupBox_26.setTitle(_translate("MainWindow", "Intensity"))
-        self.ch1_gainLabel_18.setText(_translate("MainWindow", "100uA"))
+        self.ch4_pwrLabel.setText(_translate("MainWindow", "100uA"))
         self.groupBox_27.setTitle(_translate("MainWindow", "Gain"))
-        self.ch1_displayLabel_4.setText(_translate("MainWindow", "100"))
-        self.pushButton_50.setText(_translate("MainWindow", "Link To Ch3"))
-        self.progressBar.setFormat(_translate("MainWindow", "%p%"))
+        self.ch4_displayLabel.setText(_translate("MainWindow", "100"))
+        self.ch4_linkButton.setText(_translate("MainWindow", "Link To Ch3"))
+        self.ch4_progressBar.setFormat(_translate("MainWindow", "%p%"))
+        self.ch4_remainMinsLabel.setText(_translate("MainWindow", "22\'"))
+        self.ch4_remainSecsLabel.setText(_translate("MainWindow", "22\'\'"))
         self.ch1_posButton_2.setText(_translate("MainWindow", "CH1"))
         self.label.setText(_translate("MainWindow", "Audio Output for channel:"))
         self.ch1_posButton_3.setText(_translate("MainWindow", "CH2"))
