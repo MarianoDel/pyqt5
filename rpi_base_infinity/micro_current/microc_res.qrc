@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/mains_1.png</file>
+    <file>resources/mains_2.png</file>
+    <file>resources/batt_1_4.png</file>
+    <file>resources/batt_2_4.png</file>
+    <file>resources/batt_3_4.png</file>
+    <file>resources/batt_4_4.png</file>
     <file>resources/media-playback-stop-symbolic.symbolic.png</file>
     <file>resources/audio-speakers-symbolic.svg</file>
     <file>resources/document-open-symbolic.symbolic.png</file>

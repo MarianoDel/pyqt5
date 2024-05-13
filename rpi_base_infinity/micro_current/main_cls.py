@@ -4,7 +4,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QIcon
 from PyQt5 import QtCore, QtWidgets
 
 
@@ -39,6 +39,8 @@ class MainWindow (QMainWindow):
         self.ui.ch2_gainDwnButton.clicked.connect(self.GainUpDwn)
         self.gain_ch_list = [0,0,0,0]
         self.gain_ui_list = [self.ui.ch1_gainLabel, self.ui.ch2_gainLabel, 0, 0]
+        for x in range(2):
+            self.gain_ui_list[x].setText(str(self.gain_ch_list[x]))
 
         # ch1 ch2 ch3 & ch4 can change polarity
         self.ui.ch1_posButton.clicked.connect(self.ChangePolarity)
@@ -56,7 +58,10 @@ class MainWindow (QMainWindow):
         self.pol_pos_ui_list = [self.ui.ch1_posButton, self.ui.ch2_posButton, self.ui.ch3_posButton, self.ui.ch4_posButton]        
         self.pol_alt_ui_list = [self.ui.ch1_altButton, self.ui.ch2_altButton, self.ui.ch3_altButton, self.ui.ch4_altButton]
         self.pol_neg_ui_list = [self.ui.ch1_negButton, self.ui.ch2_negButton, self.ui.ch3_negButton, self.ui.ch4_negButton]
-
+        self.pol_index_ch_list = ['', '', '', '']
+        for x in range(4):
+            self.pol_index_ch_list[x] = 'positive'
+            
         # ch1 ch2 ch3 & ch4 timer options
         self.timer_index_ch_list = [0, 0, 0, 0]        
         self.timer_list = ['6s', '12s', '30s', '1m', '10m', '30m']
@@ -70,7 +75,9 @@ class MainWindow (QMainWindow):
         self.ui.ch4_timerUpButton.clicked.connect(self.ChangeTimer)
         self.ui.ch4_timerDwnButton.clicked.connect(self.ChangeTimer)
         self.timer_ui_list = [self.ui.ch1_timerLabel, self.ui.ch2_timerLabel, self.ui.ch3_timerLabel, self.ui.ch4_timerLabel]
-
+        for x in range(4):
+            self.timer_ui_list[x].setText(self.timer_list[self.timer_index_ch_list[x]])
+            
         # frequency options
         self.freq_index_ch_list = [0, 0, 0, 0]
         self.freq_list = ['0.5Hz', '1.0Hz', '2.0Hz', '4.0Hz', '8.0Hz', '10Hz', '20Hz', '40Hz', '80Hz', '160Hz', '320Hz']
@@ -85,6 +92,9 @@ class MainWindow (QMainWindow):
         self.ui.ch4_freqUpButton.clicked.connect(self.ChangeFrequency)
         self.ui.ch4_freqDwnButton.clicked.connect(self.ChangeFrequency)
         self.freq_ui_list = [self.ui.ch1_freqLabel, self.ui.ch2_freqLabel, self.ui.ch3_freqLabel, self.ui.ch4_freqLabel]
+        for x in range(4):
+            freq_str = self.freq_list[self.freq_index_ch_list[x]]                
+            self.freq_ui_list[x].setText(freq_str)
 
         # ch1 ch2 ch3 ch4 intensity options
         self.pwr_index_ch_list = [0, 0, 0, 0]        
@@ -99,6 +109,9 @@ class MainWindow (QMainWindow):
         self.ui.ch4_pwrUpButton.clicked.connect(self.ChangePower)
         self.ui.ch4_pwrDwnButton.clicked.connect(self.ChangePower)
         self.pwr_ui_list = [self.ui.ch1_pwrLabel, self.ui.ch2_pwrLabel, self.ui.ch3_pwrLabel, self.ui.ch4_pwrLabel]
+        for x in range(4):
+            power_str = self.pwr_list[self.pwr_index_ch_list[x]]
+            self.pwr_ui_list[x].setText(power_str)
 
         # ch1 to ch4 others buttons
         self.ui.ch1_startButton.clicked.connect(self.StartChannel)
@@ -154,14 +167,56 @@ class MainWindow (QMainWindow):
             self.remainMins_ui_list[x].hide()
             self.remainSecs_ui_list[x].hide()
 
+        # disable all channels on startup
+        self.SendConfig('ch1', 'disable')
+        self.SendConfig('ch2', 'disable')
+        self.SendConfig('ch3', 'disable')
+        self.SendConfig('ch4', 'disable')
+        self.progress_config = 'init'
+        
         self.in_treat_ch_list = [False, False, False, False]
         self.ui.bt_menu_close.hide()
 
+        # all channels none probe
+        self.probeLabel_ui_list = [self.ui.ch1_probeLabel, self.ui.ch2_probeLabel, self.ui.ch3_probeLabel, self.ui.ch4_probeLabel]
+        for x in range(4):
+            self.probeLabel_ui_list[x].setText('None')
+
+        # mains and battery buttons
+        self.ui.mainsButton.clicked.connect(self.ShowVoltages)
+        self.ui.battaButton.clicked.connect(self.ShowVoltages)
+        self.ui.battbButton.clicked.connect(self.ShowVoltages)
+        # batteries full at start
+        self.mains_state = 'mains'
+        self.battery_a_state = '4'    
+        self.battery_b_state = '4'
+        self.mains_voltage_str = '--'
+        self.battery_a_voltage_str = '--'
+        self.battery_b_voltage_str = '--'
+        self.mains_revert = False
+        self.batta_revert = False
+        self.battb_revert = False
+        self.revert_cnt = 0
         
+        ## setup mains & battery icons
+        self.mains_icon_connect = QIcon(':/icons/resources/mains_1.png')
+        self.mains_icon_disconnect = QIcon(':/icons/resources/mains_2.png')
+        self.batticon_list = [QIcon(':/icons/resources/batt_1_4.png'),\
+                              QIcon(':/icons/resources/batt_2_4.png'),\
+                              QIcon(':/icons/resources/batt_3_4.png'),\
+                              QIcon(':/icons/resources/batt_4_4.png')]
+        
+    
         ## activate the 1 second timer its repetitive
         self.t1seg = QTimer()
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
+
+        ## progress timer for start and first config
+        self.progress_timer = QTimer()
+        self.progressLabel_timer = QTimer()
+        self.sine_cnt = 0
+        self.sine_table_list = [25, 50, 75, 100, 75, 50, 25, 0, 15, 30, 45, 60, 45, 30, 15, 0]
 
         
     def move_menu (self):
@@ -227,18 +282,21 @@ class MainWindow (QMainWindow):
         ch_index = self.GetChannelIndexFromString(ch_name)
 
         if ch_func == 'posButton':
+            self.pol_index_ch_list[ch_index] = 'positive'
             self.pol_pos_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
             self.pol_alt_ui_list[ch_index].setStyleSheet('')
             self.pol_neg_ui_list[ch_index].setStyleSheet('')            
             self.SendConfig(ch_name, 'polarity positive')
 
         if ch_func == 'altButton':
+            self.pol_index_ch_list[ch_index] = 'alternative'            
             self.pol_pos_ui_list[ch_index].setStyleSheet('')
             self.pol_alt_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
             self.pol_neg_ui_list[ch_index].setStyleSheet('')            
             self.SendConfig(ch_name, 'polarity alternative')
 
         if ch_func == 'negButton':
+            self.pol_index_ch_list[ch_index] = 'negative'            
             self.pol_pos_ui_list[ch_index].setStyleSheet('')
             self.pol_alt_ui_list[ch_index].setStyleSheet('')
             self.pol_neg_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
@@ -336,6 +394,11 @@ class MainWindow (QMainWindow):
         ch_func = obj_list[1]
         ch_index = self.GetChannelIndexFromString(ch_name)
 
+        # check enable channel or None in probe
+        if self.enableButton_ui_list[ch_index].text() == 'Enable Channel' or \
+           self.probeLabel_ui_list[ch_index].text() == 'None':
+            return
+        
         if self.in_treat_ch_list[ch_index] == False:
             self.SendConfig(ch_name, 'start')
 
@@ -359,6 +422,14 @@ class MainWindow (QMainWindow):
         self.remainSecs_ui_list[ch_index].show()
         self.stopButton_ui_list[ch_index].show()
         self.startButton_ui_list[ch_index].hide()
+
+        if ch_index == 2:
+            self.ui.ch3_progressBar.setValue(0)
+            self.progressLabel_timer.singleShot(200, self.ProgressLabelSM)
+        elif ch_index == 3:
+            self.ui.ch4_progressBar.setValue(0)
+            self.progressLabel_timer.singleShot(200, self.ProgressLabelSM)
+            
         
 
     def StopChannel (self):
@@ -393,9 +464,11 @@ class MainWindow (QMainWindow):
             self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(129, 129, 129);\
                                                                border: 2px solid rgb(218, 218, 218);')
             self.SendConfig(ch_name, 'enable')
+            self.SendConfigByIndex (ch_index)
         else:
             self.enableButton_ui_list[ch_index].setText('Enable Channel')
             self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+            self.probeLabel_ui_list[ch_index].setText('None')
             self.SendConfig(ch_name, 'disable')
             
 
@@ -403,6 +476,7 @@ class MainWindow (QMainWindow):
         if self.s.port_open == True:
             self.s.Write(channel + ' ' + command + '\n')
 
+            
     def SendEncodFreq (self, channel, value):
         if self.s.port_open == True:
             encoder = ''
@@ -439,18 +513,166 @@ class MainWindow (QMainWindow):
             
 
     def GetChannelIndexFromString (self, channel_str):
-            index = 3
+        index = 3
             
-            if channel_str == 'ch1':
-                index = 0
-            elif channel_str == 'ch2':
-                index = 1
-            elif channel_str == 'ch3':
-                index = 2
-            # else: # channel_str == 'ch4'
-            #     index = 3
-            return index
+        if channel_str == 'ch1':
+            index = 0
+        elif channel_str == 'ch2':
+            index = 1
+        elif channel_str == 'ch3':
+            index = 2
+        # else: # channel_str == 'ch4'
+        #     index = 3
+        return index
+
+
+    def ShowVoltages (self):
+        sender = self.sender()
         
+        if sender.objectName() == 'mainsButton':
+            self.ui.mainsButton.setIcon(QIcon())
+            self.ui.mainsButton.setText(self.mains_voltage_str)
+            self.mains_revert = True
+            self.revert_cnt = 2
+            
+        if sender.objectName() == 'battaButton':
+            self.ui.battaButton.setIcon(QIcon())
+            self.ui.battaButton.setText(self.battery_a_voltage_str)
+            self.batta_revert = True            
+            self.revert_cnt = 2            
+
+        if sender.objectName() == 'battbButton':
+            self.ui.battbButton.setIcon(QIcon())
+            self.ui.battbButton.setText(self.battery_b_voltage_str)
+            self.battb_revert = True
+            self.revert_cnt = 2            
+            
+
+    def RevertVoltages (self):
+        if self.revert_cnt > 0:
+            self.revert_cnt -= 1
+            return
+            
+        if self.mains_revert:
+            self.ui.mainsButton.setText('')
+            self.mains_revert = False
+            if self.mains_state == 'mains':
+                self.ui.mainsButton.setIcon(self.mains_icon_connect)
+            else:
+                self.ui.mainsButton.setIcon(self.mains_icon_disconnect)
+
+        if self.batta_revert:
+            self.ui.battaButton.setText('')
+            self.batta_revert = False
+            self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state) - 1])
+
+        if self.battb_revert:
+            self.ui.battbButton.setText('')
+            self.battb_revert = False
+            self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state) - 1])
+                
+            
+    def UpdateSupplyPower (self, power_str):
+        # supply mains 13.2V 8.4V 8.4V 4 4
+        # supply battery 6.2V 8.4V 8.4V 4 4
+        update_volts = False
+        power_str_list = power_str.split(' ')
+        if power_str_list[1] == 'mains':
+            self.mains_voltage_str = power_str_list [2]
+            if self.mains_state != 'mains':
+                self.mains_state = 'mains'
+                self.ui.mainsButton.setIcon(self.mains_icon_connect)
+            update_volts = True
+        elif power_str_list [1] == 'battery':
+            if self.mains_state != 'battery':
+                self.mains_state = 'battery'
+                self.ui.mainsButton.setIcon(self.mains_icon_disconnect)
+            update_volts = True
+
+        # update battery voltages
+        batta_str = power_str_list[5]
+        battb_str = power_str_list[6]
+        if update_volts and \
+           batta_str[0] > '0' and batta_str[0] < '5' and \
+           battb_str[0] > '0' and battb_str[0] < '5':
+            self.battery_a_voltage_str = power_str_list [3]
+            self.battery_b_voltage_str = power_str_list [4]
+            if self.battery_a_state != power_str_list[5]:
+                self.battery_a_state = power_str_list[5]
+                self.ui.battaButton.setIcon(self.batticon[int(self.battery_a_state)])
+
+            if self.battery_b_state != power_str_list[6]:
+                self.battery_b_state = power_str_list[6]
+                self.ui.battbButton.setIcon(self.batticon[int(self.battery_b_state)])
+
+            
+    ############################
+    # Progress Timed Functions #
+    ############################
+    def SendConfigByIndex (self, ch_index):
+        if self.progress_config != 'init':
+            return
+
+        self.prog_ch_index = ch_index
+        self.prog_ch_name = 'ch' + str(ch_index + 1)
+        self.SendConfigChannelSM ()
+        
+        
+    def SendConfigChannelSM (self):
+        if self.progress_config == 'init':
+            self.progress_config = 'gain'
+            self.progress_timer.singleShot(2000, self.SendConfigChannelSM)
+        elif self.progress_config == 'gain':
+            self.SendConfig(self.prog_ch_name, 'set_gain ' + str(self.gain_ch_list[self.prog_ch_index]))
+            self.progress_config = 'polarity'
+            self.progress_timer.singleShot(50, self.SendConfigChannelSM)
+        elif self.progress_config == 'polarity':
+            self.SendConfig(self.prog_ch_name, 'polarity ' + self.pol_index_ch_list[self.prog_ch_index])
+            self.progress_config = 'frequency'
+            self.progress_timer.singleShot(50, self.SendConfigChannelSM)
+        elif self.progress_config == 'frequency':
+            self.SendConfig(self.prog_ch_name, 'frequency ' + self.freq_conf_list[self.freq_index_ch_list[self.prog_ch_index]])
+            self.SendEncodFreq(self.prog_ch_name, self.freq_index_ch_list[self.prog_ch_index])
+            self.progress_config = 'intensity'
+            self.progress_timer.singleShot(50, self.SendConfigChannelSM)
+        elif self.progress_config == 'intensity':
+            power_str = self.pwr_list[self.pwr_index_ch_list[self.prog_ch_index]]
+            self.SendConfig(self.prog_ch_name, 'intensity ' + power_str)
+            self.SendEncodPwr(self.prog_ch_name, self.pwr_index_ch_list[self.prog_ch_index])
+            self.progress_config = 'mode'
+            self.progress_timer.singleShot(50, self.SendConfigChannelSM)
+        elif self.progress_config == 'mode':
+            if self.prog_ch_index == 0 or self.prog_ch_index == 1:
+                self.SendConfig(self.prog_ch_name, 'mode square')
+            else:
+                self.SendConfig(self.prog_ch_name, 'mode sine')
+            self.progress_config = 'init'
+
+            
+    def ProgressLabelSM (self):
+        next_cycle = False
+        if self.in_treat_ch_list[2] == True:
+            self.ui.ch3_progressBar.setValue(self.sine_table_list[self.sine_cnt])
+            next_cycle = True
+        else:
+            self.ui.ch3_progressBar.setValue(0)
+
+        if self.in_treat_ch_list[3] == True:
+            self.ui.ch4_progressBar.setValue(self.sine_table_list[self.sine_cnt])
+            next_cycle = True
+        else:
+            self.ui.ch4_progressBar.setValue(0)
+
+        if self.sine_cnt < 16 - 1:
+            self.sine_cnt += 1
+        else:
+            self.sine_cnt = 0
+            
+        if next_cycle:
+            self.progressLabel_timer.singleShot(200, self.ProgressLabelSM)
+            
+            
+            
     ###########################
     # One Second Timer signal #
     ###########################
@@ -460,6 +682,8 @@ class MainWindow (QMainWindow):
 
     def UpdateOneSec (self):
         """ one second gone, check if its something to do """
+        self.RevertVoltages()
+        
         for x in range(4):
             if self.in_treat_ch_list[x]:
                 if (self.remaining_minutes_ch_list[x] > 0 or
@@ -478,9 +702,9 @@ class MainWindow (QMainWindow):
                     self.StopChannelByIndex(x)
 
         
-        ##################
-        # Serial Methods #
-        ##################
+    ##################
+    # Serial Methods #
+    ##################
     def SerialDataCallback (self, rcv):        
         # print ("serial data callback!")
         # print (rcv)
@@ -522,7 +746,16 @@ class MainWindow (QMainWindow):
 
                 self.pwr_index_ch_list[index] = pos
                 self.ChangePowerByIndex(index)
-                
+
+        # channels comms
+        # if rcv.startswith("ch"):
+        #     if rcv[2] == '1' or \
+        #        rcv[2] == '2' or \
+        #        rcv[2] == '3' or \
+        #        rcv[2] == '4':
+        if rcv.startswith("supply "):
+            self.UpdateSupplyPower(rcv)
+               
         if rcv.startswith("ch1 display "):
             rcv_list = rcv.split(' ')
             try:
@@ -548,24 +781,64 @@ class MainWindow (QMainWindow):
         if rcv.startswith("ch2 new probe "):
             rcv_list = rcv.split(' ')
             self.ui.ch2_probeLabel.setText(rcv_list[3])
+
+        if rcv.startswith("ch3 new probe "):
+            rcv_list = rcv.split(' ')
+            self.ui.ch3_probeLabel.setText(rcv_list[3])
+
+        if rcv.startswith("ch4 new probe "):
+            rcv_list = rcv.split(' ')
+            self.ui.ch4_probeLabel.setText(rcv_list[3])
             
         if rcv.startswith("ch1 probe start"):
+            # check enable channel
+            if self.enableButton_ui_list[0].text() == 'Enable Channel':
+                return
+
             if self.in_treat_ch_list[0] == False:
                 self.SendConfig('ch1', 'start')
 
             self.StartChannelByIndex(0)            
 
         if rcv.startswith("ch2 probe start"):
+            # check enable channel
+            if self.enableButton_ui_list[1].text() == 'Enable Channel':
+                return
+
             if self.in_treat_ch_list[1] == False:
                 self.SendConfig('ch2', 'start')
 
             self.StartChannelByIndex(1)            
+
+        if rcv.startswith("ch3 probe start"):
+            # check enable channel
+            if self.enableButton_ui_list[2].text() == 'Enable Channel':
+                return
+
+            if self.in_treat_ch_list[2] == False:
+                self.SendConfig('ch3', 'start')
+
+            self.StartChannelByIndex(2)            
+
+        if rcv.startswith("ch4 probe start"):
+            # check enable channel
+            if self.enableButton_ui_list[3].text() == 'Enable Channel':
+                return
+
+            if self.in_treat_ch_list[3] == False:
+                self.SendConfig('ch4', 'start')
+
+            self.StartChannelByIndex(3)            
             
-                    
-                    
-    # def SerialProcess (self, rcv):
-    #     show_message = True
-    #     if rcv.startswith("antenna none"):
-    #         self.antennas_connected.Flush()
-    #         self.AntennaUpdate()
-        
+        if rcv.startswith("ch1 none probe"):
+            self.ui.ch1_probeLabel.setText('None')
+
+        elif rcv.startswith("ch2 none probe"):
+            self.ui.ch2_probeLabel.setText('None')
+
+        elif rcv.startswith("ch3 none probe"):
+            self.ui.ch3_probeLabel.setText('None')
+
+        elif rcv.startswith("ch4 none probe"):
+            self.ui.ch4_probeLabel.setText('None')
+            
