@@ -706,19 +706,19 @@ class MainWindow (QMainWindow):
     def ProgressCalcValue (self, curr_index, sine_point):
         if curr_index == 0:    #25uA
             c = 25
-            pp = 25
+            pp = 16
         elif curr_index == 1:    #50uA
             c = 50
-            pp = 50
+            pp = 24
         elif curr_index == 2:    #100uA
             c = 100
-            pp = 85
+            pp = 56
         elif curr_index == 3:    #200uA
             c = 200
-            pp = 100
+            pp = 66
         elif curr_index == 4:    #400uA
             c = 400
-            pp = 100
+            pp = 80
         else:                    #600uA
             c = 600
             pp = 100
