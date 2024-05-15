@@ -201,7 +201,8 @@ class MainWindow (QMainWindow):
         ## setup mains & battery icons
         self.mains_icon_connect = QIcon(':/icons/resources/mains_1.png')
         self.mains_icon_disconnect = QIcon(':/icons/resources/mains_2.png')
-        self.batticon_list = [QIcon(':/icons/resources/batt_1_4.png'),\
+        self.batticon_list = [QIcon(':/icons/resources/batt_0_4.png'),\
+                              QIcon(':/icons/resources/batt_1_4.png'),\
                               QIcon(':/icons/resources/batt_2_4.png'),\
                               QIcon(':/icons/resources/batt_3_4.png'),\
                               QIcon(':/icons/resources/batt_4_4.png')]
@@ -212,11 +213,18 @@ class MainWindow (QMainWindow):
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
 
+        self.ui.ch3_progressBar.setValue(0)
+        self.ui.ch4_progressBar.setValue(0)
+        self.ui.ch3_displayLabel.setText('--')
+        self.ui.ch4_displayLabel.setText('--')
+        self.ui.ch3_displayTextLabel.setText('')
+        self.ui.ch4_displayTextLabel.setText('')
         ## progress timer for start and first config
         self.progress_timer = QTimer()
-        self.progressLabel_timer = QTimer()
+        self.progressBar_timer = QTimer()
         self.sine_cnt = 0
-        self.sine_table_list = [25, 50, 75, 100, 75, 50, 25, 0, 15, 30, 45, 60, 45, 30, 15, 0]
+        self.sine_pos_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, 0.38, 0.71, 0.92, 1, 0.92, 0.71, 0.38, 0]
+        self.sine_alt_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, -0.57, -1.06, -1.39, -1.5, -1.39, -1.06, -0.57, 0]
 
         
     def move_menu (self):
@@ -425,10 +433,12 @@ class MainWindow (QMainWindow):
 
         if ch_index == 2:
             self.ui.ch3_progressBar.setValue(0)
-            self.progressLabel_timer.singleShot(200, self.ProgressLabelSM)
+            self.ui.ch3_displayLabel.setText('0')            
+            self.progressBar_timer.singleShot(200, self.ProgressBarSM)
         elif ch_index == 3:
             self.ui.ch4_progressBar.setValue(0)
-            self.progressLabel_timer.singleShot(200, self.ProgressLabelSM)
+            self.ui.ch4_displayLabel.setText('0')
+            self.progressBar_timer.singleShot(200, self.ProgressBarSM)
             
         
 
@@ -564,12 +574,12 @@ class MainWindow (QMainWindow):
         if self.batta_revert:
             self.ui.battaButton.setText('')
             self.batta_revert = False
-            self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state) - 1])
+            self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state)])
 
         if self.battb_revert:
             self.ui.battbButton.setText('')
             self.battb_revert = False
-            self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state) - 1])
+            self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])
                 
             
     def UpdateSupplyPower (self, power_str):
@@ -593,17 +603,17 @@ class MainWindow (QMainWindow):
         batta_str = power_str_list[5]
         battb_str = power_str_list[6]
         if update_volts and \
-           batta_str[0] > '0' and batta_str[0] < '5' and \
-           battb_str[0] > '0' and battb_str[0] < '5':
+           batta_str[0] >= '0' and batta_str[0] < '5' and \
+           battb_str[0] >= '0' and battb_str[0] < '5':
             self.battery_a_voltage_str = power_str_list [3]
             self.battery_b_voltage_str = power_str_list [4]
             if self.battery_a_state != power_str_list[5]:
                 self.battery_a_state = power_str_list[5]
-                self.ui.battaButton.setIcon(self.batticon[int(self.battery_a_state)])
+                self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state)])
 
             if self.battery_b_state != power_str_list[6]:
                 self.battery_b_state = power_str_list[6]
-                self.ui.battbButton.setIcon(self.batticon[int(self.battery_b_state)])
+                self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])                
 
             
     ############################
@@ -649,19 +659,40 @@ class MainWindow (QMainWindow):
             self.progress_config = 'init'
 
             
-    def ProgressLabelSM (self):
+    def ProgressBarSM (self):
         next_cycle = False
+        
         if self.in_treat_ch_list[2] == True:
-            self.ui.ch3_progressBar.setValue(self.sine_table_list[self.sine_cnt])
+            if self.pol_index_ch_list[2] == 'negative':
+                sine_point = -self.sine_pos_table_list[self.sine_cnt]
+            elif self.pol_index_ch_list[2] == 'positive':
+                sine_point = self.sine_pos_table_list[self.sine_cnt]
+            else:    # alternative
+                sine_point = self.sine_alt_table_list[self.sine_cnt]
+
+            display, progress = self.ProgressCalcValue(self.pwr_index_ch_list[2], sine_point)
+            self.ui.ch3_progressBar.setValue(progress)
+            self.ui.ch3_displayLabel.setText(str(display))
             next_cycle = True
         else:
             self.ui.ch3_progressBar.setValue(0)
+            self.ui.ch3_displayLabel.setText('--')
 
         if self.in_treat_ch_list[3] == True:
-            self.ui.ch4_progressBar.setValue(self.sine_table_list[self.sine_cnt])
+            if self.pol_index_ch_list[3] == 'negative':
+                sine_point = -self.sine_pos_table_list[self.sine_cnt]
+            elif self.pol_index_ch_list[3] == 'positive':
+                sine_point = self.sine_pos_table_list[self.sine_cnt]
+            else:    # alternative
+                sine_point = self.sine_alt_table_list[self.sine_cnt]
+
+            display, progress = self.ProgressCalcValue(self.pwr_index_ch_list[3], sine_point)
+            self.ui.ch4_progressBar.setValue(progress)
+            self.ui.ch4_displayLabel.setText(str(display))            
             next_cycle = True
         else:
             self.ui.ch4_progressBar.setValue(0)
+            self.ui.ch4_displayLabel.setText('--')            
 
         if self.sine_cnt < 16 - 1:
             self.sine_cnt += 1
@@ -669,9 +700,43 @@ class MainWindow (QMainWindow):
             self.sine_cnt = 0
             
         if next_cycle:
-            self.progressLabel_timer.singleShot(200, self.ProgressLabelSM)
+            self.progressBar_timer.singleShot(200, self.ProgressBarSM)
+
             
+    def ProgressCalcValue (self, curr_index, sine_point):
+        if curr_index == 0:    #25uA
+            c = 25
+            pp = 25
+        elif curr_index == 1:    #50uA
+            c = 50
+            pp = 50
+        elif curr_index == 2:    #100uA
+            c = 100
+            pp = 85
+        elif curr_index == 3:    #200uA
+            c = 200
+            pp = 100
+        elif curr_index == 4:    #400uA
+            c = 400
+            pp = 100
+        else:                    #600uA
+            c = 600
+            pp = 100
+
+        prog_value = sine_point * pp
+        prog_value = int(prog_value)
+        if prog_value < 0:
+            prog_value = -prog_value
             
+        if prog_value > 100:
+            prog_value = 100
+
+        disp_value = sine_point * c
+        disp_value = int(disp_value)
+        if disp_value > 1000:
+            disp_value = 1000
+            
+        return disp_value, prog_value
             
     ###########################
     # One Second Timer signal #
@@ -754,8 +819,11 @@ class MainWindow (QMainWindow):
         #        rcv[2] == '3' or \
         #        rcv[2] == '4':
         if rcv.startswith("supply "):
-            self.UpdateSupplyPower(rcv)
-               
+            try:
+                self.UpdateSupplyPower(rcv)
+            except:
+                print('error on supply str!')
+                
         if rcv.startswith("ch1 display "):
             rcv_list = rcv.split(' ')
             try:

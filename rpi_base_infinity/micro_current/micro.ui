@@ -1010,34 +1010,6 @@ border: 2px solid rgb(218, 218, 218);
                    </size>
                   </property>
                  </widget>
-                 <widget class="QLabel" name="ch1_displayTextLabel">
-                  <property name="geometry">
-                   <rect>
-                    <x>15</x>
-                    <y>25</y>
-                    <width>161</width>
-                    <height>26</height>
-                   </rect>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Liberation Sans</family>
-                    <pointsize>14</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(157, 205, 255);
-color: rgb(85, 170, 255);</string>
-                  </property>
-                  <property name="text">
-                   <string>Offline Gain</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
                 </widget>
                 <widget class="QPushButton" name="ch1_startButton">
                  <property name="geometry">
@@ -2328,12 +2300,49 @@ top: -8px;
                     <height>161</height>
                    </rect>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>60</pointsize>
+                    <weight>9</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(157, 205, 255);
-font: 75 65pt &quot;Liberation Sans&quot;;</string>
+font: 75 60pt &quot;Liberation Sans&quot;;</string>
                   </property>
                   <property name="text">
-                   <string>100</string>
+                   <string>1000</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="ch3_displayTextLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>15</x>
+                    <y>25</y>
+                    <width>161</width>
+                    <height>26</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(157, 205, 255);
+color: rgb(85, 170, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Offline Gain</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -3869,12 +3878,49 @@ top: -8px;
                     <height>161</height>
                    </rect>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>60</pointsize>
+                    <weight>9</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(157, 205, 255);
-font: 75 65pt &quot;Liberation Sans&quot;;</string>
+font: 75 60pt &quot;Liberation Sans&quot;;</string>
                   </property>
                   <property name="text">
-                   <string>100</string>
+                   <string>1000</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="ch4_displayTextLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>15</x>
+                    <y>25</y>
+                    <width>161</width>
+                    <height>26</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(157, 205, 255);
+color: rgb(85, 170, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Offline Gain</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>

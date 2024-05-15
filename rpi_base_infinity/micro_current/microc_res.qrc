@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/batt_0_4.png</file>
     <file>resources/mains_1.png</file>
     <file>resources/mains_2.png</file>
     <file>resources/batt_1_4.png</file>
