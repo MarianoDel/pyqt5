@@ -175,6 +175,7 @@ class MainWindow (QMainWindow):
         self.progress_config = 'init'
         
         self.in_treat_ch_list = [False, False, False, False]
+        self.in_treat_show_sine_list = [False, False, False, False]
         self.ui.bt_menu_close.hide()
 
         # all channels none probe
@@ -213,12 +214,16 @@ class MainWindow (QMainWindow):
         self.t1seg.timeout.connect(self.TimerOneSec)
         self.t1seg.start(1000)
 
+        self.displayLabel_ui_list = [self.ui.ch1_displayLabel, self.ui.ch2_displayLabel, self.ui.ch3_displayLabel, self.ui.ch4_displayLabel]
+        for x in range(4):
+            self.displayLabel_ui_list[x].setText('--')
+
+        self.displayTextLabel_ui_list = [self.ui.ch1_displayTextLabel, self.ui.ch2_displayTextLabel, self.ui.ch3_displayTextLabel, self.ui.ch4_displayTextLabel]
+        for x in range(4):
+            self.displayTextLabel_ui_list[x].setText('')
+
         self.ui.ch3_progressBar.setValue(0)
         self.ui.ch4_progressBar.setValue(0)
-        self.ui.ch3_displayLabel.setText('--')
-        self.ui.ch4_displayLabel.setText('--')
-        self.ui.ch3_displayTextLabel.setText('')
-        self.ui.ch4_displayTextLabel.setText('')
         ## progress timer for start and first config
         self.progress_timer = QTimer()
         self.progressBar_timer = QTimer()
@@ -431,6 +436,11 @@ class MainWindow (QMainWindow):
         self.stopButton_ui_list[ch_index].show()
         self.startButton_ui_list[ch_index].hide()
 
+        if ch_index == 0 or \
+           ch_index == 1:
+            # clean display
+            self.displayLabel_ui_list[ch_index].setText('--')
+
         if ch_index == 2:
             self.ui.ch3_progressBar.setValue(0)
             self.ui.ch3_displayLabel.setText('0')            
@@ -439,7 +449,6 @@ class MainWindow (QMainWindow):
             self.ui.ch4_progressBar.setValue(0)
             self.ui.ch4_displayLabel.setText('0')
             self.progressBar_timer.singleShot(200, self.ProgressBarSM)
-            
         
 
     def StopChannel (self):
@@ -459,6 +468,7 @@ class MainWindow (QMainWindow):
         self.remainSecs_ui_list[ch_index].hide()
         self.stopButton_ui_list[ch_index].hide()
         self.startButton_ui_list[ch_index].show()
+        self.displayTextLabel_ui_list[ch_index].setText('')
         
 
     def EnableChannel (self):
@@ -479,6 +489,8 @@ class MainWindow (QMainWindow):
             self.enableButton_ui_list[ch_index].setText('Enable Channel')
             self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
             self.probeLabel_ui_list[ch_index].setText('None')
+            if ch_index < 3:
+                self.displayLabel_ui_list[ch_index].setText('--')
             self.SendConfig(ch_name, 'disable')
             
 
@@ -588,7 +600,6 @@ class MainWindow (QMainWindow):
         update_volts = False
         power_str_list = power_str.split(' ')
         if power_str_list[1] == 'mains':
-            self.mains_voltage_str = power_str_list [2]
             if self.mains_state != 'mains':
                 self.mains_state = 'mains'
                 self.ui.mainsButton.setIcon(self.mains_icon_connect)
@@ -599,12 +610,13 @@ class MainWindow (QMainWindow):
                 self.ui.mainsButton.setIcon(self.mains_icon_disconnect)
             update_volts = True
 
-        # update battery voltages
+        # update mains & battery voltages
         batta_str = power_str_list[5]
         battb_str = power_str_list[6]
         if update_volts and \
            batta_str[0] >= '0' and batta_str[0] < '5' and \
            battb_str[0] >= '0' and battb_str[0] < '5':
+            self.mains_voltage_str = power_str_list [2]
             self.battery_a_voltage_str = power_str_list [3]
             self.battery_b_voltage_str = power_str_list [4]
             if self.battery_a_state != power_str_list[5]:
@@ -662,7 +674,8 @@ class MainWindow (QMainWindow):
     def ProgressBarSM (self):
         next_cycle = False
         
-        if self.in_treat_ch_list[2] == True:
+        if self.in_treat_ch_list[2] == True and \
+           self.in_treat_show_sine_list[2] == True:
             if self.pol_index_ch_list[2] == 'negative':
                 sine_point = -self.sine_pos_table_list[self.sine_cnt]
             elif self.pol_index_ch_list[2] == 'positive':
@@ -677,8 +690,10 @@ class MainWindow (QMainWindow):
         else:
             self.ui.ch3_progressBar.setValue(0)
             self.ui.ch3_displayLabel.setText('--')
+            self.in_treat_show_sine_list[2] = False
 
-        if self.in_treat_ch_list[3] == True:
+        if self.in_treat_ch_list[3] == True and \
+           self.in_treat_show_sine_list[3] == True:
             if self.pol_index_ch_list[3] == 'negative':
                 sine_point = -self.sine_pos_table_list[self.sine_cnt]
             elif self.pol_index_ch_list[3] == 'positive':
@@ -692,7 +707,8 @@ class MainWindow (QMainWindow):
             next_cycle = True
         else:
             self.ui.ch4_progressBar.setValue(0)
-            self.ui.ch4_displayLabel.setText('--')            
+            self.ui.ch4_displayLabel.setText('--')
+            self.in_treat_show_sine_list[3] = False
 
         if self.sine_cnt < 16 - 1:
             self.sine_cnt += 1
@@ -774,139 +790,209 @@ class MainWindow (QMainWindow):
         # print ("serial data callback!")
         # print (rcv)
         # self.SerialProcess(rcv)
-        if rcv.startswith("enc "):
+        if rcv.startswith('\n'):
+            return
+
+        # encoders by deltas        
+        if rcv.startswith("enc +") or \
+           rcv.startswith("enc -"):
             rcv_list = rcv.split(' ')
-            if rcv_list[1] == '0' or \
-               rcv_list[1] == '2' or \
-               rcv_list[1] == '4' or \
-               rcv_list[1] == '8':
+            try:
+                index = int(rcv_list[2])
+            except:
+                index = 8
+
+            if index > 7:
+                return
+
+            if rcv_list [1] == '+':
+                direction_up = True
+            else:
+                direction_up = False
+                
+            if index % 2 == 0:
                 # frequency encoders
-                try:
-                    index = int((int(rcv_list[1])) / 2)
-                    pos = int(rcv_list[3])
-                except:
-                    index = 0
-                    pos = 0
+                if index == 0:
+                    ch_index = 0
+                elif index == 2:
+                    ch_index = 1
+                elif index == 4:
+                    ch_index = 2
+                else:
+                    ch_index = 3
 
-                if pos > 10:
-                    pos = 10
+                if direction_up:
+                    if self.freq_index_ch_list[ch_index] < 10:
+                        self.freq_index_ch_list[ch_index] += 1
+                        self.ChangeFrequencyByIndex(ch_index)
+                        self.SendEncodFreq('ch' + str(ch_index + 1), self.freq_index_ch_list[ch_index])
+                else:
+                    if self.freq_index_ch_list[ch_index] > 0:
+                        self.freq_index_ch_list[ch_index] -= 1
+                        self.ChangeFrequencyByIndex(ch_index)
+                        self.SendEncodFreq('ch' + str(ch_index + 1), self.freq_index_ch_list[ch_index])
+                        
+            else:
+                # power encoders                
+                if index == 1:
+                    ch_index = 0
+                elif index == 3:
+                    ch_index = 1
+                elif index == 5:
+                    ch_index = 2
+                else:
+                    ch_index = 3
 
-                self.freq_index_ch_list[index] = pos
-                self.ChangeFrequencyByIndex(index)
+                if direction_up:
+                    if self.pwr_index_ch_list[ch_index] < 5:
+                        self.pwr_index_ch_list[ch_index] += 1
+                        self.ChangePowerByIndex(ch_index)
+                        self.SendEncodPwr('ch' + str(ch_index + 1), self.pwr_index_ch_list[ch_index])
+                else:
+                    if self.pwr_index_ch_list[ch_index] > 0:
+                        self.pwr_index_ch_list[ch_index] -= 1
+                        self.ChangePowerByIndex(ch_index)
+                        self.SendEncodPwr('ch' + str(ch_index + 1), self.pwr_index_ch_list[ch_index])
 
-            if rcv_list[1] == '1' or \
-               rcv_list[1] == '3' or \
-               rcv_list[1] == '5' or \
-               rcv_list[1] == '7':
-                # power encoders
-                try:
-                    index = int((int(rcv_list[1]) - 1) / 2)
-                    pos = int(rcv_list[3])
-                except:
-                    index = 0
-                    pos = 0
+            return
+        # end of encoders by deltas
+        
+        # encoders by position
+        # if rcv.startswith("enc "):
+        #     if rcv_list[1] == '0' or \
+        #        rcv_list[1] == '2' or \
+        #        rcv_list[1] == '4' or \
+        #        rcv_list[1] == '6':
+        #         # frequency encoders
+        #         try:
+        #             index = int((int(rcv_list[1])) / 2)
+        #             pos = int(rcv_list[3])
+        #         except:
+        #             index = 0
+        #             pos = 0
 
-                if pos > 5:
-                    pos = 5
+        #         if pos > 10:
+        #             pos = 10
 
-                self.pwr_index_ch_list[index] = pos
-                self.ChangePowerByIndex(index)
+        #         self.freq_index_ch_list[index] = pos
+        #         self.ChangeFrequencyByIndex(index)
 
-        # channels comms
-        # if rcv.startswith("ch"):
-        #     if rcv[2] == '1' or \
-        #        rcv[2] == '2' or \
-        #        rcv[2] == '3' or \
-        #        rcv[2] == '4':
+        #     if rcv_list[1] == '1' or \
+        #        rcv_list[1] == '3' or \
+        #        rcv_list[1] == '5' or \
+        #        rcv_list[1] == '7':
+        #         # power encoders
+        #         try:
+        #             index = int((int(rcv_list[1]) - 1) / 2)
+        #             pos = int(rcv_list[3])
+        #         except:
+        #             index = 0
+        #             pos = 0
+
+        #         if pos > 5:
+        #             pos = 5
+
+        #         self.pwr_index_ch_list[index] = pos
+        #         self.ChangePowerByIndex(index)
+
+        # supply voltage measurement
         if rcv.startswith("supply "):
             try:
                 self.UpdateSupplyPower(rcv)
             except:
                 print('error on supply str!')
+
+            return
+        # end of supply voltage measurement
                 
-        if rcv.startswith("ch1 display "):
+        # channels comms
+        if rcv.startswith("ch"):
             rcv_list = rcv.split(' ')
+            ch_index = rcv_list[0][-1]
             try:
-                gain = int(rcv_list[2])
+                ch_index = int (ch_index)
             except:
-                gain = 0
-            print('ch1 display: ' + str(gain))
-            self.ui.ch1_displayLabel.setText(str(gain))
-
-        if rcv.startswith("ch2 display "):
-            rcv_list = rcv.split(' ')
-            try:
-                gain = int(rcv_list[2])
-            except:
-                gain = 0
-            print('ch2 display: ' + str(gain))
-            self.ui.ch2_displayLabel.setText(str(gain))
-            
-        if rcv.startswith("ch1 new probe "):
-            rcv_list = rcv.split(' ')
-            self.ui.ch1_probeLabel.setText(rcv_list[3])
-
-        if rcv.startswith("ch2 new probe "):
-            rcv_list = rcv.split(' ')
-            self.ui.ch2_probeLabel.setText(rcv_list[3])
-
-        if rcv.startswith("ch3 new probe "):
-            rcv_list = rcv.split(' ')
-            self.ui.ch3_probeLabel.setText(rcv_list[3])
-
-        if rcv.startswith("ch4 new probe "):
-            rcv_list = rcv.split(' ')
-            self.ui.ch4_probeLabel.setText(rcv_list[3])
-            
-        if rcv.startswith("ch1 probe start"):
-            # check enable channel
-            if self.enableButton_ui_list[0].text() == 'Enable Channel':
+                ch_index = 5
+                
+            if ch_index < 5:
+                ch_index = ch_index - 1
+            else:
                 return
 
-            if self.in_treat_ch_list[0] == False:
+            rcv_str = rcv[4:]
+            # print("receiv: " + rcv_str + " in index: " + str(ch_index))
+            self.ParseChannelsComms(ch_index, rcv_str)
+            
+
+    def ParseChannelsComms (self, ch_index, ch_str):
+        # display values
+        if ch_str.startswith("display "):
+            rcv_list = ch_str.split(' ')
+            try:
+                gain = int(rcv_list[1])
+            except:
+                gain = 0
+            # print('ch1 display: ' + str(gain))
+
+            # check ch disable else show meas
+            if self.enableButton_ui_list[ch_index].text() == 'Disable Channel':
+                # not show ch1 or ch2 if in treat
+                if ch_index == 0 or \
+                   ch_index == 1:
+                    if self.in_treat_ch_list[ch_index] == True:
+                        return
+
+                self.displayLabel_ui_list[ch_index].setText(str(gain))
+
+            return
+        # end of display values
+
+        # probe messages
+        if ch_str.startswith("new probe "):
+            rcv_list = ch_str.split(' ')
+            self.probeLabel_ui_list[ch_index].setText(rcv_list[2])
+            return
+        # end of probe messages
+
+        # probe others
+        if ch_str.startswith("none probe"):
+            self.probeLabel_ui_list[ch_index].setText('None')
+            return
+        # end of probe others
+
+        # probe others 2
+        if ch_str.startswith("probe start"):
+            # check if channel is enable
+            if self.enableButton_ui_list[ch_index].text() == 'Enable Channel':
+                return
+
+            if self.in_treat_ch_list[ch_index] == False:
                 self.SendConfig('ch1', 'start')
 
-            self.StartChannelByIndex(0)            
+            self.StartChannelByIndex(ch_index)
+            return
+        # end of probe others 2
 
-        if rcv.startswith("ch2 probe start"):
-            # check enable channel
-            if self.enableButton_ui_list[1].text() == 'Enable Channel':
-                return
+        # for show sine progress
+        if ch_str.startswith("starting"):
+            self.in_treat_show_sine_list[ch_index] = True
+            return
+        # end of for show sine progress
 
-            if self.in_treat_ch_list[1] == False:
-                self.SendConfig('ch2', 'start')
+        # resistance meas online
+        if ch_str.startswith("resistance "):
+            rcv_list = ch_str.split(' ')
+            try:
+                res_int = int(rcv_list[1])
+            except:
+                res_int = 0
 
-            self.StartChannelByIndex(1)            
-
-        if rcv.startswith("ch3 probe start"):
-            # check enable channel
-            if self.enableButton_ui_list[2].text() == 'Enable Channel':
-                return
-
-            if self.in_treat_ch_list[2] == False:
-                self.SendConfig('ch3', 'start')
-
-            self.StartChannelByIndex(2)            
-
-        if rcv.startswith("ch4 probe start"):
-            # check enable channel
-            if self.enableButton_ui_list[3].text() == 'Enable Channel':
-                return
-
-            if self.in_treat_ch_list[3] == False:
-                self.SendConfig('ch4', 'start')
-
-            self.StartChannelByIndex(3)            
-            
-        if rcv.startswith("ch1 none probe"):
-            self.ui.ch1_probeLabel.setText('None')
-
-        elif rcv.startswith("ch2 none probe"):
-            self.ui.ch2_probeLabel.setText('None')
-
-        elif rcv.startswith("ch3 none probe"):
-            self.ui.ch3_probeLabel.setText('None')
-
-        elif rcv.startswith("ch4 none probe"):
-            self.ui.ch4_probeLabel.setText('None')
-            
+            res_mult = ''                
+            if res_int > 1000:
+                res_int = res_int / 1000
+                res_int = int(res_int)
+                res_mult = 'k'
+                
+            if self.in_treat_ch_list[ch_index] == True:
+                self.displayTextLabel_ui_list[ch_index].setText('Res. ' + str(res_int) + res_mult)
+        # end of resistance meas online
