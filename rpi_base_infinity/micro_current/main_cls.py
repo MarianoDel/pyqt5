@@ -6,7 +6,8 @@ from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5 import QtCore, QtWidgets
-
+# from playsound import playsound
+import os
 
 #imported uis
 from ui_micro import Ui_MainWindow
@@ -335,7 +336,8 @@ class MainWindow (QMainWindow):
         self.timer_ui_list[ch_index].setText(self.timer_list[self.timer_index_ch_list[ch_index]])
         ## if ch is in treat restart timer
         if self.in_treat_ch_list[ch_index] == True:
-            self.StartChannelByIndex(ch_index)
+            # self.StartChannelByIndex(ch_index)
+            self.StartChannelUpdateTimer(ch_index)            
                 
 
     def ChangeFrequency (self):
@@ -413,12 +415,14 @@ class MainWindow (QMainWindow):
             return
         
         if self.in_treat_ch_list[ch_index] == False:
+            os.system("play up.wav")
+            # playsound('up.wav')
             self.SendConfig(ch_name, 'start')
 
         self.StartChannelByIndex(ch_index)            
 
 
-    def StartChannelByIndex (self, ch_index):
+    def StartChannelUpdateTimer (self, ch_index):
         timer = self.timer_ui_list[ch_index].text()
         if timer[-1] == 's':
             self.remaining_minutes_ch_list[ch_index] = 0
@@ -430,6 +434,10 @@ class MainWindow (QMainWindow):
         self.remainMins_ui_list[ch_index].setText(str(self.remaining_minutes_ch_list[ch_index]) + "'")
         self.remainSecs_ui_list[ch_index].setText(str(self.remaining_seconds_ch_list[ch_index]) + "''")        
 
+        
+    def StartChannelByIndex (self, ch_index):
+        self.StartChannelUpdateTimer(ch_index)
+        
         self.in_treat_ch_list[ch_index] = True
         self.remainMins_ui_list[ch_index].show()
         self.remainSecs_ui_list[ch_index].show()
@@ -480,6 +488,10 @@ class MainWindow (QMainWindow):
         ch_index = self.GetChannelIndexFromString(ch_name)
 
         if self.enableButton_ui_list[ch_index].text() == 'Enable Channel':
+            # check if SendConfig is ready to sent
+            if self.progress_config != 'init':
+                return
+
             self.enableButton_ui_list[ch_index].setText('Disable Channel')
             self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(129, 129, 129);\
                                                                border: 2px solid rgb(218, 218, 218);')
@@ -489,6 +501,10 @@ class MainWindow (QMainWindow):
             self.enableButton_ui_list[ch_index].setText('Enable Channel')
             self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
             self.probeLabel_ui_list[ch_index].setText('None')
+
+            if self.in_treat_ch_list[ch_index] == True:
+                self.StopChannelByIndex(ch_index)
+                
             if ch_index < 3:
                 self.displayLabel_ui_list[ch_index].setText('--')
             self.SendConfig(ch_name, 'disable')
@@ -632,9 +648,6 @@ class MainWindow (QMainWindow):
     # Progress Timed Functions #
     ############################
     def SendConfigByIndex (self, ch_index):
-        if self.progress_config != 'init':
-            return
-
         self.prog_ch_index = ch_index
         self.prog_ch_name = 'ch' + str(ch_index + 1)
         self.SendConfigChannelSM ()
@@ -957,6 +970,9 @@ class MainWindow (QMainWindow):
         # probe others
         if ch_str.startswith("none probe"):
             self.probeLabel_ui_list[ch_index].setText('None')
+            if self.enableButton_ui_list[ch_index].text() == 'Disable Channel' and \
+               self.in_treat_ch_list[ch_index] == True:
+                self.StopChannelByIndex(ch_index)
             return
         # end of probe others
 
@@ -967,7 +983,8 @@ class MainWindow (QMainWindow):
                 return
 
             if self.in_treat_ch_list[ch_index] == False:
-                self.SendConfig('ch1', 'start')
+                os.system("play up.wav")
+                self.SendConfig('ch' + str(ch_index + 1), 'start')
 
             self.StartChannelByIndex(ch_index)
             return
