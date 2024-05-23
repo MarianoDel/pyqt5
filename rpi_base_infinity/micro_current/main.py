@@ -102,7 +102,7 @@ class MyMainClass (QObject):
     ## Main Screen
     def MainScreen (self):
         debug = False
-        a = MainWindow(self.s, parent=self)
+        a = MainWindow(self.distro, self.s, parent=self)
         a.show()
         sys.exit(app.exec_())
         # a.exec_()

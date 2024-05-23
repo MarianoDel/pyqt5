@@ -6,19 +6,33 @@ from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5 import QtCore, QtWidgets
-# from playsound import playsound
 import os
+import threading
 
 #imported uis
 from ui_micro import Ui_MainWindow
 
+
+def thread_function (distro, direction):
+    if distro == 'Slackware ':
+        if direction == 'up':
+            os.system("play up.wav")
+        else:
+            os.system("play down.wav")
+            
+    elif distro == 'debian':
+        if direction == 'up':
+            os.system("omxplayer up_long3.wav")
+        else:
+            os.system("omxplayer down_long3.wav")
+            
 
 class MainWindow (QMainWindow):
 
     #SIGNALS
     one_second_signal = pyqtSignal()
 
-    def __init__(self, serialport, parent=None):
+    def __init__(self, distro, serialport, parent=None):
         super(MainWindow, self).__init__()
 
         # Setup the user interface from Designer.
@@ -27,8 +41,19 @@ class MainWindow (QMainWindow):
 
         # get parent info
         self.s = serialport
+        self.distro = distro
         self.parent = parent
-        
+
+        # threading routines
+        # if self.distro == 'Slackware ':
+        #     self.thread_start = threading.Thread(target=thread_function, args=('Slackware ','up',))
+        #     self.thread_stop = threading.Thread(target=thread_function, args=('Slackware ','down',))
+        # elif self.distro == 'debian':
+        #     self.thread_start = threading.Thread(target=thread_function, args=('debian','up',))
+        #     self.thread_stop = threading.Thread(target=thread_function, args=('debian','down',))
+        # else:
+        #     print("distro error, no threads instanciated!")
+
         # self.bt_close.clicked.connect(self.close)
         self.ui.bt_menu_close.clicked.connect(self.move_menu)
         self.ui.bt_menu_open.clicked.connect(self.move_menu)
@@ -232,6 +257,10 @@ class MainWindow (QMainWindow):
         self.sine_pos_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, 0.38, 0.71, 0.92, 1, 0.92, 0.71, 0.38, 0]
         self.sine_alt_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, -0.57, -1.06, -1.39, -1.5, -1.39, -1.06, -0.57, 0]
 
+        # tell the system we are up
+        self.SendSystemUP()
+        os.system("sleep 0.2")
+        self.SendSystemUP()
         
     def move_menu (self):
         width = self.ui.lateralMenu.width()
@@ -413,10 +442,18 @@ class MainWindow (QMainWindow):
         if self.enableButton_ui_list[ch_index].text() == 'Enable Channel' or \
            self.probeLabel_ui_list[ch_index].text() == 'None':
             return
-        
+
+
         if self.in_treat_ch_list[ch_index] == False:
-            os.system("play up.wav")
-            # playsound('up.wav')
+            if self.distro == 'Slackware ':
+                # os.system("play up.wav")
+                self.thread_start = threading.Thread(target=thread_function, args=('Slackware ','up',))
+                self.thread_start.start()
+            elif self.distro == 'debian':
+                # os.system("omxplayer up_long3.wav")
+                self.thread_start = threading.Thread(target=thread_function, args=('debian','up',))
+                self.thread_start.start()                
+                
             self.SendConfig(ch_name, 'start')
 
         self.StartChannelByIndex(ch_index)            
@@ -451,12 +488,14 @@ class MainWindow (QMainWindow):
 
         if ch_index == 2:
             self.ui.ch3_progressBar.setValue(0)
-            self.ui.ch3_displayLabel.setText('0')            
-            self.progressBar_timer.singleShot(200, self.ProgressBarSM)
+            self.ui.ch3_displayLabel.setText('0')
+            if self.in_treat_ch_list[3] != True:
+                self.progressBar_timer.singleShot(200, self.ProgressBarSM)
         elif ch_index == 3:
             self.ui.ch4_progressBar.setValue(0)
             self.ui.ch4_displayLabel.setText('0')
-            self.progressBar_timer.singleShot(200, self.ProgressBarSM)
+            if self.in_treat_ch_list[2] != True:
+                self.progressBar_timer.singleShot(200, self.ProgressBarSM)
         
 
     def StopChannel (self):
@@ -471,6 +510,15 @@ class MainWindow (QMainWindow):
         
     def StopChannelByIndex (self, ch_index):
         self.SendConfig('ch' + str(ch_index + 1), 'stop')
+        if self.distro == 'Slackware ':
+            # os.system("play up.wav")
+            self.thread_stop = threading.Thread(target=thread_function, args=('Slackware ','down',))
+            self.thread_stop.start()
+        elif self.distro == 'debian':
+            # os.system("omxplayer up_long3.wav")
+            self.thread_stop = threading.Thread(target=thread_function, args=('debian','down',))
+            self.thread_stop.start()                
+        
         self.in_treat_ch_list[ch_index] = False
         self.remainMins_ui_list[ch_index].hide()
         self.remainSecs_ui_list[ch_index].hide()
@@ -548,6 +596,11 @@ class MainWindow (QMainWindow):
                 encoder = 'encod7'
                 
             self.s.Write(encoder + ' ' + str(value) + '\n')
+
+
+    def SendSystemUP (self):
+        if self.s.port_open == True:
+            self.s.Write('rpi is up\n')
             
 
     def GetChannelIndexFromString (self, channel_str):
@@ -871,42 +924,62 @@ class MainWindow (QMainWindow):
         # end of encoders by deltas
         
         # encoders by position
-        # if rcv.startswith("enc "):
-        #     if rcv_list[1] == '0' or \
-        #        rcv_list[1] == '2' or \
-        #        rcv_list[1] == '4' or \
-        #        rcv_list[1] == '6':
-        #         # frequency encoders
-        #         try:
-        #             index = int((int(rcv_list[1])) / 2)
-        #             pos = int(rcv_list[3])
-        #         except:
-        #             index = 0
-        #             pos = 0
+        if rcv.startswith("encp "):
+            rcv_list = rcv.split(' ')            
+            try:
+                index = int(rcv_list[1])
+            except:
+                index = 8
 
-        #         if pos > 10:
-        #             pos = 10
+            if index > 7:
+                return
+        
+            if index % 2 == 0:
+                # frequency encoders
+                if index == 0:
+                    ch_index = 0
+                elif index == 2:
+                    ch_index = 1
+                elif index == 4:
+                    ch_index = 2
+                else:
+                    ch_index = 3
 
-        #         self.freq_index_ch_list[index] = pos
-        #         self.ChangeFrequencyByIndex(index)
+                try:
+                    pos = int(rcv_list[2])
+                except:
+                    pos = 11
 
-        #     if rcv_list[1] == '1' or \
-        #        rcv_list[1] == '3' or \
-        #        rcv_list[1] == '5' or \
-        #        rcv_list[1] == '7':
-        #         # power encoders
-        #         try:
-        #             index = int((int(rcv_list[1]) - 1) / 2)
-        #             pos = int(rcv_list[3])
-        #         except:
-        #             index = 0
-        #             pos = 0
+                if pos > 10:
+                    return
 
-        #         if pos > 5:
-        #             pos = 5
+                self.freq_index_ch_list[ch_index] = pos
+                self.ChangeFrequencyByIndex(ch_index)
+                                        
+            else:
+                # power encoders                
+                if index == 1:
+                    ch_index = 0
+                elif index == 3:
+                    ch_index = 1
+                elif index == 5:
+                    ch_index = 2
+                else:
+                    ch_index = 3
 
-        #         self.pwr_index_ch_list[index] = pos
-        #         self.ChangePowerByIndex(index)
+                try:
+                    pos = int(rcv_list[2])
+                except:
+                    pos = 6
+
+                if pos > 5:
+                    return
+
+                self.pwr_index_ch_list[ch_index] = pos
+                self.ChangePowerByIndex(ch_index)
+                
+            return
+        # end of encoders by position
 
         # supply voltage measurement
         if rcv.startswith("supply "):
@@ -983,7 +1056,15 @@ class MainWindow (QMainWindow):
                 return
 
             if self.in_treat_ch_list[ch_index] == False:
-                os.system("play up.wav")
+                if self.distro == 'Slackware ':
+                    # os.system("play up.wav")
+                    self.thread_start = threading.Thread(target=thread_function, args=('Slackware ','up',))
+                    self.thread_start.start()
+                elif self.distro == 'debian':
+                    # os.system("omxplayer up_long3.wav")
+                    self.thread_start = threading.Thread(target=thread_function, args=('debian','up',))
+                    self.thread_start.start()                
+                
                 self.SendConfig('ch' + str(ch_index + 1), 'start')
 
             self.StartChannelByIndex(ch_index)
