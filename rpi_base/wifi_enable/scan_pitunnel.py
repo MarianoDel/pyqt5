@@ -3,10 +3,11 @@
 
 import os
 import subprocess
-import platform
+import get_distro
 
-(distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-if distname == 'debian':
+distname = get_distro.GetDistroName()
+if distname == 'debian' or \
+   distname == 'Raspbian':
     try:
         output = subprocess.check_output(['sudo','/bin/netstat','-tp'])
     

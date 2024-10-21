@@ -7,7 +7,8 @@ from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
 from time import sleep, time
 from datetime import datetime
-import platform
+from get_distro import GetDistroName as get_distro_name
+from get_distro import GetDistroVersion as get_distro_version
 
 
 #para el timer de 1 segundo
@@ -239,7 +240,8 @@ class Dialog(QDialog):
 
 
     def GetDistroName (self, show=False):
-        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        distname = get_distro_name()
+        version = get_distro_version()
         if show:
             os_text = "--" + distname + version + "-- "
             print("os: " + os_text)

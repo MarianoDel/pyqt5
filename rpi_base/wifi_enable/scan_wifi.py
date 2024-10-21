@@ -3,9 +3,9 @@
 
 import os
 import subprocess
-import platform
+import get_distro
 
-(distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+distname = get_distro.GetDistroName()
 output = ""
 try:
     if distname == "Slackware ":

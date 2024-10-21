@@ -1,0 +1,1 @@
+../diagnostics/get_distro.py

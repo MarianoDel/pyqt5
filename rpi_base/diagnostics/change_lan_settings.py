@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # use python3
 
-import platform
+import get_distro
 import os
 from io import IOBase
 import sys
@@ -106,8 +106,9 @@ if __name__ == "__main__":
         sys.exit(0)
     
     # check distro
-    (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
-    if distname != "debian":
+    distname = get_distro.GetDistroName()
+    if distname != "debian" and \
+       distname != 'Raspbian':
         print("only for debian operation on RPi!")
         print('asked for: ' + sys.argv[1] + ' with settings:')
         for x in range (2, len(sys.argv)):

@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer, QEventLoop
-import platform
+import get_distro
 import os
 
 #get the UI from here
@@ -65,8 +65,9 @@ class DisplayModeDialog(QDialog):
         loop.exec_()
         # end delay
         
-        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-        if distname == 'debian':
+        distname = get_distro.GetDistroName()
+        if distname == 'debian' or \
+           distname == 'Raspbian':
             if self.current_sel == 'Magnet':
                 os.system('python3 change_display_operation_mode.py magnet')
             elif self.current_sel == 'Stretcher ver 3.2':
@@ -90,8 +91,9 @@ class DisplayModeDialog(QDialog):
         sender = self.sender()
 
         if sender.text() == 'Done!':
-            (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-            if distname == 'debian':
+            distname = get_distro.GetDistroName()
+            if distname == 'debian' or \
+               distname == 'Raspbian':
                 os.system('sudo reboot')
                 
             else:

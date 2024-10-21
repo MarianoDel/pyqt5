@@ -3,11 +3,12 @@
 
 import os
 import sys
-import platform
+import get_distro
 
 
-(distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-if distname == 'debian':
+distname = get_distro.GetDistroName()
+if distname == 'debian' or \
+   distname == 'Raspbian':
     if len(sys.argv) < 2:
         os.system('sudo wpa_cli -iwlan0 reconfigure')
         os.system('sleep 1')

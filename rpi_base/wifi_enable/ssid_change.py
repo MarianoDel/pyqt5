@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # use python3
 
-import platform
+import get_distro
 import os
 from io import IOBase
 import sys
@@ -12,7 +12,8 @@ import sys
 # Get the OS distro #
 #####################
 def CheckCurrentDistro ():
-    (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+    distname = get_distro.GetDistroName()
+    version = get_distro.GetDistroVersion()
     os_text = "--" + distname + version + "-- "
     print("os: " + os_text)
 
@@ -24,7 +25,8 @@ def CheckCurrentDistro ():
         # ProcessConfig(file1, file2)
         check = True
     
-    elif distname == "debian":
+    elif distname == "debian" or \
+         distname == 'Raspbian':
         file1 = open ('/etc/wpa_supplicant/wpa_supplicant.conf', 'r')
         file1open = 1
         check = True

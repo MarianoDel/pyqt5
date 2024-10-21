@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from time import time
 from threading import Timer
 from datetime import datetime
+import get_distro
 import platform
 import os
 import subprocess
@@ -82,7 +83,8 @@ class DiagnosticsDialog(QDialog):
             self.ui.firmwareLabel.setText("Waiting...  ")
             
         # recupero informacion del sistema
-        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        distname = get_distro.GetDistroName()
+        version = get_distro.GetDistroVersion()
         os_text = "--" + distname + version + "-- "
         self.ui.osLabel.setText(os_text)
         self.distname = distname

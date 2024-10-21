@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 # use python3
 
-import platform
+import get_distro
 import os
 from io import IOBase
 import sys
 
 def GetDistroName (show=False):
-    (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+    distname = get_distro.get_distro_name()
+    version = get_distro.get_distro_version()
     if show:
         os_text = "--" + distname + version + "-- "
         print("os: " + os_text)
@@ -33,7 +34,8 @@ if __name__ == "__main__":
     
     # check distro
     distro = GetDistroName()
-    if distro != "debian":
+    if distro != 'debian' or \
+       distro != 'Raspbian':
         print("only for debian operation on RPi!")
         sys.exit(0)
 

@@ -7,7 +7,8 @@ from treatment_class import Treatment
 from stylesheet_class import ButtonStyles
 from time import sleep, time
 from datetime import datetime
-import platform
+from get_distro import GetDistroName as get_distro_name
+from get_distro import GetDistroVersion as get_distro_version
 
 
 #para el timer de 1 segundo
@@ -84,7 +85,7 @@ class Dialog(QDialog):
         # Set up the user interface from Designer.
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-
+        
         # Class Startup Init
         ## Connect up the buttons.
         self.ui.triangularButton.clicked.connect(self.SignalChange)
@@ -141,7 +142,7 @@ class Dialog(QDialog):
         
         self.t.SetCurrentVersion(CURRENT_VERSION)
         self.t.SetCurrentSystem(self.distro)
-        
+                
         ## Init stylesheet object
         self.ss = ButtonStyles()
         
@@ -239,7 +240,8 @@ class Dialog(QDialog):
 
 
     def GetDistroName (self, show=False):
-        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
+        distname = get_distro_name()
+        version = get_distro_version()
         if show:
             os_text = "--" + distname + version + "-- "
             print("os: " + os_text)
@@ -592,6 +594,7 @@ class Dialog(QDialog):
             self.ui.startButton.setStyleSheet(self.ss.start_enable)
         else:
             self.ui.startButton.setStyleSheet(self.ss.start_disable)
+            
 
 
     def CheckCompleteConf (self):
@@ -854,6 +857,7 @@ class Dialog(QDialog):
                 
             else:
                 self.InsertLocalText("Serial Port Not Open!")
+                
         else:
             # self.ui.textEdit.append("Complete all params before start")
             self.InsertLocalText("Complete all params before start")

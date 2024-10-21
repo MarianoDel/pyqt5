@@ -5,7 +5,7 @@ from time import time
 from threading import Timer
 import os
 import subprocess
-import platform
+import get_distro
 
 
 # get the UIs from here
@@ -210,8 +210,9 @@ class WiFiDialog(QDialog):
             self.update_exit_cnt = 15
 
             # check root access
-            (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-            if distname == 'debian':
+            distname = get_distro.GetDistroName()
+            if distname == 'debian' or \
+               distname == 'Raspbian':
                 os.system('sudo python3 ssid_change_only_one.py ' + self.ui.ssidEdit.text() + ' ' + self.ui.passEdit.text())
                 os.system('python3 reconfigure.py 1')
             else:

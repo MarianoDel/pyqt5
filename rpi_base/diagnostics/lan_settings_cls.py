@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer, QEventLoop
-import platform
+import get_distro
 import os
 
 #get the UI from here
@@ -76,8 +76,9 @@ class LanDialog(QDialog):
         loop.exec_()
         # end delay
         
-        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-        if distname == 'debian':
+        distname = get_distro.GetDistroName()
+        if distname == 'debian' or \
+           distname == 'Raspbian':
             if self.current_sel == 'Fixed IP':
                 ip = self.ui.ipEdit.text()
                 gw = self.ui.gwEdit.text()
