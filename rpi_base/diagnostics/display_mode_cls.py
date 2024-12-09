@@ -26,6 +26,7 @@ class DisplayModeDialog(QDialog):
 
         # populate comboBox and connect signals
         self.ui.comboBox.addItem('Magnet')
+        self.ui.comboBox.addItem('Magnet MT250')
         self.ui.comboBox.addItem('Stretcher ver 3.1')
         self.ui.comboBox.addItem('Stretcher ver 3.2')
         self.ui.comboBox.addItem('Light Treatment')
@@ -70,6 +71,8 @@ class DisplayModeDialog(QDialog):
            distname == 'Raspbian':
             if self.current_sel == 'Magnet':
                 os.system('python3 change_display_operation_mode.py magnet')
+            elif self.current_sel == 'Magnet MT250':
+                os.system('python3 change_display_operation_mode.py magnet_mt250')
             elif self.current_sel == 'Stretcher ver 3.2':
                 os.system('python3 change_display_operation_mode.py stretcher32')
             elif self.current_sel == 'Stretcher ver 3.1':

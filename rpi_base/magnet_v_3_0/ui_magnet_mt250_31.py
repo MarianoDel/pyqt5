@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'magnet_ver_3_1.ui'
+# Form implementation generated from reading ui file 'magnet_mt250_ver_3_1.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -413,7 +413,7 @@ class Ui_Dialog(object):
         self.diagButton.setText("")
         self.diagButton.setObjectName("diagButton")
         self.layoutWidget_5 = QtWidgets.QWidget(Dialog)
-        self.layoutWidget_5.setGeometry(QtCore.QRect(630, 525, 596, 102))
+        self.layoutWidget_5.setGeometry(QtCore.QRect(685, 525, 441, 102))
         self.layoutWidget_5.setObjectName("layoutWidget_5")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.layoutWidget_5)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -425,7 +425,7 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.ch1Button.sizePolicy().hasHeightForWidth())
         self.ch1Button.setSizePolicy(sizePolicy)
-        self.ch1Button.setMinimumSize(QtCore.QSize(100, 100))
+        self.ch1Button.setMinimumSize(QtCore.QSize(140, 100))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(16)
@@ -445,7 +445,7 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.ch2Button.sizePolicy().hasHeightForWidth())
         self.ch2Button.setSizePolicy(sizePolicy)
-        self.ch2Button.setMinimumSize(QtCore.QSize(100, 100))
+        self.ch2Button.setMinimumSize(QtCore.QSize(140, 100))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(16)
@@ -459,65 +459,6 @@ class Ui_Dialog(object):
 "color: rgb(55, 52, 53);")
         self.ch2Button.setObjectName("ch2Button")
         self.horizontalLayout_4.addWidget(self.ch2Button)
-        self.ch3Button = QtWidgets.QPushButton(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ch3Button.sizePolicy().hasHeightForWidth())
-        self.ch3Button.setSizePolicy(sizePolicy)
-        self.ch3Button.setMinimumSize(QtCore.QSize(100, 100))
-        font = QtGui.QFont()
-        font.setFamily("Liberation Sans")
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ch3Button.setFont(font)
-        self.ch3Button.setStyleSheet("background-color: rgb(157, 211, 175);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);\n"
-"text-align:top;\n"
-"color: rgb(55, 52, 53);")
-        self.ch3Button.setObjectName("ch3Button")
-        self.horizontalLayout_4.addWidget(self.ch3Button)
-        self.ch4Button = QtWidgets.QPushButton(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ch4Button.sizePolicy().hasHeightForWidth())
-        self.ch4Button.setSizePolicy(sizePolicy)
-        self.ch4Button.setMinimumSize(QtCore.QSize(100, 100))
-        font = QtGui.QFont()
-        font.setFamily("Liberation Sans")
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ch4Button.setFont(font)
-        self.ch4Button.setStyleSheet("background-color: rgb(157, 211, 175);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);\n"
-"text-align:top;\n"
-"color: rgb(55, 52, 53);")
-        self.ch4Button.setObjectName("ch4Button")
-        self.horizontalLayout_4.addWidget(self.ch4Button)
-        self.wifiButton = QtWidgets.QPushButton(Dialog)
-        self.wifiButton.setGeometry(QtCore.QRect(765, 20, 100, 75))
-        self.wifiButton.setMinimumSize(QtCore.QSize(100, 75))
-        font = QtGui.QFont()
-        font.setFamily("Liberation Sans")
-        font.setPointSize(20)
-        font.setBold(True)
-        font.setWeight(75)
-        self.wifiButton.setFont(font)
-        self.wifiButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.wifiButton.setStyleSheet("color: rgb(55, 52, 53);\n"
-"border-radius: 10px;\n"
-"border:2px solid rgb(55, 52, 53);")
-        self.wifiButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/buttons/resources/wifi-symbol_disa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.wifiButton.setIcon(icon)
-        self.wifiButton.setIconSize(QtCore.QSize(75, 75))
-        self.wifiButton.setObjectName("wifiButton")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -542,6 +483,4 @@ class Ui_Dialog(object):
         self.date_timeLabel.setText(_translate("Dialog", "19/03/2020 - 17:45"))
         self.ch1Button.setText(_translate("Dialog", "CH1"))
         self.ch2Button.setText(_translate("Dialog", "CH2"))
-        self.ch3Button.setText(_translate("Dialog", "CH3"))
-        self.ch4Button.setText(_translate("Dialog", "CH4"))
 import magnet3_res_rc

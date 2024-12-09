@@ -23,15 +23,16 @@ if __name__ == "__main__":
     # check line arguments
     if len(sys.argv) != 2:
         print("use executable new_operation")
-        print("options are: magnet stretcher31 stretcher32 light_treat")
+        print("options are: magnet magnet_mt250 stretcher31 stretcher32 light_treat")
         sys.exit(0)
 
     # check line arguments content
     if sys.argv[1] != 'magnet' and \
+       sys.argv[1] != 'magnet_mt250' and \
        sys.argv[1] != 'stretcher31' and \
        sys.argv[1] != 'stretcher32' and \
        sys.argv[1] != 'light_treat':
-        print("options are: magnet stretcher31 stretcher32 light_treat")        
+        print("options are: magnet magnet_mt250 stretcher31 stretcher32 light_treat")
         sys.exit(0)
     
     # check distro
@@ -66,6 +67,9 @@ if __name__ == "__main__":
     elif 'stretcher32' in sys.argv[1]:
         search_str = 'main32.py'
         splash_str = 'stretcher'        
+    elif 'magnet_mt250' in sys.argv[1]:
+        search_str = 'main_mt250.py'
+        splash_str = 'magnet'
     else:
         search_str = sys.argv[1]
         splash_str = sys.argv[1]

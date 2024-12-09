@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'magnet_treatment_dlg.ui'
+# Form implementation generated from reading ui file 'magnet_mt250_treatment_dlg.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -151,7 +151,7 @@ class Ui_TreatmentDialog(object):
 "color: rgb(55, 52, 53);")
         self.doneButton.setObjectName("doneButton")
         self.layoutWidget_6 = QtWidgets.QWidget(TreatmentDialog)
-        self.layoutWidget_6.setGeometry(QtCore.QRect(670, 560, 591, 76))
+        self.layoutWidget_6.setGeometry(QtCore.QRect(670, 560, 371, 76))
         self.layoutWidget_6.setObjectName("layoutWidget_6")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.layoutWidget_6)
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
@@ -201,48 +201,6 @@ class Ui_TreatmentDialog(object):
         self.ant2Button.setIconSize(QtCore.QSize(100, 100))
         self.ant2Button.setObjectName("ant2Button")
         self.horizontalLayout_5.addWidget(self.ant2Button)
-        self.ant3Button = QtWidgets.QPushButton(self.layoutWidget_6)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ant3Button.sizePolicy().hasHeightForWidth())
-        self.ant3Button.setSizePolicy(sizePolicy)
-        self.ant3Button.setMinimumSize(QtCore.QSize(100, 50))
-        font = QtGui.QFont()
-        font.setFamily("Liberation Sans")
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ant3Button.setFont(font)
-        self.ant3Button.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
-"")
-        self.ant3Button.setText("")
-        self.ant3Button.setIcon(icon)
-        self.ant3Button.setIconSize(QtCore.QSize(100, 100))
-        self.ant3Button.setObjectName("ant3Button")
-        self.horizontalLayout_5.addWidget(self.ant3Button)
-        self.ant4Button = QtWidgets.QPushButton(self.layoutWidget_6)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ant4Button.sizePolicy().hasHeightForWidth())
-        self.ant4Button.setSizePolicy(sizePolicy)
-        self.ant4Button.setMinimumSize(QtCore.QSize(100, 50))
-        font = QtGui.QFont()
-        font.setFamily("Liberation Sans")
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ant4Button.setFont(font)
-        self.ant4Button.setStyleSheet("background-color: rgb(230, 245, 253);\n"
-"border: 0px;\n"
-"")
-        self.ant4Button.setText("")
-        self.ant4Button.setIcon(icon)
-        self.ant4Button.setIconSize(QtCore.QSize(100, 100))
-        self.ant4Button.setObjectName("ant4Button")
-        self.horizontalLayout_5.addWidget(self.ant4Button)
         self.tempLabel = QtWidgets.QLabel(TreatmentDialog)
         self.tempLabel.setGeometry(QtCore.QRect(925, 500, 331, 41))
         font = QtGui.QFont()

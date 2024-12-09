@@ -7,7 +7,9 @@ from datetime import datetime
 
 
 #get the UI from here
-from ui_treatment_dlg import Ui_TreatmentDialog
+# from ui_treatment_dlg import Ui_TreatmentDialog
+from ui_treatment_mt250_dlg import Ui_TreatmentDialog
+from screen_saver_cls import ScreenSaverDialog
 
 
 For_Test_Send_Commands_To_Console = False
@@ -47,8 +49,6 @@ class TreatmentDialog(QDialog):
         self.ui.rsmButton.clicked.connect(self.RsmTreatment)        
         self.ui.ant1Button.clicked.connect(self.ChannelGetTemp)
         self.ui.ant2Button.clicked.connect(self.ChannelGetTemp)
-        self.ui.ant3Button.clicked.connect(self.ChannelGetTemp)
-        self.ui.ant4Button.clicked.connect(self.ChannelGetTemp)
         
         ### to carry on with date-time
         date_now = datetime.today()
@@ -136,7 +136,11 @@ class TreatmentDialog(QDialog):
         ## setup antennas
         self.antenna_emmiting = False
         self.AntennasUpdate_UI(False)
-            
+
+        ## screen saver at end of treatment
+        self.timer_screensaver_on_treat = self.treat.timeout_screensaver
+        self.screensaver_on_treat_window = False
+        
         ## start the timer
         self.t1sec.timeout.connect(self.TimerOneSec)
         self.t1sec.start(1000)
@@ -158,10 +162,12 @@ class TreatmentDialog(QDialog):
             self.ui.ant2Button.setIcon(current_icon)
 
         if self.antenna_ch3 == True:
-            self.ui.ant3Button.setIcon(current_icon)
+            # self.ui.ant3Button.setIcon(current_icon)
+            pass
 
         if self.antenna_ch4 == True:
-            self.ui.ant4Button.setIcon(current_icon)
+            # self.ui.ant4Button.setIcon(current_icon)
+            pass
 
         # if self.ant.GetActive('ch1') == True:
         #     self.ui.ant1Button.setIcon(current_icon)
@@ -204,6 +210,13 @@ class TreatmentDialog(QDialog):
         if self.treat.treatment_state == 'ENDED':
             self.UpdateEndedLabels()
 
+        # check for screensaver activation
+        if self.screensaver_on_treat_window == True:
+            if self.timer_screensaver_on_treat > 0:
+                self.timer_screensaver_on_treat -= 1
+            else:
+                self.ScreenSaverDialogScreen()
+
 
     def StartTreatment (self):
         print(self.treat.treatment_state)
@@ -215,11 +228,128 @@ class TreatmentDialog(QDialog):
             self.treat.remaining_seconds = 0
 
             self.init_state = 'clean'
-            self.SendStartSM()
+            # self.SendStartSM()
+            self.SendStartNewSM()            
 
             self.treat.treatment_state = 'START'
             self.ui.progressLabel.setText('Session in Progress')
             self.ui.textEdit.append("Starting Treatment...")
+
+            
+    def SendStartNewSM (self):
+        if For_Test_Send_Commands_To_Console == True:
+            if self.init_state == 'clean':
+                # clean the port and send the treat config
+                print("keepalive,\r\n")
+            
+                self.init_state = 'signal'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'signal':
+                # check which signal to send
+                signal = self.treat.GetSignal()
+                to_send = "signal " + signal
+                print(to_send + "\r\n")
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'frequency'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'frequency':
+                # check which freq to send
+                frequency = self.treat.GetFrequency()
+                to_send = "frequency " + frequency
+                print(to_send + "\r\n")                
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'power':
+                # check which power selected
+                signal_power_limit = self.treat.GetPowerLimit(self.treat.GetSignal())
+                power = self.treat.GetPower()
+
+                new_power = int(signal_power_limit * power / 100)
+                
+                if new_power < 10:
+                    new_power = 10
+
+                to_send = 'power {:03d}'.format(new_power)
+                print(to_send + "\r\n")                
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'duration'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+                                
+            elif self.init_state == 'duration':
+                to_send = 'duration,{:03d},'.format(self.treat.GetTreatmentTimer())
+                print(to_send + "\r\n")
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'start'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'start':
+                self.InsertLocalText("Starting Treatment...")
+                print("start,\r\n")
+
+        else:
+            if self.init_state == 'clean':
+                # clean the port and send the treat config
+                self.s.Write("keepalive,\r\n")
+            
+                self.init_state = 'signal'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'signal':
+                # check which signal to send
+                signal = self.treat.GetSignal()
+                to_send = "signal " + signal
+                self.s.Write(to_send + "\r\n")
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'frequency'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'frequency':
+                # check which freq to send
+                frequency = self.treat.GetFrequency()
+                to_send = "frequency " + frequency
+                self.s.Write(to_send + "\r\n")                
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'power'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'power':
+                # check which power selected
+                signal_power_limit = self.treat.GetPowerLimit(self.treat.GetSignal())
+                power = self.treat.GetPower()
+
+                new_power = int(signal_power_limit * power / 100)
+                
+                if new_power < 10:
+                    new_power = 10
+
+                to_send = 'power {:03d}'.format(new_power)
+                self.s.Write(to_send + "\r\n")                
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'duration'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+                                
+            elif self.init_state == 'duration':
+                to_send = 'duration,{:03d},'.format(self.treat.GetTreatmentTimer())
+                self.s.Write(to_send + "\r\n")
+
+                self.InsertLocalText(to_send)
+                self.init_state = 'start'
+                self.init_timer.singleShot(100, self.SendStartNewSM)
+
+            elif self.init_state == 'start':
+                self.InsertLocalText("Starting Treatment...")
+                self.s.Write("start,\r\n")
 
 
     def SendStartSM (self):
@@ -294,7 +424,7 @@ class TreatmentDialog(QDialog):
             elif self.init_state == 'start':
                 self.InsertLocalText("Starting Treatment...")
                 self.s.Write("start,\r\n")
-            
+                
 
     def SendPauseSM (self):
         if For_Test_Send_Commands_To_Console == True:        
@@ -510,6 +640,10 @@ class TreatmentDialog(QDialog):
             self.ui.stopButton.setEnabled(True)
             self.ui.rsmButton.setEnabled(True)
             self.AntennasUpdate_UI(False)
+            # screensaver at paused treatment
+            self.ScreenSaverKick()
+            self.screensaver_on_treat_window = True
+            
 
 
     """ posible states from rsmButton resuming, resumed """
@@ -534,6 +668,8 @@ class TreatmentDialog(QDialog):
             self.ui.progressLabel.setStyleSheet(self.style.label_green)
             self.treat.treatment_state = 'START'
             self.ui.stop_rsmButton.setEnabled(True)
+            # screensaver at resuming treatment
+            self.screensaver_on_treat_window = False
 
 
     """ posible states from stopButton stoping, stoped """
@@ -580,6 +716,9 @@ class TreatmentDialog(QDialog):
             self.treat.treatment_state = 'ENDED'
             self.ui.doneButton.setEnabled(True)
             self.ui.stop_rsmButton.setStyleSheet(self.style.stop_rsm_rewind)
+            # screensaver at end of treatment
+            self.ScreenSaverKick()
+            self.screensaver_on_treat_window = True
 
 
     def SerialDataCallback (self, rcv):        
@@ -666,11 +805,11 @@ class TreatmentDialog(QDialog):
 
         if error_channel.startswith('3') and self.antenna_ch3 == True:
             self.antenna_ch3 = False
-            self.ui.ant3Button.setIcon(current_icon)
+            # self.ui.ant3Button.setIcon(current_icon)
 
         if error_channel.startswith('4') and self.antenna_ch4 == True:
             self.antenna_ch4 = False
-            self.ui.ant4Button.setIcon(current_icon)
+            # self.ui.ant4Button.setIcon(current_icon)
 
         # if error_channel.startswith('1') and self.ant.GetActive('ch1') == True:
         #     self.ant.SetActiveStatus('ch1', False)
@@ -701,16 +840,10 @@ class TreatmentDialog(QDialog):
             self.tempLabelCntr = 3            
 
         if sender.objectName() == 'ant3Button':
-            self.ui.tempLabel.setText('CH3 Temp: ' + self.temp_ch3_str + 'C')
-            self.tempLabelCntr = 3            
+            pass
 
         if sender.objectName() == 'ant4Button':
-            # ant_str = "temp,055.00,1\r"
-            # self.SerialProcessString(ant_str)
-            # ant_str = "ERROR(0x54)\r"
-            # self.SerialProcessString(ant_str)
-            self.ui.tempLabel.setText('CH4 Temp: ' + self.temp_ch4_str + 'C')
-            self.tempLabelCntr = 3            
+            pass
             
 
     #######################
@@ -745,5 +878,15 @@ class TreatmentDialog(QDialog):
         # self.t1seg.cancel()
         self.accept()
 
+    ## ScreenSaver
+    def ScreenSaverDialogScreen (self):
+        a = ScreenSaverDialog()
+        a.setModal(True)
+        a.exec_()
+
+        self.ScreenSaverKick()
+
+    def ScreenSaverKick (self):
+        self.timer_screensaver_on_treat = self.treat.timeout_screensaver
         
 ### end of file ###
