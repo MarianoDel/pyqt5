@@ -40,6 +40,7 @@ class TreatmentMock ():
             }
 
         self.treatment_state = 'STOP'
+        self.timeout_screensaver = 10
         
 
     def GetTreatmentTimer (self):

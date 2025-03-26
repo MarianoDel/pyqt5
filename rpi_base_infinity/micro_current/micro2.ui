@@ -1,0 +1,3797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1921</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(17, 17, 17);
+border-radius: 12px;</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,9">
+       <item>
+        <widget class="QFrame" name="statusFrame">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_9">
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>36</pointsize>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>Flowave</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>1669</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="mainsButton">
+            <property name="minimumSize">
+             <size>
+              <width>104</width>
+              <height>88</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/mains_1.png</normaloff>:/icons/resources/mains_1.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="battaButton_3">
+            <property name="minimumSize">
+             <size>
+              <width>104</width>
+              <height>88</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/batt_4_4.png</normaloff>:/icons/resources/batt_4_4.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="battaButton_2">
+            <property name="minimumSize">
+             <size>
+              <width>104</width>
+              <height>88</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/batt_4_4.png</normaloff>:/icons/resources/batt_4_4.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="battaButton">
+            <property name="minimumSize">
+             <size>
+              <width>104</width>
+              <height>88</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/batt_4_4.png</normaloff>:/icons/resources/batt_4_4.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="battbButton">
+            <property name="minimumSize">
+             <size>
+              <width>104</width>
+              <height>88</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/batt_4_4.png</normaloff>:/icons/resources/batt_4_4.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bt_menu_open">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(176, 176, 176);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/go-previous-symbolic.symbolic.png</normaloff>:/icons/resources/go-previous-symbolic.symbolic.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bt_menu_close">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(176, 176, 176);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/go-next-symbolic.symbolic.png</normaloff>:/icons/resources/go-next-symbolic.symbolic.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="channelsFrame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="8,2">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QFrame" name="frame_2">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(129, 129, 129);
+</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QGroupBox" name="groupBox_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>1080</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Intensity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch1_pwrLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>14</x>
+                    <y>27</y>
+                    <width>161</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100uA</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_pwrDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>124</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_pwrUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>100</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_5">
+                 <property name="geometry">
+                  <rect>
+                   <x>865</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Frequency</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch1_freqLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>14</x>
+                    <y>27</y>
+                    <width>161</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100Hz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_freqDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>124</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_freqUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>100</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_6">
+                 <property name="geometry">
+                  <rect>
+                   <x>650</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Timer</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch1_timerLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>19</x>
+                    <y>27</y>
+                    <width>156</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100s</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_timerDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>124</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_timerUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>100</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_7">
+                 <property name="geometry">
+                  <rect>
+                   <x>435</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Polarity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="ch1_posButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>45</y>
+                    <width>146</width>
+                    <height>31</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  </property>
+                  <property name="text">
+                   <string>Positive</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_altButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>95</y>
+                    <width>146</width>
+                    <height>31</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="text">
+                   <string>Alternative</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_negButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>145</y>
+                    <width>146</width>
+                    <height>31</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="text">
+                   <string>Negative</string>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_8">
+                 <property name="geometry">
+                  <rect>
+                   <x>20</x>
+                   <y>25</y>
+                   <width>391</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Gain Spectrum</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch1_displayLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>5</x>
+                    <y>25</y>
+                    <width>181</width>
+                    <height>161</height>
+                   </rect>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(157, 205, 255);
+font: 75 65pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="ch1_gainLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>225</x>
+                    <y>35</y>
+                    <width>130</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_gainDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>205</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch1_gainUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>295</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="ch1_displayTextLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>15</x>
+                    <y>30</y>
+                    <width>161</width>
+                    <height>26</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(157, 205, 255);
+color: rgb(85, 170, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Offline Gain</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QPushButton" name="ch1_startButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1300</x>
+                   <y>50</y>
+                   <width>101</width>
+                   <height>156</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/pan-start-symbolic-rtl.symbolic.png</normaloff>:/icons/resources/pan-start-symbolic-rtl.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="ch1_stopButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1300</x>
+                   <y>130</y>
+                   <width>101</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch1_remainMinsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1285</x>
+                   <y>50</y>
+                   <width>81</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>36</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22'</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch1_remainSecsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1370</x>
+                   <y>55</y>
+                   <width>96</width>
+                   <height>71</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22''</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_28">
+                 <property name="geometry">
+                  <rect>
+                   <x>1440</x>
+                   <y>120</y>
+                   <width>381</width>
+                   <height>96</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Channels Ready To Gen</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch3_probeLabel_2">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>35</y>
+                    <width>151</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>16</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Normal Probe</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QLabel" name="label_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>240</y>
+                   <width>391</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <italic>true</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>NervSync</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_4">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(129, 129, 129);</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QGroupBox" name="groupBox_16">
+                 <property name="geometry">
+                  <rect>
+                   <x>15</x>
+                   <y>25</y>
+                   <width>196</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Gain</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch3_displayLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>5</x>
+                    <y>25</y>
+                    <width>181</width>
+                    <height>161</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>60</pointsize>
+                    <weight>9</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(157, 205, 255);
+font: 75 60pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>1000</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="ch3_displayTextLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>15</x>
+                    <y>25</y>
+                    <width>161</width>
+                    <height>26</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(157, 205, 255);
+color: rgb(85, 170, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Offline Gain</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_17">
+                 <property name="geometry">
+                  <rect>
+                   <x>235</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Polarity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="ch3_posButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>45</y>
+                    <width>146</width>
+                    <height>31</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(218, 218, 218);</string>
+                  </property>
+                  <property name="text">
+                   <string>Positive</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_altButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>95</y>
+                    <width>146</width>
+                    <height>31</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="text">
+                   <string>Alternative</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_negButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>145</y>
+                    <width>146</width>
+                    <height>31</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="text">
+                   <string>Negative</string>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_18">
+                 <property name="geometry">
+                  <rect>
+                   <x>660</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Frequency</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch3_freqLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>14</x>
+                    <y>27</y>
+                    <width>161</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100Hz</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_freqDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>124</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_freqUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>100</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_19">
+                 <property name="geometry">
+                  <rect>
+                   <x>445</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Timer</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch3_timerLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>19</x>
+                    <y>27</y>
+                    <width>156</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100s</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_timerDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>124</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_timerUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>100</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QPushButton" name="ch3_startButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1095</x>
+                   <y>50</y>
+                   <width>101</width>
+                   <height>156</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/pan-start-symbolic-rtl.symbolic.png</normaloff>:/icons/resources/pan-start-symbolic-rtl.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_20">
+                 <property name="geometry">
+                  <rect>
+                   <x>875</x>
+                   <y>25</y>
+                   <width>191</width>
+                   <height>196</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Intensity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch3_pwrLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>14</x>
+                    <y>27</y>
+                    <width>161</width>
+                    <height>81</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 36pt &quot;Liberation Sans&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>100uA</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_pwrDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>124</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-down-symbolic.symbolic.png</normaloff>:/icons/resources/go-down-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="ch3_pwrUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>100</x>
+                    <y>125</y>
+                    <width>81</width>
+                    <height>60</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>60</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/go-up-symbolic.symbolic.png</normaloff>:/icons/resources/go-up-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>50</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_21">
+                 <property name="geometry">
+                  <rect>
+                   <x>1440</x>
+                   <y>115</y>
+                   <width>381</width>
+                   <height>96</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Channels Ready To Gen</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QLabel" name="ch3_probeLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>35</y>
+                    <width>151</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>16</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Normal Probe</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QProgressBar" name="ch3_progressBar">
+                 <property name="geometry">
+                  <rect>
+                   <x>1235</x>
+                   <y>60</y>
+                   <width>571</width>
+                   <height>36</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QProgressBar {
+    border: 2px solid #2196F3;
+    border-radius: 5px;
+    background-color: #E0E0E0;
+	text-align: right;
+}
+QProgressBar::chunk {
+    background-color: #2196F3;
+    width: 10px; 
+    margin: 0.5px;
+}</string>
+                 </property>
+                 <property name="value">
+                  <number>24</number>
+                 </property>
+                 <property name="format">
+                  <string>%p%</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch3_remainMinsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1075</x>
+                   <y>50</y>
+                   <width>81</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>36</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22'</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="ch3_stopButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>1095</x>
+                   <y>130</y>
+                   <width>101</width>
+                   <height>76</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="microc_res.qrc">
+                   <normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="ch3_remainSecsLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>1160</x>
+                   <y>55</y>
+                   <width>66</width>
+                   <height>71</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>22''</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>30</x>
+                   <y>239</y>
+                   <width>391</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>28</pointsize>
+                   <weight>75</weight>
+                   <italic>true</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>CellSync</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_5">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(129, 129, 129);</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QGroupBox" name="groupBox_26">
+                 <property name="geometry">
+                  <rect>
+                   <x>30</x>
+                   <y>30</y>
+                   <width>311</width>
+                   <height>241</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Ch1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="intpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>60</y>
+                    <width>161</width>
+                    <height>131</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/intel_pos.png</normaloff>:/icons/resources/intel_pos.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="pch1dwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>190</x>
+                    <y>140</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="pch1upButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>190</x>
+                    <y>40</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_27">
+                 <property name="geometry">
+                  <rect>
+                   <x>370</x>
+                   <y>30</y>
+                   <width>141</width>
+                   <height>241</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Ch2</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="pch2dwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>140</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="pch2upButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>40</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_29">
+                 <property name="geometry">
+                  <rect>
+                   <x>540</x>
+                   <y>30</y>
+                   <width>141</width>
+                   <height>241</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Ch3</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="pch3upButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>40</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="pch3dwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>140</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_30">
+                 <property name="geometry">
+                  <rect>
+                   <x>710</x>
+                   <y>30</y>
+                   <width>141</width>
+                   <height>241</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Ch4</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="pch4dwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>140</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="pch4upButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>20</x>
+                    <y>40</y>
+                    <width>104</width>
+                    <height>88</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>104</width>
+                    <height>88</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>20</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(129, 129, 129);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/plates_no_conn.png</normaloff>:/icons/resources/plates_no_conn.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_31">
+                 <property name="geometry">
+                  <rect>
+                   <x>900</x>
+                   <y>60</y>
+                   <width>371</width>
+                   <height>211</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Plates Polarity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="platesPolUpButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>60</y>
+                    <width>311</width>
+                    <height>61</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>Positive Up</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="platesPolDwnButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>140</y>
+                    <width>311</width>
+                    <height>61</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Positive Down</string>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QGroupBox" name="groupBox_32">
+                 <property name="geometry">
+                  <rect>
+                   <x>1330</x>
+                   <y>60</y>
+                   <width>371</width>
+                   <height>211</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Liberation Sans</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox{
+border: 2px solid red;
+margin-top: 12px;
+}
+
+QGroupBox::title{
+background-color: rgb(129, 129, 129);
+color: rgb(255, 255, 255);
+/*subcontrol-origin: top right;*/
+subcontrol-position: top center;
+padding: 0 3px 0 3px;
+top: -8px;
+}</string>
+                 </property>
+                 <property name="title">
+                  <string>Inteligent Probe Polarity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <widget class="QPushButton" name="intelProbeDirButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>60</y>
+                    <width>311</width>
+                    <height>61</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>Polarity Direct</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="intelProbeRevButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>140</y>
+                    <width>311</width>
+                    <height>61</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Liberation Sans</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Polarity Reverse</string>
+                  </property>
+                 </widget>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QFrame" name="lateralMenu">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(129, 129, 129);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5" stretch="2,8">
+               <item>
+                <widget class="QFrame" name="frame_7">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_3">
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_7">
+                      <item>
+                       <widget class="QPushButton" name="audioButton">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(176, 176, 176);</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="microc_res.qrc">
+                          <normaloff>:/icons/resources/audio-speakers-symbolic.svg</normaloff>:/icons/resources/audio-speakers-symbolic.svg</iconset>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>32</width>
+                          <height>32</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="logButton">
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(176, 176, 176);</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="microc_res.qrc">
+                          <normaloff>:/icons/resources/view-paged-symbolic.symbolic.png</normaloff>:/icons/resources/view-paged-symbolic.symbolic.png</iconset>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>50</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_6">
+                      <item>
+                       <widget class="QPushButton" name="configButton">
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(176, 176, 176);</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="microc_res.qrc">
+                          <normaloff>:/icons/resources/system-run-symbolic.symbolic.png</normaloff>:/icons/resources/system-run-symbolic.symbolic.png</iconset>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>50</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_6">
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(176, 176, 176);</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="microc_res.qrc">
+                          <normaloff>:/icons/resources/insert-link-symbolic.symbolic.png</normaloff>:/icons/resources/insert-link-symbolic.symbolic.png</iconset>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>50</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="frame_8">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                  <item>
+                   <widget class="QStackedWidget" name="stackedWidget">
+                    <property name="currentIndex">
+                     <number>2</number>
+                    </property>
+                    <widget class="QWidget" name="page_audio">
+                     <widget class="QPushButton" name="ch1_posButton_2">
+                      <property name="geometry">
+                       <rect>
+                        <x>15</x>
+                        <y>50</y>
+                        <width>86</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(218, 218, 218);</string>
+                      </property>
+                      <property name="text">
+                       <string>CH1</string>
+                      </property>
+                     </widget>
+                     <widget class="QLabel" name="label">
+                      <property name="geometry">
+                       <rect>
+                        <x>20</x>
+                        <y>10</y>
+                        <width>266</width>
+                        <height>26</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Audio Output for channel:</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="ch1_posButton_3">
+                      <property name="geometry">
+                       <rect>
+                        <x>120</x>
+                        <y>50</y>
+                        <width>81</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH2</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="ch1_posButton_4">
+                      <property name="geometry">
+                       <rect>
+                        <x>225</x>
+                        <y>50</y>
+                        <width>81</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH3</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="ch1_posButton_5">
+                      <property name="geometry">
+                       <rect>
+                        <x>325</x>
+                        <y>50</y>
+                        <width>81</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH4</string>
+                      </property>
+                     </widget>
+                     <widget class="QLabel" name="label_2">
+                      <property name="geometry">
+                       <rect>
+                        <x>20</x>
+                        <y>110</y>
+                        <width>246</width>
+                        <height>26</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Audio Volume:</string>
+                      </property>
+                     </widget>
+                     <widget class="QSlider" name="horizontalSlider">
+                      <property name="geometry">
+                       <rect>
+                        <x>30</x>
+                        <y>160</y>
+                        <width>291</width>
+                        <height>36</height>
+                       </rect>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                     <widget class="QLabel" name="label_5">
+                      <property name="geometry">
+                       <rect>
+                        <x>340</x>
+                        <y>165</y>
+                        <width>56</width>
+                        <height>26</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>100%</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                     <widget class="QLabel" name="label_6">
+                      <property name="geometry">
+                       <rect>
+                        <x>20</x>
+                        <y>215</y>
+                        <width>266</width>
+                        <height>26</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Audio options:</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="ch1_posButton_6">
+                      <property name="geometry">
+                       <rect>
+                        <x>20</x>
+                        <y>260</y>
+                        <width>241</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Full audio</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="ch1_posButton_7">
+                      <property name="geometry">
+                       <rect>
+                        <x>20</x>
+                        <y>315</y>
+                        <width>241</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(218, 218, 218);</string>
+                      </property>
+                      <property name="text">
+                       <string>Start Stop audio</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="ch1_posButton_8">
+                      <property name="geometry">
+                       <rect>
+                        <x>20</x>
+                        <y>370</y>
+                        <width>241</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>No audio</string>
+                      </property>
+                     </widget>
+                    </widget>
+                    <widget class="QWidget" name="page_log">
+                     <widget class="QTextEdit" name="textEdit">
+                      <property name="geometry">
+                       <rect>
+                        <x>5</x>
+                        <y>45</y>
+                        <width>401</width>
+                        <height>651</height>
+                       </rect>
+                      </property>
+                     </widget>
+                     <widget class="QLabel" name="label_7">
+                      <property name="geometry">
+                       <rect>
+                        <x>5</x>
+                        <y>5</y>
+                        <width>286</width>
+                        <height>31</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>System Log:</string>
+                      </property>
+                     </widget>
+                    </widget>
+                    <widget class="QWidget" name="page_config">
+                     <widget class="QLabel" name="label_8">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>5</y>
+                        <width>356</width>
+                        <height>41</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Device Configurations:</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_51">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>70</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(218, 218, 218);</string>
+                      </property>
+                      <property name="text">
+                       <string>CH1 Acuscope</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_52">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>145</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH1 Myopulse</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_53">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>310</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH2 Myopulse</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_54">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>235</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(218, 218, 218);</string>
+                      </property>
+                      <property name="text">
+                       <string>CH2 Acuscope</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_55">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>475</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(218, 218, 218);</string>
+                      </property>
+                      <property name="text">
+                       <string>CH3 Myopulse</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_56">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>400</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH3 Acuscope</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_57">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>640</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(218, 218, 218);</string>
+                      </property>
+                      <property name="text">
+                       <string>CH4 Myopulse</string>
+                      </property>
+                     </widget>
+                     <widget class="QPushButton" name="pushButton_58">
+                      <property name="geometry">
+                       <rect>
+                        <x>10</x>
+                        <y>565</y>
+                        <width>396</width>
+                        <height>61</height>
+                       </rect>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Liberation Sans</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::NoFocus</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>CH4 Acuscope</string>
+                      </property>
+                     </widget>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="microc_res.qrc"/>
+ </resources>
+ <connections/>
+</ui>

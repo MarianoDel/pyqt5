@@ -3,10 +3,12 @@
 
 import os
 import subprocess
-import platform
+import distro
 
-(distname, version, nid) = platform.linux_distribution(full_distribution_name=1)    
-if distname == 'debian':
+local_distro = distro.name()
+
+if local_distro == 'debian' or \
+   local_distro == 'Raspbian GNU/Linux':
     try:
         output = subprocess.check_output(['sudo','/bin/netstat','-tp'])
     
@@ -25,6 +27,6 @@ if distname == 'debian':
                 exit()
 
 else:
-    print("nothing to done in slackware")
+    print("nothing to done for: " + local_distro)
 
 

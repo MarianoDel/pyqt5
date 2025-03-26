@@ -8,7 +8,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.uic import loadUi
 
 from treatment_class import Treatment
-import platform
+import distro
 from serialcomm import SerialComm
 
 
@@ -39,9 +39,9 @@ class MyMainClass (QObject):
         super(MyMainClass, self).__init__()
         self.t = Treatment()
 
-        self.distro = self.GetDistroName(True)
-        # print ('distro: ' + self.distro + ' distro len: ' + str(len(self.distro)))
-        print (self.distro)        
+        # open serial port #'Slackware' #'Raspbian GNU/Linux'
+        self.distro = distro.name()
+        print (self.distro + ' ' + distro.version())        
         
         self.t.SetCurrentVersion(CURRENT_VERSION)
         self.t.SetCurrentSystem(self.distro)
@@ -50,11 +50,12 @@ class MyMainClass (QObject):
         self.c = Communicate()
 
         ## PARA SLACKWARE
-        if self.t.GetCurrentSystem() == 'Slackware ':
+        if self.t.GetCurrentSystem() == 'Slackware':
             # self.s = SerialComm(self.MyObjCallback, '/dev/ttyACM0')
             self.s = SerialComm(self.MyObjCallback, '/dev/ttyUSB0')
         ## PARA RASPBERRY
-        elif self.t.GetCurrentSystem() == 'debian':
+        elif self.t.GetCurrentSystem() == 'debian' or \
+             self.t.GetCurrentSystem() == 'Raspbian GNU/Linux':
             self.s = SerialComm(self.MyObjCallback, '/dev/serial0')
             
         ### For last call to the first f*** dialog
@@ -63,15 +64,6 @@ class MyMainClass (QObject):
 
         self.MainScreen()
         self.closeEvent(self)
-
-            
-    def GetDistroName (self, show=False):
-        (distname, version, nid) = platform.linux_distribution(full_distribution_name=1)
-        if show:
-            os_text = "--" + distname + version + "-- "
-            print("os: " + os_text)
-
-        return distname
 
             
     def MyObjCallback (self, dataread):
