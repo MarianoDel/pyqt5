@@ -311,6 +311,7 @@ class MainWindow (QMainWindow):
         self.SendConfig(ch_name, 'set_gain ' + str(self.gain_ch_list[ch_index]))
         
 
+    # change both polarities
     def ChangePolarity (self):
         sender = self.sender()
         
@@ -319,27 +320,38 @@ class MainWindow (QMainWindow):
         ch_func = obj_list[1]
         ch_index = self.GetChannelIndexFromString(ch_name)
 
+        for ch_index in [0 ,2]:
+            if ch_func == 'posButton':
+                self.pol_index_ch_list[ch_index] = 'positive'
+                self.pol_pos_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+                self.pol_alt_ui_list[ch_index].setStyleSheet('')
+                self.pol_neg_ui_list[ch_index].setStyleSheet('')            
+                # self.SendConfig('polarity', 'positive')            
+
+            if ch_func == 'altButton':
+                self.pol_index_ch_list[ch_index] = 'alternative'            
+                self.pol_pos_ui_list[ch_index].setStyleSheet('')
+                self.pol_alt_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+                self.pol_neg_ui_list[ch_index].setStyleSheet('')            
+                # self.SendConfig('polarity', 'alternative')
+
+            if ch_func == 'negButton':
+                self.pol_index_ch_list[ch_index] = 'negative'            
+                self.pol_pos_ui_list[ch_index].setStyleSheet('')
+                self.pol_alt_ui_list[ch_index].setStyleSheet('')
+                self.pol_neg_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+                # self.SendConfig('polarity', 'negative')
+
+        # send conf only one time
         if ch_func == 'posButton':
-            self.pol_index_ch_list[ch_index] = 'positive'
-            self.pol_pos_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
-            self.pol_alt_ui_list[ch_index].setStyleSheet('')
-            self.pol_neg_ui_list[ch_index].setStyleSheet('')            
             self.SendConfig('polarity', 'positive')            
 
         if ch_func == 'altButton':
-            self.pol_index_ch_list[ch_index] = 'alternative'            
-            self.pol_pos_ui_list[ch_index].setStyleSheet('')
-            self.pol_alt_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
-            self.pol_neg_ui_list[ch_index].setStyleSheet('')            
             self.SendConfig('polarity', 'alternative')
 
         if ch_func == 'negButton':
-            self.pol_index_ch_list[ch_index] = 'negative'            
-            self.pol_pos_ui_list[ch_index].setStyleSheet('')
-            self.pol_alt_ui_list[ch_index].setStyleSheet('')
-            self.pol_neg_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
             self.SendConfig('polarity', 'negative')
-                    
+                
 
     def ChangeTimer (self):
         sender = self.sender()
@@ -392,8 +404,10 @@ class MainWindow (QMainWindow):
         freq_str = self.freq_list[self.freq_index_ch_list[ch_index]]                
         self.freq_ui_list[ch_index].setText(freq_str)
         # self.SendConfig('ch' + str(ch_index + 1), 'frequency ' + self.freq_conf_list[self.freq_index_ch_list[ch_index]])
-        self.SendConfig('frequency', self.freq_conf_list[self.freq_index_ch_list[ch_index]])        
-        
+        if ch_index == 0:
+            self.SendConfig('square frequency', self.freq_conf_list[self.freq_index_ch_list[ch_index]])
+        else:
+            self.SendConfig('sine frequency', self.freq_conf_list[self.freq_index_ch_list[ch_index]])
 
     def ChangePower (self):
         sender = self.sender()
@@ -423,7 +437,10 @@ class MainWindow (QMainWindow):
         power_str = self.pwr_list[self.pwr_index_ch_list[ch_index]]
         self.pwr_ui_list[ch_index].setText(power_str)        
         # self.SendConfig('ch' + str(ch_index + 1), 'intensity ' + power_str)
-        self.SendConfig('intensity', power_str)        
+        if ch_index == 0:
+            self.SendConfig('square intensity', power_str)
+        else:
+            self.SendConfig('sine intensity', power_str)
         
 
     def StartChannel (self):
@@ -452,9 +469,9 @@ class MainWindow (QMainWindow):
             #     self.thread_start.start()                
 
             if ch_index == 0:
-                self.SendConfig('start', 'square')
+                self.SendConfig('square', 'start')
             else:
-                self.SendConfig('start', 'sine')
+                self.SendConfig('sine', 'start')
                 
         self.StartChannelByIndex(ch_index)            
 
