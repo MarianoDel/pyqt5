@@ -228,6 +228,10 @@ class MainWindow (QMainWindow):
                               QIcon(':/icons/resources/batt_2_4.png'),\
                               QIcon(':/icons/resources/batt_3_4.png'),\
                               QIcon(':/icons/resources/batt_4_4.png')]
+        self.platesicon_list = [QIcon(':/icons/resources/plates_no_conn.png'),\
+                                QIcon(':/icons/resources/plates_conn.png'),\
+                                QIcon(':/icons/resources/plates_pos.png'),\
+                                QIcon(':/icons/resources/plates_neg.png')]
         
     
         ## activate the 1 second timer its repetitive
@@ -252,6 +256,10 @@ class MainWindow (QMainWindow):
         self.sine_pos_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, 0.38, 0.71, 0.92, 1, 0.92, 0.71, 0.38, 0]
         self.sine_alt_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, -0.57, -1.06, -1.39, -1.5, -1.39, -1.06, -0.57, 0]
 
+        ## plates buttons
+        self.last_plates = 0
+        self.platesButton_ui_list = [self.ui.pch1upButton, self.ui.pch1dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch3upButton, self.ui.pch3dwnButton, self.ui.pch4upButton, self.ui.pch4dwnButton]
+        
         # tell the system we are up
         self.SendSystemUP()
         os.system("sleep 0.2")
@@ -320,6 +328,7 @@ class MainWindow (QMainWindow):
         ch_func = obj_list[1]
         ch_index = self.GetChannelIndexFromString(ch_name)
 
+        ## change this, do two channels at once
         for ch_index in [0 ,2]:
             if ch_func == 'posButton':
                 self.pol_index_ch_list[ch_index] = 'positive'
@@ -344,13 +353,16 @@ class MainWindow (QMainWindow):
 
         # send conf only one time
         if ch_func == 'posButton':
-            self.SendConfig('polarity', 'positive')            
+            self.SendConfig('polarity', 'positive')
+            self.SetPlatesPolarity(self.last_plates)
 
         if ch_func == 'altButton':
             self.SendConfig('polarity', 'alternative')
+            self.SetPlatesPolarity(self.last_plates)
 
         if ch_func == 'negButton':
             self.SendConfig('polarity', 'negative')
+            self.SetPlatesPolarity(self.last_plates)
                 
 
     def ChangeTimer (self):
@@ -714,6 +726,49 @@ class MainWindow (QMainWindow):
                 self.battery_b_state = power_str_list[6]
                 self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])                
 
+
+    def UpdatePlatesConnectors (self, conn_plates_str, conn_probe_str):
+        # uncomment if get state every 6 secs
+        plates = int(conn_plates_str, 16)
+        if self.last_plates == plates:
+            return
+
+        # check pairs colors
+        self.SetPlatesPolarity(plates)
+                
+        # update plates
+        self.last_plates = plates
+
+        
+    def SetPlatesPolarity (self, plates_int):
+        # clean all
+        for x in range (8):
+            self.platesButton_ui_list[x].setIcon(self.platesicon_list[0])
+            
+        for x in range (4):
+            dmask = 3 << (2*x)
+            lw = 2 * x
+            up = 2 * x + 1
+            if (plates_int & dmask) == dmask:
+                # two plates connected
+                if self.pol_index_ch_list[0] == 'positive':
+                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[2])
+                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[3])
+                elif self.pol_index_ch_list[0] == 'negative':
+                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[3])
+                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[2])
+                else:
+                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
+                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+            elif plates_int & dmask:
+                # one plate connected
+                if (plates_int & dmask) & up:
+                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                else:
+                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
+                
+                
+        
             
     ############################
     # Progress Timed Functions #
@@ -991,10 +1046,15 @@ class MainWindow (QMainWindow):
 
             return
         # end of supply voltage measurement
-                
+
         # channels comms
+        # "conn 0x%02x 0x%02x\r\n"        
+        if rcv.startswith("conn "):
+            rcv_list = rcv.split(' ')
+            self.UpdatePlatesConnectors(rcv_list[1], rcv_list[2])
+            return
         # if rcv.startswith("ch"):
-        #     rcv_list = rcv.split(' ')
+
         #     ch_index = rcv_list[0][-1]
         #     try:
         #         ch_index = int (ch_index)
