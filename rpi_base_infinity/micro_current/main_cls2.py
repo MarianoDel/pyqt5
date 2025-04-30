@@ -200,9 +200,9 @@ class MainWindow (QMainWindow):
         self.ui.bt_menu_close.hide()
 
         # all channels none probe
-        # self.probeLabel_ui_list = [self.ui.ch1_probeLabel, self.ch2_dummy, self.ui.ch3_probeLabel, self.ch4_dummy]
-        # for x in range(4):
-        #     self.probeLabel_ui_list[x].setText('None')
+        self.probeLabel_ui_list = [self.ui.ch1_probeLabel, self.ch2_dummy, self.ui.ch3_probeLabel, self.ch4_dummy]
+        for x in range(4):
+            self.probeLabel_ui_list[x].setText('None')
 
         # mains and battery buttons
         self.ui.mainsButton.clicked.connect(self.ShowVoltages)
@@ -556,35 +556,35 @@ class MainWindow (QMainWindow):
         self.displayTextLabel_ui_list[ch_index].setText('')
         
 
-    def EnableChannel (self):
-        sender = self.sender()
+    # def EnableChannel (self):
+    #     sender = self.sender()
         
-        obj_list = sender.objectName().split('_')
-        ch_name = obj_list[0]
-        ch_func = obj_list[1]
-        ch_index = self.GetChannelIndexFromString(ch_name)
+    #     obj_list = sender.objectName().split('_')
+    #     ch_name = obj_list[0]
+    #     ch_func = obj_list[1]
+    #     ch_index = self.GetChannelIndexFromString(ch_name)
 
-        if self.enableButton_ui_list[ch_index].text() == 'Enable Channel':
-            # check if SendConfig is ready to sent
-            if self.progress_config != 'init':
-                return
+    #     if self.enableButton_ui_list[ch_index].text() == 'Enable Channel':
+    #         # check if SendConfig is ready to sent
+    #         if self.progress_config != 'init':
+    #             return
 
-            self.enableButton_ui_list[ch_index].setText('Disable Channel')
-            self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(129, 129, 129);\
-                                                               border: 2px solid rgb(218, 218, 218);')
-            self.SendConfig(ch_name, 'enable')
-            self.SendConfigByIndex (ch_index)
-        else:
-            self.enableButton_ui_list[ch_index].setText('Enable Channel')
-            self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
-            self.probeLabel_ui_list[ch_index].setText('None')
+    #         self.enableButton_ui_list[ch_index].setText('Disable Channel')
+    #         self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(129, 129, 129);\
+    #                                                            border: 2px solid rgb(218, 218, 218);')
+    #         self.SendConfig(ch_name, 'enable')
+    #         self.SendConfigByIndex (ch_index)
+    #     else:
+    #         self.enableButton_ui_list[ch_index].setText('Enable Channel')
+    #         self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+    #         self.probeLabel_ui_list[ch_index].setText('None')
 
-            if self.in_treat_ch_list[ch_index] == True:
-                self.StopChannelByIndex(ch_index)
+    #         if self.in_treat_ch_list[ch_index] == True:
+    #             self.StopChannelByIndex(ch_index)
                 
-            if ch_index < 3:
-                self.displayLabel_ui_list[ch_index].setText('--')
-            self.SendConfig(ch_name, 'disable')
+    #         if ch_index < 3:
+    #             self.displayLabel_ui_list[ch_index].setText('--')
+    #         self.SendConfig(ch_name, 'disable')
             
 
     def SendConfig (self, channel, command):
@@ -1069,10 +1069,10 @@ class MainWindow (QMainWindow):
         #     rcv_str = rcv[4:]
         #     # print("receiv: " + rcv_str + " in index: " + str(ch_index))
         #     self.ParseChannelsComms(ch_index, rcv_str)
-        self.ParseChannelsComms(2, rcv)
+        self.ParseChannelsComms(rcv)
             
 
-    def ParseChannelsComms (self, ch_index, ch_str):
+    def ParseChannelsComms (self, ch_str):
         # display values
         if ch_str.startswith("display "):
             rcv_list = ch_str.split(' ')
@@ -1082,60 +1082,79 @@ class MainWindow (QMainWindow):
                 gain = 0
             # print('ch1 display: ' + str(gain))
 
-            # check ch disable else show meas
-            if self.enableButton_ui_list[ch_index].text() == 'Disable Channel':
-                # not show ch1 or ch2 if in treat
-                if ch_index == 0 or \
-                   ch_index == 1:
-                    if self.in_treat_ch_list[ch_index] == True:
-                        return
+            if self.probeLabel_ui_list[0].text() == 'NervSync':
+                self.displayLabel_ui_list[0].setText(str(gain))
+                
+            elif self.probeLabel_ui_list[2].text() == 'CellSync':
+                self.displayLabel_ui_list[2].setText(str(gain))
 
-                self.displayLabel_ui_list[ch_index].setText(str(gain))
+            else:
+                pass
 
             return
         # end of display values
 
         # probe messages
-        if ch_str.startswith("new probe "):
-            rcv_list = ch_str.split(' ')
-            self.probeLabel_ui_list[ch_index].setText(rcv_list[2])
+        if ch_str.startswith("new probe NervSync"):
+            self.probeLabel_ui_list[0].setText("NervSync")
+            self.probeLabel_ui_list[2].setText("None")
+            return
+        if ch_str.startswith("new probe CellSync"):
+            self.probeLabel_ui_list[0].setText("None")            
+            self.probeLabel_ui_list[2].setText("CellSync")
             return
         # end of probe messages
 
         # probe others
         if ch_str.startswith("none probe"):
-            self.probeLabel_ui_list[ch_index].setText('None')
-            if self.enableButton_ui_list[ch_index].text() == 'Disable Channel' and \
-               self.in_treat_ch_list[ch_index] == True:
-                self.StopChannelByIndex(ch_index)
+            self.probeLabel_ui_list[0].setText('None')
+            self.probeLabel_ui_list[2].setText('None')            
+            # if self.enableButton_ui_list[ch_index].text() == 'Disable Channel' and \
+            #    self.in_treat_ch_list[ch_index] == True:
+            #     self.StopChannelByIndex(ch_index)
             return
         # end of probe others
 
         # probe others 2
         if ch_str.startswith("probe start"):
-            # check if channel is enable
-            if self.enableButton_ui_list[ch_index].text() == 'Enable Channel':
-                return
-
-            if self.in_treat_ch_list[ch_index] == False:
-                # if self.distro == 'Slackware ':
-                #     # os.system("play up.wav")
-                #     self.thread_start = threading.Thread(target=thread_function, args=('Slackware ','up',))
-                #     self.thread_start.start()
-                # elif self.distro == 'debian':
-                #     # os.system("omxplayer up_long3.wav")
-                #     self.thread_start = threading.Thread(target=thread_function, args=('debian','up',))
-                #     self.thread_start.start()                
+            rcv_list = ch_str.split(' ')
+            if len(rcv_list) == 3:
+                if rcv_list[2] == 'square':
+                    if self.probeLabel_ui_list[0].text() != 'NervSync':
+                        self.probeLabel_ui_list[0].setText("NervSync")
+                        self.probeLabel_ui_list[2].setText("None")
+                    if self.in_treat_ch_list[0] == False:
+                        self.SendConfig('square', 'start')
+                        self.StartChannelByIndex(0)
+                        
+                if rcv_list[2] == 'sine':
+                    if self.probeLabel_ui_list[2].text() != 'CellSync':
+                        self.probeLabel_ui_list[0].setText("None")
+                        self.probeLabel_ui_list[2].setText("CellSync")
+                    if self.in_treat_ch_list[2] == False:
+                        self.SendConfig('sine', 'start')
+                        self.StartChannelByIndex(2)
+                        
+            else:
+                if self.probeLabel_ui_list[0].text() == 'NervSync' and \
+                   self.in_treat_ch_list[0] == False:
+                    self.SendConfig('square', 'start')
+                    self.StartChannelByIndex(0)
                 
-                self.SendConfig('ch' + str(ch_index + 1), 'start')
+                elif self.probeLabel_ui_list[2].text() == 'CellSync' and \
+                     self.in_treat_ch_list[2] == False:
+                    self.SendConfig('sine', 'start')
+                    self.StartChannelByIndex(2)
 
-            self.StartChannelByIndex(ch_index)
+                else:
+                    pass
+                            
             return
         # end of probe others 2
 
         # for show sine progress
-        if ch_str.startswith("starting"):
-            self.in_treat_show_sine_list[ch_index] = True
+        if ch_str.startswith("starting sine"):
+            self.in_treat_show_sine_list[2] = True
             return
         # end of for show sine progress
 
@@ -1152,7 +1171,8 @@ class MainWindow (QMainWindow):
                 res_int = res_int / 1000
                 res_int = int(res_int)
                 res_mult = 'k'
-                
-            if self.in_treat_ch_list[ch_index] == True:
-                self.displayTextLabel_ui_list[ch_index].setText('Res. ' + str(res_int) + res_mult)
+
+            if self.probeLabel_ui_list[2].text() == 'CellSync' and \
+                 self.in_treat_ch_list[2] == True:
+                self.displayTextLabel_ui_list[2].setText('Res. ' + str(res_int) + res_mult)
         # end of resistance meas online

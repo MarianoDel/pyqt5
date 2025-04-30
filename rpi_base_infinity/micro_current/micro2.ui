@@ -1312,7 +1312,7 @@ top: -8px;
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QLabel" name="ch3_probeLabel_2">
+                 <widget class="QLabel" name="ch1_probeLabel">
                   <property name="geometry">
                    <rect>
                     <x>20</x>
