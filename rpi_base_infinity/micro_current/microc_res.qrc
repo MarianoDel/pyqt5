@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/intel_con.png</file>
     <file>resources/plates_conn.png</file>
     <file>resources/intel_nc.png</file>
     <file>resources/intel_neg.png</file>

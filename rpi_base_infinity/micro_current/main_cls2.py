@@ -232,6 +232,10 @@ class MainWindow (QMainWindow):
                                 QIcon(':/icons/resources/plates_conn.png'),\
                                 QIcon(':/icons/resources/plates_pos.png'),\
                                 QIcon(':/icons/resources/plates_neg.png')]
+        self.probeicon_list = [QIcon(':/icons/resources/intel_nc.png'),\
+                                QIcon(':/icons/resources/intel_con.png'),\
+                                QIcon(':/icons/resources/intel_pos.png'),\
+                                QIcon(':/icons/resources/intel_neg.png')]
         
     
         ## activate the 1 second timer its repetitive
@@ -256,9 +260,11 @@ class MainWindow (QMainWindow):
         self.sine_pos_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, 0.38, 0.71, 0.92, 1, 0.92, 0.71, 0.38, 0]
         self.sine_alt_table_list = [0.57, 1.06, 1.39, 1.5, 1.39, 1.06, 0.57, 0, -0.57, -1.06, -1.39, -1.5, -1.39, -1.06, -0.57, 0]
 
-        ## plates buttons
+        ## plates & probe buttons
         self.last_plates = 0
-        self.platesButton_ui_list = [self.ui.pch1upButton, self.ui.pch1dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch3upButton, self.ui.pch3dwnButton, self.ui.pch4upButton, self.ui.pch4dwnButton]
+        self.platesButton_ui_list = [self.ui.pch4upButton, self.ui.pch4dwnButton, self.ui.pch3upButton, self.ui.pch3dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch1upButton, self.ui.pch1dwnButton]
+        self.last_probe = 0
+        self.ui.intpButton.setIcon(self.platesicon_list[0])
         
         # tell the system we are up
         self.SendSystemUP()
@@ -355,14 +361,17 @@ class MainWindow (QMainWindow):
         if ch_func == 'posButton':
             self.SendConfig('polarity', 'positive')
             self.SetPlatesPolarity(self.last_plates)
+            self.SetProbePolarity(self.last_probe)
 
         if ch_func == 'altButton':
             self.SendConfig('polarity', 'alternative')
             self.SetPlatesPolarity(self.last_plates)
+            self.SetProbePolarity(self.last_probe)            
 
         if ch_func == 'negButton':
             self.SendConfig('polarity', 'negative')
             self.SetPlatesPolarity(self.last_plates)
+            self.SetProbePolarity(self.last_probe)            
                 
 
     def ChangeTimer (self):
@@ -730,14 +739,18 @@ class MainWindow (QMainWindow):
     def UpdatePlatesConnectors (self, conn_plates_str, conn_probe_str):
         # uncomment if get state every 6 secs
         plates = int(conn_plates_str, 16)
-        if self.last_plates == plates:
+        probe = int(conn_probe_str, 16)        
+        if self.last_plates == plates and \
+           self.last_probe == probe:
             return
+
+        # update plates & probe
+        self.last_plates = plates
+        self.last_probe = probe
 
         # check pairs colors
         self.SetPlatesPolarity(plates)
-                
-        # update plates
-        self.last_plates = plates
+        self.SetProbePolarity(probe)
 
         
     def SetPlatesPolarity (self, plates_int):
@@ -759,16 +772,44 @@ class MainWindow (QMainWindow):
                     self.platesButton_ui_list[up].setIcon(self.platesicon_list[2])
                 else:
                     self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
-                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                    dself.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
             elif plates_int & dmask:
-                # one plate connected
-                if (plates_int & dmask) & up:
-                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                print(f"plates: {plates_int} probe: {self.last_probe}")
+                
+                if (plates_int & 0x40) and self.last_probe:
+                    if self.pol_index_ch_list[0] == 'positive':
+                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[3])
+                    elif self.pol_index_ch_list[0] == 'negative':
+                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[2])
+                    else:
+                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
                 else:
-                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
+                    # one plate connected and not probe
+                    pos_int = (plates_int & dmask) >> (2*x)
+                    
+                    print(f"plates: {plates_int} pos_int: {pos_int}")
+                    if pos_int & 0x01:
+                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                    else:
+                        self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
                 
                 
-        
+    def SetProbePolarity (self, probe_int):
+        # clean probe
+        self.ui.intpButton.setIcon(self.probeicon_list[0])
+
+        if probe_int:
+            # probe connected
+            if self.last_plates & 0x40:
+                if self.pol_index_ch_list[0] == 'positive':
+                    self.ui.intpButton.setIcon(self.probeicon_list[2])
+                elif self.pol_index_ch_list[0] == 'negative':
+                    self.ui.intpButton.setIcon(self.probeicon_list[3])
+                else:
+                    self.ui.intpButton.setIcon(self.probeicon_list[1])
+            else:
+                self.ui.intpButton.setIcon(self.probeicon_list[1])
+
             
     ############################
     # Progress Timed Functions #
