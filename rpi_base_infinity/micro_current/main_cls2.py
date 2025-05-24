@@ -189,10 +189,10 @@ class MainWindow (QMainWindow):
         # self.SendConfig('ch2', 'disable')
         # self.SendConfig('ch3', 'disable')
         # self.SendConfig('ch4', 'disable')
-        self.SendConfig('ch1', 'enable')
-        self.SendConfig('ch2', 'enable')
-        self.SendConfig('ch3', 'enable')
-        self.SendConfig('ch4', 'enable')
+        # self.SendConfig('ch1', 'enable')
+        # self.SendConfig('ch2', 'enable')
+        # self.SendConfig('ch3', 'enable')
+        # self.SendConfig('ch4', 'enable')
         self.progress_config = 'init'
         
         self.in_treat_ch_list = [False, False, False, False]
@@ -270,6 +270,25 @@ class MainWindow (QMainWindow):
         self.SendSystemUP()
         os.system("sleep 0.2")
         self.SendSystemUP()
+        os.system("sleep 0.1")
+
+        # tell mainboard the default config
+        self.ChangeFrequencyFunc (0, 6)    #square 20Hz
+        self.ChangeFrequencyFunc (2, 6)    #sine 20Hz    
+        self.ChangePowerFunc(0, 2)    #square 100uA
+        self.ChangePowerFunc(2, 2)    #sine 100uA
+        self.ChangePolarityFunc(0, 'posButton')
+
+        
+        # Treatment_SetFrequency_Str (MODE_SQUARE, "20.00");
+        # Treatment_SetIntensity_Str (MODE_SQUARE, "100");
+        # Treatment_SetFrequency_Str (MODE_SINE, "20.00");
+        # Treatment_SetIntensity_Str (MODE_SINE, "100");
+        # Treatment_SetPolarity_Str ("alt");
+
+        # get connectors update
+        self.SendConfig('conn', 'get')
+        
         
     def move_menu (self):
         width = self.ui.lateralMenu.width()
@@ -372,7 +391,50 @@ class MainWindow (QMainWindow):
             self.SendConfig('polarity', 'negative')
             self.SetPlatesPolarity(self.last_plates)
             self.SetProbePolarity(self.last_probe)            
-                
+
+
+    def ChangePolarityFunc (self, ch_index, ch_func_str):
+        ch_func = ch_func_str
+
+        ## change this, do two channels at once
+        for ch_index in [0 ,2]:
+            if ch_func == 'posButton':
+                self.pol_index_ch_list[ch_index] = 'positive'
+                self.pol_pos_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+                self.pol_alt_ui_list[ch_index].setStyleSheet('')
+                self.pol_neg_ui_list[ch_index].setStyleSheet('')            
+                # self.SendConfig('polarity', 'positive')            
+
+            if ch_func == 'altButton':
+                self.pol_index_ch_list[ch_index] = 'alternative'            
+                self.pol_pos_ui_list[ch_index].setStyleSheet('')
+                self.pol_alt_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+                self.pol_neg_ui_list[ch_index].setStyleSheet('')            
+                # self.SendConfig('polarity', 'alternative')
+
+            if ch_func == 'negButton':
+                self.pol_index_ch_list[ch_index] = 'negative'            
+                self.pol_pos_ui_list[ch_index].setStyleSheet('')
+                self.pol_alt_ui_list[ch_index].setStyleSheet('')
+                self.pol_neg_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
+                # self.SendConfig('polarity', 'negative')
+
+        # send conf only one time
+        if ch_func == 'posButton':
+            self.SendConfig('polarity', 'positive')
+            self.SetPlatesPolarity(self.last_plates)
+            self.SetProbePolarity(self.last_probe)
+
+        if ch_func == 'altButton':
+            self.SendConfig('polarity', 'alternative')
+            self.SetPlatesPolarity(self.last_plates)
+            self.SetProbePolarity(self.last_probe)            
+
+        if ch_func == 'negButton':
+            self.SendConfig('polarity', 'negative')
+            self.SetPlatesPolarity(self.last_plates)
+            self.SetProbePolarity(self.last_probe)            
+            
 
     def ChangeTimer (self):
         sender = self.sender()
@@ -419,7 +481,13 @@ class MainWindow (QMainWindow):
         self.ChangeFrequencyByIndex(ch_index)
         if send_encod:
             self.SendEncodFreq(ch_name, self.freq_index_ch_list[ch_index])
-        
+
+
+    def ChangeFrequencyFunc (self, ch_index, freq_list_index):
+        self.freq_index_ch_list[ch_index] = freq_list_index
+        self.ChangeFrequencyByIndex(ch_index)
+        self.SendEncodFreq(f"ch{ch_index+1}", self.freq_index_ch_list[ch_index])
+            
 
     def ChangeFrequencyByIndex (self, ch_index):
         freq_str = self.freq_list[self.freq_index_ch_list[ch_index]]                
@@ -454,6 +522,12 @@ class MainWindow (QMainWindow):
             self.SendEncodPwr(ch_name, self.pwr_index_ch_list[ch_index])
             
 
+    def ChangePowerFunc (self, ch_index, pwr_list_index):
+        self.pwr_index_ch_list[ch_index] = pwr_list_index
+        self.ChangePowerByIndex(ch_index)
+        self.SendEncodPwr(f"ch{ch_index+1}", self.pwr_index_ch_list[ch_index])
+
+            
     def ChangePowerByIndex (self, ch_index):
         power_str = self.pwr_list[self.pwr_index_ch_list[ch_index]]
         self.pwr_ui_list[ch_index].setText(power_str)        
@@ -772,7 +846,7 @@ class MainWindow (QMainWindow):
                     self.platesButton_ui_list[up].setIcon(self.platesicon_list[2])
                 else:
                     self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
-                    dself.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
             elif plates_int & dmask:
                 print(f"plates: {plates_int} probe: {self.last_probe}")
                 
