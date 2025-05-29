@@ -75,16 +75,16 @@ class Ui_MainWindow(object):
         self.mainsButton.setIconSize(QtCore.QSize(100, 100))
         self.mainsButton.setObjectName("mainsButton")
         self.horizontalLayout_2.addWidget(self.mainsButton)
-        self.battaButton_3 = QtWidgets.QPushButton(self.statusFrame)
-        self.battaButton_3.setMinimumSize(QtCore.QSize(104, 88))
+        self.battdButton = QtWidgets.QPushButton(self.statusFrame)
+        self.battdButton.setMinimumSize(QtCore.QSize(104, 88))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(20)
         font.setBold(True)
         font.setWeight(75)
-        self.battaButton_3.setFont(font)
-        self.battaButton_3.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.battaButton_3.setStyleSheet("QPushButton{\n"
+        self.battdButton.setFont(font)
+        self.battdButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.battdButton.setStyleSheet("QPushButton{\n"
 "background-color: rgb(218, 218, 218);\n"
 "}\n"
 "\n"
@@ -94,23 +94,23 @@ class Ui_MainWindow(object):
 "border: 2px solid rgb(218, 218, 218);\n"
 "}\n"
 "")
-        self.battaButton_3.setText("")
+        self.battdButton.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/resources/batt_4_4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.battaButton_3.setIcon(icon1)
-        self.battaButton_3.setIconSize(QtCore.QSize(100, 100))
-        self.battaButton_3.setObjectName("battaButton_3")
-        self.horizontalLayout_2.addWidget(self.battaButton_3)
-        self.battaButton_2 = QtWidgets.QPushButton(self.statusFrame)
-        self.battaButton_2.setMinimumSize(QtCore.QSize(104, 88))
+        self.battdButton.setIcon(icon1)
+        self.battdButton.setIconSize(QtCore.QSize(100, 100))
+        self.battdButton.setObjectName("battdButton")
+        self.horizontalLayout_2.addWidget(self.battdButton)
+        self.battcButton = QtWidgets.QPushButton(self.statusFrame)
+        self.battcButton.setMinimumSize(QtCore.QSize(104, 88))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(20)
         font.setBold(True)
         font.setWeight(75)
-        self.battaButton_2.setFont(font)
-        self.battaButton_2.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.battaButton_2.setStyleSheet("QPushButton{\n"
+        self.battcButton.setFont(font)
+        self.battcButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.battcButton.setStyleSheet("QPushButton{\n"
 "background-color: rgb(218, 218, 218);\n"
 "}\n"
 "\n"
@@ -120,35 +120,11 @@ class Ui_MainWindow(object):
 "border: 2px solid rgb(218, 218, 218);\n"
 "}\n"
 "")
-        self.battaButton_2.setText("")
-        self.battaButton_2.setIcon(icon1)
-        self.battaButton_2.setIconSize(QtCore.QSize(100, 100))
-        self.battaButton_2.setObjectName("battaButton_2")
-        self.horizontalLayout_2.addWidget(self.battaButton_2)
-        self.battaButton = QtWidgets.QPushButton(self.statusFrame)
-        self.battaButton.setMinimumSize(QtCore.QSize(104, 88))
-        font = QtGui.QFont()
-        font.setFamily("Liberation Sans")
-        font.setPointSize(20)
-        font.setBold(True)
-        font.setWeight(75)
-        self.battaButton.setFont(font)
-        self.battaButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.battaButton.setStyleSheet("QPushButton{\n"
-"background-color: rgb(218, 218, 218);\n"
-"}\n"
-"\n"
-"QPushButton::hover {\n"
-"background-color: rgb(129, 129, 129);\n"
-"/*border: 2px solid red;*/\n"
-"border: 2px solid rgb(218, 218, 218);\n"
-"}\n"
-"")
-        self.battaButton.setText("")
-        self.battaButton.setIcon(icon1)
-        self.battaButton.setIconSize(QtCore.QSize(100, 100))
-        self.battaButton.setObjectName("battaButton")
-        self.horizontalLayout_2.addWidget(self.battaButton)
+        self.battcButton.setText("")
+        self.battcButton.setIcon(icon1)
+        self.battcButton.setIconSize(QtCore.QSize(100, 100))
+        self.battcButton.setObjectName("battcButton")
+        self.horizontalLayout_2.addWidget(self.battcButton)
         self.battbButton = QtWidgets.QPushButton(self.statusFrame)
         self.battbButton.setMinimumSize(QtCore.QSize(104, 88))
         font = QtGui.QFont()
@@ -173,6 +149,30 @@ class Ui_MainWindow(object):
         self.battbButton.setIconSize(QtCore.QSize(100, 100))
         self.battbButton.setObjectName("battbButton")
         self.horizontalLayout_2.addWidget(self.battbButton)
+        self.battaButton = QtWidgets.QPushButton(self.statusFrame)
+        self.battaButton.setMinimumSize(QtCore.QSize(104, 88))
+        font = QtGui.QFont()
+        font.setFamily("Liberation Sans")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.battaButton.setFont(font)
+        self.battaButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.battaButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.battaButton.setText("")
+        self.battaButton.setIcon(icon1)
+        self.battaButton.setIconSize(QtCore.QSize(100, 100))
+        self.battaButton.setObjectName("battaButton")
+        self.horizontalLayout_2.addWidget(self.battaButton)
         self.bt_menu_open = QtWidgets.QPushButton(self.statusFrame)
         self.bt_menu_open.setMinimumSize(QtCore.QSize(100, 0))
         self.bt_menu_open.setStyleSheet("background-color: rgb(176, 176, 176);")

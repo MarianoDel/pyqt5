@@ -137,7 +137,7 @@ border: 2px solid rgb(218, 218, 218);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="battaButton_3">
+           <widget class="QPushButton" name="battdButton">
             <property name="minimumSize">
              <size>
               <width>104</width>
@@ -183,53 +183,7 @@ border: 2px solid rgb(218, 218, 218);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="battaButton_2">
-            <property name="minimumSize">
-             <size>
-              <width>104</width>
-              <height>88</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Liberation Sans</family>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-background-color: rgb(218, 218, 218);
-}
-
-QPushButton::hover {
-background-color: rgb(129, 129, 129);
-/*border: 2px solid red;*/
-border: 2px solid rgb(218, 218, 218);
-}
-</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="microc_res.qrc">
-              <normaloff>:/icons/resources/batt_4_4.png</normaloff>:/icons/resources/batt_4_4.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>100</width>
-              <height>100</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="battaButton">
+           <widget class="QPushButton" name="battcButton">
             <property name="minimumSize">
              <size>
               <width>104</width>
@@ -276,6 +230,52 @@ border: 2px solid rgb(218, 218, 218);
           </item>
           <item>
            <widget class="QPushButton" name="battbButton">
+            <property name="minimumSize">
+             <size>
+              <width>104</width>
+              <height>88</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Liberation Sans</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="microc_res.qrc">
+              <normaloff>:/icons/resources/batt_4_4.png</normaloff>:/icons/resources/batt_4_4.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="battaButton">
             <property name="minimumSize">
              <size>
               <width>104</width>

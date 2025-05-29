@@ -13,19 +13,6 @@ import os
 from ui_micro2 import Ui_MainWindow
 
 
-# def thread_function (distro, direction):
-#     if distro == 'Slackware ':
-#         if direction == 'up':
-#             os.system("play up.wav")
-#         else:
-#             os.system("play down.wav")
-            
-#     elif distro == 'debian':
-#         if direction == 'up':
-#             os.system("omxplayer up_long3.wav")
-#         else:
-#             os.system("omxplayer down_long3.wav")
-
 class ChnlsDummy ():
     def setText(self, new_text):
         pass
@@ -50,16 +37,6 @@ class MainWindow (QMainWindow):
         self.s = serialport
         self.distro = distro
         self.parent = parent
-
-        # threading routines
-        # if self.distro == 'Slackware ':
-        #     self.thread_start = threading.Thread(target=thread_function, args=('Slackware ','up',))
-        #     self.thread_stop = threading.Thread(target=thread_function, args=('Slackware ','down',))
-        # elif self.distro == 'debian':
-        #     self.thread_start = threading.Thread(target=thread_function, args=('debian','up',))
-        #     self.thread_stop = threading.Thread(target=thread_function, args=('debian','down',))
-        # else:
-        #     print("distro error, no threads instanciated!")
 
         # self.bt_close.clicked.connect(self.close)
         self.ui.bt_menu_close.clicked.connect(self.move_menu)
@@ -208,16 +185,24 @@ class MainWindow (QMainWindow):
         self.ui.mainsButton.clicked.connect(self.ShowVoltages)
         self.ui.battaButton.clicked.connect(self.ShowVoltages)
         self.ui.battbButton.clicked.connect(self.ShowVoltages)
+        self.ui.battcButton.clicked.connect(self.ShowVoltages)
+        self.ui.battdButton.clicked.connect(self.ShowVoltages)        
         # batteries full at start
         self.mains_state = 'mains'
         self.battery_a_state = '4'    
         self.battery_b_state = '4'
+        self.battery_c_state = '4'    
+        self.battery_d_state = '4'
         self.mains_voltage_str = '--'
         self.battery_a_voltage_str = '--'
         self.battery_b_voltage_str = '--'
+        self.battery_c_voltage_str = '--'
+        self.battery_d_voltage_str = '--'
         self.mains_revert = False
         self.batta_revert = False
         self.battb_revert = False
+        self.battc_revert = False
+        self.battd_revert = False
         self.revert_cnt = 0
         
         ## setup mains & battery icons
@@ -554,15 +539,6 @@ class MainWindow (QMainWindow):
 
 
         if self.in_treat_ch_list[ch_index] == False:
-            # if self.distro == 'Slackware ':
-            #     # os.system("play up.wav")
-            #     self.thread_start = threading.Thread(target=thread_function, args=('Slackware ','up',))
-            #     self.thread_start.start()
-            # elif self.distro == 'debian':
-            #     # os.system("omxplayer up_long3.wav")
-            #     self.thread_start = threading.Thread(target=thread_function, args=('debian','up',))
-            #     self.thread_start.start()                
-
             if ch_index == 0:
                 self.SendConfig('square', 'start')
             else:
@@ -602,11 +578,7 @@ class MainWindow (QMainWindow):
             self.ui.ch3_progressBar.setValue(0)
             self.ui.ch3_displayLabel.setText('0')
             self.progressBar_timer.singleShot(200, self.ProgressBarSM)
-        # elif ch_index == 3:
-        #     self.ui.ch4_progressBar.setValue(0)
-        #     self.ui.ch4_displayLabel.setText('0')
-        #     if self.in_treat_ch_list[2] != True:
-        #         self.progressBar_timer.singleShot(200, self.ProgressBarSM)
+            # print("   starting sine SM")
         
 
     def StopChannel (self):
@@ -622,15 +594,7 @@ class MainWindow (QMainWindow):
     def StopChannelByIndex (self, ch_index):
         # self.SendConfig('ch' + str(ch_index + 1), 'stop')
         self.SendConfig('stop', '')        
-        # if self.distro == 'Slackware ':
-        #     # os.system("play up.wav")
-        #     self.thread_stop = threading.Thread(target=thread_function, args=('Slackware ','down',))
-        #     self.thread_stop.start()
-        # elif self.distro == 'debian':
-        #     # os.system("omxplayer up_long3.wav")
-        #     self.thread_stop = threading.Thread(target=thread_function, args=('debian','down',))
-        #     self.thread_stop.start()                
-        
+
         self.in_treat_ch_list[ch_index] = False
         self.remainMins_ui_list[ch_index].hide()
         self.remainSecs_ui_list[ch_index].hide()
@@ -750,6 +714,18 @@ class MainWindow (QMainWindow):
             self.ui.battbButton.setText(self.battery_b_voltage_str)
             self.battb_revert = True
             self.revert_cnt = 2            
+
+        if sender.objectName() == 'battcButton':
+            self.ui.battcButton.setIcon(QIcon())
+            self.ui.battcButton.setText(self.battery_c_voltage_str)
+            self.battc_revert = True
+            self.revert_cnt = 2            
+
+        if sender.objectName() == 'battdButton':
+            self.ui.battdButton.setIcon(QIcon())
+            self.ui.battdButton.setText(self.battery_d_voltage_str)
+            self.battd_revert = True
+            self.revert_cnt = 2            
             
 
     def RevertVoltages (self):
@@ -774,12 +750,23 @@ class MainWindow (QMainWindow):
             self.ui.battbButton.setText('')
             self.battb_revert = False
             self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])
-                
+
+        if self.battc_revert:
+            self.ui.battcButton.setText('')
+            self.battc_revert = False
+            self.ui.battcButton.setIcon(self.batticon_list[int(self.battery_c_state)])
+
+        if self.battd_revert:
+            self.ui.battdButton.setText('')
+            self.battd_revert = False
+            self.ui.battdButton.setIcon(self.batticon_list[int(self.battery_d_state)])
+            
             
     def UpdateSupplyPower (self, power_str):
-        # supply mains 13.2V 8.4V 8.4V 4 4
+        # supply mains 11.2 13.2 08.6 08.3 08.3 08.4 
         # supply battery 6.2V 8.4V 8.4V 4 4
         update_volts = False
+        update_values = False
         power_str_list = power_str.split(' ')
         if power_str_list[1] == 'mains':
             if self.mains_state != 'mains':
@@ -793,22 +780,52 @@ class MainWindow (QMainWindow):
             update_volts = True
 
         # update mains & battery voltages
-        batta_str = power_str_list[5]
+        batta_str = power_str_list[7]
         battb_str = power_str_list[6]
-        if update_volts and \
-           batta_str[0] >= '0' and batta_str[0] < '5' and \
-           battb_str[0] >= '0' and battb_str[0] < '5':
+        battc_str = power_str_list[5]
+        battd_str = power_str_list[4]
+        print(f'a:{batta_str} b:{battb_str} c: {battc_str} d: {battd_str}')
+        try:
+            batta = float(batta_str)
+            battb = float(battb_str)
+            battc = float(battc_str)
+            battd = float(battd_str)
+            update_values = True
+        except:
+            print('error in values')
+            pass
+            
+        if update_volts and update_values:
             self.mains_voltage_str = power_str_list [2]
-            self.battery_a_voltage_str = power_str_list [3]
-            self.battery_b_voltage_str = power_str_list [4]
-            if self.battery_a_state != power_str_list[5]:
-                self.battery_a_state = power_str_list[5]
-                self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state)])
+            self.battery_a_voltage_str = power_str_list [7]
+            self.battery_b_voltage_str = power_str_list [6]
+            self.battery_c_voltage_str = power_str_list [5]
+            self.battery_d_voltage_str = power_str_list [4]
 
-            if self.battery_b_state != power_str_list[6]:
-                self.battery_b_state = power_str_list[6]
-                self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])                
+            self.battery_a_state = self.CheckBattValues(batta)
+            self.battery_b_state = self.CheckBattValues(battb)
+            self.battery_c_state = self.CheckBattValues(battc)
+            self.battery_d_state = self.CheckBattValues(battd)
+            
+            self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state)])                
+            self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])
+            self.ui.battcButton.setIcon(self.batticon_list[int(self.battery_c_state)])                
+            self.ui.battdButton.setIcon(self.batticon_list[int(self.battery_d_state)])
 
+            
+    def CheckBattValues (self, volt_float):
+        state = '0'
+        if volt_float > 8.0:
+            state = '4'
+        elif volt_float > 7.5:
+            state = '3'
+        elif volt_float > 7.0:
+            state = '2'
+        elif volt_float > 6.5:
+            state = '1'
+
+        return state
+        
 
     def UpdatePlatesConnectors (self, conn_plates_str, conn_probe_str):
         # uncomment if get state every 6 secs
@@ -928,7 +945,8 @@ class MainWindow (QMainWindow):
             
     def ProgressBarSM (self):
         next_cycle = False
-        
+
+        # print(f" in SM {self.in_treat_ch_list[2]} show {self.in_treat_show_sine_list[2]}")
         if self.in_treat_ch_list[2] == True and \
            self.in_treat_show_sine_list[2] == True:
             if self.pol_index_ch_list[2] == 'negative':
@@ -1268,8 +1286,9 @@ class MainWindow (QMainWindow):
         # end of probe others 2
 
         # for show sine progress
-        if ch_str.startswith("starting sine"):
+        if ch_str.startswith("starting sinusoidal"):
             self.in_treat_show_sine_list[2] = True
+            # print(f" in serial {self.in_treat_show_sine_list[2]}")
             return
         # end of for show sine progress
 
@@ -1287,7 +1306,12 @@ class MainWindow (QMainWindow):
                 res_int = int(res_int)
                 res_mult = 'k'
 
+            if self.probeLabel_ui_list[0].text() == 'NervSync' and \
+                 self.in_treat_ch_list[0] == True:
+                self.displayTextLabel_ui_list[0].setText('Res. ' + str(res_int) + res_mult)
+
             if self.probeLabel_ui_list[2].text() == 'CellSync' and \
                  self.in_treat_ch_list[2] == True:
                 self.displayTextLabel_ui_list[2].setText('Res. ' + str(res_int) + res_mult)
-        # end of resistance meas online
+
+            # end of resistance meas online
