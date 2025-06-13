@@ -250,7 +250,14 @@ class MainWindow (QMainWindow):
         self.platesButton_ui_list = [self.ui.pch4upButton, self.ui.pch4dwnButton, self.ui.pch3upButton, self.ui.pch3dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch1upButton, self.ui.pch1dwnButton]
         self.last_probe = 0
         self.ui.intpButton.setIcon(self.platesicon_list[0])
-        
+
+        ## Roll Through Function
+        self.ui.rtf_startButton.clicked.connect(self.StartRoll)
+        self.ui.rtf_stopButton.clicked.connect(self.StopRoll)        
+        self.rtf_endhook = False
+        self.rtf_endhook_state = ''
+
+
         # tell the system we are up
         self.SendSystemUP()
         os.system("sleep 0.2")
@@ -419,7 +426,7 @@ class MainWindow (QMainWindow):
             self.SendConfig('polarity', 'negative')
             self.SetPlatesPolarity(self.last_plates)
             self.SetProbePolarity(self.last_probe)            
-            
+
 
     def ChangeTimer (self):
         sender = self.sender()
@@ -601,8 +608,215 @@ class MainWindow (QMainWindow):
         self.stopButton_ui_list[ch_index].hide()
         self.startButton_ui_list[ch_index].show()
         self.displayTextLabel_ui_list[ch_index].setText('')
-        
 
+        if self.rtf_endhook == True:
+            self.Roll_SM()
+
+
+    def StartRoll (self):
+        for ch_index in range (4):
+            if self.in_treat_ch_list[ch_index] != False:
+                self.ui.rtf_line1Label.setText("Some channel is running")
+                return
+
+        if self.ui.ch1_probeLabel.text() != "NervSync":
+            self.ui.rtf_line1Label.setText("NervSync Probe NC")
+            return
+
+        self.ChangeFrequencyFunc (0, 0)
+        self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[0]}")
+        self.SendConfig('square', 'start')
+        self.StartChannelByIndex(0)
+        self.rtf_endhook_state = 'freq1'
+        self.rtf_endhook = True
+        self.ui.rtf_startButton.hide()
+        self.ui.rtf_stopButton.show()        
+
+
+    def Roll_SM (self):
+        time_for_meas = 3000
+        if self.rtf_endhook_state == 'freq1':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[0]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+        elif self.rtf_endhook_state == 'freq1_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 1)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[1]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq2'
+            
+        elif self.rtf_endhook_state == 'freq2':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[1]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+        elif self.rtf_endhook_state == 'freq2_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 2)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[2]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq3'
+
+        elif self.rtf_endhook_state == 'freq3':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[2]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+        elif self.rtf_endhook_state == 'freq3_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 3)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[3]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq4'
+            
+        elif self.rtf_endhook_state == 'freq4':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[3]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+        elif self.rtf_endhook_state == 'freq4_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 4)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[4]}")            
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq5'
+            
+        elif self.rtf_endhook_state == 'freq5':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[4]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+        elif self.rtf_endhook_state == 'freq5_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 5)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[5]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq6'
+            
+        elif self.rtf_endhook_state == 'freq6':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[5]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+            
+        elif self.rtf_endhook_state == 'freq6_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 6)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[6]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq7'
+            
+        elif self.rtf_endhook_state == 'freq7':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[6]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+            
+        elif self.rtf_endhook_state == 'freq7_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 7)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[7]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq8'
+            
+        elif self.rtf_endhook_state == 'freq8':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[7]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+
+        elif self.rtf_endhook_state == 'freq8_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 8)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[8]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq9'
+            
+        elif self.rtf_endhook_state == 'freq9':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[8]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+
+        elif self.rtf_endhook_state == 'freq9_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 9)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[9]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq10'
+            
+        elif self.rtf_endhook_state == 'freq10':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[9]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+
+
+        elif self.rtf_endhook_state == 'freq10_meas':
+            # get value
+
+            # change freq
+            self.ChangeFrequencyFunc (0, 10)
+            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[10]}")
+            self.SendConfig('square', 'start')
+            self.StartChannelByIndex(0)
+            self.rtf_endhook_state = 'freq11'
+            
+        elif self.rtf_endhook_state == 'freq11':
+            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[10]}")
+            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
+            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
+            
+
+        elif self.rtf_endhook_state == 'freq11_meas':
+            # get value
+
+            # stop roll
+            self.rtf_endhook = False            
+            self.ui.rtf_line1Label.setText("Roll Stops")            
+            self.ui.rtf_startButton.show()
+            self.ui.rtf_stopButton.hide()        
+
+            
+
+    def StopRoll (self):
+        if self.rtf_endhook == True:
+            self.StopChannelByIndex(0)
+            # self.ChangeFrequencyFunc (0, self.rtf_freq_last_index)
+            self.rtf_endhook = False
+            self.ui.rtf_startButton.show()
+            self.ui.rtf_stopButton.hide()        
+
+            
+        
     # def EnableChannel (self):
     #     sender = self.sender()
         

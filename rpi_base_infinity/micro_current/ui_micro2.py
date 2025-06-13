@@ -1326,7 +1326,7 @@ class Ui_MainWindow(object):
         self.pch4upButton.setIconSize(QtCore.QSize(100, 100))
         self.pch4upButton.setObjectName("pch4upButton")
         self.groupBox_31 = QtWidgets.QGroupBox(self.frame_5)
-        self.groupBox_31.setGeometry(QtCore.QRect(900, 60, 371, 211))
+        self.groupBox_31.setGeometry(QtCore.QRect(900, 30, 491, 241))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
@@ -1348,16 +1348,16 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_31.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_31.setObjectName("groupBox_31")
-        self.platesPolUpButton = QtWidgets.QPushButton(self.groupBox_31)
-        self.platesPolUpButton.setGeometry(QtCore.QRect(30, 60, 311, 61))
+        self.rtfHitStopButton = QtWidgets.QPushButton(self.groupBox_31)
+        self.rtfHitStopButton.setGeometry(QtCore.QRect(30, 60, 301, 61))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.platesPolUpButton.setFont(font)
-        self.platesPolUpButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.platesPolUpButton.setStyleSheet("QPushButton {\n"
+        self.rtfHitStopButton.setFont(font)
+        self.rtfHitStopButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.rtfHitStopButton.setStyleSheet("QPushButton {\n"
 "background-color: rgb(218, 218, 218);\n"
 "}\n"
 "\n"
@@ -1367,20 +1367,52 @@ class Ui_MainWindow(object):
 "border: 2px solid rgb(218, 218, 218);\n"
 "}\n"
 "")
-        self.platesPolUpButton.setObjectName("platesPolUpButton")
-        self.platesPolDwnButton = QtWidgets.QPushButton(self.groupBox_31)
-        self.platesPolDwnButton.setGeometry(QtCore.QRect(30, 140, 311, 61))
+        self.rtfHitStopButton.setObjectName("rtfHitStopButton")
+        self.rtfHitSkipButton = QtWidgets.QPushButton(self.groupBox_31)
+        self.rtfHitSkipButton.setGeometry(QtCore.QRect(30, 140, 301, 61))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.platesPolDwnButton.setFont(font)
-        self.platesPolDwnButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.platesPolDwnButton.setStyleSheet("")
-        self.platesPolDwnButton.setObjectName("platesPolDwnButton")
+        self.rtfHitSkipButton.setFont(font)
+        self.rtfHitSkipButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.rtfHitSkipButton.setStyleSheet("")
+        self.rtfHitSkipButton.setObjectName("rtfHitSkipButton")
+        self.rtf_stopButton = QtWidgets.QPushButton(self.groupBox_31)
+        self.rtf_stopButton.setGeometry(QtCore.QRect(360, 55, 101, 151))
+        self.rtf_stopButton.setStyleSheet("QPushButton{\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.rtf_stopButton.setText("")
+        self.rtf_stopButton.setIcon(icon7)
+        self.rtf_stopButton.setIconSize(QtCore.QSize(32, 32))
+        self.rtf_stopButton.setObjectName("rtf_stopButton")
+        self.rtf_startButton = QtWidgets.QPushButton(self.groupBox_31)
+        self.rtf_startButton.setGeometry(QtCore.QRect(360, 50, 101, 156))
+        self.rtf_startButton.setStyleSheet("QPushButton {\n"
+"background-color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QPushButton::hover {\n"
+"background-color: rgb(129, 129, 129);\n"
+"/*border: 2px solid red;*/\n"
+"border: 2px solid rgb(218, 218, 218);\n"
+"}\n"
+"")
+        self.rtf_startButton.setText("")
+        self.rtf_startButton.setIcon(icon6)
+        self.rtf_startButton.setIconSize(QtCore.QSize(32, 32))
+        self.rtf_startButton.setObjectName("rtf_startButton")
         self.groupBox_32 = QtWidgets.QGroupBox(self.frame_5)
-        self.groupBox_32.setGeometry(QtCore.QRect(1330, 60, 371, 211))
+        self.groupBox_32.setGeometry(QtCore.QRect(1420, 30, 401, 241))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
         font.setPointSize(14)
@@ -1402,37 +1434,27 @@ class Ui_MainWindow(object):
 "}")
         self.groupBox_32.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_32.setObjectName("groupBox_32")
-        self.intelProbeDirButton = QtWidgets.QPushButton(self.groupBox_32)
-        self.intelProbeDirButton.setGeometry(QtCore.QRect(30, 60, 311, 61))
+        self.rtf_line1Label = QtWidgets.QLabel(self.groupBox_32)
+        self.rtf_line1Label.setGeometry(QtCore.QRect(10, 60, 371, 41))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
-        font.setPointSize(14)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.intelProbeDirButton.setFont(font)
-        self.intelProbeDirButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.intelProbeDirButton.setStyleSheet("QPushButton {\n"
-"background-color: rgb(218, 218, 218);\n"
-"}\n"
-"\n"
-"QPushButton::hover {\n"
-"background-color: rgb(129, 129, 129);\n"
-"/*border: 2px solid red;*/\n"
-"border: 2px solid rgb(218, 218, 218);\n"
-"}\n"
-"")
-        self.intelProbeDirButton.setObjectName("intelProbeDirButton")
-        self.intelProbeRevButton = QtWidgets.QPushButton(self.groupBox_32)
-        self.intelProbeRevButton.setGeometry(QtCore.QRect(30, 140, 311, 61))
+        self.rtf_line1Label.setFont(font)
+        self.rtf_line1Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.rtf_line1Label.setObjectName("rtf_line1Label")
+        self.rtf_line2Label = QtWidgets.QLabel(self.groupBox_32)
+        self.rtf_line2Label.setGeometry(QtCore.QRect(20, 130, 361, 41))
         font = QtGui.QFont()
         font.setFamily("Liberation Sans")
-        font.setPointSize(14)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.intelProbeRevButton.setFont(font)
-        self.intelProbeRevButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.intelProbeRevButton.setStyleSheet("")
-        self.intelProbeRevButton.setObjectName("intelProbeRevButton")
+        self.rtf_line2Label.setFont(font)
+        self.rtf_line2Label.setText("")
+        self.rtf_line2Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.rtf_line2Label.setObjectName("rtf_line2Label")
         self.verticalLayout_3.addWidget(self.frame_5)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
         self.lateralMenu = QtWidgets.QFrame(self.channelsFrame)
@@ -1805,12 +1827,11 @@ class Ui_MainWindow(object):
         self.groupBox_27.setTitle(_translate("MainWindow", "Ch2"))
         self.groupBox_29.setTitle(_translate("MainWindow", "Ch3"))
         self.groupBox_30.setTitle(_translate("MainWindow", "Ch4"))
-        self.groupBox_31.setTitle(_translate("MainWindow", "Plates Polarity"))
-        self.platesPolUpButton.setText(_translate("MainWindow", "Positive Up"))
-        self.platesPolDwnButton.setText(_translate("MainWindow", "Positive Down"))
-        self.groupBox_32.setTitle(_translate("MainWindow", "Inteligent Probe Polarity"))
-        self.intelProbeDirButton.setText(_translate("MainWindow", "Polarity Direct"))
-        self.intelProbeRevButton.setText(_translate("MainWindow", "Polarity Reverse"))
+        self.groupBox_31.setTitle(_translate("MainWindow", "Roll Through Function"))
+        self.rtfHitStopButton.setText(_translate("MainWindow", "Hit and Stop"))
+        self.rtfHitSkipButton.setText(_translate("MainWindow", "Hit and Skip"))
+        self.groupBox_32.setTitle(_translate("MainWindow", "Roll Through Results"))
+        self.rtf_line1Label.setText(_translate("MainWindow", "Wait Start"))
         self.ch1_posButton_2.setText(_translate("MainWindow", "CH1"))
         self.label.setText(_translate("MainWindow", "Audio Output for channel:"))
         self.ch1_posButton_3.setText(_translate("MainWindow", "CH2"))

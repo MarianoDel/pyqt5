@@ -1,0 +1,1795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+background-image: url(:/icons/resources/Pantalla.png);
+}
+/*QMainWindow {
+background-image: url(:/icons/resources/Pantalla_1.png);
+}*/
+/*background-image: url(:/icons/resources/Pantalla_1.png);
+*/</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>90</y>
+      <width>441</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 30px</string>
+    </property>
+    <property name="text">
+     <string>Gain Spectrum</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>90</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 30px</string>
+    </property>
+    <property name="text">
+     <string>Polarity</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>90</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 30px</string>
+    </property>
+    <property name="text">
+     <string>Polarity</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>90</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 30px</string>
+    </property>
+    <property name="text">
+     <string>Gain</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>430</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Intensity</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>430</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Intensity</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>430</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Timer</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>430</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Timer</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>430</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Frequency</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>1400</x>
+      <y>430</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Frequency</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_probeLabel">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>700</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Probe</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch2_probeLabel">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>700</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Probe</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_startButton">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>911</y>
+      <width>311</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 35px</string>
+    </property>
+    <property name="text">
+     <string>START</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_startButton">
+    <property name="geometry">
+     <rect>
+      <x>1290</x>
+      <y>910</y>
+      <width>311</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 35px</string>
+    </property>
+    <property name="text">
+     <string>START</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_probeCnButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>761</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);</string>
+    </property>
+    <property name="text">
+     <string>CONNECTED</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_probeNCnButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>800</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);</string>
+    </property>
+    <property name="text">
+     <string>NOT CONNECTED</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_probeCnButton">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>761</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);</string>
+    </property>
+    <property name="text">
+     <string>CONNECTED</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_probeNCnButton">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>800</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);</string>
+    </property>
+    <property name="text">
+     <string>NOT CONNECTED</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_posButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>160</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255,255,255);
+background-color: rgb(173, 163, 170);
+border-radius: 15;
+border: 2px rgb(173, 163, 170);</string>
+    </property>
+    <property name="text">
+     <string>POSITIVE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_altButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>200</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);
+</string>
+    </property>
+    <property name="text">
+     <string>ALTERNATIVE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_negButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>240</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);</string>
+    </property>
+    <property name="text">
+     <string>NEGATIVE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_altButton">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>199</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(81, 70, 75);
+/*color: rgb(148,138,146);*/
+border-radius: 15;
+/*border: 2px solid rgb(148, 138, 146);*/
+border: 2px solid rgb(81, 70, 75);</string>
+    </property>
+    <property name="text">
+     <string>ALTERNATIVE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_negButton">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>239</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(148,138,146);
+border-radius: 15;
+border: 2px solid rgb(148, 138, 146);</string>
+    </property>
+    <property name="text">
+     <string>NEGATIVE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_posButton">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>160</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255,255,255);
+background-color: rgb(173, 163, 170);
+border-radius: 15;
+border: 2px rgb(173, 163, 170);</string>
+    </property>
+    <property name="text">
+     <string>POSITIVE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_pwrLabel">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>500</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>25uA</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_timerLabel">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>500</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>20'</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_freqLabel">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>500</y>
+      <width>211</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>0.5Hz</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch2_timerLabel">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>500</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>20'</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch2_pwrLabel">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>500</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>25uA</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch2_freqLabel">
+    <property name="geometry">
+     <rect>
+      <x>1390</x>
+      <y>500</y>
+      <width>211</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>0.5Hz</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_19">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>270</y>
+      <width>121</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>75%</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_gainLabel">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>160</y>
+      <width>181</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>55</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>100</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="ch1_lcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>160</y>
+      <width>201</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(81, 70, 75);
+background-color: rgb(231, 232, 233);
+border-radius: 25px</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>false</bool>
+    </property>
+    <property name="digitCount">
+     <number>3</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Flat</enum>
+    </property>
+    <property name="intValue" stdset="0">
+     <number>100</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="ch2_lcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>160</y>
+      <width>201</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(81, 70, 75);
+background-color: rgb(231, 232, 233);
+border-radius: 25px;
+text-align: center;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>false</bool>
+    </property>
+    <property name="digitCount">
+     <number>3</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Flat</enum>
+    </property>
+    <property name="intValue" stdset="0">
+     <number>999</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_pwrUpButton">
+    <property name="geometry">
+     <rect>
+      <x>209</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_timerUpButton">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_freqUpButton">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_pwrUpButton">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_timerUpButton">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_freqUpButton">
+    <property name="geometry">
+     <rect>
+      <x>1410</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_freqDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1500</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_timerDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch2_pwrDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_freqDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_timerDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_pwrDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>570</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_gainDwnButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>280</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_abajo.png</normaloff>:/icons/resources/flecha_abajo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_gainUpButton">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>280</y>
+      <width>91</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/flecha_arriba.png</normaloff>:/icons/resources/flecha_arriba.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_27">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>350</y>
+      <width>121</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/burger_menu.png</normaloff>:/icons/resources/burger_menu.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_31">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>960</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+color: rgb(255, 255, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>NervSync</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_32">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>960</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+color: rgb(255, 255, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>CellSync</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="ch2_progressBar">
+    <property name="geometry">
+     <rect>
+      <x>937</x>
+      <y>360</y>
+      <width>551</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+ border: 0px;
+        padding: 0px;
+        height: 5px; /* Adjust as needed */
+/*    border-radius: 2px;*/
+    background-color: rgba(0,0,0,0);
+	text-align: right;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(231,232,233);
+    width: 10px; 
+}</string>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch2_remainMinsLabel">
+    <property name="geometry">
+     <rect>
+      <x>1320</x>
+      <y>830</y>
+      <width>121</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>40</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>20'</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_remainMinsLabel">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>830</y>
+      <width>121</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>40</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>20'</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_remainSecsLabel">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>830</y>
+      <width>121</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>20''</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch2_remainSecsLabel">
+    <property name="geometry">
+     <rect>
+      <x>1460</x>
+      <y>830</y>
+      <width>121</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>20''</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="battButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>210</y>
+      <width>121</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/pila.png</normaloff>:/icons/resources/pila.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="intpButton">
+    <property name="geometry">
+     <rect>
+      <x>1720</x>
+      <y>900</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector.png</normaloff>:/icons/resources/conector.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch1upButton">
+    <property name="geometry">
+     <rect>
+      <x>1670</x>
+      <y>700</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector_pos.png</normaloff>:/icons/resources/conector_pos.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch1dwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1770</x>
+      <y>700</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector_neg.png</normaloff>:/icons/resources/conector_neg.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch2upButton">
+    <property name="geometry">
+     <rect>
+      <x>1670</x>
+      <y>500</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector_pos.png</normaloff>:/icons/resources/conector_pos.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch2dwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1770</x>
+      <y>500</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector_neg.png</normaloff>:/icons/resources/conector_neg.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch3upButton">
+    <property name="geometry">
+     <rect>
+      <x>1670</x>
+      <y>290</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector_alt.png</normaloff>:/icons/resources/conector_alt.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch3dwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1770</x>
+      <y>290</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector_alt.png</normaloff>:/icons/resources/conector_alt.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch4upButton">
+    <property name="geometry">
+     <rect>
+      <x>1670</x>
+      <y>90</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector.png</normaloff>:/icons/resources/conector.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pch4dwnButton">
+    <property name="geometry">
+     <rect>
+      <x>1770</x>
+      <y>90</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+border: 0px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="microc_res.qrc">
+      <normaloff>:/icons/resources/conector.png</normaloff>:/icons/resources/conector.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>80</width>
+      <height>80</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rtf_startButton">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>700</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Roll Through</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="microc_res.qrc"/>
+ </resources>
+ <connections/>
+</ui>

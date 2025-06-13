@@ -2856,9 +2856,9 @@ background-color: rgb(129, 129, 129);
                  <property name="geometry">
                   <rect>
                    <x>900</x>
-                   <y>60</y>
-                   <width>371</width>
-                   <height>211</height>
+                   <y>30</y>
+                   <width>491</width>
+                   <height>241</height>
                   </rect>
                  </property>
                  <property name="font">
@@ -2885,17 +2885,17 @@ top: -8px;
 }</string>
                  </property>
                  <property name="title">
-                  <string>Plates Polarity</string>
+                  <string>Roll Through Function</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QPushButton" name="platesPolUpButton">
+                 <widget class="QPushButton" name="rtfHitStopButton">
                   <property name="geometry">
                    <rect>
                     <x>30</x>
                     <y>60</y>
-                    <width>311</width>
+                    <width>301</width>
                     <height>61</height>
                    </rect>
                   </property>
@@ -2923,15 +2923,15 @@ border: 2px solid rgb(218, 218, 218);
 </string>
                   </property>
                   <property name="text">
-                   <string>Positive Up</string>
+                   <string>Hit and Stop</string>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="platesPolDwnButton">
+                 <widget class="QPushButton" name="rtfHitSkipButton">
                   <property name="geometry">
                    <rect>
                     <x>30</x>
                     <y>140</y>
-                    <width>311</width>
+                    <width>301</width>
                     <height>61</height>
                    </rect>
                   </property>
@@ -2950,17 +2950,87 @@ border: 2px solid rgb(218, 218, 218);
                    <string notr="true"/>
                   </property>
                   <property name="text">
-                   <string>Positive Down</string>
+                   <string>Hit and Skip</string>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="rtf_stopButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>360</x>
+                    <y>55</y>
+                    <width>101</width>
+                    <height>151</height>
+                   </rect>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</normaloff>:/icons/resources/media-playback-stop-symbolic.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="rtf_startButton">
+                  <property name="geometry">
+                   <rect>
+                    <x>360</x>
+                    <y>50</y>
+                    <width>101</width>
+                    <height>156</height>
+                   </rect>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background-color: rgb(218, 218, 218);
+}
+
+QPushButton::hover {
+background-color: rgb(129, 129, 129);
+/*border: 2px solid red;*/
+border: 2px solid rgb(218, 218, 218);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="microc_res.qrc">
+                    <normaloff>:/icons/resources/pan-start-symbolic-rtl.symbolic.png</normaloff>:/icons/resources/pan-start-symbolic-rtl.symbolic.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
                   </property>
                  </widget>
                 </widget>
                 <widget class="QGroupBox" name="groupBox_32">
                  <property name="geometry">
                   <rect>
-                   <x>1330</x>
-                   <y>60</y>
-                   <width>371</width>
-                   <height>211</height>
+                   <x>1420</x>
+                   <y>30</y>
+                   <width>401</width>
+                   <height>241</height>
                   </rect>
                  </property>
                  <property name="font">
@@ -2987,72 +3057,57 @@ top: -8px;
 }</string>
                  </property>
                  <property name="title">
-                  <string>Inteligent Probe Polarity</string>
+                  <string>Roll Through Results</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <widget class="QPushButton" name="intelProbeDirButton">
+                 <widget class="QLabel" name="rtf_line1Label">
                   <property name="geometry">
                    <rect>
-                    <x>30</x>
+                    <x>10</x>
                     <y>60</y>
-                    <width>311</width>
-                    <height>61</height>
+                    <width>371</width>
+                    <height>41</height>
                    </rect>
                   </property>
                   <property name="font">
                    <font>
                     <family>Liberation Sans</family>
-                    <pointsize>14</pointsize>
+                    <pointsize>16</pointsize>
                     <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::NoFocus</enum>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton {
-background-color: rgb(218, 218, 218);
-}
-
-QPushButton::hover {
-background-color: rgb(129, 129, 129);
-/*border: 2px solid red;*/
-border: 2px solid rgb(218, 218, 218);
-}
-</string>
-                  </property>
                   <property name="text">
-                   <string>Polarity Direct</string>
+                   <string>Wait Start</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
-                 <widget class="QPushButton" name="intelProbeRevButton">
+                 <widget class="QLabel" name="rtf_line2Label">
                   <property name="geometry">
                    <rect>
-                    <x>30</x>
-                    <y>140</y>
-                    <width>311</width>
-                    <height>61</height>
+                    <x>20</x>
+                    <y>130</y>
+                    <width>361</width>
+                    <height>41</height>
                    </rect>
                   </property>
                   <property name="font">
                    <font>
                     <family>Liberation Sans</family>
-                    <pointsize>14</pointsize>
+                    <pointsize>16</pointsize>
                     <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::NoFocus</enum>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
                   <property name="text">
-                   <string>Polarity Reverse</string>
+                   <string/>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </widget>

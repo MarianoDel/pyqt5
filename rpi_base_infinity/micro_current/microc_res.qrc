@@ -1,5 +1,16 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/conector_alt.png</file>
+    <file>resources/conector_neg.png</file>
+    <file>resources/conector_pos.png</file>
+    <file>resources/pila.png</file>
+    <file>resources/Pantalla.png</file>
+    <file>resources/flecha_abajo.png</file>
+    <file>resources/flecha_arriba.png</file>
+    <file>resources/burger_menu.png</file>
+    <file>resources/conector.png</file>
+    <file>resources/Pantalla_1.png</file>
+    <file>resources/Pantalla_2.png</file>
     <file>resources/intel_con.png</file>
     <file>resources/plates_conn.png</file>
     <file>resources/intel_nc.png</file>
