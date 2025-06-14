@@ -197,6 +197,7 @@ class MainWindow (QMainWindow):
         # for x in range(4):
         #     self.displayTextLabel_ui_list[x].setText('')
 
+        self.ui.ch2_progressBar.setTextVisible(False)
         self.ui.ch2_progressBar.setValue(0)
         self.ui.ch2_progressBar.setFixedHeight(4)
         
@@ -516,8 +517,8 @@ class MainWindow (QMainWindow):
             self.displayLabel_ui_list[ch_index].display('--')            
 
         if ch_index == 1:
-            self.ui.ch1_progressBar.setValue(0)
-            self.ui.ch1_displayLabel.setText('0')
+            self.ui.ch2_progressBar.setValue(0)
+            # self.ui.ch1_displayLabel.setText('0')
             self.progressBar_timer.singleShot(200, self.ProgressBarSM)
             # print("   starting sine SM")
         
@@ -1068,8 +1069,7 @@ class MainWindow (QMainWindow):
         next_cycle = False
 
         # print(f" in SM {self.in_treat_ch_list[2]} show {self.in_treat_show_sine_list[2]}")
-        if self.in_treat_ch_list[1] == True and \
-           self.in_treat_show_sine_list[1] == True:
+        if self.in_treat_ch_list[1] == True:
             if self.pol_index_ch_list[1] == 'negative':
                 sine_point = -self.sine_pos_table_list[self.sine_cnt]
             elif self.pol_index_ch_list[1] == 'positive':
@@ -1079,12 +1079,13 @@ class MainWindow (QMainWindow):
 
             display, progress = self.ProgressCalcValue(self.pwr_index_ch_list[1], sine_point)
             self.ui.ch2_progressBar.setValue(progress)
-            self.ui.ch2_displayLabel.setText(str(display))
+            self.ui.ch2_lcdNumber.display(str(display))
+            # self.ui.ch2_displayLabel.display(str(display))            
             next_cycle = True
         else:
             self.ui.ch2_progressBar.setValue(0)
-            self.ui.ch2_displayLabel.setText('--')
-            self.in_treat_show_sine_list[1] = False
+            self.ui.ch2_lcdNumber.display('---')
+            # self.in_treat_show_sine_list[1] = False
 
         if self.sine_cnt < 16 - 1:
             self.sine_cnt += 1
@@ -1117,16 +1118,23 @@ class MainWindow (QMainWindow):
 
         prog_value = sine_point * pp
         prog_value = int(prog_value)
+        disp_value = prog_value
         if prog_value < 0:
             prog_value = -prog_value
             
         if prog_value > 100:
             prog_value = 100
 
-        disp_value = sine_point * c
-        disp_value = int(disp_value)
-        if disp_value > 1000:
-            disp_value = 1000
+        if disp_value > 100:
+            disp_value = 100
+
+        if disp_value < -99:
+            disp_value = -99
+            
+        # disp_value = sine_point * c
+        # disp_value = int(disp_value)
+        # if disp_value > 1000:
+        #     disp_value = 1000
             
         return disp_value, prog_value
             

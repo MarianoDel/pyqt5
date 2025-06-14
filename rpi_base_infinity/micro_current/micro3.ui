@@ -1375,10 +1375,10 @@ color: rgb(255, 255, 255);
     </property>
     <property name="styleSheet">
      <string notr="true">QProgressBar {
- border: 0px;
-        padding: 0px;
-        height: 5px; /* Adjust as needed */
-/*    border-radius: 2px;*/
+   border: 0px;
+   border-radius: 2px;
+   padding: 0px;
+   height: 5px; /* Adjust as needed */
     background-color: rgba(0,0,0,0);
 	text-align: right;
 }
@@ -1386,6 +1386,7 @@ color: rgb(255, 255, 255);
 QProgressBar::chunk {
     background-color: rgb(231,232,233);
     width: 10px; 
+/*   border-radius: 2px*/
 }</string>
     </property>
     <property name="value">

@@ -529,10 +529,10 @@ class Ui_MainWindow(object):
         self.ch2_progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.ch2_progressBar.setGeometry(QtCore.QRect(937, 360, 551, 16))
         self.ch2_progressBar.setStyleSheet("QProgressBar {\n"
-" border: 0px;\n"
-"        padding: 0px;\n"
-"        height: 5px; /* Adjust as needed */\n"
-"/*    border-radius: 2px;*/\n"
+"   border: 0px;\n"
+"   border-radius: 2px;\n"
+"   padding: 0px;\n"
+"   height: 5px; /* Adjust as needed */\n"
 "    background-color: rgba(0,0,0,0);\n"
 "    text-align: right;\n"
 "}\n"
@@ -540,6 +540,7 @@ class Ui_MainWindow(object):
 "QProgressBar::chunk {\n"
 "    background-color: rgb(231,232,233);\n"
 "    width: 10px; \n"
+"/*   border-radius: 2px*/\n"
 "}")
         self.ch2_progressBar.setProperty("value", 24)
         self.ch2_progressBar.setObjectName("ch2_progressBar")
