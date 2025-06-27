@@ -108,7 +108,7 @@ w = MyMainClass()
 #http://doc.qt.io/qt-5/qt.html#WindowType-enum
 # w.setWindowFlags(Qt.CustomizeWindowHint)
 # w.setWindowFlags(Qt.FramelessWindowHint)
-print('Starting magnet app...')
+print('Starting microc app...')
 # w.show()
 sys.exit(app.exec_())
 

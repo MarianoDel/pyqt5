@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MenuWindow</class>
+ <widget class="QMainWindow" name="MenuWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+background-image: url(:/icons/resources/Screenshot.png);
+}
+/*background-color: rgba(255, 255, 255, 100);*/
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>12</x>
+      <y>13</y>
+      <width>771</width>
+      <height>1051</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(99, 82, 92);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_startButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>970</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Config</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_startButton_2">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>970</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Config</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="conf3Button">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>970</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Done</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_pwrLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>251</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(99, 82, 92);</string>
+    </property>
+    <property name="text">
+     <string>Audio Volume</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QSlider" name="audioSlider">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>110</y>
+      <width>421</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 5px;
+/*
+QSlider::groove:horizontal { 
+	background-color: black;
+	border: 0px solid #424242; 
+	height: 10px; 
+	border-radius: 4px;
+}
+*/
+/*
+QSlider::handle:horizontal { 
+	background-color: red; 
+	border: 2px solid red; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}
+*/</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="volumeLabel">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>100</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(99, 82, 92);</string>
+    </property>
+    <property name="text">
+     <string>24%</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ch1_pwrLabel_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>180</y>
+      <width>251</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(99, 82, 92);</string>
+    </property>
+    <property name="text">
+     <string>Audio Output</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_startButton_4">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>240</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ch1_startButton_5">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>240</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>OFF</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="microc_res.qrc"/>
+ </resources>
+ <connections/>
+</ui>

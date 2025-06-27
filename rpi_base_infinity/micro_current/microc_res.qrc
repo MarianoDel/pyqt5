@@ -1,10 +1,20 @@
 <RCC>
   <qresource prefix="icons">
-    <file>resources/conector_alt.png</file>
+    <file>resources/Screenshot.png</file>
     <file>resources/conector_neg.png</file>
     <file>resources/conector_pos.png</file>
-    <file>resources/pila.png</file>
+    <file>resources/conector_alt.png</file>
     <file>resources/Pantalla.png</file>
+    <file>resources/batt_0.png</file>
+    <file>resources/batt_100.png</file>
+    <file>resources/batt_25.png</file>
+    <file>resources/batt_50.png</file>
+    <file>resources/batt_75.png</file>
+    <file>resources/batt_charge_0.png</file>
+    <file>resources/batt_charge_100.png</file>
+    <file>resources/batt_charge_25.png</file>
+    <file>resources/batt_charge_50.png</file>
+    <file>resources/batt_charge_75.png</file>
     <file>resources/flecha_abajo.png</file>
     <file>resources/flecha_arriba.png</file>
     <file>resources/burger_menu.png</file>

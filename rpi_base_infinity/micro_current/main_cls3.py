@@ -12,6 +12,10 @@ import os
 #imported uis
 from ui_micro3 import Ui_MainWindow
 
+#Here import the UIs or classes that got the UIs
+from menu_cls3 import MenuWindow
+from rtf_cls3 import RTFWindow
+
 
 class MainWindow (QMainWindow):
 
@@ -62,6 +66,12 @@ class MainWindow (QMainWindow):
         for x in range(2):
             self.pol_index_ch_list[x] = 'positive'
             
+        self.probe_cn_ui_list = [self.ui.ch1_probeCnButton, self.ui.ch2_probeCnButton]
+        self.probe_ncn_ui_list = [self.ui.ch1_probeNCnButton, self.ui.ch2_probeNCnButton]
+        for x in range(2):
+            self.probe_cn_ui_list[x].setStyleSheet(self.style_pol_deact)
+            self.probe_ncn_ui_list[x].setStyleSheet(self.style_pol_deact)
+        
         # ch1 ch2 timer options
         self.timer_index_ch_list = [0, 0]        
         self.timer_list = ['6s', '12s', '30s', '1m', '10m', '30m']
@@ -114,10 +124,17 @@ class MainWindow (QMainWindow):
         # # self.bt_med.clicked.connect(self.control_normal)
         # # self.bt_max.clicked.connect(self.control_maximized)
 
+        ## Hamburger Menu Button
+        self.ui.hambButton.clicked.connect(self.MenuScreen)
+
+        ## RTF Roll Through Function Button
+        self.ui.rtf_startButton.clicked.connect(self.RTFScreen)
+        
         ## connect the signals
         # timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
-        self.parent.rcv_signal.connect(self.SerialDataCallback)        
+        self.parent.rcv_signal.connect(self.SerialDataCallback)
+        self.serialcb = self.parent.rcv_signal
 
         ##
         ## initial setup for channels
@@ -147,7 +164,7 @@ class MainWindow (QMainWindow):
         self.progress_config = 'init'
         
         self.in_treat_ch_list = [False, False]
-        self.in_treat_show_sine = False
+        self.in_treat_show_sine = False    # todavia la uso?????
 
         # all channels none probe
         self.probeLabel_ui_list = [self.ui.ch1_probeLabel, self.ui.ch2_probeLabel]
@@ -157,31 +174,26 @@ class MainWindow (QMainWindow):
         # mains and battery buttons
         self.ui.battButton.clicked.connect(self.ShowVoltages)
         # batteries full at start
-        self.mains_state = 'mains'
-        self.battery_a_state = '4'    
-        self.battery_b_state = '4'
-        self.battery_c_state = '4'    
-        self.battery_d_state = '4'
-        self.mains_voltage_str = '--'
-        self.battery_a_voltage_str = '--'
-        self.battery_b_voltage_str = '--'
-        self.battery_c_voltage_str = '--'
-        self.battery_d_voltage_str = '--'
+        self.mains_mode = 'mains'
+        self.mains_state_int = 0
         self.batt_revert = False
         self.revert_cnt = 0
         
         ## setup mains & battery icons
-        self.mains_icon_connect = QIcon(':/icons/resources/mains_1.png')
-        self.mains_icon_disconnect = QIcon(':/icons/resources/mains_2.png')
-        self.batticon_list = [QIcon(':/icons/resources/batt_0_4.png'),\
-                              QIcon(':/icons/resources/batt_1_4.png'),\
-                              QIcon(':/icons/resources/batt_2_4.png'),\
-                              QIcon(':/icons/resources/batt_3_4.png'),\
-                              QIcon(':/icons/resources/batt_4_4.png')]
-        self.platesicon_list = [QIcon(':/icons/resources/conector.png'),\
-                                QIcon(':/icons/resources/conector_alt.png'),\
-                                QIcon(':/icons/resources/conector_pos.png'),\
-                                QIcon(':/icons/resources/conector_neg.png')]
+        self.mains_icon_list = [QIcon(':/icons/resources/batt_charge_0.png'),\
+                                QIcon(':/icons/resources/batt_charge_25.png'),\
+                                QIcon(':/icons/resources/batt_charge_50.png'),\
+                                QIcon(':/icons/resources/batt_charge_75.png'),\
+                                QIcon(':/icons/resources/batt_charge_100.png')]
+        self.batt_icon_list = [QIcon(':/icons/resources/batt_0.png'),\
+                               QIcon(':/icons/resources/batt_25.png'),\
+                               QIcon(':/icons/resources/batt_50.png'),\
+                               QIcon(':/icons/resources/batt_75.png'),\
+                               QIcon(':/icons/resources/batt_100.png')]
+        self.plates_icon_list = [QIcon(':/icons/resources/conector.png'),\
+                                 QIcon(':/icons/resources/conector_alt.png'),\
+                                 QIcon(':/icons/resources/conector_pos.png'),\
+                                 QIcon(':/icons/resources/conector_neg.png')]
         
     
         ## activate the 1 second timer its repetitive
@@ -210,12 +222,12 @@ class MainWindow (QMainWindow):
 
         ## plates & probe labels
         self.last_plates = 0
-        self.platesButton_ui_list = [self.ui.pch4upButton, self.ui.pch4dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch1upButton, self.ui.pch1dwnButton]
+        self.platesButton_ui_list = [self.ui.pch4upButton, self.ui.pch4dwnButton, self.ui.pch3upButton, self.ui.pch3dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch1upButton, self.ui.pch1dwnButton]
         self.last_probe = 0
-        self.ui.intpButton.setIcon(self.platesicon_list[0])
+        self.ui.intpButton.setIcon(self.plates_icon_list[0])
 
         ## Roll Through Function
-        self.ui.rtf_startButton.clicked.connect(self.StartRoll)
+        # self.ui.rtf_startButton.clicked.connect(self.StartRoll)
         # self.ui.rtf_stopButton.clicked.connect(self.StopRoll)        
         self.rtf_endhook = False
         self.rtf_endhook_state = ''
@@ -514,7 +526,7 @@ class MainWindow (QMainWindow):
         if ch_index == 0:
             # clean display
             # self.displayLabel_ui_list[ch_index].setText('--')
-            self.displayLabel_ui_list[ch_index].display('--')            
+            self.displayLabel_ui_list[ch_index].display('---')            
 
         if ch_index == 1:
             self.ui.ch2_progressBar.setValue(0)
@@ -749,38 +761,6 @@ class MainWindow (QMainWindow):
             self.ui.rtf_startButton.show()
             self.ui.rtf_stopButton.hide()        
 
-            
-        
-    # def EnableChannel (self):
-    #     sender = self.sender()
-        
-    #     obj_list = sender.objectName().split('_')
-    #     ch_name = obj_list[0]
-    #     ch_func = obj_list[1]
-    #     ch_index = self.GetChannelIndexFromString(ch_name)
-
-    #     if self.enableButton_ui_list[ch_index].text() == 'Enable Channel':
-    #         # check if SendConfig is ready to sent
-    #         if self.progress_config != 'init':
-    #             return
-
-    #         self.enableButton_ui_list[ch_index].setText('Disable Channel')
-    #         self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(129, 129, 129);\
-    #                                                            border: 2px solid rgb(218, 218, 218);')
-    #         self.SendConfig(ch_name, 'enable')
-    #         self.SendConfigByIndex (ch_index)
-    #     else:
-    #         self.enableButton_ui_list[ch_index].setText('Enable Channel')
-    #         self.enableButton_ui_list[ch_index].setStyleSheet('background-color: rgb(218, 218, 218);')
-    #         self.probeLabel_ui_list[ch_index].setText('None')
-
-    #         if self.in_treat_ch_list[ch_index] == True:
-    #             self.StopChannelByIndex(ch_index)
-                
-    #         if ch_index < 3:
-    #             self.displayLabel_ui_list[ch_index].setText('--')
-    #         self.SendConfig(ch_name, 'disable')
-            
 
     def SendConfig (self, channel, command):
         if self.s.port_open == True:
@@ -887,66 +867,75 @@ class MainWindow (QMainWindow):
     def UpdateSupplyPower (self, power_str):
         # supply mains 11.2 13.2 08.6 08.3 08.3 08.4 
         # supply battery 6.2V 8.4V 8.4V 4 4
-        update_volts = False
-        update_values = False
+        icon_change = False
+        
         power_str_list = power_str.split(' ')
         if power_str_list[1] == 'mains':
-            if self.mains_state != 'mains':
-                self.mains_state = 'mains'
-                self.ui.mainsButton.setIcon(self.mains_icon_connect)
-            update_volts = True
+            if self.mains_mode != 'mains':
+                self.mains_mode = 'mains'
+                icon_change = True
+                
         elif power_str_list [1] == 'battery':
-            if self.mains_state != 'battery':
-                self.mains_state = 'battery'
-                self.ui.mainsButton.setIcon(self.mains_icon_disconnect)
-            update_volts = True
+            if self.mains_mode != 'battery':
+                self.mains_mode = 'battery'
+                icon_change = True                
 
         # update mains & battery voltages
-        batta_str = power_str_list[7]
-        battb_str = power_str_list[6]
-        battc_str = power_str_list[5]
-        battd_str = power_str_list[4]
-        print(f'a:{batta_str} b:{battb_str} c: {battc_str} d: {battd_str}')
-        try:
-            batta = float(batta_str)
-            battb = float(battb_str)
-            battc = float(battc_str)
-            battd = float(battd_str)
-            update_values = True
-        except:
-            print('error in values')
-            pass
-            
-        if update_volts and update_values:
-            self.mains_voltage_str = power_str_list [2]
-            self.battery_a_voltage_str = power_str_list [7]
-            self.battery_b_voltage_str = power_str_list [6]
-            self.battery_c_voltage_str = power_str_list [5]
-            self.battery_d_voltage_str = power_str_list [4]
+        batt_str_list = ['', '', '', '']
+        for x in range (4):
+            batt_str_list[x] = power_str_list[x+4] 
 
-            self.battery_a_state = self.CheckBattValues(batta)
-            self.battery_b_state = self.CheckBattValues(battb)
-            self.battery_c_state = self.CheckBattValues(battc)
-            self.battery_d_state = self.CheckBattValues(battd)
+        print(f'a:{batt_str_list[0]} b:{batt_str_list[1]} c: {batt_str_list[2]} d: {batt_str_list[3]}')
+
+        total_charge = 0
+        for x in range(4):
+            total_charge += self.BatteryCharge(float(batt_str_list[x]))
+
+        total_perc = total_charge * 100 / (4 * 9000)
+        total_perc_int = int(total_perc)
+        print(f'charge batt: {total_charge} percent: {total_perc_int}')
+        self.ui.battLabel.setText(f'{total_perc_int}%')
+
+        icon_index = self.CheckBattValues(total_perc_int)
+        if icon_change:
+            self.mains_state_int = icon_index
+            if self.mains_mode == 'mains':
+                self.ui.battButton.setIcon(self.mains_icon_list[self.mains_state_int])
+            else:
+                self.ui.battButton.setIcon(self.batt_icon_list[self.mains_state_int])
             
-            self.ui.battaButton.setIcon(self.batticon_list[int(self.battery_a_state)])                
-            self.ui.battbButton.setIcon(self.batticon_list[int(self.battery_b_state)])
-            self.ui.battcButton.setIcon(self.batticon_list[int(self.battery_c_state)])                
-            self.ui.battdButton.setIcon(self.batticon_list[int(self.battery_d_state)])
+        if self.mains_state_int != icon_index:
+            self.mains_state_int = icon_index
+            if self.mains_mode == 'mains':
+                self.ui.battButton.setIcon(self.mains_icon_list[self.mains_state_int])
+            else:
+                self.ui.battButton.setIcon(self.batt_icon_list[self.mains_state_int])
 
             
-    def CheckBattValues (self, volt_float):
-        state = '0'
-        if volt_float > 8.0:
-            state = '4'
-        elif volt_float > 7.5:
-            state = '3'
-        elif volt_float > 7.0:
-            state = '2'
-        elif volt_float > 6.5:
-            state = '1'
+    def CheckBattValues (self, total_perc_int):
+        state = 0
+        if total_perc_int > 95:
+            state = 4
+        elif total_perc_int > 75:
+            state = 3
+        elif total_perc_int > 50:
+            state = 2
+        elif total_perc_int > 25:
+            state = 1
 
         return state
+
+
+    def BatteryCharge (self, batt_volt):
+        if batt_volt >= 8.4:
+            batt_volt = 8.4
+
+        if batt_volt < 6.4:
+            batt_volt = 6.4
+
+        batt_volt = batt_volt - 6.4    # between 2 and 0
+        batt_mca = batt_volt * 4500    # 9000 mca is the max charga
+        return batt_mca
         
 
     def UpdatePlatesConnectors (self, conn_plates_str, conn_probe_str):
@@ -969,7 +958,7 @@ class MainWindow (QMainWindow):
     def SetPlatesPolarity (self, plates_int):
         # clean all
         for x in range (8):
-            self.platesButton_ui_list[x].setIcon(self.platesicon_list[0])
+            self.platesButton_ui_list[x].setIcon(self.plates_icon_list[0])
             
         for x in range (4):
             dmask = 3 << (2*x)
@@ -978,50 +967,50 @@ class MainWindow (QMainWindow):
             if (plates_int & dmask) == dmask:
                 # two plates connected
                 if self.pol_index_ch_list[0] == 'positive':
-                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[2])
-                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[3])
+                    self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[2])
+                    self.platesButton_ui_list[up].setIcon(self.plates_icon_list[3])
                 elif self.pol_index_ch_list[0] == 'negative':
-                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[3])
-                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[2])
+                    self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[3])
+                    self.platesButton_ui_list[up].setIcon(self.plates_icon_list[2])
                 else:
-                    self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
-                    self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                    self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
+                    self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
             elif plates_int & dmask:
                 print(f"plates: {plates_int} probe: {self.last_probe}")
                 
                 if (plates_int & 0x40) and self.last_probe:
                     if self.pol_index_ch_list[0] == 'positive':
-                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[3])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[3])
                     elif self.pol_index_ch_list[0] == 'negative':
-                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[2])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[2])
                     else:
-                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
                 else:
                     # one plate connected and not probe
                     pos_int = (plates_int & dmask) >> (2*x)
                     
                     print(f"plates: {plates_int} pos_int: {pos_int}")
                     if pos_int & 0x01:
-                        self.platesButton_ui_list[up].setIcon(self.platesicon_list[1])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
                     else:
-                        self.platesButton_ui_list[lw].setIcon(self.platesicon_list[1])
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
                 
                 
     def SetProbePolarity (self, probe_int):
         # clean probe
-        self.ui.intpButton.setIcon(self.platesicon_list[0])
+        self.ui.intpButton.setIcon(self.plates_icon_list[0])
 
         if probe_int:
             # probe connected
             if self.last_plates & 0x40:
                 if self.pol_index_ch_list[0] == 'positive':
-                    self.ui.intpButton.setIcon(self.platesicon_list[2])
+                    self.ui.intpButton.setIcon(self.plates_icon_list[2])
                 elif self.pol_index_ch_list[0] == 'negative':
-                    self.ui.intpButton.setIcon(self.platesicon_list[3])
+                    self.ui.intpButton.setIcon(self.plates_icon_list[3])
                 else:
-                    self.ui.intpButton.setIcon(self.platesicon_list[1])
+                    self.ui.intpButton.setIcon(self.plates_icon_list[1])
             else:
-                self.ui.intpButton.setIcon(self.platesicon_list[1])
+                self.ui.intpButton.setIcon(self.plates_icon_list[1])
 
             
     ############################
@@ -1085,7 +1074,7 @@ class MainWindow (QMainWindow):
         else:
             self.ui.ch2_progressBar.setValue(0)
             self.ui.ch2_lcdNumber.display('---')
-            # self.in_treat_show_sine_list[1] = False
+            self.in_treat_show_sine = False
 
         if self.sine_cnt < 16 - 1:
             self.sine_cnt += 1
@@ -1345,11 +1334,12 @@ class MainWindow (QMainWindow):
             # print('ch1 display: ' + str(gain))
 
             if self.probeLabel_ui_list[0].text() == 'NervSync':
-                self.displayLabel_ui_list[0].setText(str(gain))
+                # self.displayLabel_ui_list[0].setText(str(gain))
+                self.ui.ch1_lcdNumber.display(str(gain))                
                 
             elif self.probeLabel_ui_list[1].text() == 'CellSync':
-                self.displayLabel_ui_list[1].setText(str(gain))
-
+                # self.displayLabel_ui_list[1].setText(str(gain))
+                pass
             else:
                 pass
 
@@ -1358,19 +1348,35 @@ class MainWindow (QMainWindow):
 
         # probe messages
         if ch_str.startswith("new probe NervSync"):
-            self.probeLabel_ui_list[0].setText("NervSync")
-            self.probeLabel_ui_list[1].setText("None")
+            self.probeLabel_ui_list[0].setText("NervSync") 
+            self.probe_cn_ui_list[0].setStyleSheet(self.style_pol_act)
+            self.probe_ncn_ui_list[0].setStyleSheet(self.style_pol_deact)
+
+            self.probeLabel_ui_list[1].setText("Probe")
+            self.probe_cn_ui_list[1].setStyleSheet(self.style_pol_deact)
+            self.probe_ncn_ui_list[1].setStyleSheet(self.style_pol_act)
             return
         if ch_str.startswith("new probe CellSync"):
-            self.probeLabel_ui_list[0].setText("None")            
+            self.probeLabel_ui_list[0].setText("Probe")            
+            self.probe_cn_ui_list[0].setStyleSheet(self.style_pol_deact)
+            self.probe_ncn_ui_list[0].setStyleSheet(self.style_pol_act)
+
             self.probeLabel_ui_list[1].setText("CellSync")
+            self.probe_cn_ui_list[1].setStyleSheet(self.style_pol_act)
+            self.probe_ncn_ui_list[1].setStyleSheet(self.style_pol_deact)
+            self.ui.ch1_lcdNumber.display('---')
             return
         # end of probe messages
 
         # probe others
         if ch_str.startswith("none probe"):
-            self.probeLabel_ui_list[0].setText('None')
-            self.probeLabel_ui_list[1].setText('None')            
+            self.probeLabel_ui_list[0].setText('Probe')
+            self.probeLabel_ui_list[1].setText('Probe')
+            self.probe_cn_ui_list[0].setStyleSheet(self.style_pol_deact)
+            self.probe_ncn_ui_list[0].setStyleSheet(self.style_pol_act)
+            self.probe_cn_ui_list[1].setStyleSheet(self.style_pol_deact)
+            self.probe_ncn_ui_list[1].setStyleSheet(self.style_pol_act)
+            self.ui.ch1_lcdNumber.display('---')
             # if self.enableButton_ui_list[ch_index].text() == 'Disable Channel' and \
             #    self.in_treat_ch_list[ch_index] == True:
             #     self.StopChannelByIndex(ch_index)
@@ -1416,7 +1422,7 @@ class MainWindow (QMainWindow):
 
         # for show sine progress
         if ch_str.startswith("starting sinusoidal"):
-            self.in_treat_show_sine_list[1] = True
+            self.in_treat_show_sine = True
             # print(f" in serial {self.in_treat_show_sine_list[2]}")
             return
         # end of for show sine progress
@@ -1446,3 +1452,32 @@ class MainWindow (QMainWindow):
                 pass
 
             # end of resistance meas online
+
+
+####################################
+# Different Screens Calls are here #
+####################################
+
+    ## Screen for Hamburger Menu
+    def MenuScreen (self):
+        # self.screensaver_window = False
+        self.a = MenuWindow(self.s, parent=self)
+        # self.a = MenuWindow(self.s)        
+        self.a.show()
+        # self.hide()
+
+    def cbMenu (self, volume):
+        print(f"menu done: {volume}")
+
+
+    ## Screen for RTF
+    def RTFScreen (self):
+        # self.screensaver_window = False
+        self.a = RTFWindow(self.s, parent=self)
+        # self.a = MenuWindow(self.s)        
+        self.a.show()
+        # self.hide()
+
+    def cbRTF (self):
+        print("rtf done")
+        

@@ -30,7 +30,7 @@ background-image: url(:/icons/resources/Pantalla_1.png);
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>200</x>
       <y>90</y>
       <width>441</width>
       <height>61</height>
@@ -794,7 +794,7 @@ border: 2px rgb(173, 163, 170);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_19">
+   <widget class="QLabel" name="battLabel">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -847,7 +847,7 @@ border: 2px rgb(173, 163, 170);</string>
    <widget class="QLCDNumber" name="ch1_lcdNumber">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>200</x>
       <y>160</y>
       <width>201</width>
       <height>191</height>
@@ -1283,7 +1283,7 @@ border: 0px</string>
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_27">
+   <widget class="QPushButton" name="hambButton">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -1511,7 +1511,7 @@ border: 0px</string>
     </property>
     <property name="icon">
      <iconset resource="microc_res.qrc">
-      <normaloff>:/icons/resources/pila.png</normaloff>:/icons/resources/pila.png</iconset>
+      <normaloff>:/icons/resources/batt_charge_100.png</normaloff>:/icons/resources/batt_charge_100.png</iconset>
     </property>
     <property name="iconSize">
      <size>
