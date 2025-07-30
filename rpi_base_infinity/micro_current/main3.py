@@ -6,6 +6,7 @@ from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QObject, QTimer, pyqt
 from PyQt5.QtGui import QColor
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.uic import loadUi
+import os
 
 from treatment_class import Treatment
 import distro
@@ -64,6 +65,20 @@ class MyMainClass (QObject):
             
     def MyObjCallback (self, dataread):
         d = dataread.rstrip()
+        if d.startswith('\r') or d.startswith('\n'):
+            return
+
+        if d.startswith('shutdown'):
+        ## SHUTDOWN PARA SLACKWARE O RASPBERRY
+            if self.t.GetCurrentSystem() == 'Slackware':
+                self.s.Close()
+                sleep(0.5)
+                sys.exit()
+
+            elif self.t.GetCurrentSystem() == 'debian' or \
+                 self.t.GetCurrentSystem() == 'Raspbian GNU/Linux':
+                os.system("sudo shutdown -h now")
+            
         self.rcv_signal.emit(d)
 
         

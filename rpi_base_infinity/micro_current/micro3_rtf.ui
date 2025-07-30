@@ -590,7 +590,7 @@ border: 2px solid rgb(148, 138, 146);
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>720</y>
+      <y>680</y>
       <width>481</width>
       <height>41</height>
      </rect>
@@ -605,7 +605,7 @@ border: 2px solid rgb(148, 138, 146);
      <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Message 2</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -615,7 +615,7 @@ border: 2px solid rgb(148, 138, 146);
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>800</y>
+      <y>720</y>
       <width>481</width>
       <height>41</height>
      </rect>

@@ -78,6 +78,7 @@ class RTFWindow (QMainWindow):
         self.ui.progressBar.setValue(0)
         self.ui.progressBar.setFixedHeight(4)
         self.ui.progressBar.setMaximum(self.cycle_time_int - 1)
+        self.ui.lcdNumber.display(str(0))
         
         # set initial freq
         self.freq_index = 0
@@ -86,6 +87,10 @@ class RTFWindow (QMainWindow):
         self.rtf_remaining_minutes = 20
         self.rtf_remaining_seconds = 0
         self.ui.tot_timerLabel.setText(f'{self.rtf_remaining_minutes}m {self.rtf_remaining_seconds}s')
+
+        # set initial messages
+        self.ui.msg1Label.setText('')
+        self.ui.msg2Label.setText('')
         
         ## activate the 1 second timer its repetitive
         self.rtf1seg = QTimer()
@@ -170,7 +175,7 @@ class RTFWindow (QMainWindow):
         if self.rtf_remaining_minutes > 10:
             remain = self.rtf_remaining_minutes % 5
             self.rtf_remaining_minutes -= remain
-            print(f'orig: {orig} remain: {remain} rtf: {self.rtf_remaining_minutes}')
+            # print(f'orig: {orig} remain: {remain} rtf: {self.rtf_remaining_minutes}')
             
         if obj_name == 'tot_timerUpButton':
             if self.rtf_remaining_minutes > 50:
@@ -220,6 +225,7 @@ class RTFWindow (QMainWindow):
         self.running = False
         self.ui.msg1Label.setText('Emisions ended!')
         self.ui.msgfreqLabel.setText('')
+        self.ui.progressBar.setValue(0)
         
         
     def closeEvent (self, event):
@@ -272,8 +278,9 @@ class RTFWindow (QMainWindow):
             # update ui every second
             self.ui.tot_timerLabel.setText(f'{self.rtf_remaining_minutes}m {self.rtf_remaining_seconds}s')
         else:
-            # self.StopChannelByIndex(x)
-            pass
+            self.ui.msg2Label.setText('by time')
+            self.RTFSendConfig('stop', '')
+            self.RTFStopEmmiting()
             
         
     def RTFSerialDataCallback (self, rcv):        
@@ -307,6 +314,7 @@ class RTFWindow (QMainWindow):
             if display > 98:
                 if self.rtfmode == 'hit_stop':
                     self.RTFSendConfig('stop', '')
+                    self.ui.msg2Label.setText('channel open!')
                     self.RTFStopEmmiting()
                     
                 elif self.rtfmode == 'hit_skip':

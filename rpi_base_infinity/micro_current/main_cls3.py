@@ -51,6 +51,15 @@ class MainWindow (QMainWindow):
         self.ui.ch2_altButton.clicked.connect(self.ChangePolarity)
         self.ui.ch2_negButton.clicked.connect(self.ChangePolarity)
 
+        # save batt str
+        self.batt_str_list = ['00.0', '00.0', '00.0', '00.0']
+        self.style_label_perc = """color: rgb(255, 255, 255);
+                                   font: 12 24pt "TT Norms ExtraLight";"""
+        self.style_label_volts = """color: rgb(255, 255, 255);
+                                    font: 12 14pt "TT Norms ExtraLight";"""
+        self.ui.battLabel.setStyleSheet(self.style_label_perc)
+        
+
         # polarity buttons and style
         self.style_pol_act = """color: rgb(255,255,255);
                                 background-color: rgb(173, 163, 170);
@@ -70,7 +79,7 @@ class MainWindow (QMainWindow):
         self.probe_ncn_ui_list = [self.ui.ch1_probeNCnButton, self.ui.ch2_probeNCnButton]
         for x in range(2):
             self.probe_cn_ui_list[x].setStyleSheet(self.style_pol_deact)
-            self.probe_ncn_ui_list[x].setStyleSheet(self.style_pol_deact)
+            self.probe_ncn_ui_list[x].setStyleSheet(self.style_pol_act)
         
         # ch1 ch2 timer options
         self.timer_index_ch_list = [0, 0]        
@@ -152,15 +161,6 @@ class MainWindow (QMainWindow):
             self.remainMins_ui_list[x].hide()
             self.remainSecs_ui_list[x].hide()
 
-        # disable all channels on startup
-        # self.SendConfig('ch1', 'disable')
-        # self.SendConfig('ch2', 'disable')
-        # self.SendConfig('ch2', 'disable')
-        # self.SendConfig('ch4', 'disable')
-        # self.SendConfig('ch1', 'enable')
-        # self.SendConfig('ch2', 'enable')
-        # self.SendConfig('ch2', 'enable')
-        # self.SendConfig('ch4', 'enable')
         self.progress_config = 'init'
         
         self.in_treat_ch_list = [False, False]
@@ -173,6 +173,7 @@ class MainWindow (QMainWindow):
 
         # mains and battery buttons
         self.ui.battButton.clicked.connect(self.ShowVoltages)
+        
         # batteries full at start
         self.mains_mode = 'mains'
         self.mains_state_int = 0
@@ -225,13 +226,6 @@ class MainWindow (QMainWindow):
         self.platesButton_ui_list = [self.ui.pch4upButton, self.ui.pch4dwnButton, self.ui.pch3upButton, self.ui.pch3dwnButton, self.ui.pch2upButton, self.ui.pch2dwnButton, self.ui.pch1upButton, self.ui.pch1dwnButton]
         self.last_probe = 0
         self.ui.intpButton.setIcon(self.plates_icon_list[0])
-
-        ## Roll Through Function
-        # self.ui.rtf_startButton.clicked.connect(self.StartRoll)
-        # self.ui.rtf_stopButton.clicked.connect(self.StopRoll)        
-        self.rtf_endhook = False
-        self.rtf_endhook_state = ''
-
 
         # tell the system we are up
         self.SendSystemUP()
@@ -510,8 +504,8 @@ class MainWindow (QMainWindow):
             self.remaining_minutes_ch_list[ch_index] = int(timer[:-1])
             self.remaining_seconds_ch_list[ch_index] = 0
 
-        self.remainMins_ui_list[ch_index].setText(str(self.remaining_minutes_ch_list[ch_index]) + "'")
-        self.remainSecs_ui_list[ch_index].setText(str(self.remaining_seconds_ch_list[ch_index]) + "''")        
+        self.remainMins_ui_list[ch_index].setText(str(self.remaining_minutes_ch_list[ch_index]) + "m")
+        self.remainSecs_ui_list[ch_index].setText(str(self.remaining_seconds_ch_list[ch_index]) + "s")        
 
         
     def StartChannelByIndex (self, ch_index):
@@ -522,11 +516,8 @@ class MainWindow (QMainWindow):
         self.remainSecs_ui_list[ch_index].show()
         # self.stopButton_ui_list[ch_index].show()
         self.startButton_ui_list[ch_index].setText("STOP")
-
-        if ch_index == 0:
-            # clean display
-            # self.displayLabel_ui_list[ch_index].setText('--')
-            self.displayLabel_ui_list[ch_index].display('---')            
+        # always stops ch0 meas
+        self.displayLabel_ui_list[0].display('---')
 
         if ch_index == 1:
             self.ui.ch2_progressBar.setValue(0)
@@ -554,213 +545,7 @@ class MainWindow (QMainWindow):
         # self.stopButton_ui_list[ch_index].hide()
         self.startButton_ui_list[ch_index].setText("START")
         # self.displayTextLabel_ui_list[ch_index].setText('')
-
-        if self.rtf_endhook == True:
-            self.Roll_SM()
-
-
-    def StartRoll (self):
-        for ch_index in range (2):
-            if self.in_treat_ch_list[ch_index] != False:
-                self.ui.rtf_line1Label.setText("Some channel is running")
-                return
-
-        if self.ui.ch1_probeLabel.text() != "NervSync":
-            self.ui.rtf_line1Label.setText("NervSync Probe NC")
-            return
-
-        self.ChangeFrequencyFunc (0, 0)
-        self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[0]}")
-        self.SendConfig('square', 'start')
-        self.StartChannelByIndex(0)
-        self.rtf_endhook_state = 'freq1'
-        self.rtf_endhook = True
-        self.ui.rtf_startButton.hide()
-        self.ui.rtf_stopButton.show()        
-
-
-    def Roll_SM (self):
-        time_for_meas = 3000
-        if self.rtf_endhook_state == 'freq1':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[0]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-        elif self.rtf_endhook_state == 'freq1_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 1)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[1]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq2'
-            
-        elif self.rtf_endhook_state == 'freq2':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[1]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-        elif self.rtf_endhook_state == 'freq2_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 1)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[1]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq3'
-
-        elif self.rtf_endhook_state == 'freq3':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[1]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-        elif self.rtf_endhook_state == 'freq3_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 3)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[3]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq4'
-            
-        elif self.rtf_endhook_state == 'freq4':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[3]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-        elif self.rtf_endhook_state == 'freq4_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 4)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[4]}")            
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq5'
-            
-        elif self.rtf_endhook_state == 'freq5':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[4]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-        elif self.rtf_endhook_state == 'freq5_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 5)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[5]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq6'
-            
-        elif self.rtf_endhook_state == 'freq6':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[5]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-            
-        elif self.rtf_endhook_state == 'freq6_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 6)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[6]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq7'
-            
-        elif self.rtf_endhook_state == 'freq7':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[6]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-            
-        elif self.rtf_endhook_state == 'freq7_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 7)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[7]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq8'
-            
-        elif self.rtf_endhook_state == 'freq8':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[7]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-
-        elif self.rtf_endhook_state == 'freq8_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 8)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[8]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq9'
-            
-        elif self.rtf_endhook_state == 'freq9':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[8]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-
-        elif self.rtf_endhook_state == 'freq9_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 9)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[9]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq10'
-            
-        elif self.rtf_endhook_state == 'freq10':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[9]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-
-
-        elif self.rtf_endhook_state == 'freq10_meas':
-            # get value
-
-            # change freq
-            self.ChangeFrequencyFunc (0, 10)
-            self.ui.rtf_line1Label.setText(f"Running on {self.freq_list[10]}")
-            self.SendConfig('square', 'start')
-            self.StartChannelByIndex(0)
-            self.rtf_endhook_state = 'freq11'
-            
-        elif self.rtf_endhook_state == 'freq11':
-            self.ui.rtf_line1Label.setText(f"Measure {self.freq_list[10]}")
-            self.progressBar_timer.singleShot(time_for_meas, self.Roll_SM)
-            self.rtf_endhook_state = f'{self.rtf_endhook_state}_meas'
-            
-
-        elif self.rtf_endhook_state == 'freq11_meas':
-            # get value
-
-            # stop roll
-            self.rtf_endhook = False            
-            self.ui.rtf_line1Label.setText("Roll Stops")            
-            self.ui.rtf_startButton.show()
-            self.ui.rtf_stopButton.hide()        
-
-            
-
-    def StopRoll (self):
-        if self.rtf_endhook == True:
-            self.StopChannelByIndex(0)
-            # self.ChangeFrequencyFunc (0, self.rtf_freq_last_index)
-            self.rtf_endhook = False
-            self.ui.rtf_startButton.show()
-            self.ui.rtf_stopButton.hide()        
-
+        
 
     def SendConfig (self, channel, command):
         if self.s.port_open == True:
@@ -820,37 +605,15 @@ class MainWindow (QMainWindow):
 
 
     def ShowVoltages (self):
-        sender = self.sender()
-        
-        if sender.objectName() == 'mainsButton':
-            self.ui.mainsButton.setIcon(QIcon())
-            self.ui.mainsButton.setText(self.mains_voltage_str)
-            self.mains_revert = True
-            self.revert_cnt = 2
-            
-        if sender.objectName() == 'battaButton':
-            self.ui.battaButton.setIcon(QIcon())
-            self.ui.battaButton.setText(self.battery_a_voltage_str)
-            self.batta_revert = True            
-            self.revert_cnt = 2            
+        if self.batt_revert:
+            return
 
-        if sender.objectName() == 'battbButton':
-            self.ui.battbButton.setIcon(QIcon())
-            self.ui.battbButton.setText(self.battery_b_voltage_str)
-            self.battb_revert = True
-            self.revert_cnt = 2            
+        self.batt_revert = True
+        self.revert_cnt = 2
 
-        if sender.objectName() == 'battcButton':
-            self.ui.battcButton.setIcon(QIcon())
-            self.ui.battcButton.setText(self.battery_c_voltage_str)
-            self.battc_revert = True
-            self.revert_cnt = 2            
-
-        if sender.objectName() == 'battdButton':
-            self.ui.battdButton.setIcon(QIcon())
-            self.ui.battdButton.setText(self.battery_d_voltage_str)
-            self.battd_revert = True
-            self.revert_cnt = 2            
+        batt_str = f'{self.batt_str_list[0]}V {self.batt_str_list[1]}V\n{self.batt_str_list[2]}V {self.batt_str_list[3]}V'
+        self.ui.battLabel.setStyleSheet(self.style_label_volts)
+        self.ui.battLabel.setText(batt_str)
             
 
     def RevertVoltages (self):
@@ -859,14 +622,24 @@ class MainWindow (QMainWindow):
             return
             
         if self.batt_revert:
-            self.ui.battButton.setText('')
-            self.batta_revert = False
-            self.ui.battButton.setIcon(self.batticon_list[int(self.battery_a_state)])
+            self.batt_revert = False
+
+            total_charge = 0
+            for x in range(4):
+                try:
+                    total_charge += self.BatteryCharge(float(self.batt_str_list[x]))
+                except:
+                    pass
+
+            total_perc = total_charge * 100 / (4 * 9000)
+            total_perc_int = int(total_perc)
+            self.ui.battLabel.setStyleSheet(self.style_label_perc)
+            self.ui.battLabel.setText(f'{total_perc_int}%')
             
             
     def UpdateSupplyPower (self, power_str):
         # supply mains 11.2 13.2 08.6 08.3 08.3 08.4 
-        # supply battery 6.2V 8.4V 8.4V 4 4
+        # supply battery 00.2 13.2 08.6 08.3 08.3 08.4 
         icon_change = False
         
         power_str_list = power_str.split(' ')
@@ -881,15 +654,17 @@ class MainWindow (QMainWindow):
                 icon_change = True                
 
         # update mains & battery voltages
-        batt_str_list = ['', '', '', '']
         for x in range (4):
-            batt_str_list[x] = power_str_list[x+4] 
+            self.batt_str_list[x] = power_str_list[x+4] 
 
-        print(f'a:{batt_str_list[0]} b:{batt_str_list[1]} c: {batt_str_list[2]} d: {batt_str_list[3]}')
+        print(f'a:{self.batt_str_list[0]} b:{self.batt_str_list[1]} c: {self.batt_str_list[2]} d: {self.batt_str_list[3]}')
+
+        if self.batt_revert:
+            return
 
         total_charge = 0
         for x in range(4):
-            total_charge += self.BatteryCharge(float(batt_str_list[x]))
+            total_charge += self.BatteryCharge(float(self.batt_str_list[x]))
 
         total_perc = total_charge * 100 / (4 * 9000)
         total_perc_int = int(total_perc)
@@ -964,36 +739,59 @@ class MainWindow (QMainWindow):
             dmask = 3 << (2*x)
             lw = 2 * x
             up = 2 * x + 1
-            if (plates_int & dmask) == dmask:
-                # two plates connected
-                if self.pol_index_ch_list[0] == 'positive':
-                    self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[2])
-                    self.platesButton_ui_list[up].setIcon(self.plates_icon_list[3])
-                elif self.pol_index_ch_list[0] == 'negative':
-                    self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[3])
-                    self.platesButton_ui_list[up].setIcon(self.plates_icon_list[2])
-                else:
-                    self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
-                    self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
-            elif plates_int & dmask:
-                print(f"plates: {plates_int} probe: {self.last_probe}")
-                
-                if (plates_int & 0x40) and self.last_probe:
+            if x != 3:
+                # check all conns but not the probe
+                if (plates_int & dmask) == dmask:
+                    # two plates connected
                     if self.pol_index_ch_list[0] == 'positive':
-                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[3])
-                    elif self.pol_index_ch_list[0] == 'negative':
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[3])
                         self.platesButton_ui_list[up].setIcon(self.plates_icon_list[2])
-                    else:
-                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
-                else:
-                    # one plate connected and not probe
-                    pos_int = (plates_int & dmask) >> (2*x)
-                    
-                    print(f"plates: {plates_int} pos_int: {pos_int}")
-                    if pos_int & 0x01:
-                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
+                    elif self.pol_index_ch_list[0] == 'negative':
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[2])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[3])
                     else:
                         self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
+
+                elif plates_int & dmask:
+                    # one plate conn
+                    pos_int = (plates_int & dmask) >> (2*x)                    
+                    if pos_int & 0x01:
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
+                    else:
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
+
+            elif self.last_probe:
+                # conn of probe kit with probe present
+                if (plates_int & 0x40):
+                    if self.pol_index_ch_list[0] == 'positive':
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[3])
+                    elif self.pol_index_ch_list[0] == 'negative':
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[2])
+                    else:
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
+                
+            else:
+                # conn of probe kit no probe
+                if (plates_int & dmask) == dmask:
+                    # two plates connected
+                    if self.pol_index_ch_list[0] == 'positive':
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[3])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[2])
+                    elif self.pol_index_ch_list[0] == 'negative':
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[2])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[3])
+                    else:
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
+
+                elif plates_int & dmask:
+                    # one plate conn
+                    pos_int = (plates_int & dmask) >> (2*x)                    
+                    if pos_int & 0x01:
+                        self.platesButton_ui_list[lw].setIcon(self.plates_icon_list[1])
+                    else:
+                        self.platesButton_ui_list[up].setIcon(self.plates_icon_list[1])
                 
                 
     def SetProbePolarity (self, probe_int):
@@ -1149,8 +947,8 @@ class MainWindow (QMainWindow):
                         self.remaining_seconds_ch_list[x] = 59
 
                     # update ui every second
-                    self.remainMins_ui_list[x].setText(str(self.remaining_minutes_ch_list[x]) + "'")
-                    self.remainSecs_ui_list[x].setText(str(self.remaining_seconds_ch_list[x]) + "''")
+                    self.remainMins_ui_list[x].setText(str(self.remaining_minutes_ch_list[x]) + "m")
+                    self.remainSecs_ui_list[x].setText(str(self.remaining_seconds_ch_list[x]) + "s")
 
                 else:
                     self.StopChannelByIndex(x)
@@ -1333,7 +1131,8 @@ class MainWindow (QMainWindow):
                 gain = 0
             # print('ch1 display: ' + str(gain))
 
-            if self.probeLabel_ui_list[0].text() == 'NervSync':
+            if self.probeLabel_ui_list[0].text() == 'NervSync' and \
+               self.in_treat_ch_list[0] == False:
                 # self.displayLabel_ui_list[0].setText(str(gain))
                 self.ui.ch1_lcdNumber.display(str(gain))                
                 
@@ -1371,9 +1170,9 @@ class MainWindow (QMainWindow):
         # probe others
         if ch_str.startswith("none probe"):
             self.probeLabel_ui_list[0].setText('Probe')
-            self.probeLabel_ui_list[1].setText('Probe')
             self.probe_cn_ui_list[0].setStyleSheet(self.style_pol_deact)
             self.probe_ncn_ui_list[0].setStyleSheet(self.style_pol_act)
+            self.probeLabel_ui_list[1].setText('Probe')
             self.probe_cn_ui_list[1].setStyleSheet(self.style_pol_deact)
             self.probe_ncn_ui_list[1].setStyleSheet(self.style_pol_act)
             self.ui.ch1_lcdNumber.display('---')
@@ -1390,26 +1189,43 @@ class MainWindow (QMainWindow):
                 if rcv_list[2] == 'square':
                     if self.probeLabel_ui_list[0].text() != 'NervSync':
                         self.probeLabel_ui_list[0].setText("NervSync")
-                        self.probeLabel_ui_list[1].setText("None")
-                    if self.in_treat_ch_list[0] == False:
+                        self.probe_cn_ui_list[0].setStyleSheet(self.style_pol_act)
+                        self.probe_ncn_ui_list[0].setStyleSheet(self.style_pol_deact)
+
+                        self.probeLabel_ui_list[1].setText("Probe")
+                        self.probe_cn_ui_list[1].setStyleSheet(self.style_pol_deact)
+                        self.probe_ncn_ui_list[1].setStyleSheet(self.style_pol_act)
+                        
+                    if self.in_treat_ch_list[0] == False and \
+                       self.in_treat_ch_list[1] == False:
                         self.SendConfig('square', 'start')
                         self.StartChannelByIndex(0)
                         
                 if rcv_list[2] == 'sine':
                     if self.probeLabel_ui_list[1].text() != 'CellSync':
-                        self.probeLabel_ui_list[0].setText("None")
+                        self.probeLabel_ui_list[0].setText("Probe")
+                        self.probe_cn_ui_list[0].setStyleSheet(self.style_pol_deact)
+                        self.probe_ncn_ui_list[0].setStyleSheet(self.style_pol_act)
+
                         self.probeLabel_ui_list[1].setText("CellSync")
-                    if self.in_treat_ch_list[1] == False:
+                        self.probe_cn_ui_list[1].setStyleSheet(self.style_pol_act)
+                        self.probe_ncn_ui_list[1].setStyleSheet(self.style_pol_deact)
+
+                    if self.in_treat_ch_list[0] == False and \
+                       self.in_treat_ch_list[1] == False:
                         self.SendConfig('sine', 'start')
                         self.StartChannelByIndex(1)
                         
             else:
+                # just for backward compatibility on probe start
                 if self.probeLabel_ui_list[0].text() == 'NervSync' and \
-                   self.in_treat_ch_list[0] == False:
+                   self.in_treat_ch_list[0] == False and \
+                   self.in_treat_ch_list[1] == False:                    
                     self.SendConfig('square', 'start')
                     self.StartChannelByIndex(0)
                 
                 elif self.probeLabel_ui_list[1].text() == 'CellSync' and \
+                     self.in_treat_ch_list[0] == False and \
                      self.in_treat_ch_list[1] == False:
                     self.SendConfig('sine', 'start')
                     self.StartChannelByIndex(1)
@@ -1472,12 +1288,27 @@ class MainWindow (QMainWindow):
 
     ## Screen for RTF
     def RTFScreen (self):
+        for ch_index in range (2):
+            if self.in_treat_ch_list[ch_index] != False:
+                print("some channel is running!")
+                # self.ui.rtf_line1Label.setText("Some channel is running")
+                return
+
+        # if self.ui.ch1_probeLabel.text() != "NervSync":
+        #     print("NervSync Probe NC")
+        #     # self.ui.rtf_line1Label.setText("NervSync Probe NC")            
+        #     return
+        
         # self.screensaver_window = False
         self.a = RTFWindow(self.s, parent=self)
-        # self.a = MenuWindow(self.s)        
         self.a.show()
-        # self.hide()
+
 
     def cbRTF (self):
-        print("rtf done")
-        
+        print("rtf done, updating configs to main window")
+        self.ChangeFrequencyByIndex (0)    #square send actual config
+        self.ChangeFrequencyByIndex (1)    #sine send actual config
+        os.system("sleep 0.05")
+        self.ChangePowerByIndex(0)    #square send actual config
+        self.ChangePowerByIndex(1)    #sine send actual config
+

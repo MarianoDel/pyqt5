@@ -797,10 +797,10 @@ border: 2px rgb(173, 163, 170);</string>
    <widget class="QLabel" name="battLabel">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>270</y>
-      <width>121</width>
-      <height>61</height>
+      <x>10</x>
+      <y>280</y>
+      <width>181</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -816,7 +816,7 @@ border: 2px rgb(173, 163, 170);</string>
      <string>75%</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignHCenter|Qt::AlignTop</set>
     </property>
    </widget>
    <widget class="QLabel" name="ch1_gainLabel">
