@@ -239,8 +239,9 @@ class MainWindow (QMainWindow):
         self.ChangePowerFunc(0, 2)    #square 100uA
         self.ChangePowerFunc(1, 2)    #sine 100uA
         self.ChangePolarityFunc(0, 'posButton')
+        self.actual_volume_str = '100'
+        self.SendConfig('audio volume', self.actual_volume_str)
 
-        
         # Treatment_SetFrequency_Str (MODE_SQUARE, "20.00");
         # Treatment_SetIntensity_Str (MODE_SQUARE, "100");
         # Treatment_SetFrequency_Str (MODE_SINE, "20.00");
@@ -525,16 +526,6 @@ class MainWindow (QMainWindow):
             self.progressBar_timer.singleShot(200, self.ProgressBarSM)
             # print("   starting sine SM")
         
-
-    # def StopChannel (self):
-    #     sender = self.sender()
-        
-    #     obj_list = sender.objectName().split('_')
-    #     ch_name = obj_list[0]
-    #     ch_func = obj_list[1]
-    #     ch_index = self.GetChannelIndexFromString(ch_name)
-    #     self.StopChannelByIndex(ch_index)
-
         
     def StopChannelByIndex (self, ch_index):
         self.SendConfig('stop', '')        
@@ -1284,6 +1275,8 @@ class MainWindow (QMainWindow):
 
     def cbMenu (self, volume):
         print(f"menu done: {volume}")
+        self.actual_volume_str = volume
+        self.SendConfig('audio volume', self.actual_volume_str)
 
 
     ## Screen for RTF
