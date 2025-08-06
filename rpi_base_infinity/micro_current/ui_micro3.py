@@ -680,6 +680,17 @@ class Ui_MainWindow(object):
 "color: rgb(255, 255, 255);\n"
 "border-radius: 25px")
         self.rtf_startButton.setObjectName("rtf_startButton")
+        self.datetimeLabel = QtWidgets.QLabel(self.centralwidget)
+        self.datetimeLabel.setGeometry(QtCore.QRect(1590, 0, 281, 51))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(20)
+        self.datetimeLabel.setFont(font)
+        self.datetimeLabel.setStyleSheet("background-color: rgba(0, 0, 0, 0);\n"
+"color: rgb(255, 255, 255);\n"
+"")
+        self.datetimeLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.datetimeLabel.setObjectName("datetimeLabel")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -727,4 +738,5 @@ class Ui_MainWindow(object):
         self.ch1_remainSecsLabel.setText(_translate("MainWindow", "20\'\'"))
         self.ch2_remainSecsLabel.setText(_translate("MainWindow", "20\'\'"))
         self.rtf_startButton.setText(_translate("MainWindow", "Roll Through"))
+        self.datetimeLabel.setText(_translate("MainWindow", "12/13/2025 - 08:17"))
 import microc_res_rc

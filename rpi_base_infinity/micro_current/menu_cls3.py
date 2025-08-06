@@ -135,21 +135,29 @@ class MenuWindow (QMainWindow):
         hour = self.ui.hourLabel.text()
         minute = self.ui.minuteLabel.text()
         
-        myCmd1 = f"sudo date -s {day}/{month}/20{year}"
+        # myCmd1 = f"sudo date -s {day}/{month}/20{year}"
+        myCmd1 = f"sudo date -s {month}/{day}/20{year}"    # us format      
         myCmd2 = f"sudo date -s {hour}:{minute}:00"
         myCmd3 = "sudo hwclock -w"    # save into hwclck
         
+        print ("")
+        print (f"  distro: {self.parent.distro}")
+        print ("")
+
+        # with open ("/home/pi/microc.log", "w") as file:
+        #     file.write(f"distro: {self.parent.distro}")
+
         if self.parent.distro == 'Slackware':
             print(myCmd1)
             print(myCmd2)
             print(myCmd3)
             self.ui.datetimeButton.setText('Done')
 
-        elif self.parent.distro == 'debian':
-            print("What!!!!")
+        elif self.parent.distro == 'debian' or \
+             self.parent.distro == 'Raspbian GNU/Linux':
             self.ui.datetimeButton.setText('Done')
-            # os.system(myCmd1)
-            # os.system(myCmd2)            
-            # os.system(myCmd3)
+            os.system(myCmd1)
+            os.system(myCmd2)            
+            os.system(myCmd3)
 
 

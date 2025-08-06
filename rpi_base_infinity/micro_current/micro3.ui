@@ -1787,6 +1787,33 @@ border-radius: 25px</string>
      <string>Roll Through</string>
     </property>
    </widget>
+   <widget class="QLabel" name="datetimeLabel">
+    <property name="geometry">
+     <rect>
+      <x>1590</x>
+      <y>0</y>
+      <width>281</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0, 0, 0, 0);
+color: rgb(255, 255, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>12/13/2025 - 08:17</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>

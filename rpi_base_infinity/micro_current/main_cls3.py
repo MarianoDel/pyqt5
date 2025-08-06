@@ -6,6 +6,7 @@ from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QTimer
 from PyQt5.QtGui import QColor, QIcon
 from PyQt5 import QtCore, QtWidgets
+from datetime import datetime
 import os
 # import threading
 
@@ -227,6 +228,11 @@ class MainWindow (QMainWindow):
         self.last_probe = 0
         self.ui.intpButton.setIcon(self.plates_icon_list[0])
 
+        ## to carry on with date-time
+        date_now = datetime.today()
+        self.minutes_last = date_now.minute
+        self.UpdateDateTime(date_now)
+        
         # tell the system we are up
         self.SendSystemUP()
         os.system("sleep 0.2")
@@ -944,6 +950,17 @@ class MainWindow (QMainWindow):
                 else:
                     self.StopChannelByIndex(x)
 
+        date_now = datetime.today()
+        if date_now.minute != self.minutes_last:
+            self.minutes_last = date_now.minute
+            self.UpdateDateTime(date_now)
+
+
+    def UpdateDateTime(self, new_date_time):
+        date_str = ""
+        date_str = new_date_time.strftime("%m/%d/%Y - %H:%M")
+        self.ui.datetimeLabel.setText(date_str)
+        
         
     ##################
     # Serial Methods #
@@ -1277,6 +1294,7 @@ class MainWindow (QMainWindow):
         print(f"menu done: {volume}")
         self.actual_volume_str = volume
         self.SendConfig('audio volume', self.actual_volume_str)
+        self.UpdateDateTime(datetime.today())
 
 
     ## Screen for RTF
