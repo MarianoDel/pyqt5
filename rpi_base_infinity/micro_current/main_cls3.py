@@ -136,6 +136,7 @@ class MainWindow (QMainWindow):
 
         ## Hamburger Menu Button
         self.ui.hambButton.clicked.connect(self.MenuScreen)
+        self.audio_selected = 'full'
 
         ## RTF Roll Through Function Button
         self.ui.rtf_startButton.clicked.connect(self.RTFScreen)
@@ -550,17 +551,13 @@ class MainWindow (QMainWindow):
             print(channel + ' ' + command + '\n')
 
             
-    def SendEncodFreq (self, channel, value):
+    def SendEncodFreq (self, channel_str, value):
         if self.s.port_open == True:
             encoder = ''
-            if channel == 'ch1':
-                encoder = 'encod0'
-            elif channel == 'ch2':
-                encoder = 'encod2'
-            elif channel == 'ch2':
-                encoder = 'encod4'
-            else: # channel == 'ch4'
-                encoder = 'encod6'
+            if channel_str == 'ch1':
+                encoder = 'enc 0'
+            else:    # ch2
+                encoder = 'enc 2'
 
             if value <= 9:
                 self.s.Write(encoder + ' ' + str(value) + '\n')
@@ -570,17 +567,13 @@ class MainWindow (QMainWindow):
                 self.s.Write(encoder + ' ;\n')
                 
 
-    def SendEncodPwr (self, channel, value):
+    def SendEncodPwr (self, channel_str, value):
         if self.s.port_open == True:
             encoder = ''
-            if channel == 'ch1':
-                encoder = 'encod1'
-            elif channel == 'ch2':
-                encoder = 'encod3'
-            elif channel == 'ch2':
-                encoder = 'encod5'
-            else: # channel == 'ch4'
-                encoder = 'encod7'
+            if channel_str == 'ch1':
+                encoder = 'enc 1'
+            else:    # ch2
+                encoder = 'enc 3'
                 
             self.s.Write(encoder + ' ' + str(value) + '\n')
 
@@ -972,121 +965,52 @@ class MainWindow (QMainWindow):
         if rcv.startswith('\n'):
             return
 
-        # encoders by deltas        
-        if rcv.startswith("enc +") or \
-           rcv.startswith("enc -"):
-            rcv_list = rcv.split(' ')
-            try:
-                index = int(rcv_list[2])
-            except:
-                index = 8
-
-            if index > 7:
-                return
-
-            if rcv_list [1] == '+':
-                direction_up = True
-            else:
-                direction_up = False
-                
-            if index % 2 == 0:
-                # frequency encoders
-                if index == 0:
-                    ch_index = 0
-                elif index == 2:
-                    ch_index = 1
-                elif index == 4:
-                    ch_index = 2
-                else:
-                    ch_index = 3
-
-                if direction_up:
-                    if self.freq_index_ch_list[ch_index] < 10:
-                        self.freq_index_ch_list[ch_index] += 1
-                        self.ChangeFrequencyByIndex(ch_index)
-                        self.SendEncodFreq('ch' + str(ch_index + 1), self.freq_index_ch_list[ch_index])
-                else:
-                    if self.freq_index_ch_list[ch_index] > 0:
-                        self.freq_index_ch_list[ch_index] -= 1
-                        self.ChangeFrequencyByIndex(ch_index)
-                        self.SendEncodFreq('ch' + str(ch_index + 1), self.freq_index_ch_list[ch_index])
-                        
-            else:
-                # power encoders                
-                if index == 1:
-                    ch_index = 0
-                elif index == 3:
-                    ch_index = 1
-                elif index == 5:
-                    ch_index = 2
-                else:
-                    ch_index = 3
-
-                if direction_up:
-                    if self.pwr_index_ch_list[ch_index] < 5:
-                        self.pwr_index_ch_list[ch_index] += 1
-                        self.ChangePowerByIndex(ch_index)
-                        self.SendEncodPwr('ch' + str(ch_index + 1), self.pwr_index_ch_list[ch_index])
-                else:
-                    if self.pwr_index_ch_list[ch_index] > 0:
-                        self.pwr_index_ch_list[ch_index] -= 1
-                        self.ChangePowerByIndex(ch_index)
-                        self.SendEncodPwr('ch' + str(ch_index + 1), self.pwr_index_ch_list[ch_index])
-
-            return
-        # end of encoders by deltas
-        
         # encoders by position
         if rcv.startswith("encp "):
+            # print("   in rx encoders!")
             rcv_list = rcv.split(' ')            
             try:
                 index = int(rcv_list[1])
             except:
                 index = 8
 
+            # print(f"   enc index: {index}")
             if index > 7:
                 return
-        
-            if index % 2 == 0:
-                # frequency encoders
-                if index == 0:
-                    ch_index = 0
-                elif index == 2:
-                    ch_index = 1
-                elif index == 4:
-                    ch_index = 2
-                else:
-                    ch_index = 3
 
+            if index == 0 or index == 2:
+                # frequency encoders
                 try:
-                    pos = int(rcv_list[2])
+                    pos = ord(rcv_list[2]) - ord('0')
                 except:
                     pos = 11
 
-                if pos > 10:
+                # print(f"   enc pos: {pos}")                    
+                if pos > 11:
                     return
 
+                if index == 0:
+                    ch_index = 0
+                else:
+                    ch_index = 1
+                    
                 self.freq_index_ch_list[ch_index] = pos
                 self.ChangeFrequencyByIndex(ch_index)
                                         
-            else:
+            elif index == 1 or index == 3:
                 # power encoders                
-                if index == 1:
-                    ch_index = 0
-                elif index == 3:
-                    ch_index = 1
-                elif index == 5:
-                    ch_index = 2
-                else:
-                    ch_index = 3
-
                 try:
-                    pos = int(rcv_list[2])
+                    pos = ord(rcv_list[2]) - ord('0')
                 except:
                     pos = 6
 
                 if pos > 5:
                     return
+
+                if index == 1:
+                    ch_index = 0
+                else:
+                    ch_index = 1
 
                 self.pwr_index_ch_list[ch_index] = pos
                 self.ChangePowerByIndex(ch_index)
@@ -1285,8 +1209,8 @@ class MainWindow (QMainWindow):
     ## Screen for Hamburger Menu
     def MenuScreen (self):
         # self.screensaver_window = False
-        self.a = MenuWindow(self.s, parent=self)
-        # self.a = MenuWindow(self.s)        
+        self.a = MenuWindow(self.s, self.audio_selected, parent=self)
+        # self.a = MenuWindow(self.s)
         self.a.show()
         # self.hide()
 

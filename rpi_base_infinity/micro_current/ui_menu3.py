@@ -28,98 +28,56 @@ class Ui_MenuWindow(object):
 "border-radius: 25px")
         self.label.setText("")
         self.label.setObjectName("label")
-        self.ch1_startButton = QtWidgets.QPushButton(self.centralwidget)
-        self.ch1_startButton.setGeometry(QtCore.QRect(30, 970, 231, 51))
+        self.config1_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.config1_Button.setGeometry(QtCore.QRect(30, 970, 231, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(24)
-        self.ch1_startButton.setFont(font)
-        self.ch1_startButton.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
+        self.config1_Button.setFont(font)
+        self.config1_Button.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 25px")
-        self.ch1_startButton.setObjectName("ch1_startButton")
-        self.ch1_startButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.ch1_startButton_2.setGeometry(QtCore.QRect(280, 970, 231, 51))
+        self.config1_Button.setObjectName("config1_Button")
+        self.config2_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.config2_Button.setGeometry(QtCore.QRect(280, 970, 231, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(24)
-        self.ch1_startButton_2.setFont(font)
-        self.ch1_startButton_2.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
+        self.config2_Button.setFont(font)
+        self.config2_Button.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 25px")
-        self.ch1_startButton_2.setObjectName("ch1_startButton_2")
-        self.conf3Button = QtWidgets.QPushButton(self.centralwidget)
-        self.conf3Button.setGeometry(QtCore.QRect(530, 970, 231, 51))
+        self.config2_Button.setObjectName("config2_Button")
+        self.done_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.done_Button.setGeometry(QtCore.QRect(530, 970, 231, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(24)
-        self.conf3Button.setFont(font)
-        self.conf3Button.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
+        self.done_Button.setFont(font)
+        self.done_Button.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 25px")
-        self.conf3Button.setObjectName("conf3Button")
-        self.ch1_pwrLabel = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel.setGeometry(QtCore.QRect(30, 50, 251, 51))
+        self.done_Button.setObjectName("done_Button")
+        self.audioLabel = QtWidgets.QLabel(self.centralwidget)
+        self.audioLabel.setGeometry(QtCore.QRect(30, 50, 251, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(28)
-        self.ch1_pwrLabel.setFont(font)
-        self.ch1_pwrLabel.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.audioLabel.setFont(font)
+        self.audioLabel.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.ch1_pwrLabel.setObjectName("ch1_pwrLabel")
-        self.audioSlider = QtWidgets.QSlider(self.centralwidget)
-        self.audioSlider.setGeometry(QtCore.QRect(30, 110, 421, 31))
-        self.audioSlider.setStyleSheet("border-radius: 5px;\n"
-"/*\n"
-"QSlider::groove:horizontal { \n"
-"    background-color: black;\n"
-"    border: 0px solid #424242; \n"
-"    height: 10px; \n"
-"    border-radius: 4px;\n"
-"}\n"
-"*/\n"
-"/*\n"
-"QSlider::handle:horizontal { \n"
-"    background-color: red; \n"
-"    border: 2px solid red; \n"
-"    width: 16px; \n"
-"    height: 20px; \n"
-"    line-height: 20px; \n"
-"    margin-top: -5px; \n"
-"    margin-bottom: -5px; \n"
-"    border-radius: 10px; \n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:hover { \n"
-"    border-radius: 10px;\n"
-"}\n"
-"*/")
-        self.audioSlider.setMaximum(10)
-        self.audioSlider.setSingleStep(1)
-        self.audioSlider.setPageStep(1)
-        self.audioSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.audioSlider.setObjectName("audioSlider")
-        self.volumeLabel = QtWidgets.QLabel(self.centralwidget)
-        self.volumeLabel.setGeometry(QtCore.QRect(480, 100, 101, 51))
+        self.audioLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.audioLabel.setObjectName("audioLabel")
+        self.date0Label = QtWidgets.QLabel(self.centralwidget)
+        self.date0Label.setGeometry(QtCore.QRect(30, 180, 251, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(28)
-        self.volumeLabel.setFont(font)
-        self.volumeLabel.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.date0Label.setFont(font)
+        self.date0Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.volumeLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.volumeLabel.setObjectName("volumeLabel")
-        self.ch1_pwrLabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_3.setGeometry(QtCore.QRect(30, 180, 251, 51))
-        font = QtGui.QFont()
-        font.setFamily("TT Norms ExtraLight")
-        font.setPointSize(28)
-        self.ch1_pwrLabel_3.setFont(font)
-        self.ch1_pwrLabel_3.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.ch1_pwrLabel_3.setObjectName("ch1_pwrLabel_3")
+        self.date0Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.date0Label.setObjectName("date0Label")
         self.datetimeButton = QtWidgets.QPushButton(self.centralwidget)
         self.datetimeButton.setGeometry(QtCore.QRect(530, 590, 231, 51))
         font = QtGui.QFont()
@@ -130,16 +88,16 @@ class Ui_MenuWindow(object):
 "color: rgb(255, 255, 255);\n"
 "border-radius: 25px")
         self.datetimeButton.setObjectName("datetimeButton")
-        self.ch1_pwrLabel_4 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_4.setGeometry(QtCore.QRect(30, 450, 251, 51))
+        self.time0Label = QtWidgets.QLabel(self.centralwidget)
+        self.time0Label.setGeometry(QtCore.QRect(30, 450, 251, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(28)
-        self.ch1_pwrLabel_4.setFont(font)
-        self.ch1_pwrLabel_4.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.time0Label.setFont(font)
+        self.time0Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.ch1_pwrLabel_4.setObjectName("ch1_pwrLabel_4")
+        self.time0Label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.time0Label.setObjectName("time0Label")
         self.monthLabel = QtWidgets.QLabel(self.centralwidget)
         self.monthLabel.setGeometry(QtCore.QRect(40, 240, 181, 71))
         font = QtGui.QFont()
@@ -219,46 +177,46 @@ class Ui_MenuWindow(object):
         self.year_DwnButton.setIcon(icon)
         self.year_DwnButton.setIconSize(QtCore.QSize(50, 50))
         self.year_DwnButton.setObjectName("year_DwnButton")
-        self.ch1_pwrLabel_5 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_5.setGeometry(QtCore.QRect(30, 390, 191, 51))
+        self.date1Label = QtWidgets.QLabel(self.centralwidget)
+        self.date1Label.setGeometry(QtCore.QRect(30, 390, 191, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(22)
-        self.ch1_pwrLabel_5.setFont(font)
-        self.ch1_pwrLabel_5.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.date1Label.setFont(font)
+        self.date1Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_5.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_pwrLabel_5.setObjectName("ch1_pwrLabel_5")
-        self.ch1_pwrLabel_6 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_6.setGeometry(QtCore.QRect(220, 390, 191, 51))
+        self.date1Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.date1Label.setObjectName("date1Label")
+        self.date2Label = QtWidgets.QLabel(self.centralwidget)
+        self.date2Label.setGeometry(QtCore.QRect(220, 390, 191, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(22)
-        self.ch1_pwrLabel_6.setFont(font)
-        self.ch1_pwrLabel_6.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.date2Label.setFont(font)
+        self.date2Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_6.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_pwrLabel_6.setObjectName("ch1_pwrLabel_6")
-        self.ch1_pwrLabel_7 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_7.setGeometry(QtCore.QRect(420, 390, 191, 51))
+        self.date2Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.date2Label.setObjectName("date2Label")
+        self.date3Label = QtWidgets.QLabel(self.centralwidget)
+        self.date3Label.setGeometry(QtCore.QRect(420, 390, 191, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(22)
-        self.ch1_pwrLabel_7.setFont(font)
-        self.ch1_pwrLabel_7.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.date3Label.setFont(font)
+        self.date3Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_7.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_pwrLabel_7.setObjectName("ch1_pwrLabel_7")
-        self.ch1_pwrLabel_8 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_8.setGeometry(QtCore.QRect(30, 660, 191, 51))
+        self.date3Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.date3Label.setObjectName("date3Label")
+        self.time1Label = QtWidgets.QLabel(self.centralwidget)
+        self.time1Label.setGeometry(QtCore.QRect(30, 660, 191, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(22)
-        self.ch1_pwrLabel_8.setFont(font)
-        self.ch1_pwrLabel_8.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.time1Label.setFont(font)
+        self.time1Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_8.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_pwrLabel_8.setObjectName("ch1_pwrLabel_8")
+        self.time1Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.time1Label.setObjectName("time1Label")
         self.hour_DwnButton = QtWidgets.QPushButton(self.centralwidget)
         self.hour_DwnButton.setGeometry(QtCore.QRect(130, 580, 91, 71))
         self.hour_DwnButton.setStyleSheet("background-color: rgba(0, 0, 0, 0);\n"
@@ -267,16 +225,16 @@ class Ui_MenuWindow(object):
         self.hour_DwnButton.setIcon(icon)
         self.hour_DwnButton.setIconSize(QtCore.QSize(50, 50))
         self.hour_DwnButton.setObjectName("hour_DwnButton")
-        self.ch1_pwrLabel_9 = QtWidgets.QLabel(self.centralwidget)
-        self.ch1_pwrLabel_9.setGeometry(QtCore.QRect(220, 660, 191, 51))
+        self.time2Label = QtWidgets.QLabel(self.centralwidget)
+        self.time2Label.setGeometry(QtCore.QRect(220, 660, 191, 51))
         font = QtGui.QFont()
         font.setFamily("TT Norms ExtraLight")
         font.setPointSize(22)
-        self.ch1_pwrLabel_9.setFont(font)
-        self.ch1_pwrLabel_9.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.time2Label.setFont(font)
+        self.time2Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(99, 82, 92);")
-        self.ch1_pwrLabel_9.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch1_pwrLabel_9.setObjectName("ch1_pwrLabel_9")
+        self.time2Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.time2Label.setObjectName("time2Label")
         self.minute_UpButton = QtWidgets.QPushButton(self.centralwidget)
         self.minute_UpButton.setGeometry(QtCore.QRect(230, 580, 91, 71))
         self.minute_UpButton.setStyleSheet("background-color: rgba(0, 0, 0, 0);\n"
@@ -319,6 +277,59 @@ class Ui_MenuWindow(object):
         self.hour_UpButton.setIcon(icon1)
         self.hour_UpButton.setIconSize(QtCore.QSize(50, 50))
         self.hour_UpButton.setObjectName("hour_UpButton")
+        self.audio_high_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.audio_high_Button.setGeometry(QtCore.QRect(360, 100, 211, 31))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(14)
+        self.audio_high_Button.setFont(font)
+        self.audio_high_Button.setStyleSheet("color: rgb(148,138,146);\n"
+"border-radius: 15;\n"
+"border: 2px solid rgb(148, 138, 146);\n"
+"")
+        self.audio_high_Button.setObjectName("audio_high_Button")
+        self.audio_half_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.audio_half_Button.setGeometry(QtCore.QRect(360, 140, 211, 31))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(14)
+        self.audio_half_Button.setFont(font)
+        self.audio_half_Button.setStyleSheet("color: rgb(148,138,146);\n"
+"border-radius: 15;\n"
+"border: 2px solid rgb(148, 138, 146);")
+        self.audio_half_Button.setObjectName("audio_half_Button")
+        self.audio_full_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.audio_full_Button.setGeometry(QtCore.QRect(360, 60, 211, 31))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(14)
+        self.audio_full_Button.setFont(font)
+        self.audio_full_Button.setStyleSheet("color: rgb(255,255,255);\n"
+"background-color: rgb(173, 163, 170);\n"
+"border-radius: 15;\n"
+"border: 2px rgb(173, 163, 170);")
+        self.audio_full_Button.setObjectName("audio_full_Button")
+        self.audio_off_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.audio_off_Button.setGeometry(QtCore.QRect(360, 220, 211, 31))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(14)
+        self.audio_off_Button.setFont(font)
+        self.audio_off_Button.setStyleSheet("color: rgb(148,138,146);\n"
+"border-radius: 15;\n"
+"border: 2px solid rgb(148, 138, 146);")
+        self.audio_off_Button.setObjectName("audio_off_Button")
+        self.audio_low_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.audio_low_Button.setGeometry(QtCore.QRect(360, 180, 211, 31))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(14)
+        self.audio_low_Button.setFont(font)
+        self.audio_low_Button.setStyleSheet("color: rgb(148,138,146);\n"
+"border-radius: 15;\n"
+"border: 2px solid rgb(148, 138, 146);\n"
+"")
+        self.audio_low_Button.setObjectName("audio_low_Button")
         MenuWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MenuWindow)
@@ -327,22 +338,26 @@ class Ui_MenuWindow(object):
     def retranslateUi(self, MenuWindow):
         _translate = QtCore.QCoreApplication.translate
         MenuWindow.setWindowTitle(_translate("MenuWindow", "MainWindow"))
-        self.ch1_startButton.setText(_translate("MenuWindow", "Config"))
-        self.ch1_startButton_2.setText(_translate("MenuWindow", "Config"))
-        self.conf3Button.setText(_translate("MenuWindow", "Done"))
-        self.ch1_pwrLabel.setText(_translate("MenuWindow", "Audio Volume"))
-        self.volumeLabel.setText(_translate("MenuWindow", "100%"))
-        self.ch1_pwrLabel_3.setText(_translate("MenuWindow", "Change Date"))
+        self.config1_Button.setText(_translate("MenuWindow", "Audio Vol"))
+        self.config2_Button.setText(_translate("MenuWindow", "Date Time"))
+        self.done_Button.setText(_translate("MenuWindow", "Done"))
+        self.audioLabel.setText(_translate("MenuWindow", "Audio Volume"))
+        self.date0Label.setText(_translate("MenuWindow", "Change Date"))
         self.datetimeButton.setText(_translate("MenuWindow", "Update"))
-        self.ch1_pwrLabel_4.setText(_translate("MenuWindow", "Change Time"))
+        self.time0Label.setText(_translate("MenuWindow", "Change Time"))
         self.monthLabel.setText(_translate("MenuWindow", "12"))
         self.dayLabel.setText(_translate("MenuWindow", "20"))
         self.yearLabel.setText(_translate("MenuWindow", "2000"))
-        self.ch1_pwrLabel_5.setText(_translate("MenuWindow", "Month"))
-        self.ch1_pwrLabel_6.setText(_translate("MenuWindow", "Day"))
-        self.ch1_pwrLabel_7.setText(_translate("MenuWindow", "Year"))
-        self.ch1_pwrLabel_8.setText(_translate("MenuWindow", "Hour"))
-        self.ch1_pwrLabel_9.setText(_translate("MenuWindow", "Minute"))
+        self.date1Label.setText(_translate("MenuWindow", "Month"))
+        self.date2Label.setText(_translate("MenuWindow", "Day"))
+        self.date3Label.setText(_translate("MenuWindow", "Year"))
+        self.time1Label.setText(_translate("MenuWindow", "Hour"))
+        self.time2Label.setText(_translate("MenuWindow", "Minute"))
         self.minuteLabel.setText(_translate("MenuWindow", "20"))
         self.hourLabel.setText(_translate("MenuWindow", "12"))
+        self.audio_high_Button.setText(_translate("MenuWindow", "HIGH"))
+        self.audio_half_Button.setText(_translate("MenuWindow", "HALF"))
+        self.audio_full_Button.setText(_translate("MenuWindow", "FULL"))
+        self.audio_off_Button.setText(_translate("MenuWindow", "OFF"))
+        self.audio_low_Button.setText(_translate("MenuWindow", "LOW"))
 import microc_res_rc

@@ -19,7 +19,7 @@ class MenuWindow (QMainWindow):
     #SIGNALS
     # one_second_signal = pyqtSignal()
 
-    def __init__(self, serialport, parent=None):
+    def __init__(self, serialport, audio_selected, parent=None):
         super(MenuWindow, self).__init__()
 
         # Setup the user interface from Designer.
@@ -29,11 +29,39 @@ class MenuWindow (QMainWindow):
         # get parent info
         self.s = serialport
         self.parent = parent
+        self.audio_selected = audio_selected
         self.datetime_now = datetime.today()
 
+        # volume buttons style
+        self.style_vol_act = """color: rgb(255,255,255);
+                                background-color: rgb(173, 163, 170);
+                                border-radius: 15;
+                                border: 2px rgb(173, 163, 170);"""
+        self.style_vol_deact = """color: rgb(148,138,146);
+                                  border-radius: 15;
+                                  border: 2px solid rgb(148, 138, 146);"""
+
+        self.style_conf_deact = """background-color: rgba(81, 70, 75, 150);
+                                   color: rgb(255, 255, 255);
+                                   border-radius: 25px"""
+
+        self.style_conf_act = """background-color: rgba(148, 138, 146, 150);
+                                 color: rgb(255, 255, 255);
+                                 border-radius: 25px"""
+
         # connect buttons
-        self.ui.conf3Button.clicked.connect(self.close)
-        self.ui.audioSlider.valueChanged.connect(self.AudioVolume)
+        self.ui.done_Button.clicked.connect(self.close)
+        self.ui.config1_Button.clicked.connect(self.AudioConfig)
+        self.ui.config2_Button.clicked.connect(self.DateTimeConfig)
+
+        self.ui.audio_full_Button.clicked.connect(self.AudioVolume)
+        self.ui.audio_high_Button.clicked.connect(self.AudioVolume)
+        self.ui.audio_half_Button.clicked.connect(self.AudioVolume)
+        self.ui.audio_low_Button.clicked.connect(self.AudioVolume)
+        self.ui.audio_off_Button.clicked.connect(self.AudioVolume)
+        self.audio_buttons_list = [self.ui.audio_full_Button, self.ui.audio_high_Button, self.ui.audio_half_Button, self.ui.audio_low_Button, self.ui.audio_off_Button]
+        self.audio_buttons_index_list = ['full', 'high', 'half', 'low', 'off']        
+        
         self.ui.month_UpButton.clicked.connect(self.DateTimeUpDwn)
         self.ui.day_UpButton.clicked.connect(self.DateTimeUpDwn)
         self.ui.year_UpButton.clicked.connect(self.DateTimeUpDwn)
@@ -47,32 +75,135 @@ class MenuWindow (QMainWindow):
         self.ui.minute_DwnButton.clicked.connect(self.DateTimeUpDwn)
         
         self.ui.datetimeButton.clicked.connect(self.DateTimeUpdate)
-        
-        # volume setup
-        self.volume = self.parent.actual_volume_str
-        self.ui.volumeLabel.setText(self.volume + '%')
-        vol_int = int((int(self.volume))/10)
-        self.ui.audioSlider.setValue(vol_int)
 
+        # populate audio buttons
+        self.AudioVolume_Select (self.audio_selected)
+        self.ui.config1_Button.setStyleSheet(self.style_conf_act)
+        
         # populate date and time
         self.ui.monthLabel.setText(self.datetime_now.strftime("%m"))
         self.ui.dayLabel.setText(self.datetime_now.strftime("%d"))
         self.ui.yearLabel.setText(self.datetime_now.strftime("%y"))        
         self.ui.hourLabel.setText(self.datetime_now.strftime("%H"))
         self.ui.minuteLabel.setText(self.datetime_now.strftime("%M"))
+        self.ui.config2_Button.setStyleSheet(self.style_conf_deact)
+        self.DateTimeHide()
         
 
     def AudioVolume (self):
-        current_value = self.ui.audioSlider.value()
-        self.ui.volumeLabel.setText(str(current_value * 10) + '%')
-        self.volume = str(current_value * 10)
+        sender = self.sender()
+
+        # full, high, half, low, off
+        obj_list = sender.objectName().split('_')
+        func = obj_list[1]
+        self.audio_selected = func
+        self.AudioVolume_Select (func)
+
+
+    def AudioVolume_Select (self, audio_selected):
+        for x in range(len(self.audio_buttons_list)):
+            if audio_selected == self.audio_buttons_index_list[x]:
+                self.audio_buttons_list[x].setStyleSheet(self.style_vol_act)
+            else:
+                self.audio_buttons_list[x].setStyleSheet(self.style_vol_deact)
 
 
     def closeEvent (self, event):
         print("close")
-        self.parent.cbMenu(self.volume)
+        self.parent.cbMenu(self.audio_selected)
 
 
+    def AudioConfig (self):
+        self.AudioShow()
+        self.AudioVolume_Select (self.audio_selected)
+        self.ui.config1_Button.setStyleSheet(self.style_conf_act)
+        self.ui.config2_Button.setStyleSheet(self.style_conf_deact)        
+        self.DateTimeHide()
+
+
+    def DateTimeConfig (self):
+        self.DateTimeShow()
+        self.ui.config1_Button.setStyleSheet(self.style_conf_deact)
+        self.ui.config2_Button.setStyleSheet(self.style_conf_act)
+        self.AudioHide()
+        
+        
+    def AudioShow (self):
+        self.ui.audioLabel.show()
+        
+        for x in range(len(self.audio_buttons_list)):
+            self.audio_buttons_list[x].show()
+
+
+    def AudioHide (self):
+        self.ui.audioLabel.hide()
+        
+        for x in range(len(self.audio_buttons_list)):
+            self.audio_buttons_list[x].hide()
+            
+        
+    def DateTimeShow (self):
+        self.ui.monthLabel.show()
+        self.ui.dayLabel.show()
+        self.ui.yearLabel.show()
+        self.ui.hourLabel.show()
+        self.ui.minuteLabel.show()
+
+        self.ui.month_UpButton.show()
+        self.ui.day_UpButton.show()
+        self.ui.year_UpButton.show()
+        self.ui.hour_UpButton.show()
+        self.ui.minute_UpButton.show()
+
+        self.ui.month_DwnButton.show()
+        self.ui.day_DwnButton.show()
+        self.ui.year_DwnButton.show()
+        self.ui.hour_DwnButton.show()
+        self.ui.minute_DwnButton.show()
+        
+        self.ui.datetimeButton.show()
+
+        self.ui.date0Label.show()
+        self.ui.date1Label.show()
+        self.ui.date2Label.show()
+        self.ui.date3Label.show()        
+
+        self.ui.time0Label.show()
+        self.ui.time1Label.show()
+        self.ui.time2Label.show()
+
+
+    def DateTimeHide (self):
+        self.ui.monthLabel.hide()
+        self.ui.dayLabel.hide()
+        self.ui.yearLabel.hide()
+        self.ui.hourLabel.hide()
+        self.ui.minuteLabel.hide()
+
+        self.ui.month_UpButton.hide()
+        self.ui.day_UpButton.hide()
+        self.ui.year_UpButton.hide()
+        self.ui.hour_UpButton.hide()
+        self.ui.minute_UpButton.hide()
+
+        self.ui.month_DwnButton.hide()
+        self.ui.day_DwnButton.hide()
+        self.ui.year_DwnButton.hide()
+        self.ui.hour_DwnButton.hide()
+        self.ui.minute_DwnButton.hide()
+        
+        self.ui.datetimeButton.hide()
+
+        self.ui.date0Label.hide()
+        self.ui.date1Label.hide()
+        self.ui.date2Label.hide()
+        self.ui.date3Label.hide()        
+
+        self.ui.time0Label.hide()
+        self.ui.time1Label.hide()
+        self.ui.time2Label.hide()
+        
+        
     def DateTimeUpDwn (self):
         sender = self.sender()
 
