@@ -1,0 +1,4 @@
+[static_config]
+localization = usa
+audio_selected = off
+

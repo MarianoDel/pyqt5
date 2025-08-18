@@ -23,7 +23,7 @@ class MainWindow (QMainWindow):
     #SIGNALS
     one_second_signal = pyqtSignal()
 
-    def __init__(self, distro, serialport, parent=None):
+    def __init__(self, config_class, serialport, parent=None):
         super(MainWindow, self).__init__()
 
         # Setup the user interface from Designer.
@@ -32,7 +32,8 @@ class MainWindow (QMainWindow):
 
         # get parent info
         self.s = serialport
-        self.distro = distro
+        self.config_class = config_class
+        self.distro = self.config_class.GetCurrentSystem()
         self.parent = parent
 
         # ch1 acuscope with gain
@@ -136,7 +137,7 @@ class MainWindow (QMainWindow):
 
         ## Hamburger Menu Button
         self.ui.hambButton.clicked.connect(self.MenuScreen)
-        self.audio_selected = 'full'
+        self.audio_selected = self.config_class.audio_selected
 
         ## RTF Roll Through Function Button
         self.ui.rtf_startButton.clicked.connect(self.RTFScreen)
@@ -246,8 +247,7 @@ class MainWindow (QMainWindow):
         self.ChangePowerFunc(0, 2)    #square 100uA
         self.ChangePowerFunc(1, 2)    #sine 100uA
         self.ChangePolarityFunc(0, 'posButton')
-        self.actual_volume_str = '100'
-        self.SendConfig('audio volume', self.actual_volume_str)
+        self.SendConfig('audio volume', self.audio_selected)
 
         # Treatment_SetFrequency_Str (MODE_SQUARE, "20.00");
         # Treatment_SetIntensity_Str (MODE_SQUARE, "100");
@@ -1216,8 +1216,12 @@ class MainWindow (QMainWindow):
 
     def cbMenu (self, volume):
         print(f"menu done: {volume}")
-        self.actual_volume_str = volume
-        self.SendConfig('audio volume', self.actual_volume_str)
+        if volume != self.audio_selected:
+            self.config_class.audio_selected = volume
+            self.config_class.SaveConfigFile()
+            
+        self.audio_selected = volume
+        self.SendConfig('audio volume', self.audio_selected)
         self.UpdateDateTime(datetime.today())
 
 
