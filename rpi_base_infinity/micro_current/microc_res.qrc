@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/Screenshot_1.png</file>
     <file>resources/Screenshot.png</file>
     <file>resources/conector_neg.png</file>
     <file>resources/conector_pos.png</file>

@@ -16,7 +16,7 @@ class Ui_RTFWindow(object):
         RTFWindow.setObjectName("RTFWindow")
         RTFWindow.resize(1920, 1080)
         RTFWindow.setStyleSheet("QMainWindow {\n"
-"background-image: url(:/icons/resources/Screenshot.png);\n"
+"background-image: url(:/icons/resources/Screenshot_1.png);\n"
 "}\n"
 "")
         self.centralwidget = QtWidgets.QWidget(RTFWindow)
@@ -277,6 +277,25 @@ class Ui_RTFWindow(object):
 "}")
         self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")
+        self.battLabel = QtWidgets.QLabel(self.centralwidget)
+        self.battLabel.setGeometry(QtCore.QRect(10, 280, 181, 81))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(24)
+        self.battLabel.setFont(font)
+        self.battLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.battLabel.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.battLabel.setObjectName("battLabel")
+        self.battButton = QtWidgets.QPushButton(self.centralwidget)
+        self.battButton.setGeometry(QtCore.QRect(30, 210, 121, 71))
+        self.battButton.setStyleSheet("background-color: rgba(0, 0, 0, 0);\n"
+"border: 0px")
+        self.battButton.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/resources/batt_charge_100.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.battButton.setIcon(icon2)
+        self.battButton.setIconSize(QtCore.QSize(50, 50))
+        self.battButton.setObjectName("battButton")
         self.label.raise_()
         self.hit_skip_Button.raise_()
         self.hit_stop_Button.raise_()
@@ -303,6 +322,8 @@ class Ui_RTFWindow(object):
         self.msg3Label.raise_()
         self.msgfreqLabel.raise_()
         self.progressBar.raise_()
+        self.battLabel.raise_()
+        self.battButton.raise_()
         RTFWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(RTFWindow)
@@ -327,4 +348,5 @@ class Ui_RTFWindow(object):
         self.msg1Label.setText(_translate("RTFWindow", "Message 1"))
         self.msg2Label.setText(_translate("RTFWindow", "Message 2"))
         self.msgfreqLabel.setText(_translate("RTFWindow", "sweep cycle"))
+        self.battLabel.setText(_translate("RTFWindow", "75%"))
 import microc_res_rc

@@ -70,7 +70,7 @@ class RTFWindow (QMainWindow):
         self.RTFChangePowerUpdate()
 
         # set initial mode
-        self.rtfmode = 'hit_stop'
+        self.rtfmode = self.parent.rtfmode
         self.RTFChangeModeUpdate(self.rtfmode)
 
         # set initial progress bar config
@@ -91,6 +91,14 @@ class RTFWindow (QMainWindow):
         # set initial messages
         self.ui.msg1Label.setText('')
         self.ui.msg2Label.setText('')
+
+        # set initial batt values
+        self.batt_str_list = ['00.0', '00.0', '00.0', '00.0']
+        self.rtf_mains_mode = self.parent.mains_mode
+        self.rtf_mains_state_int = self.parent.mains_state_int
+        self.ui.battButton.setIcon(self.parent.mains_icon_list[self.rtf_mains_state_int])
+        batt_str = self.parent.ui.battLabel.text()
+        self.ui.battLabel.setText(batt_str)
         
         ## activate the 1 second timer its repetitive
         self.rtf1seg = QTimer()
@@ -138,10 +146,29 @@ class RTFWindow (QMainWindow):
     def RTFChangeFrequency (self):
         freq_str = self.parent.freq_list[self.freq_index]
         self.ui.freqLabel.setText(freq_str)
-        # self.SendConfig('ch' + str(ch_index + 1), 'frequency ' + self.freq_conf_list[self.freq_index_ch_list[ch_index]])
         self.RTFSendConfig('square frequency', self.parent.freq_conf_list[self.freq_index])
+        self.RTFSendEncodFreq(self.freq_index)
+        self.RTFSendEncodPwr(self.pwr_index)        
 
-        
+
+    def RTFSendEncodFreq (self, value):
+        if self.s.port_open == True:
+            encoder = 'enc 0'
+
+            if value <= 9:
+                self.s.Write(encoder + ' ' + str(value) + '\n')
+            elif value == 10:
+                self.s.Write(encoder + ' :\n')
+            elif value == 11:
+                self.s.Write(encoder + ' ;\n')
+
+
+    def RTFSendEncodPwr (self, value):
+        if self.s.port_open == True:
+            encoder = 'enc 1'                
+            self.s.Write(encoder + ' ' + str(value) + '\n')
+
+            
     def RTFChangeCycleTime (self):
         sender = self.sender()
         obj_name = sender.objectName()
@@ -213,6 +240,7 @@ class RTFWindow (QMainWindow):
         power_str = self.parent.pwr_list[self.pwr_index]
         self.ui.pwrLabel.setText(power_str)        
         self.RTFSendConfig('square intensity', power_str)
+        self.RTFSendEncodPwr(self.pwr_index)
 
 
     def RTFSendConfig (self, channel, command):
@@ -232,10 +260,56 @@ class RTFWindow (QMainWindow):
         print("close")
         self.RTFSendConfig('stop', '')
         self.RTFStopEmmiting()
-        # self.parent.cbMenu(self.volume)
-        self.parent.cbRTF()        
+        self.parent.cbRTF(self.rtfmode)        
 
 
+    def RTFUpdateSupplyPower (self, power_str):
+        # supply mains 11.2 13.2 08.6 08.3 08.3 08.4 
+        # supply battery 00.2 13.2 08.6 08.3 08.3 08.4
+        icon_change = False
+        
+        power_str_list = power_str.split(' ')
+        if power_str_list[1] == 'mains':
+            if self.rtf_mains_mode != 'mains':
+                self.rtf_mains_mode = 'mains'
+                icon_change = True
+                
+        elif power_str_list [1] == 'battery':
+            if self.rtf_mains_mode != 'battery':
+                self.rtf_mains_mode = 'battery'
+                icon_change = True                
+
+        # update mains & battery voltages
+        for x in range (4):
+            self.batt_str_list[x] = power_str_list[x+4] 
+
+        print(f'rtf a:{self.batt_str_list[0]} b:{self.batt_str_list[1]} c: {self.batt_str_list[2]} d: {self.batt_str_list[3]}')
+
+        total_charge = 0
+        for x in range(4):
+            total_charge += self.parent.BatteryCharge(float(self.batt_str_list[x]))
+
+        total_perc = total_charge * 100 / (4 * 9000)
+        total_perc_int = int(total_perc)
+        print(f'charge batt: {total_charge} percent: {total_perc_int}')
+        self.ui.battLabel.setText(f'{total_perc_int}%')
+
+        icon_index = self.parent.CheckBattValues(total_perc_int)
+        if icon_change:
+            self.rtf_mains_state_int = icon_index
+            if self.rtf_mains_mode == 'mains':
+                self.ui.battButton.setIcon(self.parent.mains_icon_list[self.rtf_mains_state_int])
+            else:
+                self.ui.battButton.setIcon(self.parent.batt_icon_list[self.rtf_mains_state_int])
+            
+        if self.rtf_mains_state_int != icon_index:
+            self.rtf_mains_state_int = icon_index
+            if self.rtf_mains_mode == 'mains':
+                self.ui.battButton.setIcon(self.parent.mains_icon_list[self.rtf_mains_state_int])
+            else:
+                self.ui.battButton.setIcon(self.parent.batt_icon_list[self.rtf_mains_state_int])
+                
+        
     ###########################
     # One Second Timer signal #
     ###########################
@@ -298,11 +372,12 @@ class RTFWindow (QMainWindow):
 
             if res_int < 330:
                 display = 100
-            elif res_int > 33000:
-                display = 0
+            # elif res_int > 33000:
+            #     display = 0
             else:
+                offset = 101 + self.parent.gain_ch1
                 f = res_int * (-3.06e-3)
-                display = int(f + 101)
+                display = int(f + offset)
 
             if display > 100:
                 display = 100
@@ -326,4 +401,15 @@ class RTFWindow (QMainWindow):
 
                     self.sweep = 0
                     self.RTFChangeFrequency()
+                    
+
+        # supply voltage measurement
+        if rcv.startswith("supply "):
+            try:
+                self.RTFUpdateSupplyPower(rcv)
+            except:
+                print('error on supply str!')
+
+            return
+        # end of supply voltage measurement
                     

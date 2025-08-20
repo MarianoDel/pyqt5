@@ -51,6 +51,7 @@ class Treatment():
         config.read('config.txt')
 
         self.audio_selected = config.get('static_config', 'audio_selected', fallback = 'full')
+        self.rtfmode = config.get('static_config', 'rtfmode', fallback = 'hit_stop')
 
         # tsaver = config.get('static_config', 'timeout_screensaver', fallback = '300')
         # self.timeout_screensaver = int(tsaver)
@@ -63,7 +64,8 @@ class Treatment():
 
         config.add_section('static_config')
         config.set('static_config', 'localization', self.localization)
-        config.set('static_config', 'audio_selected', self.audio_selected)        
+        config.set('static_config', 'audio_selected', self.audio_selected)
+        config.set('static_config', 'rtfmode', self.rtfmode)
         
         # Writing our configuration file to 'example.cfg'
         with open('config.txt', 'w') as configfile:

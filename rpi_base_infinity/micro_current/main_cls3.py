@@ -139,9 +139,11 @@ class MainWindow (QMainWindow):
         self.ui.hambButton.clicked.connect(self.MenuScreen)
         self.audio_selected = self.config_class.audio_selected
 
-        ## RTF Roll Through Function Button
+        ## RTF Roll Through Function Button modes: hit_stop; hit_skip; cont
         self.ui.rtf_startButton.clicked.connect(self.RTFScreen)
-        
+        self.rtfmode = self.config_class.rtfmode
+        self.rtfclean = 0
+
         ## connect the signals
         # timer signal to the Update
         self.one_second_signal.connect(self.UpdateOneSec)
@@ -277,7 +279,7 @@ class MainWindow (QMainWindow):
                 self.gain_ch1 -= 1
 
         self.ui.ch1_gainLabel.setText(str(self.gain_ch1))
-        self.SendConfig(ch_name, 'set_gain ' + str(self.gain_ch1))
+        self.SendConfig('set_gain', str(self.gain_ch1))
         
 
     # change both polarities
@@ -948,6 +950,11 @@ class MainWindow (QMainWindow):
             self.minutes_last = date_now.minute
             self.UpdateDateTime(date_now)
 
+        if self.rtfclean:
+            self.rtfclean -= 1
+        else:
+            self.ui.rtf_infoLabel.setText('')
+
 
     def UpdateDateTime(self, new_date_time):
         date_str = ""
@@ -1230,21 +1237,28 @@ class MainWindow (QMainWindow):
         for ch_index in range (2):
             if self.in_treat_ch_list[ch_index] != False:
                 print("some channel is running!")
-                # self.ui.rtf_line1Label.setText("Some channel is running")
+                self.rtfclean = 2
+                self.ui.rtf_infoLabel.setText("Some channel is running")
                 return
 
-        # if self.ui.ch1_probeLabel.text() != "NervSync":
-        #     print("NervSync Probe NC")
-        #     # self.ui.rtf_line1Label.setText("NervSync Probe NC")            
-        #     return
+        if self.ui.ch1_probeLabel.text() != "NervSync":
+            print("NervSync Probe NC")
+            self.rtfclean = 2            
+            self.ui.rtf_infoLabel.setText("NervSync Probe NC")            
+            return
         
         # self.screensaver_window = False
         self.a = RTFWindow(self.s, parent=self)
         self.a.show()
 
 
-    def cbRTF (self):
-        print("rtf done, updating configs to main window")
+    def cbRTF (self, rtfmode):
+        print(f"rtf done, mode: {rtfmode}, updating configs to main window")
+        if rtfmode != self.rtfmode:
+            self.config_class.rtfmode = rtfmode
+            self.config_class.SaveConfigFile()
+
+        self.rtfmode = rtfmode
         self.ChangeFrequencyByIndex (0)    #square send actual config
         self.ChangeFrequencyByIndex (1)    #sine send actual config
         os.system("sleep 0.05")
