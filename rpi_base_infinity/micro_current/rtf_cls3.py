@@ -153,7 +153,7 @@ class RTFWindow (QMainWindow):
 
     def RTFSendEncodFreq (self, value):
         if self.s.port_open == True:
-            encoder = 'enc 0'
+            encoder = 'enc 1'
 
             if value <= 9:
                 self.s.Write(encoder + ' ' + str(value) + '\n')
@@ -165,7 +165,7 @@ class RTFWindow (QMainWindow):
 
     def RTFSendEncodPwr (self, value):
         if self.s.port_open == True:
-            encoder = 'enc 1'                
+            encoder = 'enc 0'                
             self.s.Write(encoder + ' ' + str(value) + '\n')
 
             

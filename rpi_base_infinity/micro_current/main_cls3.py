@@ -557,9 +557,9 @@ class MainWindow (QMainWindow):
         if self.s.port_open == True:
             encoder = ''
             if channel_str == 'ch1':
-                encoder = 'enc 0'
+                encoder = 'enc 1'
             else:    # ch2
-                encoder = 'enc 2'
+                encoder = 'enc 3'
 
             if value <= 9:
                 self.s.Write(encoder + ' ' + str(value) + '\n')
@@ -573,9 +573,9 @@ class MainWindow (QMainWindow):
         if self.s.port_open == True:
             encoder = ''
             if channel_str == 'ch1':
-                encoder = 'enc 1'
+                encoder = 'enc 0'
             else:    # ch2
-                encoder = 'enc 3'
+                encoder = 'enc 2'
                 
             self.s.Write(encoder + ' ' + str(value) + '\n')
 
@@ -985,7 +985,7 @@ class MainWindow (QMainWindow):
             if index > 7:
                 return
 
-            if index == 0 or index == 2:
+            if index == 1 or index == 3:
                 # frequency encoders
                 try:
                     pos = ord(rcv_list[2]) - ord('0')
@@ -996,7 +996,7 @@ class MainWindow (QMainWindow):
                 if pos > 11:
                     return
 
-                if index == 0:
+                if index == 1:
                     ch_index = 0
                 else:
                     ch_index = 1
@@ -1004,7 +1004,7 @@ class MainWindow (QMainWindow):
                 self.freq_index_ch_list[ch_index] = pos
                 self.ChangeFrequencyByIndex(ch_index)
                                         
-            elif index == 1 or index == 3:
+            elif index == 0 or index == 2:
                 # power encoders                
                 try:
                     pos = ord(rcv_list[2]) - ord('0')
@@ -1014,7 +1014,7 @@ class MainWindow (QMainWindow):
                 if pos > 5:
                     return
 
-                if index == 1:
+                if index == 0:
                     ch_index = 0
                 else:
                     ch_index = 1
