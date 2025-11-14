@@ -260,7 +260,7 @@ class RTFWindow (QMainWindow):
         print("close")
         self.RTFSendConfig('stop', '')
         self.RTFStopEmmiting()
-        self.parent.cbRTF(self.rtfmode)        
+        self.parent.cbRTF(self.rtfmode, self.freq_index, self.pwr_index)
 
 
     def RTFUpdateSupplyPower (self, power_str):

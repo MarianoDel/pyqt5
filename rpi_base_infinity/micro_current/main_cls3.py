@@ -1252,16 +1252,16 @@ class MainWindow (QMainWindow):
         self.a.show()
 
 
-    def cbRTF (self, rtfmode):
+    def cbRTF (self, rtfmode, last_freq_index, last_pwr_index):
         print(f"rtf done, mode: {rtfmode}, updating configs to main window")
         if rtfmode != self.rtfmode:
             self.config_class.rtfmode = rtfmode
             self.config_class.SaveConfigFile()
 
         self.rtfmode = rtfmode
-        self.ChangeFrequencyByIndex (0)    #square send actual config
+        self.ChangeFrequencyFunc (0, last_freq_index)    # update freq and encod to last rtf
         self.ChangeFrequencyByIndex (1)    #sine send actual config
         os.system("sleep 0.05")
-        self.ChangePowerByIndex(0)    #square send actual config
+        self.ChangePowerFunc(0, last_pwr_index)    # update pwr and encod to last rtf
         self.ChangePowerByIndex(1)    #sine send actual config
 
