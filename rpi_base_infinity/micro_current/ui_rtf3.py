@@ -296,6 +296,33 @@ class Ui_RTFWindow(object):
         self.battButton.setIcon(icon2)
         self.battButton.setIconSize(QtCore.QSize(50, 50))
         self.battButton.setObjectName("battButton")
+        self.ch_nameLabel = QtWidgets.QLabel(self.centralwidget)
+        self.ch_nameLabel.setGeometry(QtCore.QRect(560, 860, 481, 71))
+        font = QtGui.QFont()
+        font.setFamily("TT Norms ExtraLight")
+        font.setPointSize(28)
+        self.ch_nameLabel.setFont(font)
+        self.ch_nameLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.ch_nameLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.ch_nameLabel.setObjectName("ch_nameLabel")
+        self.ch2_progressBar = QtWidgets.QProgressBar(self.centralwidget)
+        self.ch2_progressBar.setGeometry(QtCore.QRect(580, 310, 551, 16))
+        self.ch2_progressBar.setStyleSheet("QProgressBar {\n"
+"   border: 0px;\n"
+"   border-radius: 2px;\n"
+"   padding: 0px;\n"
+"   height: 5px; /* Adjust as needed */\n"
+"    background-color: rgba(0,0,0,0);\n"
+"    text-align: right;\n"
+"}\n"
+"\n"
+"QProgressBar::chunk {\n"
+"    background-color: rgb(231,232,233);\n"
+"    width: 10px; \n"
+"/*   border-radius: 2px*/\n"
+"}")
+        self.ch2_progressBar.setProperty("value", 24)
+        self.ch2_progressBar.setObjectName("ch2_progressBar")
         self.label.raise_()
         self.hit_skip_Button.raise_()
         self.hit_stop_Button.raise_()
@@ -324,6 +351,8 @@ class Ui_RTFWindow(object):
         self.progressBar.raise_()
         self.battLabel.raise_()
         self.battButton.raise_()
+        self.ch_nameLabel.raise_()
+        self.ch2_progressBar.raise_()
         RTFWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(RTFWindow)
@@ -349,4 +378,5 @@ class Ui_RTFWindow(object):
         self.msg2Label.setText(_translate("RTFWindow", "Message 2"))
         self.msgfreqLabel.setText(_translate("RTFWindow", "sweep cycle"))
         self.battLabel.setText(_translate("RTFWindow", "75%"))
+        self.ch_nameLabel.setText(_translate("RTFWindow", "Roll Through Function"))
 import microc_res_rc

@@ -742,6 +742,60 @@ border: 0px</string>
      </size>
     </property>
    </widget>
+   <widget class="QLabel" name="ch_nameLabel">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>860</y>
+      <width>481</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Roll Through Function</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="ch2_progressBar">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>310</y>
+      <width>551</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+   border: 0px;
+   border-radius: 2px;
+   padding: 0px;
+   height: 5px; /* Adjust as needed */
+    background-color: rgba(0,0,0,0);
+	text-align: right;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(231,232,233);
+    width: 10px; 
+/*   border-radius: 2px*/
+}</string>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>hit_skip_Button</zorder>
    <zorder>hit_stop_Button</zorder>
@@ -770,6 +824,8 @@ border: 0px</string>
    <zorder>progressBar</zorder>
    <zorder>battLabel</zorder>
    <zorder>battButton</zorder>
+   <zorder>ch_nameLabel</zorder>
+   <zorder>ch2_progressBar</zorder>
   </widget>
  </widget>
  <resources>

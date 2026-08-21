@@ -9,6 +9,7 @@ from PyQt5 import QtCore, QtWidgets
 from datetime import datetime
 import os
 # import threading
+from battery_utils import BatteryCharge_Filter_Reset, BatteryCharge_Filter, BatteryCharge_With_Batt, BatteryCharge_With_Mains, BatteryCharge_Total_Charge_To_Percent
 
 #imported uis
 from ui_micro3 import Ui_MainWindow
@@ -140,7 +141,8 @@ class MainWindow (QMainWindow):
         self.audio_selected = self.config_class.audio_selected
 
         ## RTF Roll Through Function Button modes: hit_stop; hit_skip; cont
-        self.ui.rtf_startButton.clicked.connect(self.RTFScreen)
+        self.ui.rtf_nervsync_startButton.clicked.connect(self.RTFScreen)
+        self.ui.rtf_cellsync_startButton.clicked.connect(self.RTFScreen)        
         self.rtfmode = self.config_class.rtfmode
         self.rtfclean = 0
 
@@ -180,7 +182,7 @@ class MainWindow (QMainWindow):
         self.ui.battButton.clicked.connect(self.ShowVoltages)
         
         # batteries full at start
-        self.mains_mode = 'mains'
+        self.mains_mode = ''
         self.mains_state_int = 0
         self.batt_revert = False
         self.revert_cnt = 0
@@ -232,6 +234,12 @@ class MainWindow (QMainWindow):
         self.last_probe = 0
         self.ui.intpButton.setIcon(self.plates_icon_list[0])
 
+        ## reset Batt filter and disable batt icon and percentage
+        BatteryCharge_Filter_Reset()
+        self.batt_first_time = True
+        self.ui.battButton.setIcon(QIcon())
+        self.ui.battLabel.setText('')
+        
         ## to carry on with date-time
         date_now = datetime.today()
         self.minutes_last = date_now.minute
@@ -601,6 +609,7 @@ class MainWindow (QMainWindow):
             return
 
         self.batt_revert = True
+        self.batt_revert_last_percent_str = self.ui.battLabel.text()
         self.revert_cnt = 2
 
         batt_str = f'{self.batt_str_list[0]}V {self.batt_str_list[1]}V\n{self.batt_str_list[2]}V {self.batt_str_list[3]}V'
@@ -615,18 +624,8 @@ class MainWindow (QMainWindow):
             
         if self.batt_revert:
             self.batt_revert = False
-
-            total_charge = 0
-            for x in range(4):
-                try:
-                    total_charge += self.BatteryCharge(float(self.batt_str_list[x]))
-                except:
-                    pass
-
-            total_perc = total_charge * 100 / (4 * 9000)
-            total_perc_int = int(total_perc)
             self.ui.battLabel.setStyleSheet(self.style_label_perc)
-            self.ui.battLabel.setText(f'{total_perc_int}%')
+            self.ui.battLabel.setText(self.batt_revert_last_percent_str)
             
             
     def UpdateSupplyPower (self, power_str):
@@ -649,18 +648,35 @@ class MainWindow (QMainWindow):
         for x in range (4):
             self.batt_str_list[x] = power_str_list[x+4] 
 
-        print(f'a:{self.batt_str_list[0]} b:{self.batt_str_list[1]} c: {self.batt_str_list[2]} d: {self.batt_str_list[3]}')
+        print(f'a:{self.batt_str_list[0]} b:{self.batt_str_list[1]} c:{self.batt_str_list[2]} d:{self.batt_str_list[3]}')
 
         if self.batt_revert:
             return
 
         total_charge = 0
-        for x in range(4):
-            total_charge += self.BatteryCharge(float(self.batt_str_list[x]))
 
-        total_perc = total_charge * 100 / (4 * 9000)
-        total_perc_int = int(total_perc)
-        print(f'charge batt: {total_charge} percent: {total_perc_int}')
+        # for x in range(4):
+        #     total_charge += self.BatteryCharge(float(self.batt_str_list[x]))
+
+        if self.mains_mode == 'mains':
+            for x in range(4):            
+                total_charge += BatteryCharge_With_Mains(float(self.batt_str_list[x]))
+        else:    # 'battery'
+            for x in range(4):            
+                total_charge += BatteryCharge_With_Batt(float(self.batt_str_list[x]))
+
+
+        if not self.batt_first_time:
+            total_charge_filter = BatteryCharge_Filter(total_charge)
+        else:
+            for x in range(10):
+                total_charge_filter = BatteryCharge_Filter(total_charge)
+
+            print('init filter for total_charge')
+                
+        print(f'total charge: {total_charge} total charge filtered: {total_charge_filter}')
+        total_perc_int = BatteryCharge_Total_Charge_To_Percent(total_charge_filter)
+        print(f'charge batt percent: {total_perc_int}')
         self.ui.battLabel.setText(f'{total_perc_int}%')
 
         icon_index = self.CheckBattValues(total_perc_int)
@@ -681,29 +697,26 @@ class MainWindow (QMainWindow):
             
     def CheckBattValues (self, total_perc_int):
         state = 0
-        if total_perc_int > 95:
-            state = 4
-        elif total_perc_int > 75:
-            state = 3
-        elif total_perc_int > 50:
-            state = 2
-        elif total_perc_int > 25:
-            state = 1
+        # if total_perc_int > 95:
+        #     state = 4
+        # elif total_perc_int > 75:
+        #     state = 3
+        # elif total_perc_int > 50:
+        #     state = 2
+        # elif total_perc_int > 25:
+        #     state = 1
 
+        if total_perc_int > 88:
+            state = 4
+        elif total_perc_int > 63:
+            state = 3
+        elif total_perc_int > 37:
+            state = 2
+        elif total_perc_int > 12:
+            state = 1
+            
         return state
 
-
-    def BatteryCharge (self, batt_volt):
-        if batt_volt >= 8.4:
-            batt_volt = 8.4
-
-        if batt_volt < 6.4:
-            batt_volt = 6.4
-
-        batt_volt = batt_volt - 6.4    # between 2 and 0
-        batt_mca = batt_volt * 4500    # 9000 mca is the max charga
-        return batt_mca
-        
 
     def UpdatePlatesConnectors (self, conn_plates_str, conn_probe_str):
         # uncomment if get state every 6 secs
@@ -953,7 +966,8 @@ class MainWindow (QMainWindow):
         if self.rtfclean:
             self.rtfclean -= 1
         else:
-            self.ui.rtf_infoLabel.setText('')
+            self.ui.rtf_nervsync_infoLabel.setText('')
+            self.ui.rtf_cellsync_infoLabel.setText('')            
 
 
     def UpdateDateTime(self, new_date_time):
@@ -1234,21 +1248,37 @@ class MainWindow (QMainWindow):
 
     ## Screen for RTF
     def RTFScreen (self):
+        sender = self.sender()
+        
+        obj_list = sender.objectName().split('_')
+        ch_name = obj_list[1]
+
+        channel_already_running = False
         for ch_index in range (2):
             if self.in_treat_ch_list[ch_index] != False:
                 print("some channel is running!")
+                channel_already_running = True
                 self.rtfclean = 2
-                self.ui.rtf_infoLabel.setText("Some channel is running")
+                
+        if ch_name == 'nervsync':
+            if channel_already_running:
+                self.ui.rtf_nervsync_infoLabel.setText("Some channel is running")
                 return
 
-        if self.ui.ch1_probeLabel.text() != "NervSync":
-            print("NervSync Probe NC")
-            self.rtfclean = 2            
-            self.ui.rtf_infoLabel.setText("NervSync Probe NC")            
-            return
+            if self.ui.ch1_probeLabel.text() != "NervSync":
+                print("NervSync Probe NC")
+                self.rtfclean = 2            
+                self.ui.rtf_nervsync_infoLabel.setText("NervSync Probe NC")            
+                return
         
+        else:
+            # cellsync
+            if channel_already_running:
+                self.ui.rtf_cellsync_infoLabel.setText("Some channel is running")
+                return
+
         # self.screensaver_window = False
-        self.a = RTFWindow(self.s, parent=self)
+        self.a = RTFWindow(self.s, runas=ch_name, parent=self)
         self.a.show()
 
 

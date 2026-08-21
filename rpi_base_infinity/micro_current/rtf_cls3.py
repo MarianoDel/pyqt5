@@ -18,7 +18,7 @@ class RTFWindow (QMainWindow):
     # SIGNALS
     rtf_one_second_signal = pyqtSignal()
 
-    def __init__(self, serialport, parent=None):
+    def __init__(self, serialport, runas='none', parent=None):
         super(RTFWindow, self).__init__()
 
         # Setup the user interface from Designer.
@@ -28,6 +28,7 @@ class RTFWindow (QMainWindow):
         # get parent info
         self.s = serialport
         self.parent = parent
+        self.runas = runas
 
         # mode buttons and style
         self.style_act = """color: rgb(255,255,255);
@@ -106,7 +107,32 @@ class RTFWindow (QMainWindow):
         self.rtf1seg.start(1000)
         self.running = True
 
-        self.RTFSendConfig('square', 'start')
+        ## progress timer for start and first config        
+        self.ui.ch2_progressBar.setTextVisible(False)
+        self.ui.ch2_progressBar.setValue(0)
+        self.ui.ch2_progressBar.setFixedHeight(4)
+        self.rtf_progressBar_timer = QTimer()
+        self.sine_cnt = 0
+        
+        if self.runas == 'nervsync':
+            self.ui.ch_nameLabel.setText('NervSync')
+            self.ui.ch2_pwrLabel.hide()
+            self.RTFSendConfig('square', 'start')
+        elif self.runas == 'cellsync':
+            self.ui.ch_nameLabel.setText('CellSync')            
+            self.RTFSendConfig('sine', 'start')
+            self.ui.hit_stop_Button.setEnabled(False)
+            self.ui.hit_skip_Button.setEnabled(False)
+            self.ui.cont_Button.setEnabled(False)
+            self.ui.hit_stop_Button.hide()
+            self.ui.hit_skip_Button.hide()
+            self.ui.cont_Button.hide()
+
+            self.ui.ch2_progressBar.setValue(0)
+            self.rtf_progressBar_timer.singleShot(200, self.RTFProgressBarSM)
+            
+        else:
+            self.close()
 
         
     def RTFChangeMode (self):
@@ -146,7 +172,10 @@ class RTFWindow (QMainWindow):
     def RTFChangeFrequency (self):
         freq_str = self.parent.freq_list[self.freq_index]
         self.ui.freqLabel.setText(freq_str)
-        self.RTFSendConfig('square frequency', self.parent.freq_conf_list[self.freq_index])
+        if self.runas == 'nervsync':
+            self.RTFSendConfig('square frequency', self.parent.freq_conf_list[self.freq_index])
+        else:    # cellsync
+            self.RTFSendConfig('sine frequency', self.parent.freq_conf_list[self.freq_index])
         self.RTFSendEncodFreq(self.freq_index)
         self.RTFSendEncodPwr(self.pwr_index)        
 
@@ -309,7 +338,35 @@ class RTFWindow (QMainWindow):
             else:
                 self.ui.battButton.setIcon(self.parent.batt_icon_list[self.rtf_mains_state_int])
                 
+
+    def RTFProgressBarSM (self):
+        next_cycle = False
         
+        if self.running:
+            if self.parent.pol_index_ch_list[1] == 'negative':
+                sine_point = -self.parent.sine_pos_table_list[self.sine_cnt]
+            elif self.parent.pol_index_ch_list[1] == 'positive':
+                sine_point = self.parent.sine_pos_table_list[self.sine_cnt]
+            else:    # alternative
+                sine_point = self.parent.sine_alt_table_list[self.sine_cnt]
+
+            display, progress = self.parent.ProgressCalcValue(self.parent.pwr_index_ch_list[1], sine_point)
+            self.ui.ch2_progressBar.setValue(progress)
+            self.ui.lcdNumber.display(str(display))
+            next_cycle = True
+        else:
+            self.ui.ch2_progressBar.setValue(0)
+            self.ui.lcdNumber.display('---')
+
+        if self.sine_cnt < 16 - 1:
+            self.sine_cnt += 1
+        else:
+            self.sine_cnt = 0
+
+        if next_cycle:
+            self.rtf_progressBar_timer.singleShot(200, self.RTFProgressBarSM)
+            
+                
     ###########################
     # One Second Timer signal #
     ###########################
@@ -364,6 +421,9 @@ class RTFWindow (QMainWindow):
 
     def RTFSerialProcessString (self, rcv):
         if rcv.startswith("resistance "):
+            if self.runas != 'nervsync':
+                return
+            
             rcv_list = rcv.split(' ')
             try:
                 res_int = int(rcv_list[1])

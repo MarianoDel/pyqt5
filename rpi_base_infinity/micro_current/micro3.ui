@@ -1763,7 +1763,7 @@ border: 0px</string>
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="rtf_startButton">
+   <widget class="QPushButton" name="rtf_nervsync_startButton">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -1814,10 +1814,59 @@ color: rgb(255, 255, 255);
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="rtf_infoLabel">
+   <widget class="QLabel" name="rtf_nervsync_infoLabel">
     <property name="geometry">
      <rect>
       <x>440</x>
+      <y>760</y>
+      <width>451</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rtf_cellsync_startButton">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>700</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>TT Norms ExtraLight</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(81, 70, 75, 150);
+color: rgb(255, 255, 255);
+border-radius: 25px</string>
+    </property>
+    <property name="text">
+     <string>Roll Through</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rtf_cellsync_infoLabel">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
       <y>760</y>
       <width>451</width>
       <height>31</height>
