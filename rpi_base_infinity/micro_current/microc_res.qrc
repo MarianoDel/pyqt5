@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/sys_msg_img.png</file>
+    <file>resources/batt_low_img.png</file>
+    <file>resources/rtf_img.png</file>
+    <file>resources/gain_spectrum.png</file>
     <file>resources/Screenshot_1.png</file>
     <file>resources/Screenshot.png</file>
     <file>resources/conector_neg.png</file>

@@ -408,7 +408,7 @@ border: 0px</string>
    <widget class="QLabel" name="ch1_pwrLabel_2">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>550</x>
       <y>920</y>
       <width>481</width>
       <height>71</height>
@@ -421,10 +421,12 @@ border: 0px</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+image: url(:/icons/resources/rtf_img.png);
+</string>
     </property>
     <property name="text">
-     <string>Roll Through Function</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

@@ -33,8 +33,10 @@ class Ui_MainWindow(object):
         font.setPointSize(22)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("background-color: rgba(81, 70, 75, 150);\n"
+"image: url(:/icons/resources/gain_spectrum.png);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 30px")
+        self.label_2.setText("")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
@@ -729,7 +731,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_2.setText(_translate("MainWindow", "Gain Spectrum"))
         self.label_3.setText(_translate("MainWindow", "Polarity"))
         self.label_4.setText(_translate("MainWindow", "Polarity"))
         self.label_5.setText(_translate("MainWindow", "Gain"))
@@ -748,9 +749,9 @@ class Ui_MainWindow(object):
         self.ch2_probeCnButton.setText(_translate("MainWindow", "CONNECTED"))
         self.ch2_probeNCnButton.setText(_translate("MainWindow", "NOT CONNECTED"))
         self.ch1_posButton.setText(_translate("MainWindow", "POSITIVE"))
-        self.ch1_altButton.setText(_translate("MainWindow", "ALTERNATIVE"))
+        self.ch1_altButton.setText(_translate("MainWindow", "ALTERNATE"))
         self.ch1_negButton.setText(_translate("MainWindow", "NEGATIVE"))
-        self.ch2_altButton.setText(_translate("MainWindow", "ALTERNATIVE"))
+        self.ch2_altButton.setText(_translate("MainWindow", "ALTERNATE"))
         self.ch2_negButton.setText(_translate("MainWindow", "NEGATIVE"))
         self.ch2_posButton.setText(_translate("MainWindow", "POSITIVE"))
         self.ch1_pwrLabel.setText(_translate("MainWindow", "25uA"))

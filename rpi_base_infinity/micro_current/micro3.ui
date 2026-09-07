@@ -44,11 +44,12 @@ background-image: url(:/icons/resources/Pantalla_1.png);
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgba(81, 70, 75, 150);
+image: url(:/icons/resources/gain_spectrum.png);
 color: rgb(255, 255, 255);
 border-radius: 30px</string>
     </property>
     <property name="text">
-     <string>Gain Spectrum</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -542,7 +543,7 @@ border: 2px solid rgb(148, 138, 146);
 </string>
     </property>
     <property name="text">
-     <string>ALTERNATIVE</string>
+     <string>ALTERNATE</string>
     </property>
    </widget>
    <widget class="QPushButton" name="ch1_negButton">
@@ -592,7 +593,7 @@ border-radius: 15;
 border: 2px solid rgb(81, 70, 75);</string>
     </property>
     <property name="text">
-     <string>ALTERNATIVE</string>
+     <string>ALTERNATE</string>
     </property>
    </widget>
    <widget class="QPushButton" name="ch2_negButton">

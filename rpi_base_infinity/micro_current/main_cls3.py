@@ -17,6 +17,7 @@ from ui_micro3 import Ui_MainWindow
 #Here import the UIs or classes that got the UIs
 from menu_cls3 import MenuWindow
 from rtf_cls3 import RTFWindow
+from close_cls3 import CloseWindow
 
 
 class MainWindow (QMainWindow):
@@ -124,17 +125,9 @@ class MainWindow (QMainWindow):
             self.pwr_ui_list[x].setText(power_str)
 
         # ch1 and ch2 others buttons
-        self.ui.ch1_startButton.clicked.connect(self.StartChannel)
-        # self.ui.ch1_stopButton.clicked.connect(self.StopChannel)        
-
-        # self.ui.ch1_enableButton.clicked.connect(self.EnableChannel)
+        # self.ui.ch1_startButton.clicked.connect(self.CloseScreen)
+        self.ui.ch1_startButton.clicked.connect(self.StartChannel)        
         self.ui.ch2_startButton.clicked.connect(self.StartChannel)
-        # self.ui.ch2_stopButton.clicked.connect(self.StopChannel)
-        # self.ui.ch2_enableButton.clicked.connect(self.EnableChannel)
-
-        # # self.bt_min.clicked.connect(self.control_minimized)
-        # # self.bt_med.clicked.connect(self.control_normal)
-        # # self.bt_max.clicked.connect(self.control_maximized)
 
         ## Hamburger Menu Button
         self.ui.hambButton.clicked.connect(self.MenuScreen)
@@ -142,9 +135,10 @@ class MainWindow (QMainWindow):
 
         ## RTF Roll Through Function Button modes: hit_stop; hit_skip; cont
         self.ui.rtf_nervsync_startButton.clicked.connect(self.RTFScreen)
-        self.ui.rtf_cellsync_startButton.clicked.connect(self.RTFScreen)        
+        self.ui.rtf_cellsync_startButton.clicked.connect(self.RTFScreen)
         self.rtfmode = self.config_class.rtfmode
         self.rtfclean = 0
+        self.rtf_window_running = False
 
         ## connect the signals
         # timer signal to the Update
@@ -259,12 +253,9 @@ class MainWindow (QMainWindow):
         self.ChangePolarityFunc(0, 'posButton')
         self.SendConfig('audio volume', self.audio_selected)
 
-        # Treatment_SetFrequency_Str (MODE_SQUARE, "20.00");
-        # Treatment_SetIntensity_Str (MODE_SQUARE, "100");
-        # Treatment_SetFrequency_Str (MODE_SINE, "20.00");
-        # Treatment_SetIntensity_Str (MODE_SINE, "100");
-        # Treatment_SetPolarity_Str ("alt");
-
+        # to show the battery close window
+        self.battery_low_show = False
+        
         # get connectors update
         self.SendConfig('conn', 'get')
         
@@ -631,18 +622,36 @@ class MainWindow (QMainWindow):
     def UpdateSupplyPower (self, power_str):
         # supply mains 11.2 13.2 08.6 08.3 08.3 08.4 
         # supply battery 00.2 13.2 08.6 08.3 08.3 08.4 
-        icon_change = False
-        
+        my_mains_mode, my_percent = self.CheckCharge_Mains_Batt_Icon(power_str)
+
+        if self.batt_revert:
+            return
+
+        icon_index = self.CheckBattValues(my_percent)
+        self.mains_state_int = icon_index
+        self.mains_mode = my_mains_mode
+
+        self.ui.battLabel.setText(f'{my_percent}%')
+        if self.mains_mode == 'mains':
+            self.ui.battButton.setIcon(self.mains_icon_list[self.mains_state_int])
+        else:
+            self.ui.battButton.setIcon(self.batt_icon_list[self.mains_state_int])
+
+        # show battery_low window
+        if my_percent > 22:
+            self.battery_low_show = False
+        elif my_percent < 17:
+            if self.battery_low_show == False:
+                self.battery_low_show = True
+                self.CloseScreen()
+            
+
+
+    def CheckCharge_Mains_Batt_Icon (self, power_str):
+        # supply mains 11.2 13.2 08.6 08.3 08.3 08.4 
+        # supply battery 00.2 13.2 08.6 08.3 08.3 08.4 
         power_str_list = power_str.split(' ')
-        if power_str_list[1] == 'mains':
-            if self.mains_mode != 'mains':
-                self.mains_mode = 'mains'
-                icon_change = True
-                
-        elif power_str_list [1] == 'battery':
-            if self.mains_mode != 'battery':
-                self.mains_mode = 'battery'
-                icon_change = True                
+        mains_mode = power_str_list[1]
 
         # update mains & battery voltages
         for x in range (4):
@@ -650,21 +659,14 @@ class MainWindow (QMainWindow):
 
         print(f'a:{self.batt_str_list[0]} b:{self.batt_str_list[1]} c:{self.batt_str_list[2]} d:{self.batt_str_list[3]}')
 
-        if self.batt_revert:
-            return
-
         total_charge = 0
 
-        # for x in range(4):
-        #     total_charge += self.BatteryCharge(float(self.batt_str_list[x]))
-
-        if self.mains_mode == 'mains':
+        if mains_mode == 'mains':
             for x in range(4):            
                 total_charge += BatteryCharge_With_Mains(float(self.batt_str_list[x]))
         else:    # 'battery'
             for x in range(4):            
                 total_charge += BatteryCharge_With_Batt(float(self.batt_str_list[x]))
-
 
         if not self.batt_first_time:
             total_charge_filter = BatteryCharge_Filter(total_charge)
@@ -677,23 +679,9 @@ class MainWindow (QMainWindow):
         print(f'total charge: {total_charge} total charge filtered: {total_charge_filter}')
         total_perc_int = BatteryCharge_Total_Charge_To_Percent(total_charge_filter)
         print(f'charge batt percent: {total_perc_int}')
-        self.ui.battLabel.setText(f'{total_perc_int}%')
 
-        icon_index = self.CheckBattValues(total_perc_int)
-        if icon_change:
-            self.mains_state_int = icon_index
-            if self.mains_mode == 'mains':
-                self.ui.battButton.setIcon(self.mains_icon_list[self.mains_state_int])
-            else:
-                self.ui.battButton.setIcon(self.batt_icon_list[self.mains_state_int])
-            
-        if self.mains_state_int != icon_index:
-            self.mains_state_int = icon_index
-            if self.mains_mode == 'mains':
-                self.ui.battButton.setIcon(self.mains_icon_list[self.mains_state_int])
-            else:
-                self.ui.battButton.setIcon(self.batt_icon_list[self.mains_state_int])
-
+        return mains_mode, total_perc_int
+                
             
     def CheckBattValues (self, total_perc_int):
         state = 0
@@ -988,6 +976,10 @@ class MainWindow (QMainWindow):
 
         # encoders by position
         if rcv.startswith("encp "):
+            # if rtf is running, no updates
+            if self.rtf_window_running == True:
+                return
+            
             # print("   in rx encoders!")
             rcv_list = rcv.split(' ')            
             try:
@@ -1266,10 +1258,13 @@ class MainWindow (QMainWindow):
                 return
 
             if self.ui.ch1_probeLabel.text() != "NervSync":
-                print("NervSync Probe NC")
-                self.rtfclean = 2            
-                self.ui.rtf_nervsync_infoLabel.setText("NervSync Probe NC")            
-                return
+                # print("NervSync Probe NC")
+                # self.rtfclean = 2            
+                # self.ui.rtf_nervsync_infoLabel.setText("NervSync Probe NC")            
+                # return
+                # we can do RTF only in continuos mode
+                ch_name = 'nervsync_cont'
+                self.rtfmode = 'cont'
         
         else:
             # cellsync
@@ -1277,7 +1272,8 @@ class MainWindow (QMainWindow):
                 self.ui.rtf_cellsync_infoLabel.setText("Some channel is running")
                 return
 
-        # self.screensaver_window = False
+        self.runas_ch_name = ch_name
+        self.rtf_window_running = True
         self.a = RTFWindow(self.s, runas=ch_name, parent=self)
         self.a.show()
 
@@ -1288,10 +1284,24 @@ class MainWindow (QMainWindow):
             self.config_class.rtfmode = rtfmode
             self.config_class.SaveConfigFile()
 
+        self.rtf_window_running = False            
         self.rtfmode = rtfmode
-        self.ChangeFrequencyFunc (0, last_freq_index)    # update freq and encod to last rtf
-        self.ChangeFrequencyByIndex (1)    #sine send actual config
-        os.system("sleep 0.05")
-        self.ChangePowerFunc(0, last_pwr_index)    # update pwr and encod to last rtf
-        self.ChangePowerByIndex(1)    #sine send actual config
-
+        if self.runas_ch_name == 'nervsync' or \
+           self.runas_ch_name == 'nervsync_cont':
+            self.ChangeFrequencyFunc (0, last_freq_index)    # update freq and encod to last rtf
+            self.ChangePowerFunc(0, last_pwr_index)    # update pwr and encod to last rtf
+            self.ChangeFrequencyByIndex (1)    #sine send actual config
+            os.system("sleep 0.05")
+            self.ChangePowerByIndex(1)    #sine send actual config
+        else:
+            self.ChangeFrequencyFunc (1, last_freq_index)    # update freq and encod to last rtf
+            self.ChangePowerFunc(1, last_pwr_index)    # update pwr and encod to last rtf
+            self.ChangeFrequencyByIndex (0)
+            os.system("sleep 0.05")
+            self.ChangePowerByIndex(0)
+            
+            
+    ## Screen for Close System Low Batt
+    def CloseScreen (self):
+        self.a = CloseWindow()
+        self.a.show()
